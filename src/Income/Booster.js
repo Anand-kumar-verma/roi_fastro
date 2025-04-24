@@ -6,6 +6,7 @@ import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
+import CustomToPagination from "../Shared/CustomToPagination";
 
 const BoosterIncome = () => {
   const [page, setPage] = useState(1);
@@ -133,7 +134,7 @@ const BoosterIncome = () => {
           </div>
 
           <div className="flex justify-center mt-6">
-            <CustomPagination data={booster_data} setPage={setPage} />
+            <CustomToPagination data={booster_data} page={page} setPage={setPage} />
           </div>
         </div>
       </div>

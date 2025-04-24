@@ -8,6 +8,7 @@ import moment from "moment";
 import crypto from "../images/crypto.jpg";
 import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
+import CustomToPagination from "../Shared/CustomToPagination";
 
 const RoiIncome = () => {
   const [page, setPage] = useState(1);
@@ -85,7 +86,7 @@ const RoiIncome = () => {
           </div>
           {/* Pagination */}
           <div className="flex justify-center mt-6">
-            <CustomPagination data={roi_data} setPage={setPage} />
+            <CustomToPagination data={roi_data} page={page} setPage={setPage} />
           </div>
         </div>
       </div>

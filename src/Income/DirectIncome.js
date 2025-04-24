@@ -7,6 +7,7 @@ import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
+import CustomToPagination from "../Shared/CustomToPagination";
 
 const DirectIncome = () => {
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
@@ -92,7 +93,7 @@ const DirectIncome = () => {
             </table>
           </div>
           <div className="flex justify-center mt-6">
-            <CustomPagination data={direct_data} setPage={setPage} />
+            <CustomToPagination data={direct_data} page={page} setPage={setPage} />
           </div>
         </div>
       </div>
