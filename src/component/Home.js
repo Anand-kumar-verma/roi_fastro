@@ -23,20 +23,7 @@ function Home() {
     slidesToScroll: 1,
   };
 
-  const { data } = useQuery(
-    ["curre_api"],
-    () =>
-      apiConnectorGet(`${endpoint?.market_api}?ids=polkadot&vs_currencies=usd`),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const curr_data = data?.data?.polkadot?.usd;
+ 
 
   const { data: bit } = useQuery(
     ["bit_api"],
