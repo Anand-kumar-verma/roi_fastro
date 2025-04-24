@@ -42,8 +42,8 @@ export default function Market() {
   return (
     <div className='overflow-hidden'>
       <Header />
-      <div className="text-center flex lg:flex-row flex-col  justify-center lg:items-center gap-8 lg:p-16 py-10 bg-blue-50">
-        <p className="lg:text-5xl text-4xl font-bold text-gray-800 text-left p-4  ">
+      {/* <div className="text-center flex lg:flex-row flex-col  justify-center lg:items-center gap-8 lg:p-16 py-10 bg-blue-50"> */}
+        {/* <p className="lg:text-5xl text-4xl font-bold text-gray-800 text-left p-4  ">
           <TypeAnimation
             sequence={[
               `Tight spreads and ultra-fast execution 
@@ -85,7 +85,7 @@ export default function Market() {
           className="lg:h-[400px] transition-all duration-500 hover:scale-75 rounded-lg hover:shadow-2xl hover:shadow-purple-500"
         />
         {/* <img src={graph} alt="" className="lg:h-[500px]" /> */}
-      </div>
+      {/* </div>
       <div className="bg-blue-50 px-2 lg:flex lg:justify-center lg:gap-5 space-y-5 lg:space-y-0">
         <img
           src={gif1}
@@ -133,7 +133,7 @@ export default function Market() {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */} 
       <p className='lg:text-center  text-left pt-10 lg:text-4xl bg-black text-white text-2xl px-4 font-bold'>A relationship on your terms with Meta Prime.</p>
       <p className='text-center p-2 lg:text-xl text-white bg-black'>Work with us the way you want in the forex market.</p>
  

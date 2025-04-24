@@ -113,8 +113,7 @@ export default function About() {
   return (
     <div className="">
       <Header />
-      <img src={abb} alt="" className="lg:block hidden w-full" />
-      <img src={abm} alt="" className="lg:hidden block w-full" />
+   
       <p className="p-5 lg:text-4xl bg-black text-white lg:text-center text-2xl text-left font-bold">
         Putting our clients first since 1986
       </p>
