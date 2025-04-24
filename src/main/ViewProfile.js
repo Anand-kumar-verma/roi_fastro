@@ -51,18 +51,18 @@ function ViewProfile() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-6 mt-10 !overflow-y-scroll min-h-screen flex flex-col items-center justify-center  bg-background"
+        className="p-6 mt-10 min-h-screen flex flex-col items-center justify-center  bg-[#111022]"
 
         //  style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="flex lg:w-[50%]  justify-between gap-[10%] items-center ">
-          <p className="text-3xl text-text-color text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
+          <p className="text-3xl text-white text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
             {" "}
             View Profile{" "}
           </p>
         </div>
 
-        <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-green-400 rounded overflow-scroll">
+        <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-white ">
           <div className="flex !flex-col">
             {data?.jnr_achieve_reward ? (
               <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">

@@ -39,12 +39,12 @@ const changeFn = async (reqbody)=>{
 
    <>
    <Navbar/>
-    <div className="p-6 min-h-screen lg:px-32 bg-background"
+    <div className="p-6 min-h-screen  bg-[#111022] flex flex-col items-center"
     
     //  style={{ backgroundImage: `url(${crypto})` }}
      
      >
-      <h2 className="text-xl text-text-color font-bold mt-20 mb-10">Edit Associate </h2>
+      <h2 className="text-xl text-white font-bold mt-20 mb-10">Edit  </h2>
       <form  className='px-10 py-5 w-fit !mb-10   border border-yellow-400 rounded'>
         <div className="grid  grid-cols-1 gap-4  ">
           

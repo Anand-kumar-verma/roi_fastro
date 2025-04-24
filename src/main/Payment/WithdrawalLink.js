@@ -11,7 +11,7 @@ const WithdrawalLink = () => {
     <>
       <Navbar />
       <div
-        className="flex min-h-screen flex-col justify-center items-center"
+        className="flex min-h-screen flex-col justify-center items-center bg-[#111022]"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <p

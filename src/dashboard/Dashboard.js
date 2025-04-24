@@ -136,12 +136,12 @@ const Dashboard = () => {
     <>
       <Navbar />
       <div
-        className=" text-text-color lg:px-32 min-h-screen pb-10"
+        className=" text-white bg-[#111022] lg:px-32 min-h-screen pb-10"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <Loader isLoading={isLoading || proLoding || loading} />
-        <div className="px-8 pt-10">
-          <p className="text-lg text-black  p-2 px-5 lg:mt-20 mt-10 flex justify-between">
+        <div className="px-8 pt-10  mt-10">
+          {/* <p className="text-lg text-black  p-2 px-5 lg:mt-20 mt-10 flex justify-between">
             <Telegram
               fontSize="large"
               className="!bg-blue-400 !text-background rounded-full p-1 !font-bold"
@@ -166,7 +166,7 @@ const Dashboard = () => {
               fontSize="large"
               className="!text-background rounded-full p-1 !bg-red-600 !font-bold"
             />
-          </p>
+          </p> */}
           <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
             <p className="  !font-bold bg-gradient-to-r from-teal-600 to-yellow-500 bg-clip-text text-transparent">
               {profile?.jnr_achieve_reward && "Rank:"}{" "}
@@ -208,12 +208,7 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Type</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.lgn_user_type}
-              </p>
-            </div> */}
+          
             <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
               <p className="">Activation Date</p>
               <p className="bg-white text-black rounded-xl font-bold text-sm p-1">

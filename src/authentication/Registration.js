@@ -107,22 +107,22 @@ const Registration = () => {
         className="flex justify-center items-center min-h-screen"
         style={{
           backgroundImage:
-            "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 48%)",
+            "linear-gradient(225deg, rgba(119,0,255) 0%, rgba(20, 20, 20, 1) 61%)",
         }}
       >
-        <Tilt
-          className="w-full max-w-lg lg:p-6 p-4 border-[#008eff] border rounded-xl shadow-2xl"
+        {/* <Tilt
+          className="w-full max-w-lg lg:p-6 p-4 border-[#7700ff] border rounded-xl shadow-2xl"
           // style={{ height: "300px", backgroundColor: "darkgreen" }}
-        >
+        > */}
           <div
-            className="w-full max-w-lg lg:p-6 p-4 border-[#008eff] border rounded-xl shadow-2xl"
+            className="w-full max-w-lg lg:p-6 p-4 border-[#7700ff] border rounded-xl shadow-2xl"
             style={{
               backgroundImage:
-                "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 61%)",
+                "linear-gradient(225deg, rgba(119,0,255) 0%, rgba(20, 20, 20, 1) 61%)",
             }}
           >
             <div className="flex justify-center my-2">
-              <img src={logo} alt="Logo" className="h-14 w-16" />
+              <img src={"https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg"} alt="Logo" className="h-14 w-16" />
             </div>
             <h2 className="text-xl font-bold text-center text-white mb-6">
               You might have already account{" "}
@@ -136,9 +136,9 @@ const Registration = () => {
             <button
               style={{
                 backgroundImage:
-                  "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 61%)",
+                  "linear-gradient(225deg, rgba(119,0,255) 0%, rgba(20, 20, 20, 1) 61%)",
               }}
-              className="w-full py-3 text-white border-2 border-[#008eff] font-semibold rounded-full hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-[#128C7E] transition duration-300 ease-in-out transform hover:scale-105"
+              className="w-full py-3 text-white border-2 border-[#7700ff] font-semibold rounded-full hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-[#7700ff] transition duration-300 ease-in-out transform hover:scale-105"
               onClick={requestAccount}
             >
               Connect Your Wallet
@@ -157,7 +157,7 @@ const Registration = () => {
                     name="email"
                     value={fk.values.email}
                     onChange={fk.handleChange}
-                    className="w-full p-3 mt-1 text-black placeholder:text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
+                    className="w-full p-3 mt-1 text-black placeholder:text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7700ff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />
                 </div>
@@ -168,7 +168,7 @@ const Registration = () => {
                     name="full_name"
                     value={fk.values.full_name}
                     onChange={fk.handleChange}
-                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
+                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7700ff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />
                 </div>
@@ -180,7 +180,7 @@ const Registration = () => {
                     name="mobile"
                     value={fk.values.mobile}
                     onChange={fk.handleChange}
-                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
+                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7700ff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />
                 </div>
@@ -192,7 +192,7 @@ const Registration = () => {
                     name="referral_id"
                     value={fk.values.referral_id}
                     onChange={fk.handleChange}
-                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
+                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7700ff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />
                   <span className="text-white !px-2">{data?.jnr_name}</span>
@@ -203,7 +203,7 @@ const Registration = () => {
                     id="password"
                     value={fk.values.password}
                     onChange={fk.handleChange}
-                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
+                    className="w-full p-3 mt-1 border text-black placeholder:text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7700ff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />
                 </div>
@@ -227,16 +227,16 @@ const Registration = () => {
                 type="submit"
                 style={{
                   backgroundImage:
-                    "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 61%)",
+                    "linear-gradient(225deg, rgba(119,0,255) 0%, rgba(20, 20, 20, 1) 61%)",
                 }}
-                className="w-full py-3 text-white border-2 border-[#008eff] font-semibold rounded-full hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-[#128C7E] transition duration-300 ease-in-out transform hover:scale-105"
+                className="w-full py-3 text-white border-2 border-[#7700ff] font-semibold rounded-full hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-[#128C7E] transition duration-300 ease-in-out transform hover:scale-105"
                 onClick={fk.handleSubmit}
               >
                 Register
               </button>
             </form>
           </div>
-        </Tilt>
+        {/* </Tilt> */}
       </div>
     </>
   );

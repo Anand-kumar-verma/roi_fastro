@@ -78,15 +78,15 @@ const BoosterIncome = () => {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className=" text-text-color p-3 min-h-screen flex flex-col "
+        className=" text-white bg-[#111022] p-3 min-h-screen flex flex-col  items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <div className="p-4 lg:w-[70%] w-full mt-20 lg:mx-40 rounded shadow-md">
+        <div className="p-4 lg:w-[70%] w-full mt-20 ">
           <div>
-            <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
+            <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-white">
               Rocket Income
             </h1>
-            <h2 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
+            <h2 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-white">
               {remainingDate}
             </h2>
           </div>
@@ -112,18 +112,18 @@ const BoosterIncome = () => {
               <tbody className="">
                 {booster_data?.data?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center whitespace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-white bg-black text-center whitespace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center whitespace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-white bg-black text-center whitespace-nowrap">
                       {moment(item?.ledger_created_at)?.format(
                         "DD-MM-YYYY HH:mm:ss"
                       )}
                     </td>
-                    <td className="px-6 border border-yellow-500 text-text-color text-center py-4 whitespace-nowrap">
+                    <td className="px-6 border border-yellow-500 text-white bg-black text-center py-4 whitespace-nowrap">
                       {item?.ledger_amount}
                     </td>
-                    <td className="px-6  border border-yellow-500 text-text-color text-center py-4 whitespace-nowrap">
+                    <td className="px-6  border border-yellow-500 text-white bg-black text-center py-4 whitespace-nowrap">
                       {item?.ledger_des}
                     </td>
                   </tr>
