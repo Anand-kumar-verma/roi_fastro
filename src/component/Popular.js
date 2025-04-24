@@ -13,8 +13,7 @@ import gif1 from "../images/gif1.gif";
 import gif2 from "../images/gif2.gif";
 import { TypeAnimation } from "react-type-animation";
 
-const Popular = ({ market, curr_data_bit, curr_data_Eth }) => {
-  const [textColor, setTextColor] = useState("grey");
+const Popular = ({ curr_data_bit, curr_data_Eth }) => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -152,13 +151,6 @@ const Popular = ({ market, curr_data_bit, curr_data_Eth }) => {
       value: curr_data_bit,
       spanClass: "bg-red-600",
       spanText: "500",
-    },
-    {
-      id: 2,
-      label: "Polkadot",
-      value: market,
-      spanClass: "bg-blue-600",
-      spanText: "100",
     },
     {
       id: 3,

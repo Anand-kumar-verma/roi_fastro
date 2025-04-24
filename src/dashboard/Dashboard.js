@@ -84,7 +84,7 @@ const Dashboard = () => {
   const ChartCount = {
     series: [
       (Number(showPopup?.topup_roi_amount) * 100) /
-        showPopup?.topup_pack_amount,
+      showPopup?.topup_pack_amount,
     ],
     options: {
       chart: {
@@ -137,7 +137,7 @@ const Dashboard = () => {
       <Navbar />
       <div
         className=" text-white bg-[#111022] lg:px-32 min-h-screen pb-10"
-        // style={{ backgroundImage: `url(${crypto})` }}
+      // style={{ backgroundImage: `url(${crypto})` }}
       >
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
@@ -208,7 +208,7 @@ const Dashboard = () => {
               </p>
             </div>
 
-          
+
             <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
               <p className="">Activation Date</p>
               <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
@@ -268,9 +268,8 @@ const Dashboard = () => {
             <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
               <p style={{ fontWeight: "bold" }}>Flush Amount</p>
               <p
-                className={`bg-white rounded-xl  p-1  text-2xl ${
-                  Number(profile?.jnr_flush_amnt || 0) > 0 && "animated-text"
-                }`}
+                className={`bg-white rounded-xl  p-1  text-2xl ${Number(profile?.jnr_flush_amnt || 0) > 0 && "animated-text"
+                  }`}
               >
                 {Number(profile?.jnr_flush_amnt)?.toFixed(0, 2)} $
               </p>
@@ -451,8 +450,10 @@ const Dashboard = () => {
           <BsTrophyFill className="!text-yellow-500" />
         </p>
 
+       
+        <div className="grid grid-cols-2 gap-2  place-items-center">
         <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5 lg:w-[500px] lg:px-10 lg:mt-10 mt-5 flex justify-between"
           onClick={() => navigate("/roi_income")}
         >
           <div>
@@ -466,85 +467,101 @@ const Dashboard = () => {
             <Diamond className="!text-yellow-600 !h-14 !w-14" />
           </p>
         </div>
+          <div
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px] p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate("/direct_income")}
+          >
+            <div>
+              {" "}
+              <p className=" !text-text-color !font-bold"> {"Direct Income"}</p>
+              <p className=" !text-yellow-600 p-1 !font-bold">
+                {" "}
+                {Number(data?.[0]?.direct)?.toFixed(2) || 0} USD
+              </p>
+            </div>
+            <p>
+              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+            </p>
+          </div>
+          <div
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate("/level_income")}
+          >
+            <div>
+              {" "}
+              <p className=" !text-text-color !font-bold">{"Level Income"}</p>
+              <p className=" !text-yellow-600 p-1 !font-bold">
+                {" "}
+                {Number(data?.[0]?.level)?.toFixed(2) || 0} USD
+              </p>
+            </div>
+            <p>
+              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+            </p>
+          </div>
+          <div
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate("/booster_income")}
+          >
+            <div>
+              {" "}
+              <p className=" !text-text-color !font-bold">{"Rocket Income"}</p>
+              <p className=" !text-yellow-600 p-1 !font-bold">
+                {Number(data?.[0]?.rocket)?.toFixed(2) || 0} USD
+              </p>
+            </div>
+            <p>
+              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+            </p>
+          </div>
+          <div
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate("/matching_income")}
+          >
+            <div>
+              {" "}
+              <p className=" !text-text-color !font-bold"> {"Magic Income"}</p>
+              <p className=" !text-yellow-600 p-1 !font-bold">
+                {" "}
+                {Number(data?.[0]?.matching)?.toFixed(2) || 0} USD
+              </p>
+            </div>
+            <p>
+              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+            </p>
+          </div>
+          <div
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate("/weekly_income")}
+          >
+            <div>
+              {" "}
+              <p className=" !text-text-color !font-bold">{"Rank Income"}</p>
+              <p className=" !text-yellow-600 p-1 !font-bold">
+                {Number(data?.[0]?.weekly)?.toFixed(2) || 0} USD
+              </p>
+            </div>
+            <p>
+              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+            </p>
+          </div>
+          <div
+          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+          onClick={() => navigate("/jackpot_income")}
+        >
+          <div>
+            {" "}
+            <p className=" !text-text-color !font-bold">{"Jackpot Income"}</p>
+            <p className=" !text-yellow-600 p-1 !font-bold">
+              {Number(data?.[0]?.jackpot)?.toFixed(2) || 0} USD
+            </p>
+          </div>
+          <p>
+            <Diamond className="!text-yellow-600 !h-14 !w-14" />
+          </p>
+        </div>
+        </div>
 
-        <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-          onClick={() => navigate("/direct_income")}
-        >
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold"> {"Direct Income"}</p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {" "}
-              {Number(data?.[0]?.direct)?.toFixed(2) || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div>
-        <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-          onClick={() => navigate("/level_income")}
-        >
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold">{"Level Income"}</p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {" "}
-              {Number(data?.[0]?.level)?.toFixed(2) || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div>
-        <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-          onClick={() => navigate("/booster_income")}
-        >
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold">{"Rocket Income"}</p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {Number(data?.[0]?.rocket)?.toFixed(2) || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div>
-        <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-          onClick={() => navigate("/matching_income")}
-        >
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold"> {"Magic Income"}</p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {" "}
-              {Number(data?.[0]?.matching)?.toFixed(2) || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div>
-        <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-          onClick={() => navigate("/weekly_income")}
-        >
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold">{"Rank Income"}</p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {Number(data?.[0]?.weekly)?.toFixed(2) || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div>
         {/* <div className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between">
           <div>
             {" "}
@@ -560,21 +577,7 @@ const Dashboard = () => {
           </p>
         </div> */}
 
-        <div
-          className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-          onClick={() => navigate("/jackpot_income")}
-        >
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold">{"Jackpot Income"}</p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {Number(data?.[0]?.jackpot)?.toFixed(2) || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div>
+      
       </div>
     </>
   );

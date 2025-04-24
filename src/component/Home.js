@@ -4,6 +4,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import slide from "../images/m.png";
+import bitcoin from "../images/in-equity-slide-1.png";
+import m from "../images/mainb.png";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import { apiConnectorGet } from "../utils/APIConnector";
@@ -73,11 +75,11 @@ function Home() {
     },
     {
       id: 2,
-      image: slide,
+      image: bitcoin,
     },
     {
       id: 3,
-       image: slide,
+       image: m,
     },
   ];
 
@@ -98,7 +100,7 @@ function Home() {
         }}
       >
        
-        <div className="!w-full hidden lg:block !overflow-hidden py-1">
+        <div className="!w-full hidden lg:block  py-1">
           <Slider {...settings}>
             {slides.map((slideData) => (
               <div
@@ -109,7 +111,7 @@ function Home() {
                 <img
                   src={slideData?.image}
                   alt={`Slide ${slideData?.id}`}
-                  className="!h-[600px] w-[1000px] !mt-5"
+                  className="!h-[500px] w-[800px] !mt-5"
                 />
               </div>
             ))}
@@ -122,7 +124,7 @@ function Home() {
                 <p className="mt-1 text-2xl py-2 text-center font-extrabold text-white">
                   {slideData.heading}
                 </p>
-                <img src={slideData?.image} alt={`Slide ${slideData?.id}`} />
+                <img src={slideData?.image} />
               </div>
             ))}
           </Slider>
@@ -130,7 +132,6 @@ function Home() {
       </div>
 
       <Popular
-        market={curr_data}
         curr_data_bit={curr_data_bit}
         curr_data_Eth={curr_data_Eth}
       />
