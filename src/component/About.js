@@ -1,130 +1,130 @@
-import React, { useState } from "react";
-import abb from "../images/about.PNG";
-import abm from "../images/aboutm.PNG";
-import philosphy from "../images/philosphy.PNG";
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
-import { TypeAnimation } from "react-type-animation";
+import React, { useState } from 'react';
+import abb from '../images/about.PNG';
+import abm from '../images/aboutm.PNG';
+import philosphy from '../images/philosphy.PNG';
+import Header from '../Layout/Header';
+import Footer from '../Layout/Footer';
+import { TypeAnimation } from 'react-type-animation';
 
 export default function About() {
-  const [textColor, setTextColor] = useState("grey");
+  const [textColor, setTextColor] = useState('grey');
   const sections = [
     {
-      title: "Our Philosophy",
+      title: 'Our Philosophy',
       description:
-        "We believe in simplifying forex trading for both novice and experienced traders. Our philosophy is grounded in transparency, reliability, and cutting-edge technology. We aim to empower traders by providing them with accurate market data, professional analysis, and powerful trading tools that allow them to make informed decisions.",
+        'We believe in simplifying forex trading for both novice and experienced traders. Our philosophy is grounded in transparency, reliability, and cutting-edge technology. We aim to empower traders by providing them with accurate market data, professional analysis, and powerful trading tools that allow them to make informed decisions.',
       additionalInfo:
-        "We also emphasize continuous learning in the face of ever-evolving market dynamics. This helps our clients stay ahead of trends and market shifts.",
+        'We also emphasize continuous learning in the face of ever-evolving market dynamics. This helps our clients stay ahead of trends and market shifts.',
       image: philosphy, // You can replace this with the actual image variable
     },
     {
-      title: "Our Culture",
+      title: 'Our Culture',
       description:
-        "At Meta Prime, we believe in simplifying forex trading for both novice and experienced traders. Our philosophy is grounded in transparency, reliability, and cutting-edge technology. We aim to empower traders by providing them with accurate market data, professional analysis, and powerful trading tools that allow them to make informed decisions.",
+        'At Meta Prime, we believe in simplifying forex trading for both novice and experienced traders. Our philosophy is grounded in transparency, reliability, and cutting-edge technology. We aim to empower traders by providing them with accurate market data, professional analysis, and powerful trading tools that allow them to make informed decisions.',
       additionalInfo:
-        "We also emphasize continuous learning in the face of ever-evolving market dynamics. This helps our clients stay ahead of trends and market shifts.",
+        'We also emphasize continuous learning in the face of ever-evolving market dynamics. This helps our clients stay ahead of trends and market shifts.',
       image: philosphy,
     },
     {
-      title: "Our History",
+      title: 'Our History',
       description:
-        "At Meta Prime, we believe in simplifying forex trading for both novice and experienced traders. Our philosophy is grounded in transparency, reliability, and cutting-edge technology. We aim to empower traders by providing them with accurate market data, professional analysis, and powerful trading tools that allow them to make informed decisions.",
+        'At Meta Prime, we believe in simplifying forex trading for both novice and experienced traders. Our philosophy is grounded in transparency, reliability, and cutting-edge technology. We aim to empower traders by providing them with accurate market data, professional analysis, and powerful trading tools that allow them to make informed decisions.',
       additionalInfo:
-        "We also emphasize continuous learning and adaptation in the face of ever-evolving market dynamics. This helps our clients stay ahead of trends and market shifts.",
+        'We also emphasize continuous learning and adaptation in the face of ever-evolving market dynamics. This helps our clients stay ahead of trends and market shifts.',
       image: philosphy,
     },
   ];
   const products = [
     {
       id: 1,
-      label: "Stocks",
+      label: 'Stocks',
       description:
-        " core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
-      spanClass: "bg-[#e54a41]",
-      spanText: "EQ",
-      bgClass: "bg-[#a7e2f2]",
+        ' core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.',
+      spanClass: 'bg-[#e54a41]',
+      spanText: 'EQ',
+      bgClass: 'bg-[#a7e2f2]',
     },
     {
       id: 2,
-      label: "Listed Options",
+      label: 'Listed Options',
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
-      spanClass: "bg-[#37bc9c]",
-      spanText: "LQ",
-      bgClass: "bg-[#a7e2f2]",
+        'Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.',
+      spanClass: 'bg-[#37bc9c]',
+      spanText: 'LQ',
+      bgClass: 'bg-[#a7e2f2]',
     },
     {
       id: 3,
-      label: "Futures",
+      label: 'Futures',
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
-      spanClass: "bg-[#4886d9]",
-      spanText: "FU",
-      bgClass: "bg-[#a7e2f2]",
+        'Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.',
+      spanClass: 'bg-[#4886d9]',
+      spanText: 'FU',
+      bgClass: 'bg-[#a7e2f2]',
     },
     {
       id: 4,
-      label: "More products",
+      label: 'More products',
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
-      spanClass: "bg-[#fff]",
-      spanText: "---",
-      bgClass: "bg-[#a7e2f2]",
+        'Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.',
+      spanClass: 'bg-[#fff]',
+      spanText: '---',
+      bgClass: 'bg-[#a7e2f2]',
     },
   ];
 
   const statsData = [
     {
       id: 1,
-      label: "S&PA 500 index",
-      value: "52,000",
-      spanClass: "bg-red-600",
-      spanText: "500",
+      label: 'S&PA 500 index',
+      value: '52,000',
+      spanClass: 'bg-red-600',
+      spanText: '500',
     },
     {
       id: 2,
-      label: "USA & CFE",
-      value: "240,000",
-      spanClass: "bg-blue-600",
-      spanText: "100",
+      label: 'USA & CFE',
+      value: '240,000',
+      spanClass: 'bg-blue-600',
+      spanText: '100',
     },
     {
       id: 3,
-      label: "Europe",
-      value: "1,47854",
-      spanClass: "bg-purple-600",
-      spanText: "E",
+      label: 'Europe',
+      value: '1,47854',
+      spanClass: 'bg-purple-600',
+      spanText: 'E',
     },
     {
       id: 4,
-      label: "Bitcoin",
-      value: "1,14250",
-      spanClass: "bg-yellow-600",
-      spanText: "B",
+      label: 'Bitcoin',
+      value: '1,14250',
+      spanClass: 'bg-yellow-600',
+      spanText: 'B',
     },
     {
       id: 5,
-      label: "Ethereum",
-      value: "1,8576",
-      spanClass: "bg-pink-600",
-      spanText: "Eth",
+      label: 'Ethereum',
+      value: '1,8576',
+      spanClass: 'bg-pink-600',
+      spanText: 'Eth',
     },
   ];
   return (
     <div className="">
       <Header />
-   
+
       <p className="p-5 lg:text-4xl bg-black text-white lg:text-center text-2xl text-left font-bold">
         Putting our clients first since 1986
       </p>
       <p className=" p-2 lg:text-center bg-black text-white text-left">
-        {" "}
+        {' '}
         empowering clients by helping them take control of their forex trading
         journey.
         <p>
-          {" "}
-          Our commitment to deliverin, and advanced tools has positioned{" "}
-        </p>{" "}
+          {' '}
+          Our commitment to deliverin, and advanced tools has positioned{' '}
+        </p>{' '}
         Meta Prime as a trusted leader in the forex industry.
       </p>
       <div>
@@ -156,7 +156,7 @@ export default function About() {
             color: textColor,
           }}
         > */}
-          {/* <TypeAnimation
+        {/* <TypeAnimation
             sequence={[
               `Meta Prime: Your gateway to
                advanced forex trading`,
@@ -182,11 +182,12 @@ export default function About() {
             repeat={Infinity}
           /> */}
         {/* </p> */}
-        <p className="mt-8 text-xl text-red-400" style={{ fontSize: "50px" }}>Your gateway to
-        advanced forex trading</p>
-        <p className="mt-8 text-xl text-gray-400" data-aos="fade-up">
+        <p className="mt-8 text-xl text-red-400" style={{ fontSize: '50px' }}>
+          Your gateway to advanced forex trading
+        </p>
+        <p className="mt-5 text-xl text-gray-400" data-aos="fade-up">
           Experience seamless forex trading with Meta Prime. Make smarter,
-          faster, <br /> and more precise decisions with advanced tools and{" "}
+          faster, <br /> and more precise decisions with advanced tools and{' '}
           <br /> real-time data for currency pairs worldwide.
         </p>
 
@@ -194,7 +195,7 @@ export default function About() {
       </div>
       <div
         className="p-4 flex  justify-center gap-5 !text-white overflow-x-auto"
-        style={{ backgroundColor: "rgb(26, 26, 26)" }}
+        style={{ backgroundColor: 'rgb(26, 26, 26)' }}
       >
         {statsData.map((stat) => (
           <div
@@ -213,7 +214,7 @@ export default function About() {
             {stat.id !== statsData.length && (
               <div
                 className="!border-r !border-white mt-2"
-                style={{ height: "30px" }}
+                style={{ height: '30px' }}
               />
             )}
           </div>

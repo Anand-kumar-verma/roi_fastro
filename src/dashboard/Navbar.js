@@ -4,9 +4,9 @@ import {
   LogoutTwoTone,
   Person,
   Person3,
-} from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
-import { BsPerson, BsTrophy } from "react-icons/bs";
+} from '@mui/icons-material';
+import React, { useEffect, useState } from 'react';
+import { BsPerson, BsTrophy } from 'react-icons/bs';
 import {
   FaAffiliatetheme,
   FaBars,
@@ -14,10 +14,10 @@ import {
   FaIntercom,
   FaRegMoneyBillAlt,
   FaTimes,
-} from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import logo from "../images/logo.png";
-import { logOutFunction } from "../utils/APICalling";
+} from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import logo from '../images/logo.png';
+import { logOutFunction } from '../utils/APICalling';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Navbar() {
   };
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    document.body.style.overflow = isSidebarOpen ? "auto" : "hidden"; // Disable scrolling when sidebar is open
+    document.body.style.overflow = isSidebarOpen ? 'auto' : 'hidden';
   };
 
   const handleDropdownToggle = (menu) => {
@@ -40,33 +40,31 @@ export default function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        !event.target.closest(".dropdown") &&
-        !event.target.closest(".logout-dropdown")
+        !event.target.closest('.dropdown') &&
+        !event.target.closest('.logout-dropdown')
       ) {
         setOpenDropdown(null);
         setIsLogoutOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   return (
     <div className="fixed top-0 left-0 w-full bg-black text-white z-50 shadow-md">
       <div className="flex justify-between px-10 text-sm h-16 items-center">
-        {/* Logo and Sidebar Toggle */}
         <div className="flex font-medium items-center gap-10">
-          <img src={"https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg"} alt="Logo" className="h-14 w-16" />
-          {/* Mobile Sidebar Toggle */}
-          <div className="lg:hidden mr-10 flex items-center">
-            <FaBars
-              className="cursor-pointer text-2xl !text-white"
-              onClick={toggleSidebar}
-            />
-          </div>
-          <div className="lg:hidden flex items-center">
+          <img
+            src={
+              'https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg'
+            }
+            alt="Logo"
+            className="h-14 w-16"
+          />
+          <div className="lg:hidden sm:pl-[32rem]  pl-[9rem] flex items-center">
             <FaBars
               className="cursor-pointer text-2xl"
               onClick={toggleSidebar}
@@ -76,10 +74,9 @@ export default function Navbar() {
           {/* Sidebar */}
           <div
             className={`fixed top-0 left-0 p-4 h-full bg-black !text-white transition-transform transform ${
-              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+              isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             } md:relative md:translate-x-0 md:flex md:gap-10`}
           >
-            {/* Sidebar Header */}
             <div className="flex justify-between shadow-xl p-2 items-center mb-5 md:hidden">
               <img src={logo} alt="Logo" className="h-10" />
               <FaTimes
@@ -87,56 +84,52 @@ export default function Navbar() {
                 onClick={toggleSidebar}
               />
             </div>
-
-            {/* Navigation Links */}
             <p
               className="flex items-center gap-2 cursor-pointer p-2 text-white"
               onClick={() => {
-                navigate("/home");
-                window.location.reload()
+                navigate('/home');
+                window.location.reload();
               }}
             >
               <FaHome className="text-blue-400" /> Home
             </p>
-
-            {/* Affiliates Dropdown */}
             <div
               className="relative dropdown"
-              onMouseEnter={() => setOpenDropdown("affiliate")}
+              onMouseEnter={() => setOpenDropdown('affiliate')}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <p
                 className="flex items-center gap-2 cursor-pointer p-2 text-white"
-                onClick={() => handleDropdownToggle("affiliate")}
+                onClick={() => handleDropdownToggle('affiliate')}
               >
                 <FaAffiliatetheme className="text-blue-400" /> Affiliates
               </p>
-              {openDropdown === "affiliate" && (
+              {openDropdown === 'affiliate' && (
                 <div className="absolute left-0 bg-white shadow-md rounded w-48 p-3 z-40">
                   <div
                     className="cursor-pointer flex items-center gap-2 py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/withdrawalhistory")}
+                    onClick={() => navigate('/withdrawalhistory')}
                   >
                     <Lock className="text-blue-400" fontSize="small" />
                     <p>Withdrawal</p>
                   </div>
                   <div
                     className="cursor-pointer flex items-center gap-2 py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/password")}
+                    onClick={() => navigate('/password')}
                   >
                     <KeyOff className="text-blue-400" fontSize="small" />
                     <p>Password</p>
                   </div>
                   <div
                     className="cursor-pointer flex items-center gap-2 py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/view")}
+                    onClick={() => navigate('/view')}
                   >
                     <Person className="text-blue-400" fontSize="small" />
                     <p>View Profile</p>
                   </div>
                   <div
                     className="cursor-pointer flex items-center gap-2 py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/Teamdata")}
+                    onClick={() => navigate('/Teamdata')}
                   >
                     <Person3 className="text-blue-400" fontSize="small" />
                     <p>Team Data</p>
@@ -147,72 +140,70 @@ export default function Navbar() {
 
             <p
               className="flex items-center gap-2 cursor-pointer p-2 text-white"
-              onClick={() => navigate("/activation")}
+              onClick={() => navigate('/activation')}
             >
               <BsTrophy className="text-blue-400" /> Activation
             </p>
             <p
               className="flex items-center gap-2 cursor-pointer p-2 text-white"
-              onClick={() => navigate("/topup_detail")}
+              onClick={() => navigate('/topup_detail')}
             >
               <BsTrophy className="text-blue-400" /> Top Up Details
             </p>
-
-            {/* Income Dropdown */}
             <div
               className="relative dropdown"
-              onMouseEnter={() => setOpenDropdown("income")}
+              onMouseEnter={() => setOpenDropdown('income')}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <p
                 className="flex items-center gap-2 cursor-pointer p-2 text-white"
-                onClick={() => handleDropdownToggle("income")}
+                onClick={() => handleDropdownToggle('income')}
               >
                 <FaIntercom className="text-blue-400" /> Income
               </p>
-              {openDropdown === "income" && (
+              {openDropdown === 'income' && (
                 <div className="absolute left-0  bg-white shadow-md rounded w-48 p-3 z-40">
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/roi_income")}
+                    onClick={() => navigate('/roi_income')}
                   >
                     ROI Income
                   </div>
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/direct_income")}
+                    onClick={() => navigate('/direct_income')}
                   >
                     Direct Income
                   </div>
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/level_income")}
+                    onClick={() => navigate('/level_income')}
                   >
                     Level Income
                   </div>
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/booster_income")}
+                    onClick={() => navigate('/booster_income')}
                   >
                     Rocket Income
                   </div>
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/matching_income")}
+                    onClick={() => navigate('/matching_income')}
                   >
                     Magic Income
                   </div>
 
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/weekly_income")}
+                    onClick={() => navigate('/weekly_income')}
                   >
                     Rank Income
                   </div>
 
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/jackpot_income")}
+                    onClick={() => navigate('/jackpot_income')}
                   >
                     Jackpot Income
                   </div>
@@ -222,19 +213,19 @@ export default function Navbar() {
 
             <p
               className="flex items-center gap-2 cursor-pointer p-2 text-white"
-              onClick={() => navigate("/withdrawal-link")}
+              onClick={() => navigate('/withdrawal-link')}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Withdrawal
             </p>
             <p
               className="flex items-center gap-2 cursor-pointer p-2 text-white"
-              onClick={() => navigate("/compound-history")}
+              onClick={() => navigate('/compound-history')}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Compound
             </p>
             <p
               className="flex items-center gap-2 cursor-pointer p-2 text-white"
-              onClick={() => navigate("/view")}
+              onClick={() => navigate('/view')}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Profile
             </p>
@@ -246,13 +237,10 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-
-        {/* Login Icon */}
         <div className="hidden md:flex justify-center items-center gap-10 relative">
           <p className="cursor-pointer" onClick={toggleLogoutDropdown}>
             <BsPerson className="text-blue-400" />
           </p>
-          {/* Logout Submenu */}
           {isLogoutOpen && (
             <div className="absolute top-8 right-0 bg-white shadow-md rounded p-3 w-32 z-40 logout-dropdown">
               <div

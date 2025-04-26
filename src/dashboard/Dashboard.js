@@ -9,27 +9,34 @@ import {
   Twitter,
   WhatsApp,
   YouTube,
-} from "@mui/icons-material";
-import copy from "copy-to-clipboard";
-import moment from "moment/moment";
-import React, { useState } from "react";
-import ReactApexChart from "react-apexcharts";
-import toast from "react-hot-toast";
-import { BsTrophyFill } from "react-icons/bs";
-import { useQuery } from "react-query";
-import Loader from "../Shared/Loader";
-import { apiConnectorGet } from "../utils/APIConnector";
-import { endpoint } from "../utils/APIRoutes";
-import Navbar from "./Navbar";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+} from '@mui/icons-material';
+import copy from 'copy-to-clipboard';
+import moment from 'moment/moment';
+import React, { useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import toast from 'react-hot-toast';
+import { BsTrophyFill } from 'react-icons/bs';
+import { useQuery } from 'react-query';
+import Loader from '../Shared/Loader';
+import { apiConnectorGet } from '../utils/APIConnector';
+import { endpoint } from '../utils/APIRoutes';
+import Navbar from './Navbar';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import card1 from '../images/card1.jpg';
+import card2 from '../images/card2.jpg';
+import card3 from '../images/card3.jpg';
+import card4 from '../images/card4.jpg';
+import card5 from '../images/card5.png';
+import card6 from '../images/card_6.png';
+import card7 from '../images/card7.png';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState();
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const { isLoading, data: dashboard } = useQuery(
-    ["dashboard_api"],
+    ['dashboard_api'],
     () => apiConnectorGet(endpoint?.user_dashboard_api),
     {
       refetchOnMount: false,
@@ -41,7 +48,7 @@ const Dashboard = () => {
   );
   const data = dashboard?.data?.result || [];
   const { isLoading: packageLoding, data: getPackageDetails } = useQuery(
-    ["dashboard_api_package"],
+    ['dashboard_api_package'],
     () => apiConnectorGet(endpoint?.user_buy_package_details_api),
     {
       refetchOnMount: false,
@@ -54,7 +61,7 @@ const Dashboard = () => {
   const getPackageDetailsData = getPackageDetails?.data?.result || [];
 
   const { data: usd } = useQuery(
-    ["curre_api"],
+    ['curre_api'],
     () =>
       apiConnectorGet(`${endpoint?.market_api}?ids=polkadot&vs_currencies=usd`),
     {
@@ -69,7 +76,7 @@ const Dashboard = () => {
   const curr_data = usd?.data?.polkadot?.usd;
 
   const { isLoading: proLoding, data: profile_data } = useQuery(
-    ["profile_api"],
+    ['profile_api'],
     () => apiConnectorGet(endpoint?.profile_api),
     {
       refetchOnMount: false,
@@ -89,22 +96,22 @@ const Dashboard = () => {
     options: {
       chart: {
         height: 350,
-        type: "radialBar",
+        type: 'radialBar',
       },
       plotOptions: {
         radialBar: {
           dataLabels: {
             name: {
-              fontSize: "22px",
+              fontSize: '22px',
             },
             value: {
-              fontSize: "16px",
+              fontSize: '16px',
             },
             total: {
               show: true,
-              label: "Achieved",
+              label: 'Achieved',
               formatter: function (w) {
-                return w.globals.seriesTotals.reduce((a, b) => a + b, 0) + "%";
+                return w.globals.seriesTotals.reduce((a, b) => a + b, 0) + '%';
               },
             },
           },
@@ -115,12 +122,12 @@ const Dashboard = () => {
   async function compoundFuncCalled() {
     try {
       if (Number(profile?.jnr_curr_wallet || 0) < 10)
-        return toast("Amount should be equal or grater than 10$");
+        return toast('Amount should be equal or grater than 10$');
       setLoading(true);
       const api_response = await apiConnectorGet(endpoint?.compounding_wallet);
       toast(api_response.data?.message, { id: 1 });
     } catch (e) {
-      toast("Something went wrong.", { id: 1 });
+      toast('Something went wrong.', { id: 1 });
     }
     setLoading(false);
   }
@@ -167,28 +174,54 @@ const Dashboard = () => {
               className="!text-background rounded-full p-1 !bg-red-600 !font-bold"
             />
           </p> */}
+          <div className="text-lg bg-gray-100 border border-rose-500 rounded opacity-75 lg:p-4 p-2 lg:px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
+            <span className="!font-bold pr-3 text-yellow-600">News:</span>
+            <div className="w-full overflow-hidden whitespace-nowrap relative">
+              <div
+                className="flex animate-marquee"
+                style={{
+                  animation: 'marquee 6s linear infinite',
+                }}
+              >
+                <span className="inline-block text-red-600 text-sm">
+                  Text is the exact, original words written by an author. Text
+                  is also a specific work as written by the original author.
+                  Text is also commonly used to refer to a text message or to
+                  send a text message. Text has several other senses as a noun.
+                </span>
+                <span className="inline-block text-red-600  text-sm">
+                  Text is the exact, original words written by an author. Text
+                  is also a specific work as written by the original author.
+                  Text is also commonly used to refer to a text message or to
+                  send a text message. Text has several other senses as a noun.
+                </span>
+              </div>
+              <style>{`
+                   @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); }} `}</style>
+            </div>
+          </div>
           <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
             <p className="  !font-bold bg-gradient-to-r from-teal-600 to-yellow-500 bg-clip-text text-transparent">
-              {profile?.jnr_achieve_reward && "Rank:"}{" "}
-              {profile?.jnr_achieve_reward}{" "}
+              {profile?.jnr_achieve_reward && 'Rank:'}{' '}
+              {profile?.jnr_achieve_reward}{' '}
             </p>
             <p className=" !text-yellow-600 p-1 !font-bold">
-              {" "}
+              {' '}
               Current Wallet: {profile?.jnr_curr_wallet || 0} USD
             </p>
           </div>
-          <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col justify-between">
+          {/* <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col justify-between">
             <p className=" !text-blue-500 !font-bold ">Polkadot (DOT) :</p>
             <p className=" !text-yellow-600 p-1 !font-bold"> {curr_data} USD</p>
-          </div>
+          </div> */}
           <div className="text-lg bg-gray-color opacity-75 border border-rose-500 rounded py-5 p-2 px-5 lg:mt-10 mt-5 flex flex-col gap-2 justify-start">
             <p className=" !text-green-500 bg-white !text-xs lg:!text-xl p-1  w-fit rounded">
-              {profile?.topup_date && "Activated"}
+              {profile?.topup_date && 'Activated'}
             </p>
             <div className=" !text-text-color flex justify-between lg:flex-row flex-col lg:mt-0 mt-2   !text-xs lg:!text-lg p-1 ">
               <p className=" !text-text-color rounded bg-blue-600 px-4 !text-xs lg:!text-lg p-1 font-bold w-fit flex items-center">
-                {" "}
-                My Wallet Fund :{" "}
+                {' '}
+                My Wallet Fund :{' '}
                 <span className="bg-white text-black text-lg  mb-1 p-1 ">
                   {profile?.jnr_curr_wallet} USD
                 </span>
@@ -213,7 +246,7 @@ const Dashboard = () => {
               <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
                 {moment
                   ?.utc(profile?.topup_date)
-                  ?.format("DD-MM-YYYY HH:mm:ss")}
+                  ?.format('DD-MM-YYYY HH:mm:ss')}
               </p>
             </div>
             {/* <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
@@ -265,10 +298,10 @@ const Dashboard = () => {
               </p>
             </div>
             <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p style={{ fontWeight: "bold" }}>Flush Amount</p>
+              <p style={{ fontWeight: 'bold' }}>Flush Amount</p>
               <p
                 className={`bg-white rounded-xl  p-1  text-2xl ${
-                  Number(profile?.jnr_flush_amnt || 0) > 0 && "animated-text"
+                  Number(profile?.jnr_flush_amnt || 0) > 0 && 'animated-text'
                 }`}
               >
                 {Number(profile?.jnr_flush_amnt)?.toFixed(0, 2)} $
@@ -283,76 +316,76 @@ const Dashboard = () => {
               <div
                 data-aos="flip-down"
                 style={{
-                  padding: "35px",
-                  color: "#1f2937",
-                  fontSize: "1.5rem",
-                  borderRadius: "50%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  transition: "all 0.4s ease-in-out",
-                  transform: "scale(1)",
+                  padding: '35px',
+                  color: '#1f2937',
+                  fontSize: '1.5rem',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  transition: 'all 0.4s ease-in-out',
+                  transform: 'scale(1)',
                   boxShadow:
-                    "0 15px 30px rgba(147, 51, 234, 0.8), 0 0 15px rgba(255, 255, 255, 0.2)",
+                    '0 15px 30px rgba(147, 51, 234, 0.8), 0 0 15px rgba(255, 255, 255, 0.2)',
                   background:
-                    "linear-gradient(135deg, #16a34a, #065f46, #1e3a8a, #9333ea)",
-                  opacity: "0.97",
-                  cursor: "pointer",
-                  width: "200px",
-                  height: "200px",
-                  border: "4px solid rgba(255, 255, 255, 0.7)",
-                  position: "relative",
-                  overflow: "hidden",
+                    'linear-gradient(135deg, #16a34a, #065f46, #1e3a8a, #9333ea)',
+                  opacity: '0.97',
+                  cursor: 'pointer',
+                  width: '200px',
+                  height: '200px',
+                  border: '4px solid rgba(255, 255, 255, 0.7)',
+                  position: 'relative',
+                  overflow: 'hidden',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(0.88)";
+                  e.currentTarget.style.transform = 'scale(0.88)';
                   e.currentTarget.style.boxShadow =
-                    "0 20px 40px rgba(147, 51, 234, 1), 0 0 20px rgba(255, 255, 255, 0.4)";
+                    '0 20px 40px rgba(147, 51, 234, 1), 0 0 20px rgba(255, 255, 255, 0.4)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.transform = 'scale(1)';
                   e.currentTarget.style.boxShadow =
-                    "0 15px 30px rgba(147, 51, 234, 0.8), 0 0 15px rgba(255, 255, 255, 0.2)";
+                    '0 15px 30px rgba(147, 51, 234, 0.8), 0 0 15px rgba(255, 255, 255, 0.2)';
                 }}
                 onClick={() => setShowPopup(i)}
               >
                 {/* Glowing Animation Effect */}
                 <div
                   style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
                     top: 0,
                     left: 0,
                     background:
-                      "radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 50%)",
-                    animation: "glow 3s infinite alternate",
+                      'radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 50%)',
+                    animation: 'glow 3s infinite alternate',
                   }}
                 />
 
                 <p
                   style={{
-                    padding: "12px",
-                    textAlign: "center",
-                    color: "#ff0000",
-                    fontWeight: "bold",
-                    fontSize: "1.5rem",
-                    textShadow: "3px 3px 8px rgba(255, 0, 0, 0.6)",
+                    padding: '12px',
+                    textAlign: 'center',
+                    color: '#ff0000',
+                    fontWeight: 'bold',
+                    fontSize: '1.5rem',
+                    textShadow: '3px 3px 8px rgba(255, 0, 0, 0.6)',
                   }}
                 >
                   {Number(i?.topup_pack_amount).toFixed(2)} $
                 </p>
                 <p
                   style={{
-                    textAlign: "center",
-                    color: "#000",
-                    backgroundColor: "#fff",
-                    borderRadius: "9999px",
-                    padding: "8px 14px",
-                    fontSize: "1.3rem",
-                    fontWeight: "bold",
-                    boxShadow: "0 3px 10px rgba(0, 0, 0, 0.3)",
+                    textAlign: 'center',
+                    color: '#000',
+                    backgroundColor: '#fff',
+                    borderRadius: '9999px',
+                    padding: '8px 14px',
+                    fontSize: '1.3rem',
+                    fontWeight: 'bold',
+                    boxShadow: '0 3px 10px rgba(0, 0, 0, 0.3)',
                   }}
                   className="bg-gradient-to-r from-green-500 via-rose-500 to-blue-500"
                 >
@@ -360,10 +393,10 @@ const Dashboard = () => {
                 </p>
                 <Diamond
                   style={{
-                    color: "#facc15",
-                    marginTop: "12px",
-                    fontSize: "2.5rem",
-                    textShadow: "0px 5px 8px rgba(255, 215, 0, 0.8)",
+                    color: '#facc15',
+                    marginTop: '12px',
+                    fontSize: '2.5rem',
+                    textShadow: '0px 5px 8px rgba(255, 215, 0, 0.8)',
                   }}
                 />
               </div>
@@ -402,10 +435,10 @@ const Dashboard = () => {
                 </button>
               </div>
               <div className=" px-2 font-bold flex justify-center items-center bg-gradient-to-r from-yellow-200 to-yellow-200 bg-clip-text text-transparent">
-                Topup:{" "}
+                Topup:{' '}
                 {moment
                   ?.utc(showPopup?.created_at)
-                  ?.format("DD-MM-YYYY HH:mm:ss")}
+                  ?.format('DD-MM-YYYY HH:mm:ss')}
               </div>
               <ReactApexChart
                 className="!text-text-color"
@@ -426,7 +459,7 @@ const Dashboard = () => {
             <CopyAll
               onClick={() => {
                 copy(`https://t.me/axisuser_bot/DotPyWorld`);
-                toast("Copied.", { id: 1 });
+                toast('Copied.', { id: 1 });
               }}
             />
           </p>
@@ -440,123 +473,189 @@ const Dashboard = () => {
             <CopyAll
               onClick={() => {
                 copy(profile?.lgn_cust_id);
-                toast("Copied.", { id: 1 });
+                toast('Copied.', { id: 1 });
               }}
             />
           </p>
         </div>
         <p className="mt-10 mx-5 flex items-center justify-between lg:gap-10 gap-1  p-3 px-5 lg:text-xl font-bold  !text-text-color text-lg bg-[#d8197a] rounded">
-          Check Out Royality & Rewards{" "}
+          Check Out Royality & Rewards{' '}
           <BsTrophyFill className="!text-yellow-500" />
         </p>
 
-        <div className="grid grid-cols-2 gap-2  place-items-center">
+        <div className="grid md:grid-cols-2 grid-cols-1  gap-2  place-items-center">
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5 lg:w-[500px] lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/roi_income")}
+            style={{
+              backgroundImage: `url(${card1})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5 lg:w-[500px] w-[320px] h-[120px] lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/roi_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold"> {"ROI Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
+              {' '}
+              <p className=" !text-text-color p-2 !font-bold">
+                {' '}
+                {'ROI Income'}
+              </p>
+              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
                 {Number(data?.[0]?.roi)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3 !h-14 !w-14" />
             </p>
           </div>
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px] p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/direct_income")}
+            style={{
+              backgroundImage: `url(${card2})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px] p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/direct_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold"> {"Direct Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
-                {" "}
+              {' '}
+              <p className=" !text-text-color p-2 !font-bold">
+                {' '}
+                {'Direct Income'}
+              </p>
+              <p className=" !text-yellow-300 p-2 !pt-2 !font-bold">
+                {' '}
                 {Number(data?.[0]?.direct)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
             </p>
           </div>
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/level_income")}
+            style={{
+              backgroundImage: `url(${card3})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5 w-[320px] h-[120px]   lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/level_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold">{"Level Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
-                {" "}
+              {' '}
+              <p className=" !text-text-color p-2  !font-bold">
+                {'Level Income'}
+              </p>
+              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
+                {' '}
                 {Number(data?.[0]?.level)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
             </p>
           </div>
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/booster_income")}
+            style={{
+              backgroundImage: `url(${card7})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5 w-[320px] h-[120px]   lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/booster_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold">{"Rocket Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
+              {' '}
+              <p className=" !text-text-color p-2  !font-bold">
+                {'Rocket Income'}
+              </p>
+              <p className=" !text-yellow-500 p-2 !pt-1 !font-bold">
                 {Number(data?.[0]?.rocket)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
             </p>
           </div>
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/matching_income")}
+            style={{
+              backgroundImage: `url(${card4})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/matching_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold"> {"Magic Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
-                {" "}
+              {' '}
+              <p className=" !text-text-color p-2  !font-bold">
+                {' '}
+                {'Magic Income'}
+              </p>
+              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
+                {' '}
                 {Number(data?.[0]?.matching)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
             </p>
           </div>
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/weekly_income")}
+            style={{
+              backgroundImage: `url(${card6})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/weekly_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold">{"Rank Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
+              {' '}
+              <p className=" !text-text-color p-2  !font-bold">
+                {'Rank Income'}
+              </p>
+              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
                 {Number(data?.[0]?.weekly)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
             </p>
           </div>
           <div
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate("/jackpot_income")}
+            style={{
+              backgroundImage: `url(${card5})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '8px',
+              padding: '1rem',
+            }}
+            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
+            onClick={() => navigate('/jackpot_income')}
           >
             <div>
-              {" "}
-              <p className=" !text-text-color !font-bold">{"Jackpot Income"}</p>
-              <p className=" !text-yellow-600 p-1 !font-bold">
+              {' '}
+              <p className=" !text-text-color p-2  !font-bold">
+                {'Jackpot Income'}
+              </p>
+              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
                 {Number(data?.[0]?.jackpot)?.toFixed(2) || 0} USD
               </p>
             </div>
             <p>
-              <Diamond className="!text-yellow-600 !h-14 !w-14" />
+              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
             </p>
           </div>
         </div>

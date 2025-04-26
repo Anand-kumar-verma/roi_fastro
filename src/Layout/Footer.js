@@ -1,51 +1,49 @@
-import React, { useEffect, useRef } from "react";
-import gif3 from "../images/gif3.gif";
-import graph2 from "../images/graph2.webp";
-import graph3 from "../images/graph3.webp";
-import graph4 from "../images/graph4.jpg";
-import graph5 from "../images/graph5.png";
-import logo from "../images/logo.png";
+import React, { useEffect, useRef } from 'react';
+import gif3 from '../images/gif3.gif';
+import graph2 from '../images/graph2.webp';
+import graph3 from '../images/graph3.webp';
+import graph4 from '../images/graph4.jpg';
+import graph5 from '../images/graph5.png';
+import logo from '../images/logo.png';
 
 export default function Footer() {
   const scrollRef1 = useRef(null);
   const scrollRef2 = useRef(null);
 
-  useEffect(() => {
-    const scroll = (ref, speed, direction) => {
-      const container = ref.current;
-      if (!container) return;
+  // useEffect(() => {
+  //   const scroll = (ref, speed, direction) => {
+  //     const container = ref.current;
+  //     if (!container) return;
 
-      let scrollAmount = 0;
+  //     let scrollAmount = 0;
 
-      const animate = () => {
-        if (scrollAmount >= container.scrollWidth / 2) {
-          scrollAmount = 0; // Reset for seamless looping
-        } else {
-          scrollAmount += speed;
-        }
+  //     const animate = () => {
+  //       if (scrollAmount >= container.scrollWidth / 2) {
+  //         scrollAmount = 0; // Reset for seamless looping
+  //       } else {
+  //         scrollAmount += speed;
+  //       }
 
-        container.style.transform = `translateX(${direction * scrollAmount}px)`;
-        requestAnimationFrame(animate);
-      };
+  //       container.style.transform = `translateX(${direction * scrollAmount}px)`;
+  //       requestAnimationFrame(animate);
+  //     };
 
-      animate();
-    };
+  //     animate();
+  //   };
 
-    scroll(scrollRef1, 0.5, -1); // Right to Left
-    scroll(scrollRef2, 1, 1); // Left to Right
-  }, []);
+  //   scroll(scrollRef1, 0.5, -1); // Right to Left
+  //   scroll(scrollRef2, 1, 1); // Left to Right
+  // }, []);
 
-  const images = [graph2, graph3, graph4, graph5, graph2, graph4];
+  // const images = [graph2, graph3, graph4, graph5, graph2, graph4];
 
   return (
     <>
-      {/* Auto Scrolling Image Sections */}
-      <div className="relative w-full overflow-hidden ">
-        {/* First row: Right to Left */}
+      {/* <div className="relative w-full overflow-hidden ">
         <div
           ref={scrollRef1}
           className="flex gap-4 "
-          style={{ display: "flex", minWidth: "200%" }}
+          style={{ display: 'flex', minWidth: '200%' }}
         >
           {[...images, ...images].map((src, index) => (
             <img
@@ -56,15 +54,17 @@ export default function Footer() {
             />
           ))}
         </div>
+      </div> */}
 
-        {/* Second row: Left to Right */}
-       
-      </div>
-
-      {/* Footer Content */}
-      <div className="flex lg:flex-row flex-col justify-between gap-10 py-10 lg:px-20 !bg-black">
-        <div className="!px-10">
-          <img src={"https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg"} alt="Meta Prime Logo" className="w-40" />
+      <div className="flex lg:flex-row flex-col gap-[3rem] py-5 lg:px-20 !bg-black">
+        <div className="!px-10 lg:flex items-center gap-12 lg:justify-center">
+          <img
+            src={
+              'https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg'
+            }
+            alt="Meta Prime Logo"
+            className="w-40"
+          />
           <p className="mt-4 text-gray-300 lg:w-[500px]">
             Discover a world of opportunities with our Forex trading platform.
             We provide real-time market data, reliable analysis, and expert
@@ -74,8 +74,10 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="!px-10">
-          <h2 className="text-2xl font-bold text-white mb-4">Quick Links</h2>
+        <div className="!px-8 pt-7">
+          <h2 className="text-2xl font-bold text-yellow-600 mb-4">
+            Quick Links
+          </h2>
           <ul className="list-none">
             <li className="mb-2 text-gray-400 hover:text-blue-500">Home</li>
             <li className="mb-2 text-gray-400 hover:text-blue-500">Markets</li>
@@ -88,11 +90,11 @@ export default function Footer() {
           </ul>
         </div>
         {/* <DrawChart /> */}
-        <img
+        {/* <img
           src={gif3}
           alt="GIF Animation"
           className="lg:h-[40vh] lg:w-[30vw] w-full"
-        />
+        /> */}
       </div>
     </>
   );
