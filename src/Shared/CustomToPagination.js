@@ -4,11 +4,11 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { IconButton } from "@mui/material";
 const CustomToPagination = ({ setPage, page, data }) => {
   return (
-    <div className="bg-black w-full flex items-center justify-end gap-4 p-3 rounded">
-      <span className="text-white font-semibold">
+    <div className="bg-custom-gradient w-full flex items-center justify-end gap-4 p-3 rounded">
+      <span className=" font-semibold text-gray-700">
         Total Pages: <span className="text-blue-600">{data?.totalPage}</span>
       </span>
-      <span className="text-white font-semibold">
+      <span className=" font-semibold text-gray-700">
         Current Page: <span className="text-green-600">{data?.currPage}</span>
       </span>
 

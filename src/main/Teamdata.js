@@ -36,19 +36,19 @@ function Teamdata() {
         <>
             <Navbar />
             <Loader isLoading={isLoading} />
-            <div className="p-4  flex min-h-screen flex-col bg-[#111022] items-center "
+            <div className="p-4  flex min-h-screen flex-col bg-custom-gradient items-center "
                 // style={{ backgroundImage: `url(${crypto})` }} 
                 
                 >
                 <div className="p-4 lg:w-[70%] w-full mt-20">
-                    <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-white">Team Data</h1>
+                    <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">Team Data</h1>
                     <div className="text-center mb-6 ">
-                        <p className="text-white mr-4 text-left">Select Level:</p>
+                        <p className="text-text-color mr-4 text-left">Select Level:</p>
                         <select
                         
                             value={level}
                             onChange={(e) => handleLevelChange(Number(e.target.value))}
-                            className="px-4 py-2 rounded text-black w-full bg-white bg-opacity-50"
+                            className="px-4 py-2 rounded text-black w-full bg-text-color bg-opacity-50"
                         >
                             {[...Array(10)].map((_, index) => (
                                 <option key={index} value={index + 1}>
@@ -84,16 +84,16 @@ function Teamdata() {
                             <tbody className="">
                                 {data?.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="px-6 py-4  border border-yellow-500 text-white text-center whitespace-nowrap">{index + 1}</td>
-                                        <td className="px-6 py-4  border border-yellow-500 text-white text-center whitespace-nowrap">
+                                        <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">{index + 1}</td>
+                                        <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                                             {moment?.utc(item?.jnr_topup_date)?.format("DD-MM-YYYY HH:mm:ss")}
                                         </td>
-                                        <td className="px-6 py-4 border border-yellow-500 text-white text-center whitespace-nowrap">
+                                        <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                                             {item?.lgn_email}
                                         </td>
-                                        <td className="px-6 text-center border border-yellow-500 text-white py-4 whitespace-nowrap">{item?.lgn_cust_id}</td>
-                                        <td className="px-6  text-center border border-yellow-500 text-white py-4 whitespace-nowrap"> $ {Number(item?.jnr_topup_wallet)?.toFixed(0, 2)}</td>
-                                        <td className="px-6  text-center border border-yellow-500 text-white py-4 whitespace-nowrap">Level {level} </td>
+                                        <td className="px-6 text-center border border-yellow-500 text-text-color py-4 text-colorspace-nowrap">{item?.lgn_cust_id}</td>
+                                        <td className="px-6  text-center border border-yellow-500 text-text-color py-4 text-colorspace-nowrap"> $ {Number(item?.jnr_topup_wallet)?.toFixed(0, 2)}</td>
+                                        <td className="px-6  text-center border border-yellow-500 text-text-color py-4 text-colorspace-nowrap">Level {level} </td>
                                     </tr>
                                 ))}
                             </tbody>

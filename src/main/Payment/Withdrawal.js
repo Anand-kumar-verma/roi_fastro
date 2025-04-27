@@ -102,17 +102,17 @@ function Withdrawal() {
     <>
       <Navbar />
       <div
-        className=" text-white flex flex-col items-center  min-h-screen pb-10 bg-[#111022]"
+        className=" text-white flex flex-col items-center  min-h-screen pb-10 bg-custom-gradient]"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <Loader isLoading={loding} />
 
         <div
-          className="flex min-h-screen flex-col justify-center items-center bg-[#111022] px-1 mt-5"
+          className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient px-1 mt-5"
           // style={{ backgroundImage: `url(${crypto})` }}
         >
           <Box
-            className="!cursor-pointer bg-[#111022]  !flex !flex-col !justify-center gap-2  w-full border-2 border-white "
+            className="!cursor-pointer bg-custom-gradient  !flex !flex-col !justify-center gap-2  w-full border-2 border-white "
             sx={{
               // background: "#dad3d3",
               borderRadius: "5px",
@@ -120,7 +120,7 @@ function Withdrawal() {
               boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
             }}
           >
-            <p className="text-3xl text-white text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
+            <p className="text-3xl text-text-color text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
               Withdrawal
             </p>
 

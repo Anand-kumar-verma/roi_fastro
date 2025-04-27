@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Tilt from "react-parallax-tilt";
 import { useNavigate } from "react-router-dom";
-import logo from "../images/logo1.png";
+import logo from "../images/fastro.png";
 import Loader from "../Shared/Loader";
 import { apiConnectorPost } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
@@ -151,7 +151,7 @@ const Login = () => {
         className="flex justify-center items-center min-h-screen"
         style={{
           backgroundImage:
-            "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 48%)",
+            "linear-gradient(162deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
         }}
       >
         {openDialogBox && (
@@ -159,7 +159,7 @@ const Login = () => {
             <div
               style={{
                 backgroundImage:
-                  "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 61%)",
+                  "linear-gradient(162deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
               }}
             >
               <div className="flex justify-center my-2">
@@ -188,7 +188,7 @@ const Login = () => {
                   type="submit"
                   style={{
                     backgroundImage:
-                      "linear-gradient(225deg, rgba(0, 170, 216, 1) 0%, rgba(20, 20, 20, 1) 61%)",
+                      "linear-gradient(162deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
                   }}
                   className="w-full py-3 text-white border-2 border-[#008eff] font-semibold rounded-full hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-[#128C7E] transition duration-300 ease-in-out transform hover:scale-105"
                 >

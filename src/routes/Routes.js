@@ -20,6 +20,7 @@ import ActivatoinLink from "../main/Payment/ActivatoinLink";
 import WithdrawalLink from "../main/Payment/WithdrawalLink";
 import CompoundHistory from "../Income/CompoundHistory";
 import Jackpot from "../Income/Jackpot";
+import AwardReward from "../Income/AwardReward";
 export const routes = [
   {
     path: "/dashboard",
@@ -40,6 +41,10 @@ export const routes = [
   {
     path: "/activation",
     component: <ActivatoinLink />,
+  },
+  {
+    path: "/award-reward",
+    component: <AwardReward />,
   },
   {
     path: "/topup_detail",

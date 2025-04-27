@@ -1,23 +1,21 @@
+import "animate.css";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 import {
   Route,
   BrowserRouter as Router,
-  Routes,
-  useLocation,
+  Routes
 } from "react-router-dom";
+import "../src/index.css";
+import AdminLayout from "./Adminpages/Layout";
+import { adminroutes } from "./AdminRoutes";
+import "./App.css";
 import Login from "./authentication/login";
 import Registration from "./authentication/Registration";
 import Home from "./component/Home";
-import "../src/index.css";
-import "./App.css";
-import { routes } from "./routes/Routes";
-import { useEffect } from "react";
-import Aos from "aos";
-import "animate.css";
-import "aos/dist/aos.css";
-import AdminLayout from "./Adminpages/Layout";
-import { adminroutes } from "./AdminRoutes";
 import Activation from "./main/Payment/Activation";
-import Withdrawal from "./main/Payment/Withdrawal";
+import { routes } from "./routes/Routes";
 
 const App = () => {
   const user = localStorage.getItem("logindataen");

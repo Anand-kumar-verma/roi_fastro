@@ -7,6 +7,11 @@ module.exports = {
         background: "#ffffff",
         "text-color": "#000000",
         "gray-color": "#f2f0ef",
+        
+      },
+      backgroundImage: {
+        "custom-gradient":
+          "radial-gradient(circle,rgb(180, 238, 237) 0%, rgb(252, 250, 250) 100%)",
       },
     },
   },

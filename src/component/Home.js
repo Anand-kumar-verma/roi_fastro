@@ -71,7 +71,7 @@ function Home() {
   ];
 
   return (
-    <div className="!bg-[#111022] !overflow-hidden">
+    <div className="bg-custom-gradient !overflow-hidden">
       <Header />
       {/* <div>
         startAppValue : {JSON.stringify(startAppValue || "")}

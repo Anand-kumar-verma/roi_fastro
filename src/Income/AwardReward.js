@@ -10,16 +10,15 @@ import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import CustomToPagination from "../Shared/CustomToPagination";
 
-const RoiIncome = () => {
+const AwardReward = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
-
-  const { isLoading,data } = useQuery(
-    ["roi_income_api", page],
+  const { isLoading, data } = useQuery(
+    ["award_reward_income_api", page],
     () =>
       apiConnectorGet(
-        `${endpoint?.roi_income_api}?income_type=ROI&page=${page}`
+        `${endpoint?.roi_income_api}?income_type=REWARD&page=${page}`
       ),
     {
       refetchOnMount: false,
@@ -35,14 +34,14 @@ const RoiIncome = () => {
   return (
     <>
       <Navbar />
-      <Loader isLoading={isLoading}/>
+      <Loader isLoading={isLoading} />
       <div
         className="text-text-color p-3 min-h-screen flex flex-col bg-custom-gradient items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
           <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
-            ROI Income
+            Award - Reward
           </h1>
           <div className="mt-6 lg:mt-10 overflow-x-auto">
             <table className="min-w-full">
@@ -94,4 +93,4 @@ const RoiIncome = () => {
   );
 };
 
-export default RoiIncome;
+export default AwardReward;

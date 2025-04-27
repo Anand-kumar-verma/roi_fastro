@@ -1,17 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import money from '../images/money.png';
+import React, { useEffect, useRef } from 'react';
+import { TypeAnimation } from 'react-type-animation';
 import calc from '../images/equatity.svg';
+import gif1 from '../images/gif1.gif';
+import gif2 from '../images/gif2.gif';
 import curr from '../images/in-equity-2-icon-1.svg';
 import forex from '../images/in-equity-2-icon-3.svg';
 import meta from '../images/in-equity-2-icon-4.svg';
 import Review from './Review';
-import coin1 from '../images/coin1.PNG';
-import coin2 from '../images/coin2.png';
-import graph_image from '../images/graphimage-Photoroom.png';
-import graph1 from '../images/graph1.webp';
-import gif1 from '../images/gif1.gif';
-import gif2 from '../images/gif2.gif';
-import { TypeAnimation } from 'react-type-animation';
 
 const Popular = ({ curr_data_bit, curr_data_Eth }) => {
   const scrollRef = useRef(null);
@@ -200,7 +195,7 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
   return (
     <>
       <div className=" !lg:p-8 lg:py-14 p-2 py-10 ">
-        <p className="text-xl lg:pl-12 p-2 font-bold text-white">
+        <p className="text-xl lg:pl-12 p-2 font-bold text-text-color">
           Popular products
         </p>
         <div className="relative w-full overflow-hidden">
@@ -215,15 +210,15 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
                 key={index}
                 className="p-6 shadow-2xl text-[#656d70] text-lg rounded-lg transition-all duration-500 hover:scale-75 hover:shadow-2xl hover:shadow-purple-500 !bg-[#010b13] min-w-[250px]"
               >
-                <p className="font-bold text-white mb-4">
+                <p className="font-bold text-text-color mb-4">
                   <span
-                    className={`!text-white rounded-full p-1 mx-2 text-xs ${product.spanClass}`}
+                    className={`!text-text-color rounded-full p-1 mx-2 text-xs ${product.spanClass}`}
                   >
                     {product.spanText}
                   </span>
                   {product.label}
                 </p>
-                <p className="!text-white text-opacity-50 text-sm">
+                <p className="!text-text-color text-opacity-50 text-sm">
                   {product.description}
                 </p>
               </div>
@@ -233,7 +228,7 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
       </div>
 
       <div
-        className="p-4 flex  justify-center gap-5 !text-white overflow-x-auto"
+        className="p-4 flex  justify-center gap-5 !text-text-color overflow-x-auto"
         style={{ backgroundColor: 'rgb(26, 26, 26)' }}
       >
         {statsData.map((stat) => (
@@ -243,7 +238,7 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
           >
             <p>
               <span
-                className={`!text-white rounded-full p-1 mx-2 text-xs ${stat.spanClass}`}
+                className={`!text-text-color rounded-full p-1 mx-2 text-xs ${stat.spanClass}`}
               >
                 {stat.spanText}
               </span>
@@ -455,16 +450,16 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
       <p className="text-center lg:text-4xl text-xl py-10 text-[#e68413] font-bold">
         Getting Started with Forex Trading is Easy
       </p>
-      <div className="flex lg:flex-row flex-col justify-center gap-16 items-center lg:p-8 text-[#656d70] font-bold">
+      <div className="flex lg:flex-row flex-col justify-center gap-16 items-center lg:p-8 text-text-color font-bold">
         {steps.map((step) => (
           <div
             key={step?.id}
-            className="flex flex-col justify-center items-start gap-5 px-5 lg:w-[300px]"
+            className="flex flex-col justify-center items-center items-start gap-5 px-5 lg:w-[300px]"
           >
             <p className="bg-gray-300 rounded-full px-4 py-2 text-black">
               {step?.id}
             </p>
-            <p className="text-center text-gray-100">{step?.title}</p>
+            <p className="text-center text-text-color">{step?.title}</p>
           </div>
         ))}
       </div>

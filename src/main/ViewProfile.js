@@ -51,18 +51,18 @@ function ViewProfile() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-6 mt-10 min-h-screen flex flex-col items-center justify-center  bg-[#111022]"
+        className="p-6 mt-10 min-h-screen flex flex-col items-center justify-center  bg-custom-gradient"
 
         //  style={{ backgroundImage: `url(${crypto})` }}
       >
-        <div className="flex lg:w-[50%]  justify-between gap-[10%] items-center ">
-          <p className="text-3xl text-white text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
+        <div className="flex lg:w-[50%]  justify-center gap-[10%] items-center ">
+          <p className="text-3xl text-text-color text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
             {" "}
             View Profile{" "}
           </p>
         </div>
 
-        <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-white ">
+        <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-text-color ">
           <div className="flex !flex-col">
             {data?.jnr_achieve_reward ? (
               <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
@@ -164,7 +164,7 @@ function ViewProfile() {
             {data?.lgn_update_prof === "Active" && (
               <Button
                 variant="contained"
-                className="!mt-2 !bg-gradient-to-r !from-green-400 !to-[#44a8e7] !rounded-full !hover:bg-white !hover:text-black  !p-2 !text-background"
+                className="!mt-2 !bg-gradient-to-r !from-green-400 !to-[#44a8e7] !rounded-full !hover:bg-text-color !hover:text-black  !p-2 !text-background"
                 onClick={fk.handleSubmit}
               >
                 Update

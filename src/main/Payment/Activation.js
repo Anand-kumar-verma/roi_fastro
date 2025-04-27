@@ -328,10 +328,10 @@ function Activation() {
       <Loader isLoading={loding} />
 
       <div
-        className="flex min-h-screen flex-col justify-center items-center bg-[#111022]"
+        className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <Box className="!cursor-pointer bg-[#111022]   p-1 lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full">
+        <Box className="!cursor-pointer bg-custom-gradient  p-1 lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full">
           <p className="p-5 font-bold text-xl text-center  text-black">
             Activation
           </p>

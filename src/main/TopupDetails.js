@@ -26,11 +26,11 @@ function TopUP() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-4  flex min-h-screen flex-col items-center bg-[#111022]"
+        className="p-4  flex min-h-screen flex-col items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-white">
+          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-colorr">
             Top Up Details
           </h1>
 
@@ -55,18 +55,18 @@ function TopUP() {
               <tbody className="">
                 {data?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4  border border-yellow-500 text-white text-center whitespace-nowrap">
+                    <td className="px-6 py-4  border border-yellow-500 text-text-colorr text-center text-colorrspace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-white text-center whitespace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-text-colorr text-center text-colorrspace-nowrap">
                       {moment
                         ?.utc(item?.topup_date)
                         ?.format("DD-MM-YYYY HH:mm:ss")}
                     </td>
-                    <td className="px-6 text-center border border-yellow-500 text-white py-4 whitespace-nowrap">
+                    <td className="px-6 text-center border border-yellow-500 text-text-colorr py-4 text-colorrspace-nowrap">
                       {item?.topup_pack_amount}
                     </td>
-                    <td className="px-6  text-center border border-yellow-500 py-4 whitespace-nowrap text-green-500">
+                    <td className="px-6  text-center border border-yellow-500 py-4 text-colorrspace-nowrap text-green-500">
                       Success
                     </td>
                   </tr>

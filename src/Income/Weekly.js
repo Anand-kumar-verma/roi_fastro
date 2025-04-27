@@ -44,12 +44,12 @@ const WeeklyIncome = () => {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className=" text-white p-3 min-h-screen flex flex-col bg-[#111022]  items-center"
+        className=" text-text-color p-3 min-h-screen flex flex-col bg-custom-gradient  items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20  ">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-white">
-            Rank Income
+          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
+            Weekly Income
           </h1>
           <div className="mt-6 lg:mt-10 overflow-x-auto">
             <table className="min-w-full ">
@@ -72,18 +72,18 @@ const WeeklyIncome = () => {
               <tbody className="">
                 {weekly_data?.data?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 border border-yellow-500 text-white text-center whitespace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-white text-center whitespace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                       {moment(item?.ledger_created_at)?.format(
                         "DD-MM-YYYY HH:mm:ss"
                       )}
                     </td>
-                    <td className="px-6 border border-yellow-500 text-white text-center py-4 whitespace-nowrap">
+                    <td className="px-6 border border-yellow-500 text-text-color text-center py-4 text-colorspace-nowrap">
                       {item?.ledger_amount}
                     </td>
-                    <td className="px-6  border border-yellow-500 text-white text-center py-4 whitespace-nowrap">
+                    <td className="px-6  border border-yellow-500 text-text-color text-center py-4 text-colorspace-nowrap">
                       {item?.ledger_des}
                     </td>
                   </tr>

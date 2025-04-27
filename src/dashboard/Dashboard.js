@@ -1,42 +1,27 @@
-import {
-  Close,
-  CopyAll,
-  Diamond,
-  Facebook,
-  Instagram,
-  People,
-  Telegram,
-  Twitter,
-  WhatsApp,
-  YouTube,
-} from '@mui/icons-material';
-import copy from 'copy-to-clipboard';
-import moment from 'moment/moment';
-import React, { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import toast from 'react-hot-toast';
-import { BsTrophyFill } from 'react-icons/bs';
-import { useQuery } from 'react-query';
-import Loader from '../Shared/Loader';
-import { apiConnectorGet } from '../utils/APIConnector';
-import { endpoint } from '../utils/APIRoutes';
-import Navbar from './Navbar';
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import card1 from '../images/card1.jpg';
-import card2 from '../images/card2.jpg';
-import card3 from '../images/card3.jpg';
-import card4 from '../images/card4.jpg';
-import card5 from '../images/card5.png';
-import card6 from '../images/card_6.png';
-import card7 from '../images/card7.png';
-
+import { Close, Diamond } from "@mui/icons-material";
+import moment from "moment/moment";
+import React, { useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import toast from "react-hot-toast";
+import { BsTrophyFill } from "react-icons/bs";
+import { FaCopy } from "react-icons/fa";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import card1 from "../images/card1.jpg";
+import card2 from "../images/card2.jpg";
+import card3 from "../images/card3.jpg";
+import card6 from "../images/card_6.png";
+import Loader from "../Shared/Loader";
+import { apiConnectorGet } from "../utils/APIConnector";
+import { endpoint } from "../utils/APIRoutes";
+import Navbar from "./Navbar";
+// import ReactApexChart from 'react-apexcharts';
 const Dashboard = () => {
   const [loading, setLoading] = useState();
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const { isLoading, data: dashboard } = useQuery(
-    ['dashboard_api'],
+    ["dashboard_api"],
     () => apiConnectorGet(endpoint?.user_dashboard_api),
     {
       refetchOnMount: false,
@@ -48,7 +33,7 @@ const Dashboard = () => {
   );
   const data = dashboard?.data?.result || [];
   const { isLoading: packageLoding, data: getPackageDetails } = useQuery(
-    ['dashboard_api_package'],
+    ["dashboard_api_package"],
     () => apiConnectorGet(endpoint?.user_buy_package_details_api),
     {
       refetchOnMount: false,
@@ -60,23 +45,8 @@ const Dashboard = () => {
   );
   const getPackageDetailsData = getPackageDetails?.data?.result || [];
 
-  const { data: usd } = useQuery(
-    ['curre_api'],
-    () =>
-      apiConnectorGet(`${endpoint?.market_api}?ids=polkadot&vs_currencies=usd`),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const curr_data = usd?.data?.polkadot?.usd;
-
   const { isLoading: proLoding, data: profile_data } = useQuery(
-    ['profile_api'],
+    ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
     {
       refetchOnMount: false,
@@ -89,48 +59,54 @@ const Dashboard = () => {
   const profile = profile_data?.data?.result?.[0] || [];
 
   const ChartCount = {
-    series: [
-      (Number(showPopup?.topup_roi_amount) * 100) /
-        showPopup?.topup_pack_amount,
-    ],
+    series: getPackageDetailsData?.map((i) => {
+      return Number(i?.topup_pack_amount).toFixed(2);
+    }),
     options: {
       chart: {
-        height: 350,
-        type: 'radialBar',
+        height: 500,
+        type: "radialBar",
+        offsetY: -10,
       },
       plotOptions: {
         radialBar: {
+          startAngle: -135,
+          endAngle: 135,
           dataLabels: {
             name: {
-              fontSize: '22px',
+              fontSize: "16px",
+              color: undefined,
+              offsetY: 120,
             },
             value: {
-              fontSize: '16px',
-            },
-            total: {
-              show: true,
-              label: 'Achieved',
-              formatter: function (w) {
-                return w.globals.seriesTotals.reduce((a, b) => a + b, 0) + '%';
+              offsetY: 76,
+              fontSize: "22px",
+              color: "white",
+              formatter: function (val) {
+                return val + "$";
               },
             },
           },
         },
       },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "light",
+          shadeIntensity: 0.15,
+          inverseColors: false,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 50, 65, 91],
+        },
+      },
+      stroke: {
+        dashArray: 4,
+      },
+      labels: ["Influencer"],
     },
   };
-  async function compoundFuncCalled() {
-    try {
-      if (Number(profile?.jnr_curr_wallet || 0) < 10)
-        return toast('Amount should be equal or grater than 10$');
-      setLoading(true);
-      const api_response = await apiConnectorGet(endpoint?.compounding_wallet);
-      toast(api_response.data?.message, { id: 1 });
-    } catch (e) {
-      toast('Something went wrong.', { id: 1 });
-    }
-    setLoading(false);
-  }
+
   //0, roi
   //1, level ==> Booster
   //2, direct
@@ -139,13 +115,171 @@ const Dashboard = () => {
   //5, weekly ==> rank
   //6, Rocket
   // 7, Jackpot
+  const url = "https://t.me/fastro2025_bot/fastro";
+
+  const handleCopy = (url) => {
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+  let statee = {
+    series: [75],
+    options: {
+      chart: {
+        height: 350,
+        type: "radialBar",
+        toolbar: {
+          show: true,
+        },
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: -135,
+          endAngle: 225,
+          hollow: {
+            margin: 0,
+            size: "70%",
+            background: "#fff",
+            image: undefined,
+            imageOffsetX: 0,
+            imageOffsetY: 0,
+            position: "front",
+            dropShadow: {
+              enabled: true,
+              top: 3,
+              left: 0,
+              blur: 4,
+              opacity: 0.5,
+            },
+          },
+          track: {
+            background: "#fff",
+            strokeWidth: "67%",
+            margin: 0, // margin is in pixels
+            dropShadow: {
+              enabled: true,
+              top: -3,
+              left: 0,
+              blur: 4,
+              opacity: 0.7,
+            },
+          },
+
+          dataLabels: {
+            show: true,
+            name: {
+              offsetY: -10,
+              show: true,
+              color: "#888",
+              fontSize: "17px",
+            },
+            value: {
+              formatter: function (val) {
+                return parseInt(val);
+              },
+              color: "#111",
+              fontSize: "36px",
+              show: true,
+            },
+          },
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "horizontal",
+          shadeIntensity: 0.5,
+          gradientToColors: ["#ABE5A1"],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100],
+        },
+      },
+      stroke: {
+        lineCap: "round",
+      },
+      labels: ["Percent"],
+    },
+  };
+  const state = {
+    series: [
+      {
+        name: "Package",
+        data: getPackageDetailsData?.map((i) => {
+          return Number(i?.topup_pack_amount).toFixed(2);
+        }),
+      },
+      {
+        name: "ROI",
+        data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+      },
+      {
+        name: "Weekly",
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      },
+    ],
+    options: {
+      chart: {
+        type: "bar",
+        height: 350,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          borderRadius: 5,
+          borderRadiusApplication: "end",
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["white"],
+      },
+      xaxis: {
+        categories: [
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+        ],
+      },
+      yaxis: {
+        title: {
+          text: "$ (thousands)",
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return "$ " + val + " thousands";
+          },
+        },
+      },
+    },
+  };
   return (
     <>
       <Navbar />
-      <div
-        className=" text-white bg-[#111022] lg:px-32 min-h-screen pb-10"
-        // style={{ backgroundImage: `url(${crypto})` }}
-      >
+      <div className=" text-white lg:px-32 min-h-screen pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
           {/* <p className="text-lg text-black  p-2 px-5 lg:mt-20 mt-10 flex justify-between">
@@ -180,7 +314,7 @@ const Dashboard = () => {
               <div
                 className="flex animate-marquee"
                 style={{
-                  animation: 'marquee 6s linear infinite',
+                  animation: "marquee 6s linear infinite",
                 }}
               >
                 <span className="inline-block text-red-600 text-sm">
@@ -200,21 +334,156 @@ const Dashboard = () => {
                    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); }} `}</style>
             </div>
           </div>
-          <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
+
+          {/* <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
             <p className="  !font-bold bg-gradient-to-r from-teal-600 to-yellow-500 bg-clip-text text-transparent">
               {profile?.jnr_achieve_reward && 'Rank:'}{' '}
-              {profile?.jnr_achieve_reward}{' '}
+              {profile?.jnr_achieve_reward}{' '} hhhh
             </p>
             <p className=" !text-yellow-600 p-1 !font-bold">
               {' '}
               Current Wallet: {profile?.jnr_curr_wallet || 0} USD
             </p>
-          </div>
-          {/* <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col justify-between">
-            <p className=" !text-blue-500 !font-bold ">Polkadot (DOT) :</p>
-            <p className=" !text-yellow-600 p-1 !font-bold"> {curr_data} USD</p>
           </div> */}
-          <div className="text-lg bg-gray-color opacity-75 border border-rose-500 rounded py-5 p-2 px-5 lg:mt-10 mt-5 flex flex-col gap-2 justify-start">
+
+          <div className="  w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4">
+            <div className="rounded-2xl bg-gradient-to-r from-pink-100 to-pink-200 p-6 shadow-lg">
+              <div className="grid gap-6 grid-cols-2 place-items-center mb-4">
+                <div className="flex items-center text-xl font-bold text-gray-800">
+                  Current Wallet
+                  <span className="ml-2 px-2 py-0.5 text-green-600 bg-green-100 rounded text-xs font-semibold">
+                    {profile?.topup_date && "Activated"}
+                  </span>
+                </div>
+                <div className="text-2xl font-bold text-yellow-600">
+                  {profile?.jnr_curr_wallet || 0} USD
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">User Id</span>
+                  <span className="font-semibold text-gray-500">
+                    {profile?.lgn_cust_id}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Activation Date</span>
+                  <span className="font-semibold text-gray-500">
+                    {moment
+                      ?.utc(profile?.topup_date)
+                      ?.format("DD-MM-YYYY HH:mm:ss")}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Today Income</span>
+                  <span className="font-semibold text-gray-500">
+                    {Number(profile?.today_income || 0)?.toFixed(2)} $
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center text-gray-700">
+                  <span className="font-medium">Flush Amount</span>
+                  <span
+                    className={`bg-white shadow px-3 py-1 rounded-lg text-2xl font-bold ${
+                      Number(profile?.jnr_flush_amnt || 0) > 0
+                        ? "animate-pulse text-red-500"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    {Number(profile?.jnr_flush_amnt || 0)?.toFixed(0)} $
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-gradient-to-r from-yellow-100 to-yellow-200 p-6 shadow-lg">
+              <div className="flex flex-col gap-6">
+                <p className="text-2xl font-bold text-gray-800 text-center mb-4">
+                  Other Details
+                </p>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Direct Team</span>
+                  <span className="font-semibold text-gray-500">
+                    {profile?.jnr_direct_team || 0}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Direct TopUp Member</span>
+                  <span className="font-semibold text-gray-500">
+                    {profile?.jnr_direct_topup_mem || 0}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Total Income</span>
+                  <span className="font-semibold text-gray-500">
+                    {Number(profile?.total_income || 0)?.toFixed(2)} $
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">TopUp Amount</span>
+                  <span className="font-semibold text-gray-500">
+                    {Number(profile?.jnr_topup_wallet || 0)?.toFixed(2)} $
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Team Income</span>
+                  <span className="font-semibold text-gray-500">
+                    {Number(profile?.team_income || 0)?.toFixed(2)} $
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-gradient-to-r from-green-100 to-green-200 p-6 shadow-lg">
+              <div className="flex flex-col items-center gap-6">
+                {/* Referral Link Title */}
+                <p className="text-2xl font-bold text-gray-800 text-center">
+                  Referral Link
+                </p>
+
+                {/* Referral Link Display */}
+                <div className="flex items-center flex-wrap gap-3 justify-center">
+                  <div className="flex items-center px-4 py-2 bg-green-200 text-blue-500 rounded-md border">
+                    {url?.substring(0, 10)}...{url?.substring(15, 20)}
+                  </div>
+                  <div
+                    className="flex items-center justify-center bg-green-400 hover:bg-green-500 text-white px-3 py-2 rounded-md cursor-pointer transition"
+                    onClick={() => handleCopy(url)}
+                  >
+                    <FaCopy size={20} />
+                  </div>
+                </div>
+
+                {/* Referral ID Title */}
+                <p className="text-2xl font-bold text-gray-800 text-center">
+                  My Referral ID
+                </p>
+
+                {/* Referral ID Display */}
+                <div className="flex items-center gap-3 justify-center">
+                  <div className="flex items-center px-4 py-2 bg-green-200 text-blue-500 rounded-md border">
+                    {profile?.lgn_cust_id}
+                  </div>
+                  <div
+                    className="flex items-center justify-center bg-green-400 hover:bg-green-500 text-white px-3 py-2 rounded-md cursor-pointer transition"
+                    onClick={() => handleCopy(profile?.lgn_cust_id)}
+                  >
+                    <FaCopy size={20} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="text-lg bg-gray-color opacity-75 border border-rose-500 rounded py-5 p-2 px-5 lg:mt-10 mt-5 flex flex-col gap-2 justify-start">
             <p className=" !text-green-500 bg-white !text-xs lg:!text-xl p-1  w-fit rounded">
               {profile?.topup_date && 'Activated'}
             </p>
@@ -249,12 +518,6 @@ const Dashboard = () => {
                   ?.format('DD-MM-YYYY HH:mm:ss')}
               </p>
             </div>
-            {/* <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Email</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.lgn_email}
-              </p>
-            </div> */}
             <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
               <p className="">Direct Bussiness</p>
               <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
@@ -300,108 +563,37 @@ const Dashboard = () => {
             <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
               <p style={{ fontWeight: 'bold' }}>Flush Amount</p>
               <p
-                className={`bg-white rounded-xl  p-1  text-2xl ${
-                  Number(profile?.jnr_flush_amnt || 0) > 0 && 'animated-text'
-                }`}
+                className={`bg-white rounded-xl  p-1  text-2xl ${Number(profile?.jnr_flush_amnt || 0) > 0 && 'animated-text'
+                  }`}
               >
                 {Number(profile?.jnr_flush_amnt)?.toFixed(0, 2)} $
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
-        <p className="mt-16 p-5  mb-5 text-xl font-bold">Packages</p>
-        <div className="!flex flex-wrap justify-center">
-          {getPackageDetailsData?.map((i) => {
-            return (
-              <div
-                data-aos="flip-down"
-                style={{
-                  padding: '35px',
-                  color: '#1f2937',
-                  fontSize: '1.5rem',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  transition: 'all 0.4s ease-in-out',
-                  transform: 'scale(1)',
-                  boxShadow:
-                    '0 15px 30px rgba(147, 51, 234, 0.8), 0 0 15px rgba(255, 255, 255, 0.2)',
-                  background:
-                    'linear-gradient(135deg, #16a34a, #065f46, #1e3a8a, #9333ea)',
-                  opacity: '0.97',
-                  cursor: 'pointer',
-                  width: '200px',
-                  height: '200px',
-                  border: '4px solid rgba(255, 255, 255, 0.7)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(0.88)';
-                  e.currentTarget.style.boxShadow =
-                    '0 20px 40px rgba(147, 51, 234, 1), 0 0 20px rgba(255, 255, 255, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow =
-                    '0 15px 30px rgba(147, 51, 234, 0.8), 0 0 15px rgba(255, 255, 255, 0.2)';
-                }}
-                onClick={() => setShowPopup(i)}
-              >
-                {/* Glowing Animation Effect */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    top: 0,
-                    left: 0,
-                    background:
-                      'radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 50%)',
-                    animation: 'glow 3s infinite alternate',
-                  }}
-                />
-
-                <p
-                  style={{
-                    padding: '12px',
-                    textAlign: 'center',
-                    color: '#ff0000',
-                    fontWeight: 'bold',
-                    fontSize: '1.5rem',
-                    textShadow: '3px 3px 8px rgba(255, 0, 0, 0.6)',
-                  }}
-                >
-                  {Number(i?.topup_pack_amount).toFixed(2)} $
-                </p>
-                <p
-                  style={{
-                    textAlign: 'center',
-                    color: '#000',
-                    backgroundColor: '#fff',
-                    borderRadius: '9999px',
-                    padding: '8px 14px',
-                    fontSize: '1.3rem',
-                    fontWeight: 'bold',
-                    boxShadow: '0 3px 10px rgba(0, 0, 0, 0.3)',
-                  }}
-                  className="bg-gradient-to-r from-green-500 via-rose-500 to-blue-500"
-                >
-                  Influencer
-                </p>
-                <Diamond
-                  style={{
-                    color: '#facc15',
-                    marginTop: '12px',
-                    fontSize: '2.5rem',
-                    textShadow: '0px 5px 8px rgba(255, 215, 0, 0.8)',
-                  }}
-                />
-              </div>
-            );
-          })}
+        <p className="mt-16 p-5  mb-5 text-xl text-center font-bold">
+          Packages
+        </p>
+        <div
+          className={`${
+            getPackageDetailsData?.length > 0 && "!grid"
+          } lg:!grid-cols-2 grid-cols-1`}
+        >
+          {getPackageDetailsData?.length > 0 && (
+            <ReactApexChart
+              className="!text-text-color"
+              options={ChartCount.options}
+              series={ChartCount.series}
+              type="radialBar"
+              height={400}
+            />
+          )}
+          <ReactApexChart
+            options={state.options}
+            series={state.series}
+            type="bar"
+            height={350}
+          />
         </div>
         <div className=" -z-50 opacity-50">
           <div className="bubble"></div>
@@ -435,245 +627,70 @@ const Dashboard = () => {
                 </button>
               </div>
               <div className=" px-2 font-bold flex justify-center items-center bg-gradient-to-r from-yellow-200 to-yellow-200 bg-clip-text text-transparent">
-                Topup:{' '}
+                Topup:{" "}
                 {moment
                   ?.utc(showPopup?.created_at)
-                  ?.format('DD-MM-YYYY HH:mm:ss')}
+                  ?.format("DD-MM-YYYY HH:mm:ss")}
               </div>
-              <ReactApexChart
-                className="!text-text-color"
-                options={ChartCount.options}
-                series={ChartCount.series}
-                type="radialBar"
-                height={400}
-              />
             </div>
           </div>
         )}
-        <p className=" mt-10 p-2 text-xl font-bold">My Referral Link</p>
-        <div className="p-2 w-full text-lg   mt-1 flex justify-between">
-          <p className=" !text-blue-700 bg-gray-color  rounded p-2 lg:px-5 lg:text-xl text-xs">
-            https://t.me/axisuser_bot/DotPyWorld
-          </p>
-          <p>
-            <CopyAll
-              onClick={() => {
-                copy(`https://t.me/axisuser_bot/DotPyWorld`);
-                toast('Copied.', { id: 1 });
-              }}
-            />
-          </p>
-        </div>
-        <p className="  p-2 text-xl font-bold">My Referral Id</p>
-        <div className="p-2 w-full text-lg   mt-1 flex justify-between">
-          <p className=" !text-blue-700 bg-gray-color  rounded p-2 lg:px-5 lg:text-xl text-xs">
-            {profile?.lgn_cust_id}
-          </p>
-          <p>
-            <CopyAll
-              onClick={() => {
-                copy(profile?.lgn_cust_id);
-                toast('Copied.', { id: 1 });
-              }}
-            />
-          </p>
-        </div>
+
         <p className="mt-10 mx-5 flex items-center justify-between lg:gap-10 gap-1  p-3 px-5 lg:text-xl font-bold  !text-text-color text-lg bg-[#d8197a] rounded">
-          Check Out Royality & Rewards{' '}
+          Check Out Royality & Rewards{" "}
           <BsTrophyFill className="!text-yellow-500" />
         </p>
 
-        <div className="grid md:grid-cols-2 grid-cols-1  gap-2  place-items-center">
-          <div
-            style={{
-              backgroundImage: `url(${card1})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5 lg:w-[500px] w-[320px] h-[120px] lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/roi_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2 !font-bold">
-                {' '}
-                {'ROI Income'}
-              </p>
-              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
-                {Number(data?.[0]?.roi)?.toFixed(2) || 0} USD
-              </p>
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-6 place-items-center px-4 py-6">
+          {[
+            {
+              title: "ROI Income",
+              value: Number(data?.[0]?.roi)?.toFixed(2) || 0,
+              url: "/roi_income",
+              bg: card1,
+            },
+            {
+              title: "Direct Income",
+              value: Number(data?.[0]?.award_reward || 0)?.toFixed(2) || 0,
+              url: "/direct_income",
+              bg: card2,
+            },
+            {
+              title: "Level Income",
+              value: Number(data?.[0]?.level)?.toFixed(2) || 0,
+              url: "/level_income",
+              bg: card3,
+            },
+            {
+              title: "Rank Income",
+              value: Number(data?.[0]?.weekly)?.toFixed(2) || 0,
+              url: "/weekly_income",
+              bg: card6,
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              onClick={() => navigate(item.url)}
+              style={{
+                backgroundImage: `url(${item.bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+              className="group relative flex flex-col justify-between p-6 rounded-2xl shadow-xl w-full max-w-[400px] h-[180px] bg-gradient-to-r from-white/70 to-white/30 cursor-pointer hover:scale-105 transition-transform duration-300"
+            >
+              <div className="absolute inset-0 bg-black/20 rounded-2xl group-hover:bg-black/10 transition"></div>
+              <div className="relative z-10">
+                <p className="text-white text-lg font-semibold">{item.title}</p>
+                <p className="text-yellow-300 text-2xl font-bold mt-2">
+                  {item.value} USD
+                </p>
+              </div>
+              <div className="relative z-10 flex justify-end">
+                <Diamond className="text-yellow-300 h-14 w-14 opacity-80 group-hover:opacity-100 transition" />
+              </div>
             </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3 !h-14 !w-14" />
-            </p>
-          </div>
-          <div
-            style={{
-              backgroundImage: `url(${card2})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px] p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/direct_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2 !font-bold">
-                {' '}
-                {'Direct Income'}
-              </p>
-              <p className=" !text-yellow-300 p-2 !pt-2 !font-bold">
-                {' '}
-                {Number(data?.[0]?.direct)?.toFixed(2) || 0} USD
-              </p>
-            </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
-            </p>
-          </div>
-          <div
-            style={{
-              backgroundImage: `url(${card3})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5 w-[320px] h-[120px]   lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/level_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2  !font-bold">
-                {'Level Income'}
-              </p>
-              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
-                {' '}
-                {Number(data?.[0]?.level)?.toFixed(2) || 0} USD
-              </p>
-            </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
-            </p>
-          </div>
-          <div
-            style={{
-              backgroundImage: `url(${card7})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5 w-[320px] h-[120px]   lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/booster_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2  !font-bold">
-                {'Rocket Income'}
-              </p>
-              <p className=" !text-yellow-500 p-2 !pt-1 !font-bold">
-                {Number(data?.[0]?.rocket)?.toFixed(2) || 0} USD
-              </p>
-            </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
-            </p>
-          </div>
-          <div
-            style={{
-              backgroundImage: `url(${card4})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/matching_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2  !font-bold">
-                {' '}
-                {'Magic Income'}
-              </p>
-              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
-                {' '}
-                {Number(data?.[0]?.matching)?.toFixed(2) || 0} USD
-              </p>
-            </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
-            </p>
-          </div>
-          <div
-            style={{
-              backgroundImage: `url(${card6})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  lg:w-[500px] p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/weekly_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2  !font-bold">
-                {'Rank Income'}
-              </p>
-              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
-                {Number(data?.[0]?.weekly)?.toFixed(2) || 0} USD
-              </p>
-            </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
-            </p>
-          </div>
-          <div
-            style={{
-              backgroundImage: `url(${card5})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              padding: '1rem',
-            }}
-            className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75 lg:w-[500px]  p-5 w-[320px] h-[120px]  lg:px-10 lg:mt-10 mt-5 flex justify-between"
-            onClick={() => navigate('/jackpot_income')}
-          >
-            <div>
-              {' '}
-              <p className=" !text-text-color p-2  !font-bold">
-                {'Jackpot Income'}
-              </p>
-              <p className=" !text-yellow-300 p-2 !pt-1 !font-bold">
-                {Number(data?.[0]?.jackpot)?.toFixed(2) || 0} USD
-              </p>
-            </div>
-            <p>
-              <Diamond className="!text-yellow-300 mt-3  !h-14 !w-14" />
-            </p>
-          </div>
+          ))}
         </div>
-
-        {/* <div className="text-lg bg-gray-color border border-rose-500 rounded mx-4 opacity-75  p-5  lg:px-10 lg:mt-10 mt-5 flex justify-between">
-          <div>
-            {" "}
-            <p className=" !text-text-color !font-bold">
-              {"Weekly Bonus" || data?.[4]?.ledger_income_type}
-            </p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {data?.[4]?.["SUM(`ledger_amount`)"] || 0} USD
-            </p>
-          </div>
-          <p>
-            <Diamond className="!text-yellow-600 !h-14 !w-14" />
-          </p>
-        </div> */}
       </div>
     </>
   );

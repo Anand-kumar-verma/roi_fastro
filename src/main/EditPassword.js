@@ -39,7 +39,7 @@ const changeFn = async (reqbody)=>{
 
    <>
    <Navbar/>
-    <div className="p-6 min-h-screen  bg-[#111022] flex flex-col items-center"
+    <div className="p-6 min-h-screen  bg-custom-gradient flex flex-col items-center"
     
     //  style={{ backgroundImage: `url(${crypto})` }}
      

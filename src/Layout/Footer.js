@@ -4,7 +4,7 @@ import graph2 from '../images/graph2.webp';
 import graph3 from '../images/graph3.webp';
 import graph4 from '../images/graph4.jpg';
 import graph5 from '../images/graph5.png';
-import logo from '../images/logo.png';
+import logo from '../images/fastro.png';
 
 export default function Footer() {
   const scrollRef1 = useRef(null);
@@ -60,7 +60,8 @@ export default function Footer() {
         <div className="!px-10 lg:flex items-center gap-12 lg:justify-center">
           <img
             src={
-              'https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg'
+              logo
+              // 'https://static.vecteezy.com/system/resources/previews/009/029/127/non_2x/mlm-logo-mlm-letter-mlm-letter-logo-design-initials-mlm-logo-linked-with-circle-and-uppercase-monogram-logo-mlm-typography-for-technology-business-and-real-estate-brand-vector.jpg'
             }
             alt="Meta Prime Logo"
             className="w-40"

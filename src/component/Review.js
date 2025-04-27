@@ -168,8 +168,8 @@ export default function Review() {
             <div key={index} className="p-6 flex gap-5 items-center">
               <img src={item.image} alt={item.title} className="h-16 w-16" />
               <div>
-                <h2 className="text-lg font-semibold">{item.title}</h2>
-                <p className="text-sm text-gray-600">{item.description}</p>
+                <h2 className="text-lg font-semibold text-white">{item.title}</h2>
+                <p className="text-sm text-gray-500">{item.description}</p>
               </div>
             </div>
           ))}
