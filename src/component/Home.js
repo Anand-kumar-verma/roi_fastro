@@ -1,19 +1,18 @@
-import React, { useEffect, useMemo } from "react";
-import { useQuery } from "react-query";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-import slide from "../images/m.png";
-import bitcoin from "../images/in-equity-slide-1.png";
-import m from "../images/mainb.png";
-import Footer from "../Layout/Footer";
-import Header from "../Layout/Header";
-import { apiConnectorGet } from "../utils/APIConnector";
-import { endpoint } from "../utils/APIRoutes";
-import Popular from "./Popular";
+import React, { useEffect, useMemo } from 'react';
+import { useQuery } from 'react-query';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import slide from '../images/m.png';
+import bitcoin from '../images/in-equity-slide-1.png';
+import m from '../images/mainb.png';
+import Footer from '../Layout/Footer';
+import Header from '../Layout/Header';
+import { apiConnectorGet } from '../utils/APIConnector';
+import { endpoint } from '../utils/APIRoutes';
+import Popular from './Popular';
 
 function Home() {
-
   const settings = {
     autoplay: true,
     dots: false,
@@ -23,10 +22,8 @@ function Home() {
     slidesToScroll: 1,
   };
 
- 
-
   const { data: bit } = useQuery(
-    ["bit_api"],
+    ['bit_api'],
     () =>
       apiConnectorGet(`${endpoint?.market_api}?ids=BITCOIN&vs_currencies=BTC`),
     {
@@ -41,7 +38,7 @@ function Home() {
   const curr_data_bit = bit?.data?.bitcoin?.btc;
 
   const { data: Eth } = useQuery(
-    ["eth_api"],
+    ['eth_api'],
     () =>
       apiConnectorGet(`${endpoint?.market_api}?ids=Ethereum&vs_currencies=ETH`),
     {
@@ -58,7 +55,7 @@ function Home() {
   const slides = [
     {
       id: 1,
-       image: slide,
+      image: slide,
     },
     {
       id: 2,
@@ -66,7 +63,7 @@ function Home() {
     },
     {
       id: 3,
-       image: m,
+      image: m,
     },
   ];
 
@@ -80,13 +77,12 @@ function Home() {
       <div
         className="w-full flex items-center justify-center  relative"
         style={{
-          backgroundImage: `url(${"https://t3.ftcdn.net/jpg/04/08/55/24/240_F_408552427_4YG6SEh8h8zcJP8AmhVXC6TMG2mDnAFh.jpg"})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundColor:"#111022"
+          backgroundImage: `url(${'https://media.istockphoto.com/id/1140409137/vector/trendy-low-poly-triangles-with-navy-bg.jpg?s=612x612&w=0&k=20&c=vunManM5m2lfkcgYpOd_dIF-gCGUEUL4SjLYe-o9Nng='})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundColor: '#111022',
         }}
       >
-       
         <div className="!w-full hidden lg:block  py-1">
           <Slider {...settings}>
             {slides.map((slideData) => (
@@ -94,7 +90,6 @@ function Home() {
                 key={slideData?.id}
                 className="!flex justify-center px-8 mt-5 py-2 animate-pulse"
               >
-              
                 <img
                   src={slideData?.image}
                   alt={`Slide ${slideData?.id}`}
@@ -118,10 +113,7 @@ function Home() {
         </div>
       </div>
 
-      <Popular
-        curr_data_bit={curr_data_bit}
-        curr_data_Eth={curr_data_Eth}
-      />
+      <Popular curr_data_bit={curr_data_bit} curr_data_Eth={curr_data_Eth} />
 
       <Footer />
     </div>
