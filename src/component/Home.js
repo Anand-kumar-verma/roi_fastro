@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo } from "react";
-import { useQuery } from "react-query";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-import slide from "../images/m.png";
-import bitcoin from "../images/in-equity-slide-1.png";
-import m from "../images/mainb.png";
-import Footer from "../Layout/Footer";
-import Header from "../Layout/Header";
-import { apiConnectorGet } from "../utils/APIConnector";
-import { endpoint } from "../utils/APIRoutes";
-import Popular from "./Popular";
+import React, { useEffect, useMemo } from 'react';
+import { useQuery } from 'react-query';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import slide from '../images/m.png';
+import bitcoin from '../images/in-equity-slide-1.png';
+import m from '../images/mainb.png';
+import Footer from '../Layout/Footer';
+import Header from '../Layout/Header';
+import { apiConnectorGet } from '../utils/APIConnector';
+import { endpoint } from '../utils/APIRoutes';
+import Popular from './Popular';
 
 function Home() {
   const settings = {
@@ -23,7 +23,7 @@ function Home() {
   };
 
   const { data: bit } = useQuery(
-    ["bit_api"],
+    ['bit_api'],
     () =>
       apiConnectorGet(`${endpoint?.market_api}?ids=BITCOIN&vs_currencies=BTC`),
     {
@@ -38,7 +38,7 @@ function Home() {
   const curr_data_bit = bit?.data?.bitcoin?.btc;
 
   const { data: Eth } = useQuery(
-    ["eth_api"],
+    ['eth_api'],
     () =>
       apiConnectorGet(`${endpoint?.market_api}?ids=Ethereum&vs_currencies=ETH`),
     {
