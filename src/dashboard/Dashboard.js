@@ -1,29 +1,26 @@
 import { Close, Diamond } from "@mui/icons-material";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
+import GraphicEqIcon from "@mui/icons-material/GraphicEq";
+import InfoIcon from "@mui/icons-material/Info";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { Button } from "@mui/material";
 import moment from "moment/moment";
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import toast from "react-hot-toast";
 import { BsTrophyFill } from "react-icons/bs";
-import { FaCopy } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import card1 from "../images/card1.jpg";
 import card2 from "../images/card2.jpg";
 import card3 from "../images/card3.jpg";
 import card6 from "../images/card_6.png";
+import tether from "../images/tether.png";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
-import AddLinkIcon from "@mui/icons-material/AddLink";
-import InsertLinkIcon from "@mui/icons-material/InsertLink";
-import GraphicEqIcon from "@mui/icons-material/GraphicEq";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 import Navbar from "./Navbar";
-import ButtomNavigation from "../Layout/ButtomNaviagatoin";
-import AllInboxIcon from "@mui/icons-material/AllInbox";
-import { Button } from "@mui/material";
-import tether from "../images/tether.png";
-import InfoIcon from "@mui/icons-material/Info";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState();
@@ -291,7 +288,7 @@ const Dashboard = () => {
                   <div className="flex gap-2">
                     {" "}
                     <AllInboxIcon />
-                    <p className="text-[#60A5FA] text-lg">Balance</p>
+                    <p className="text-text-color text-lg">Balance</p>
                   </div>
                   <Button
                     variant="contained"
@@ -314,9 +311,9 @@ const Dashboard = () => {
                 <div className="pt-4  border-b-2 border-text-color"></div>
                 <div className="flex justify-between items-center pt-8">
                   <div className="flex gap-2">
-                    <p className="text-[#60A5FA] lg:text-lg text-base">
-                      Total Earnings <br />
-                      Available
+                    <p className="text-text-color lg:text-lg text-base">
+                      Total Token <br />
+                      Achieved(FST)
                     </p>
                   </div>
                   <Button
@@ -328,14 +325,15 @@ const Dashboard = () => {
                   </Button>
                 </div>
                 <div className="text-xl font-bold text-amber-400 flex gap-2 pt-2">
-                  {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} USD
+                  {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} FST
                   <img src={tether} alt="" className="w-6 h-6" />
                 </div>
-                <div className="flex gap-2 pt-4">
-                  <p className="text-[#60A5FA] text-sm justify-center ">
-                    Purchase Your package to continue earning reward & ROI
+                <div className="flex gap-2 pt-4 justify-center">
+                  <p className="text-text-color text-sm ">
+                    RePurchase Your package to continue earning reward & ROI
                   </p>
                 </div>
+                <div className="flex gap-2 pt-4 flex-col items-center"></div>
               </div>
             </div>
             <div className="p-6 bg-glassy">
@@ -430,41 +428,12 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* <div className="p-6 bg-glassy">
-              <div className="flex flex-col items-center gap-6">
-                <p className="text-2xl font-bold  text-center flex justify-between px-4">
-                  <AddLinkIcon className="!text-6xl" />
-                </p>
-
-                <div className="flex items-center flex-wrap gap-3 justify-center">
-                  <div className="flex items-center px-4 py-2 bg-green-200 text-blue-500 rounded-md border">
-                    {url?.substring(0, 10)}...{url?.substring(15, 20)}
-                  </div>
-                  <div
-                    className="flex items-center justify-center bg-green-400 hover:bg-green-500 text-white px-3 py-2 rounded-md cursor-pointer transition"
-                    onClick={() => handleCopy(url)}
-                  >
-                    <InsertLinkIcon size={20} />
-                  </div>
-                </div>
-
-                <p className="text-2xl font-bold text-gray-800 text-center">
-                  My Referral ID
-                </p>
-
-                <div className="flex items-center gap-3 justify-center">
-                  <div className="flex items-center px-4 py-2 bg-green-200 text-blue-500 rounded-md border">
-                    {profile?.lgn_cust_id}
-                  </div>
-                  <div
-                    className="flex items-center justify-center bg-green-400 hover:bg-green-500 text-white px-3 py-2 rounded-md cursor-pointer transition"
-                    onClick={() => handleCopy(profile?.lgn_cust_id)}
-                  >
-                    <InsertLinkIcon size={20} />
-                  </div>
-                </div>
-              </div>
-            </div> */}
+            <div className="p-6 bg-glassy !text-white flex flex-col items-center">
+              <p>FASTRO(FST) Contract: </p>
+              <p className=" text-sm justify-center text-[10px] ">
+                0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0
+              </p>
+            </div>
           </div>
 
           {/* <div className="text-lg bg-gray-color opacity-75 border border-rose-500 rounded py-5 p-2 px-5 lg:mt-10 mt-5 flex flex-col gap-2 justify-start">

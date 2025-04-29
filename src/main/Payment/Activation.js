@@ -1,58 +1,71 @@
-import { Box, MenuItem, TextField } from '@mui/material';
-import { ethers } from 'ethers';
-import { useFormik } from 'formik';
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
-import { useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom';
-import Loader from '../../Shared/Loader';
+import { Box, MenuItem, TextField } from "@mui/material";
+import { ethers } from "ethers";
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useQuery } from "react-query";
+import { useLocation } from "react-router-dom";
+import Loader from "../../Shared/Loader";
 import {
   apiConnectorGetWithoutToken,
   apiConnectorPostWithdouToken,
-} from '../../utils/APIConnector';
-import { endpoint } from '../../utils/APIRoutes';
-import { enCryptData } from '../../utils/Secret';
+} from "../../utils/APIConnector";
+import { endpoint } from "../../utils/APIRoutes";
+import { enCryptData } from "../../utils/Secret";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 const tokenABI = [
   // balanceOf function ABI
-  'function balanceOf(address owner) view returns (uint256)',
+  "function balanceOf(address owner) view returns (uint256)",
   // transfer function ABI
-  'function transfer(address to, uint256 amount) returns (bool)',
+  "function transfer(address to, uint256 amount) returns (bool)",
 ];
 function Activation() {
-  const [walletAddress, setWalletAddress] = useState('');
-  const [no_of_Tokne, setno_of_Tokne] = useState('');
-  const [transactionHash, setTransactionHash] = useState('');
-  const [receiptStatus, setReceiptStatus] = useState('');
-  const [bnb, setBnb] = useState('');
-  const [gasprice, setGasPrice] = useState('');
+  const [walletAddress, setWalletAddress] = useState("");
+  const [no_of_Tokne, setno_of_Tokne] = useState("");
+  const [transactionHash, setTransactionHash] = useState("");
+  const [receiptStatus, setReceiptStatus] = useState("");
+  const [bnb, setBnb] = useState("");
+  const [gasprice, setGasPrice] = useState("");
   const [loding, setLoding] = useState(false);
   const location = useLocation();
   const params = new URLSearchParams(location?.search);
-  const IdParam = params?.get('token');
+  const IdParam = params?.get("token");
   const base64String = atob(IdParam);
+
+  const { data: general_address } = useQuery(
+    ["contract_address_api"],
+    () =>
+      apiConnectorGetWithoutToken(
+        endpoint?.general_contact_address_api,
+        {},
+        base64String
+      ),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const address = general_address?.data?.result?.[0] || [];
+
   const fk = useFormik({
     initialValues: {
-      inr_value: '',
-      pack_id: 'SelectPackage',
+      inr_value: "",
+      pack_id: "SelectPackage",
     },
   });
   async function requestAccount() {
-    if (!curr_data)
-      return toast('Please refresh your page. Polka Rate not found');
-
     setLoding(true);
     if (window.ethereum) {
       try {
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x38' }], // Chain ID for Binance Smart Chain Mainnet
-        });
         const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts',
+          method: "eth_requestAccounts",
         });
         await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x38' }], // Chain ID for Binance Smart Chain Mainnet
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x38" }], // Chain ID for Binance Smart Chain Mainnet
         });
         const userAccount = accounts[0];
 
@@ -72,6 +85,7 @@ function Activation() {
         const nativeBalance = await provider.getBalance(userAccount);
         setBnb(ethers.utils.formatEther(nativeBalance));
         // Create a contract instance for the ZP token
+        console.log(address?.token_contract_add);
         const tokenContract = new ethers.Contract(
           address?.token_contract_add,
           tokenABI,
@@ -81,50 +95,51 @@ function Activation() {
         const tokenBalance = await tokenContract.balanceOf(userAccount);
         setno_of_Tokne(ethers.utils.formatUnits(tokenBalance, 18));
       } catch (error) {
-        toast('Error connecting...', error);
+        console.log(error);
+        toast("Error connecting...", error);
       }
     } else {
-      toast('MetaMask not detected.');
+      toast("MetaMask not detected.");
     }
     setLoding(false);
   }
 
   async function sendTokenTransaction() {
-    if (!curr_data)
-      return toast('Please refresh your page. Polka Rate not found');
-    if (!address?.receiving_key) return toast('Please add Receiving Address');
+    if (!address?.receiving_key) return toast("Please add Receiving Address");
     if (!address?.token_contract_add)
-      return toast('Please add your contract Address');
-    if (!walletAddress) return toast('Please Connect your wallet.');
+      return toast("Please add your contract Address");
+    if (!walletAddress) return toast("Please Connect your wallet.");
     if (
       Number(
-        Number(
-          res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-            ?.pack_amount
-        ) / Number(curr_data)
+        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
       ) > no_of_Tokne
     )
-      return toast('Your Wallet Amount is low.');
+      return toast("Your Wallet Amount is low.");
     setLoding(true);
 
     if (!window.ethereum) {
-      toast('MetaMask not detected');
+      toast("MetaMask not detected");
       setLoding(false);
       return;
     }
 
-    if (fk.values.pack_id === 'SelectPackage') {
+    if (fk.values.pack_id === "SelectPackage") {
       setLoding(false);
-      return toast('Select Your Package.');
+      return toast("Select Your Package.");
     }
 
     await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x38' }], // Chain ID for Binance Smart Chain Mainnet
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x38" }], // Chain ID for Binance Smart Chain Mainnet
     });
 
     try {
       const dummyData = await PayinZpDummy();
+      console.log(dummyData);
+      if (dummyData?.success == false) {
+        setLoding(false);
+        return toast(dummyData?.message);
+      }
       const last_id = dummyData?.last_id;
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -133,10 +148,8 @@ function Activation() {
       const tokenAmount = ethers.utils.parseUnits(
         String(
           Number(
-            Number(
-              res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-                ?.pack_amount
-            ) / Number(curr_data)
+            res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
+              ?.pack_amount
           )?.toFixed(6)
         ),
         18
@@ -174,7 +187,7 @@ function Activation() {
       );
       if (tokenBalance.lt(tokenAmount)) {
         setLoding(false);
-        return toast('Insufficient token balance.');
+        return toast("Insufficient token balance.");
       }
 
       // Send the token transfer transaction
@@ -185,7 +198,7 @@ function Activation() {
       const receipt = await transactionResponse.wait();
 
       setTransactionHash(transactionResponse.hash);
-      setReceiptStatus(receipt.status === 1 ? 'Success' : 'Failure');
+      setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
       console.log(receipt);
       // Call PayinZp function with appropriate status and gas price
       if (receipt.status === 1) {
@@ -205,7 +218,7 @@ function Activation() {
       }
     } catch (error) {
       console.log(error);
-      toast('Token transaction failed', error);
+      toast("Token transaction failed", error);
     }
 
     setLoding(false);
@@ -221,7 +234,7 @@ function Activation() {
       u_user_wallet_address: walletAddress,
       u_transaction_hash: tr_hash,
       u_trans_status: status,
-      currentBNB: curr_data,
+      currentBNB: 0,
       currentZP: no_of_Tokne,
       gas_price: gasPrice,
       pkg_id: fk.values.pack_id,
@@ -249,11 +262,11 @@ function Activation() {
         res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
       ),
       u_user_wallet_address: walletAddress,
-      u_transaction_hash: 'xxxxxxxxxx',
+      u_transaction_hash: "xxxxxxxxxx",
       u_trans_status: 1,
-      currentBNB: curr_data,
+      currentBNB: 0,
       currentZP: no_of_Tokne,
-      gas_price: '',
+      gas_price: "",
       pkg_id: fk.values.pack_id,
     };
 
@@ -272,7 +285,7 @@ function Activation() {
   }
 
   const { data: user } = useQuery(
-    ['package_api'],
+    ["package_api"],
     () =>
       apiConnectorGetWithoutToken(endpoint?.package_list_api, {}, base64String),
     {
@@ -285,92 +298,50 @@ function Activation() {
   );
   const res = user?.data?.result || [];
 
-  const { data: general_address } = useQuery(
-    ['contract_address_api'],
-    () =>
-      apiConnectorGetWithoutToken(
-        endpoint?.general_contact_address_api,
-        {},
-        base64String
-      ),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const address = general_address?.data?.result?.[0] || [];
-
-  const { data: usd } = useQuery(
-    ['curre_api'],
-    () =>
-      apiConnectorGetWithoutToken(
-        `${endpoint?.market_api}?ids=polkadot&vs_currencies=usd`,
-        {},
-        base64String
-      ),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const curr_data = usd?.data?.polkadot?.usd;
   return (
     <>
       <Loader isLoading={loding} />
 
       <div
-        className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient"
+        className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient p-3"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <Box className="!cursor-pointer bg-custom-gradient  p-1 lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full">
-          <p className="p-5 font-bold text-xl text-center  text-[#60A5FA]">
-            Activation
-          </p>
+        <Box className="!cursor-pointer bg-custom-gradient  lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full p-2 border border-text-color rounded-lg shadow-2xl">
+          <div className="flex justify-center gap-[10%] items-center mt-1 p-2  w-full border border-text-color rounded focus:ring-blue-500 focus:border-blue-500">
+            <AccountBalanceIcon className="!text-text-color !text-[80px]" />
+          </div>
           <button
             className="!bg-blue-600 rounded-full hover:bg-white hover:text-black  p-2 !text-background"
             onClick={requestAccount}
           >
             Connect Your Wallet
           </button>
-          <div className="m-3">
-            <div className="flex flex-wrap justify-start">
-              <span className="!font-bold text-[#60A5FA]">Address : </span>{' '}
-              <span className="!text-sm">{walletAddress}</span>
+          <div className="m-3 bg-glassy p-4">
+            <div className="flex flex-wrap justify-start items-center">
+              <span className="!font-bold text-text-color">Address : </span>{" "}
+              <span className="!text-sm">
+                {walletAddress?.substring(0, 10)}...
+                {walletAddress?.substring(
+                  walletAddress?.length - 10,
+                  walletAddress?.length
+                )}
+              </span>
             </div>
-            <p className="!font-bold mt-2 text-[#60A5FA]">Wallet Balance</p>
-            <div className="flex flex-wrap justify-start">
-              <p className="!font-semibold text-[#60A5FA]">BNB : </p>{' '}
-              <p>{bnb}</p>
+            <p className="!font-bold mt-2 text-text-color">Wallet Balance</p>
+            <div className="flex flex-wrap justify-start items-center">
+              <p className="!font-semibold text-text-color">BNB : </p>{" "}
+              <p className="!text-green-500">{bnb}</p>
             </div>
             <div className="flex flex-wrap  justify-between">
-              <p className="!font-semibold flex text-[#60A5FA]">
-                DOT : <p>{no_of_Tokne}</p>
-              </p>
-              <p className="!font-semibold flex text-[#60A5FA]">
-                Rate : <p>{curr_data}$</p>
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-start">
-              <p className="!font-semibold text-[#60A5FA]">Pkg : </p>{' '}
-              <p className="text-[#60A5FA]">
-                {Number(
-                  Number(
-                    res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-                      ?.pack_amount
-                  ) / Number(curr_data)
-                )?.toFixed(6)}{' '}
-                DOT
+              <p className="!font-semibold flex text-text-color">
+                USDT(BEP20):{" "}
+                <p className="!text-green-500">
+                  {Number(no_of_Tokne || 0)?.toFixed(4)}
+                </p>
               </p>
             </div>
           </div>
-          <p className="my-2 font-bold text-[#60A5FA]">Select Package Name</p>
+          <p className="my-2 font-bold text-text-color">Select Your Package</p>
           <TextField
             select
             id="pack_id"
@@ -378,18 +349,18 @@ function Activation() {
             value={fk.values.pack_id}
             onChange={fk.handleChange}
             sx={{
-              '& .MuiSelect-select': {
-                color: '#60A5FA',
+              "& .MuiSelect-select": {
+                color: "#60A5FA",
               },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#60A5FA',
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#60A5FA",
                 },
-                '&:hover fieldset': {
-                  borderColor: '#60A5FA',
+                "&:hover fieldset": {
+                  borderColor: "#60A5FA",
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#60A5FA',
+                "&.Mui-focused fieldset": {
+                  borderColor: "#60A5FA",
                 },
               },
             }}
@@ -408,20 +379,20 @@ function Activation() {
           >
             Confirm
           </button>
-          <div className="m-3">
-            <div className=" flex flex-wrap justify-start">
-              <p className="text-[#60A5FA]">Transaction Hash : </p>{' '}
-              <p className="!text-[9px] whitespace-break-spaces text-[#60A5FA]">
+          <div className="m-3 bg-glassy p-4">
+            <div className=" flex flex-wrap justify-start items-center">
+              <p className="text-text-color">Transaction Hash : </p>{" "}
+              <p className="!text-[9px] whitespace-break-spaces text-text-color">
                 {transactionHash}
               </p>
             </div>
-            <div className="flex flex-wrap justify-start !gap-4">
-              <p className="text-[#60A5FA]">Gas Price : </p>{' '}
-              <p className="!font-bold text-[#60A5FA]">{gasprice}</p>
+            <div className="flex flex-wrap justify-start items-center !gap-4">
+              <p className="text-text-color">Gas Price : </p>{" "}
+              <p className="!font-bold text-text-color">{gasprice}</p>
             </div>
-            <div className="flex flex-wrap justify-start !gap-4">
-              <p className="text-[#60A5FA]">Transaction Status : </p>{' '}
-              <p className="!font-bold text-[#60A5FA]">{receiptStatus}</p>
+            <div className="flex flex-wrap justify-start items-center !gap-4">
+              <p className="text-text-color">Transaction Status : </p>{" "}
+              <p className="!font-bold text-text-color">{receiptStatus}</p>
             </div>
           </div>
         </Box>
