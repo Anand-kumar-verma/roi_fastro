@@ -9,6 +9,7 @@ import crypto from "../images/crypto.jpg";
 import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import CustomToPagination from "../Shared/CustomToPagination";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 const RoiIncome = () => {
   const [page, setPage] = useState(1);
@@ -90,6 +91,7 @@ const RoiIncome = () => {
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 };

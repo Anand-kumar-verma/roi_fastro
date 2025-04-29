@@ -4,14 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#ffffff",
-        "text-color": "#000000",
+        "background": "#ffffff",
+        "text-color": "#3f7de0",
         "gray-color": "#f2f0ef",
-        
       },
       backgroundImage: {
         "custom-gradient":
-          "radial-gradient(circle,rgb(180, 238, 237) 0%, rgb(252, 250, 250) 100%)",
+          "radial-gradient(circle, rgb(50 125 224) 0%, rgb(0, 0, 20) 50%)",
       },
     },
   },

@@ -7,6 +7,8 @@ import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
+import CustomToPagination from "../Shared/CustomToPagination";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 const WeeklyIncome = () => {
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
@@ -92,10 +94,15 @@ const WeeklyIncome = () => {
             </table>
           </div>
           <div className="flex justify-center mt-6">
-            <CustomPagination data={weekly_data} setPage={setPage} />
+            <CustomToPagination
+              page={page}
+              data={weekly_data}
+              setPage={setPage}
+            />
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 };

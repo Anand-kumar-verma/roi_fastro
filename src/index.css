@@ -81,10 +81,10 @@ code {
   animation: drop 60s ease-in-out infinite;
 }
 
-
 /* /// */
 @keyframes colorZoomChange {
-  0%, 100% {
+  0%,
+  100% {
     color: green;
     font-weight: bold;
     transform: scale(1);
@@ -98,4 +98,14 @@ code {
 
 .animated-text {
   animation: colorZoomChange 1s infinite;
+}
+
+.bg-glassy {
+  background: rgba(255, 255, 255, 0.1); /* <-- white with 10% opacity */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: #3f7de0; /* no quotes needed */
 }

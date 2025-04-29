@@ -9,6 +9,7 @@ import crypto from "../images/crypto.jpg";
 import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import CustomToPagination from "../Shared/CustomToPagination";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 const AwardReward = () => {
   const [page, setPage] = useState(1);
@@ -89,6 +90,7 @@ const AwardReward = () => {
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 };

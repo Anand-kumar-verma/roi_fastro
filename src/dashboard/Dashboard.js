@@ -12,10 +12,15 @@ import card2 from "../images/card2.jpg";
 import card3 from "../images/card3.jpg";
 import card6 from "../images/card_6.png";
 import Loader from "../Shared/Loader";
+import AddLinkIcon from "@mui/icons-material/AddLink";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import GraphicEqIcon from "@mui/icons-material/GraphicEq";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 import Navbar from "./Navbar";
-// import ReactApexChart from 'react-apexcharts';
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+
 const Dashboard = () => {
   const [loading, setLoading] = useState();
   const [showPopup, setShowPopup] = useState(false);
@@ -127,87 +132,7 @@ const Dashboard = () => {
         console.error("Failed to copy: ", err);
       });
   };
-  let statee = {
-    series: [75],
-    options: {
-      chart: {
-        height: 350,
-        type: "radialBar",
-        toolbar: {
-          show: true,
-        },
-      },
-      plotOptions: {
-        radialBar: {
-          startAngle: -135,
-          endAngle: 225,
-          hollow: {
-            margin: 0,
-            size: "70%",
-            background: "#fff",
-            image: undefined,
-            imageOffsetX: 0,
-            imageOffsetY: 0,
-            position: "front",
-            dropShadow: {
-              enabled: true,
-              top: 3,
-              left: 0,
-              blur: 4,
-              opacity: 0.5,
-            },
-          },
-          track: {
-            background: "#fff",
-            strokeWidth: "67%",
-            margin: 0, // margin is in pixels
-            dropShadow: {
-              enabled: true,
-              top: -3,
-              left: 0,
-              blur: 4,
-              opacity: 0.7,
-            },
-          },
 
-          dataLabels: {
-            show: true,
-            name: {
-              offsetY: -10,
-              show: true,
-              color: "#888",
-              fontSize: "17px",
-            },
-            value: {
-              formatter: function (val) {
-                return parseInt(val);
-              },
-              color: "#111",
-              fontSize: "36px",
-              show: true,
-            },
-          },
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "dark",
-          type: "horizontal",
-          shadeIntensity: 0.5,
-          gradientToColors: ["#ABE5A1"],
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100],
-        },
-      },
-      stroke: {
-        lineCap: "round",
-      },
-      labels: ["Percent"],
-    },
-  };
   const state = {
     series: [
       {
@@ -276,6 +201,118 @@ const Dashboard = () => {
       },
     },
   };
+  let area = {
+    series: [
+      {
+        name: "TEAM A",
+        type: "column",
+        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+      },
+      {
+        name: "TEAM B",
+        type: "area",
+        data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+      },
+      {
+        name: "TEAM C",
+        type: "line",
+        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "line",
+        stacked: false,
+      },
+      stroke: {
+        width: [0, 2, 5],
+        curve: "smooth",
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "50%",
+        },
+      },
+      fill: {
+        opacity: [0.85, 0.25, 1],
+        gradient: {
+          inverseColors: false,
+          shade: "light",
+          type: "vertical",
+          opacityFrom: 0.85,
+          opacityTo: 0.55,
+          stops: [0, 100, 100, 100],
+        },
+      },
+      labels: [
+        "01/01/2003",
+        "02/01/2003",
+        "03/01/2003",
+        "04/01/2003",
+        "05/01/2003",
+        "06/01/2003",
+        "07/01/2003",
+        "08/01/2003",
+        "09/01/2003",
+        "10/01/2003",
+        "11/01/2003",
+      ],
+      markers: {
+        size: 0,
+      },
+      xaxis: {
+        type: "datetime",
+        labels: {
+          style: {
+            colors: "#3f7de0",
+          },
+        },
+        axisBorder: {
+          color: "#3f7de0",
+        },
+        axisTicks: {
+          color: "#3f7de0",
+        },
+      },
+      yaxis: {
+        title: {
+          text: "Points",
+          style: {
+            color: "#3f7de0",
+          },
+        },
+        labels: {
+          style: {
+            colors: "#3f7de0",
+          },
+        },
+      },
+      tooltip: {
+        shared: true,
+        intersect: false,
+        style: {
+          fontSize: "12px",
+          fontFamily: undefined,
+          colors: ["#3f7de0"],
+        },
+        y: {
+          formatter: function (y) {
+            if (typeof y !== "undefined") {
+              return y.toFixed(0) + " points";
+            }
+            return y;
+          },
+        },
+      },
+      legend: {
+        labels: {
+          colors: "#3f7de0",
+        },
+      },
+    },
+  };
+
   return (
     <>
       <Navbar />
@@ -347,50 +384,56 @@ const Dashboard = () => {
           </div> */}
 
           <div className="  w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4">
-            <div className="rounded-2xl bg-gradient-to-r from-pink-100 to-pink-200 p-6 shadow-lg">
+            <div className=" bg-glassy">
+              <ReactApexChart
+                className="!text-text-color !p-0"
+                options={area.options}
+                series={area.series}
+                type="line"
+                height={350}
+              />
+            </div>
+            <div className="p-6 bg-glassy">
               <div className="grid gap-6 grid-cols-2 place-items-center mb-4">
-                <div className="flex items-center text-xl font-bold text-gray-800">
-                  Current Wallet
-                  <span className="ml-2 px-2 py-0.5 text-green-600 bg-green-100 rounded text-xs font-semibold">
-                    {profile?.topup_date && "Activated"}
-                  </span>
+                <div className="flex items-center  font-bold text-blue-400">
+                  <MonetizationOnIcon className="!text-8xl" />
                 </div>
-                <div className="text-2xl font-bold text-yellow-600">
+                <div className="text-2xl font-bold text-amber-400">
                   {profile?.jnr_curr_wallet || 0} USD
                 </div>
               </div>
 
               <div className="flex flex-col gap-4">
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">User Id</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-blue-400">
                     {profile?.lgn_cust_id}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-700">
+                {/* <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Activation Date</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-blue-400">
                     {moment
                       ?.utc(profile?.topup_date)
                       ?.format("DD-MM-YYYY HH:mm:ss")}
                   </span>
-                </div>
+                </div> */}
 
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Today Income</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-green-400">
                     {Number(profile?.today_income || 0)?.toFixed(2)} $
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center text-gray-700">
+                <div className="flex justify-between items-center text-blue-300">
                   <span className="font-medium">Flush Amount</span>
                   <span
-                    className={`bg-white shadow px-3 py-1 rounded-lg text-2xl font-bold ${
+                    className={`bg-white/10 shadow px-3 py-1 rounded-lg text-2xl font-bold ${
                       Number(profile?.jnr_flush_amnt || 0) > 0
-                        ? "animate-pulse text-red-500"
-                        : "text-gray-500"
+                        ? "animate-pulse text-red-400"
+                        : "text-gray-400"
                     }`}
                   >
                     {Number(profile?.jnr_flush_amnt || 0)?.toFixed(0)} $
@@ -399,54 +442,54 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="rounded-2xl bg-gradient-to-r from-yellow-100 to-yellow-200 p-6 shadow-lg">
+            <div className="p-6 bg-glassy">
               <div className="flex flex-col gap-6">
-                <p className="text-2xl font-bold text-gray-800 text-center mb-4">
-                  Other Details
+                <p className="text-2xl font-bold text-blue-400 text-center mb-4">
+                  <GraphicEqIcon className="!text-8xl" />
                 </p>
 
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Direct Team</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-blue-400">
                     {profile?.jnr_direct_team || 0}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Direct TopUp Member</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-blue-400">
                     {profile?.jnr_direct_topup_mem || 0}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Total Income</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-green-400">
                     {Number(profile?.total_income || 0)?.toFixed(2)} $
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">TopUp Amount</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-amber-400">
                     {Number(profile?.jnr_topup_wallet || 0)?.toFixed(2)} $
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-700">
+                <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Team Income</span>
-                  <span className="font-semibold text-gray-500">
+                  <span className="font-semibold text-green-400">
                     {Number(profile?.team_income || 0)?.toFixed(2)} $
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-2xl bg-gradient-to-r from-green-100 to-green-200 p-6 shadow-lg">
+            <div className="p-6 bg-glassy">
               <div className="flex flex-col items-center gap-6">
                 {/* Referral Link Title */}
-                <p className="text-2xl font-bold text-gray-800 text-center">
-                  Referral Link
+                <p className="text-2xl font-bold  text-center flex justify-between px-4">
+                  <AddLinkIcon className="!text-6xl" />
                 </p>
 
                 {/* Referral Link Display */}
@@ -458,7 +501,7 @@ const Dashboard = () => {
                     className="flex items-center justify-center bg-green-400 hover:bg-green-500 text-white px-3 py-2 rounded-md cursor-pointer transition"
                     onClick={() => handleCopy(url)}
                   >
-                    <FaCopy size={20} />
+                    <InsertLinkIcon size={20} />
                   </div>
                 </div>
 
@@ -476,7 +519,7 @@ const Dashboard = () => {
                     className="flex items-center justify-center bg-green-400 hover:bg-green-500 text-white px-3 py-2 rounded-md cursor-pointer transition"
                     onClick={() => handleCopy(profile?.lgn_cust_id)}
                   >
-                    <FaCopy size={20} />
+                    <InsertLinkIcon size={20} />
                   </div>
                 </div>
               </div>
@@ -636,7 +679,7 @@ const Dashboard = () => {
           </div>
         )}
 
-        <p className="mt-10 mx-5 flex items-center justify-between lg:gap-10 gap-1  p-3 px-5 lg:text-xl font-bold  !text-text-color text-lg bg-[#d8197a] rounded">
+        <p className="mt-10 mx-5 flex items-center justify-between lg:gap-10 gap-1  p-3 px-5 lg:text-xl font-bold  text-lg rounded bg-glassy ">
           Check Out Royality & Rewards{" "}
           <BsTrophyFill className="!text-yellow-500" />
         </p>
@@ -676,22 +719,25 @@ const Dashboard = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              className="group relative flex flex-col justify-between p-6 rounded-2xl shadow-xl w-full max-w-[400px] h-[180px] bg-gradient-to-r from-white/70 to-white/30 cursor-pointer hover:scale-105 transition-transform duration-300"
+              className="group relative flex flex-col justify-between p-6 rounded-2xl shadow-2xl w-full max-w-[400px] h-[180px] bg-gradient-to-r from-white/70 to-white/30 cursor-pointer hover:scale-110 hover:rotate-1 transition-transform duration-300 ease-in-out"
             >
-              <div className="absolute inset-0 bg-black/20 rounded-2xl group-hover:bg-black/10 transition"></div>
+              <div className="absolute inset-0 bg-black/40 rounded-2xl group-hover:bg-black/20 transition duration-300 ease-in-out"></div>
               <div className="relative z-10">
-                <p className="text-white text-lg font-semibold">{item.title}</p>
-                <p className="text-yellow-300 text-2xl font-bold mt-2">
+                <p className="text-white text-lg font-semibold tracking-wide">
+                  {item.title}
+                </p>
+                <p className="text-yellow-400 text-3xl font-bold mt-2 transform group-hover:scale-105 transition duration-300 ease-in-out">
                   {item.value} USD
                 </p>
               </div>
               <div className="relative z-10 flex justify-end">
-                <Diamond className="text-yellow-300 h-14 w-14 opacity-80 group-hover:opacity-100 transition" />
+                <Diamond className="text-yellow-400 h-16 w-16 opacity-80 group-hover:opacity-100 transition transform group-hover:scale-125 duration-300" />
               </div>
             </div>
           ))}
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 };

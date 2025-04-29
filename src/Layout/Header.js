@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import fastroLogo from "../images/fastro.png"
+import fastroLogo from "../images/fastro.png";
 
 const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -30,16 +30,16 @@ const Header = () => {
     <>
       <div
         //  style={{ backgroundColor: "rgb(26, 26, 26)" }}
-        className="bg-[#111022]">
+        className="bg-[#111022]"
+      >
         <div className="flex justify-between lg:px-20 text-sm text-white">
           <div className="flex p-2 justify-center items-center gap-10">
-            <img src={fastroLogo}
-              alt="fastroLogo" className="h-14 w-16" />
+            <img src={fastroLogo} alt="fastroLogo" className="h-14 w-16" />
             <div className="hidden lg:flex gap-10">
               <p
                 className="cursor-pointer"
                 onClick={() => {
-                  navigate("/dashboard");
+                  navigate("/home");
                   window.location.reload();
                 }}
               >
@@ -138,19 +138,19 @@ const Header = () => {
             </ListItem>
             <ListItem
               button
-            // onClick={() => {
-            //   navigate("/login");
-            //   setIsDrawerOpen(false);
-            // }}
+              // onClick={() => {
+              //   navigate("/login");
+              //   setIsDrawerOpen(false);
+              // }}
             >
               <ListItemText primary={`UID: ${localStorage.getItem("uid")}`} />
             </ListItem>
             <ListItem
               button
-            // onClick={() => {
-            //   navigate("/register");
-            //   setIsDrawerOpen(false);
-            // }}
+              // onClick={() => {
+              //   navigate("/register");
+              //   setIsDrawerOpen(false);
+              // }}
             >
               <ListItemText
                 primary={`User: ${localStorage.getItem("username")}`}

@@ -6,6 +6,7 @@ import crypto from "../images/crypto.jpg";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 import Loader from "../Shared/Loader";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 function TopUP() {
   const { isLoading, data: topup_data } = useQuery(
@@ -30,7 +31,7 @@ function TopUP() {
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-colorr">
+          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
             Top Up Details
           </h1>
 
@@ -55,15 +56,15 @@ function TopUP() {
               <tbody className="">
                 {data?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4  border border-yellow-500 text-text-colorr text-center text-colorrspace-nowrap">
+                    <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-colorr text-center text-colorrspace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
                       {moment
                         ?.utc(item?.topup_date)
                         ?.format("DD-MM-YYYY HH:mm:ss")}
                     </td>
-                    <td className="px-6 text-center border border-yellow-500 text-text-colorr py-4 text-colorrspace-nowrap">
+                    <td className="px-6 text-center border border-yellow-500 text-text-color py-4 text-colorrspace-nowrap">
                       {item?.topup_pack_amount}
                     </td>
                     <td className="px-6  text-center border border-yellow-500 py-4 text-colorrspace-nowrap text-green-500">
@@ -76,6 +77,7 @@ function TopUP() {
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 }

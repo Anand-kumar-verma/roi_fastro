@@ -7,6 +7,7 @@ import { apiConnectorGet } from '../utils/APIConnector';
 import { endpoint } from '../utils/APIRoutes';
 import Loader from '../Shared/Loader';
 import CustomPagination from '../Shared/CustomPagination';
+import ButtomNavigation from '../Layout/ButtomNaviagatoin';
 
 
 function Teamdata() {
@@ -105,6 +106,7 @@ function Teamdata() {
 
                 </div>
             </div>
+            <ButtomNavigation/>
         </>
     );
 }

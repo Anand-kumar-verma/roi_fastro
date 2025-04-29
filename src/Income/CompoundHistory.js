@@ -7,6 +7,7 @@ import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 import CustomToPagination from "../Shared/CustomToPagination";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 const CompoundHistory = () => {
   const [page, setPage] = useState(1);
@@ -84,6 +85,7 @@ const CompoundHistory = () => {
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 };

@@ -68,7 +68,7 @@ export default function Navbar() {
           />
           <div className="lg:hidden sm:pl-[32rem]  pl-[9rem] flex items-center">
             <FaBars
-              className="cursor-pointer text-2xl"
+              className="cursor-pointer text-2xl text-text-color"
               onClick={toggleSidebar}
             />
           </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
           <div
             className={`fixed top-0 left-0 p-4 h-full  ! transition-transform transform  ${
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } md:relative md:translate-x-0 md:flex md:gap-10 bg-custom-gradient`}
+            } md:relative md:translate-x-0 md:flex md:gap-10 bg-custom-gradient text-text-color`}
           >
             <div className="flex justify-between  p-2 items-center mb-5 md:hidden">
               <img src={logo} alt="Logo" className="h-10" />
@@ -89,7 +89,7 @@ export default function Navbar() {
             <p
               className="flex items-center gap-2 cursor-pointer p-2 "
               onClick={() => {
-                navigate("/home");
+                navigate("/dashboard");
                 window.location.reload();
               }}
             >

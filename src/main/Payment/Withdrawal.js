@@ -8,6 +8,7 @@ import Navbar from "../../dashboard/Navbar";
 import { apiConnectorGet, apiConnectorPost } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { enCryptData } from "../../utils/Secret";
+import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 function Withdrawal() {
   // const [walletAddress, setWalletAddress] = useState("");
@@ -206,6 +207,7 @@ function Withdrawal() {
         </div>
         {/* <Footer /> */}
       </div>
+      <ButtomNavigation/>
     </>
   );
 }

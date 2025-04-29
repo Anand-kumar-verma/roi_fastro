@@ -7,6 +7,7 @@ import Loader from "../Shared/Loader";
 import { useFormik } from "formik";
 import { Button } from "@mui/material";
 import toast from "react-hot-toast";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 function ViewProfile() {
   const client = useQueryClient();
@@ -173,6 +174,7 @@ function ViewProfile() {
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 }

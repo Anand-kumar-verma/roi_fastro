@@ -5,6 +5,7 @@ import { frontend } from "../../utils/APIRoutes";
 import { CopyAll } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import copy from "copy-to-clipboard";
+import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 const WithdrawalLink = () => {
   return (
@@ -32,6 +33,7 @@ const WithdrawalLink = () => {
           <span className="!text-blue-500">{frontend}/withdrawal-link</span>
         </p>
       </div>
+      <ButtomNavigation />
     </>
   );
 };

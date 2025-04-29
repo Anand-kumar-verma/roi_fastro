@@ -2,7 +2,7 @@
 
 export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://192.168.177.149:9009";
+// export const domain = "http://192.168.92.149:9009";
 export const frontend = "https://fastro.info";
 
 export const endpoint = {

@@ -14,6 +14,7 @@ const Login = () => {
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [loading, setLoading] = useState(false);
   const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
+  const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
   // const datatele = {
   //   id: 1840589027,
   //   first_name: "A.K.",
@@ -39,7 +40,7 @@ const Login = () => {
     email: String(datatele?.id),
     mobile: String(datatele?.id),
     password: String(datatele?.id),
-    referral_id: "",
+    referral_id: String(params),
   };
 
   const formik = useFormik({
@@ -72,12 +73,12 @@ const Login = () => {
         localStorage.setItem("uid", datatele?.id);
         localStorage.setItem("username", datatele?.username);
         if (response?.data?.result?.[0]?.user_type === "Admin") {
-          navigate("/admindashboard");
-          window.location.reload();
+          // navigate("/admindashboard");
+          // window.location.reload();
         } else {
           if (response?.data?.result?.[0]?.user_type === "User") {
-            navigate("/home");
-            window.location.reload();
+            // navigate("/home");
+            // window.location.reload();
           }
         }
       }
@@ -92,10 +93,23 @@ const Login = () => {
     //   username: String(reqBody.id),
     //   password: String(reqBody.id),
     // };
+
     const reqBodyy = {
-      username: String("1840589027"),
-      password: String("1840589027"),
+      mobile: String(datatele?.id),
+      email: String(datatele?.id),
+      full_name: String(datatele?.username),
+      referral_id: String(params),
+      username: String(reqBody.id),
+      password: String(reqBody.id),
     };
+    // const reqBodyy = {
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
+    //   full_name: String(datatele?.username),
+    //   referral_id: String("1234567890"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
+    // };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {
@@ -147,21 +161,11 @@ const Login = () => {
   return (
     <>
       <Loader isLoading={loading} />
-      <div
-        className="flex justify-center items-center min-h-screen"
-        style={{
-          backgroundImage:
-            "linear-gradient(162deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
-        }}
-      >
+
+      <div className="flex justify-center items-center min-h-screen bg-custom-gradient">
         {openDialogBox && (
           <Tilt className="w-full max-w-lg lg:p-6 p-4 border-[#008eff] border rounded-xl shadow-2xl">
-            <div
-              style={{
-                backgroundImage:
-                  "linear-gradient(162deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
-              }}
-            >
+            <div className="bg-glassy">
               <div className="flex justify-center my-2">
                 <img src={logo} alt="Logo" className="h-14 w-16" />
               </div>

@@ -8,6 +8,7 @@ import { endpoint } from "../../utils/APIRoutes";
 import Loader from "../../Shared/Loader";
 import CustomPagination from "../../Shared/CustomPagination";
 import CustomToPagination from "../../Shared/CustomToPagination";
+import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 function WithdrawalHistory() {
   const [page, setPage] = useState(1);
@@ -84,6 +85,7 @@ function WithdrawalHistory() {
           </div>
         </div>
       </div>
+      <ButtomNavigation/>
     </>
   );
 }

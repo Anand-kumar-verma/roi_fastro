@@ -13,7 +13,6 @@ import { endpoint } from "../utils/APIRoutes";
 import Popular from "./Popular";
 
 function Home() {
-
   const settings = {
     autoplay: true,
     dots: false,
@@ -22,8 +21,6 @@ function Home() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
- 
 
   const { data: bit } = useQuery(
     ["bit_api"],
@@ -58,7 +55,7 @@ function Home() {
   const slides = [
     {
       id: 1,
-       image: slide,
+      image: slide,
     },
     {
       id: 2,
@@ -66,7 +63,7 @@ function Home() {
     },
     {
       id: 3,
-       image: m,
+      image: m,
     },
   ];
 
@@ -83,10 +80,9 @@ function Home() {
           backgroundImage: `url(${"https://t3.ftcdn.net/jpg/04/08/55/24/240_F_408552427_4YG6SEh8h8zcJP8AmhVXC6TMG2mDnAFh.jpg"})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundColor:"#111022"
+          backgroundColor: "#111022",
         }}
       >
-       
         <div className="!w-full hidden lg:block  py-1">
           <Slider {...settings}>
             {slides.map((slideData) => (
@@ -94,7 +90,6 @@ function Home() {
                 key={slideData?.id}
                 className="!flex justify-center px-8 mt-5 py-2 animate-pulse"
               >
-              
                 <img
                   src={slideData?.image}
                   alt={`Slide ${slideData?.id}`}
@@ -118,10 +113,7 @@ function Home() {
         </div>
       </div>
 
-      <Popular
-        curr_data_bit={curr_data_bit}
-        curr_data_Eth={curr_data_Eth}
-      />
+      <Popular curr_data_bit={curr_data_bit} curr_data_Eth={curr_data_Eth} />
 
       <Footer />
     </div>

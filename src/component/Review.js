@@ -1,13 +1,10 @@
 import React from "react";
-import women from "../images/in-team-1.png";
-import men from "../images/in-team-8.png";
 import Taskbg from "../images/in-equity-11-bg.png";
 import t1 from "../images/in-equity-11-icon-1.svg";
 import t2 from "../images/in-equity-11-icon-2.svg";
 import t3 from "../images/in-equity-11-icon-3.svg";
-import t4 from "../images/in-equity-11-icon-4.svg";
-import t5 from "../images/in-equity-11-icon-5.svg";
-import t6 from "../images/in-equity-11-icon-6.svg";
+import women from "../images/in-team-1.png";
+import men from "../images/in-team-8.png";
 
 export default function Review() {
   const reviews = [
@@ -96,9 +93,10 @@ export default function Review() {
   ];
   return (
     <>
-      <p className="text-center lg:text-4xl text-xl py-10 text-[#e68413] font-bold">
+      <p className="text-center lg:text-5xl text-2xl py-10 font-bold text-[#e68413]">
         More than 23,000 traders joined
       </p>
+
       <div className="grid lg:grid-cols-2 gap-8 px-5 lg:px-20">
         {reviews.map((review, index) => (
           <div
@@ -106,15 +104,15 @@ export default function Review() {
             data-aos-delay="300"
             data-aos-offset="0"
             key={index}
-            className="flex items-center space-x-4 p-5 "
+            className="flex items-center space-x-6 p-6 bg-[#1e2b34] rounded-lg shadow-xl transition-all hover:scale-105 hover:shadow-2xl hover:shadow-[#e68413]"
           >
             <img
               src={review.image}
               alt={review.name}
-              className="lg:w-28 lg:h-28 w-12 h-12 rounded-full bg-blue-400 object-cover"
+              className="lg:w-28 lg:h-28 w-16 h-16 rounded-full border-4 border-[#e68413] object-cover"
             />
             <div>
-              <h3 className="text-lg font-semibold text-white">
+              <h3 className="text-xl font-semibold text-white">
                 {review.name}
               </h3>
               <p className="text-sm text-gray-400">from {review.country}</p>
@@ -123,22 +121,22 @@ export default function Review() {
           </div>
         ))}
       </div>
+
       <div
-        className=""
+        className="bg-cover bg-center py-20"
         style={{
           backgroundImage: `url(${Taskbg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
         }}
       >
-        <h1 className="lg:text-4xl text-2xl lg:text-center text-left font-bold my-4 pt-10 px-2 text-[#6e96cf]">
+        <h1 className="lg:text-5xl text-3xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#6e96cf] to-[#e68413] my-4">
           Trade the World's Most Popular Markets
         </h1>
-        <p className="text-xl text-center text-gray-400 ">
+        <p className="text-xl text-center text-gray-400 max-w-2xl mx-auto">
           Access AI-powered insights and advanced tools to trade a wide range of
           markets.
         </p>
-        <div className="lg:p-10 p-4 w-full flex items-center gap-2 justify-center">
+
+        <div className="lg:p-10 p-6 w-full flex items-center gap-2 justify-center">
           <div className="grid lg:grid-cols-2 grid-cols-1 place-content-center gap-6">
             {marketData.map((market, index) => (
               <div
@@ -146,9 +144,13 @@ export default function Review() {
                 data-aos-easing="ease-out-cubic"
                 data-aos-duration="2000"
                 key={market.id}
-                className={`p-6 shadow-2xl text-[#656d70] bg-[#010b13]  text-lg rounded-lg transition-all duration-500 hover:scale-75  hover:shadow-2xl hover:shadow-purple-500 `}
+                className="p-8 shadow-2xl text-[#656d70] bg-[#010b13] text-lg rounded-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500"
               >
-                <img src={market.image} alt="" className="h-16 w-16" />
+                <img
+                  src={market.image}
+                  alt=""
+                  className="h-16 w-16 mx-auto mb-4 border-4 border-[#e68413] rounded-full"
+                />
                 <div>
                   <h2 className="text-lg font-semibold text-white">
                     {market.name}
@@ -159,16 +161,27 @@ export default function Review() {
             ))}
           </div>
         </div>
+
         <p className="text-xs text-blue-500 text-center my-2">
           Warning: All trading involves risk. It is possible to lose all your
           capital. Use AI-powered analysis to trade wisely.
         </p>
-        <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center lg:p-10 p-5 ">
+
+        <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center lg:p-10 p-5">
           {tradingInfo.map((item, index) => (
-            <div key={index} className="p-6 flex gap-5 items-center">
-              <img src={item.image} alt={item.title} className="h-16 w-16" />
+            <div
+              key={index}
+              className="p-6 flex gap-6 items-center hover:bg-[#1e2b34] rounded-lg transition-all hover:scale-105"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-16 w-16 border-4 border-[#e68413] rounded-full"
+              />
               <div>
-                <h2 className="text-lg font-semibold text-white">{item.title}</h2>
+                <h2 className="text-lg font-semibold text-white">
+                  {item.title}
+                </h2>
                 <p className="text-sm text-gray-500">{item.description}</p>
               </div>
             </div>

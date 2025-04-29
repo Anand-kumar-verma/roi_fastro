@@ -2,11 +2,7 @@ import "animate.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "../src/index.css";
 import AdminLayout from "./Adminpages/Layout";
 import { adminroutes } from "./AdminRoutes";

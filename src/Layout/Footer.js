@@ -1,9 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import gif3 from '../images/gif3.gif';
-import graph2 from '../images/graph2.webp';
-import graph3 from '../images/graph3.webp';
-import graph4 from '../images/graph4.jpg';
-import graph5 from '../images/graph5.png';
+import React, { useRef } from 'react';
 import logo from '../images/fastro.png';
 
 export default function Footer() {

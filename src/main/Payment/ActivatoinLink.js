@@ -5,6 +5,7 @@ import { frontend } from "../../utils/APIRoutes";
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 import { CopyAll } from "@mui/icons-material";
+import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 const ActivatoinLink = () => {
   return (
@@ -32,6 +33,7 @@ const ActivatoinLink = () => {
           <span className="!text-blue-500">{frontend}/activation-link</span>
         </p>
       </div>
+      <ButtomNavigation/>
     </>
   );
 };

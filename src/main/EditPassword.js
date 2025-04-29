@@ -5,6 +5,7 @@ import { apiConnectorPost } from '../utils/APIConnector';
 import { endpoint } from '../utils/APIRoutes';
 import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
+import ButtomNavigation from '../Layout/ButtomNaviagatoin';
 
 function EditPassword() {
 
@@ -82,7 +83,9 @@ const changeFn = async (reqbody)=>{
           Submit
         </button>
       </form>
-    </div></>
+    </div>
+    <ButtomNavigation/>
+    </>
   );
 }
 

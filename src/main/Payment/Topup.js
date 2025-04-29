@@ -13,6 +13,7 @@ import crypto from "../../images/crypto.jpg";
 import Loader from "../../Shared/Loader";
 import { apiConnectorGet, apiConnectorPost } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
+import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 function TopUP() {
   const [data, setData] = useState("");
@@ -136,7 +137,7 @@ function TopUP() {
 
         </Box>
       </div>
-
+      <ButtomNavigation/>
 
     </>
   );
