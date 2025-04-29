@@ -1,16 +1,16 @@
-import moment from "moment";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import Navbar from "../dashboard/Navbar";
-import crypto from "../images/crypto.jpg";
-import { apiConnectorGet } from "../utils/APIConnector";
-import { endpoint } from "../utils/APIRoutes";
-import Loader from "../Shared/Loader";
-import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+import moment from 'moment';
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import Navbar from '../dashboard/Navbar';
+import crypto from '../images/crypto.jpg';
+import { apiConnectorGet } from '../utils/APIConnector';
+import { endpoint } from '../utils/APIRoutes';
+import Loader from '../Shared/Loader';
+import ButtomNavigation from '../Layout/ButtomNaviagatoin';
 
 function TopUP() {
   const { isLoading, data: topup_data } = useQuery(
-    ["topup_api"],
+    ['topup_api'],
     () => apiConnectorGet(endpoint?.get_topup_api),
     {
       refetchOnMount: false,
@@ -27,7 +27,7 @@ function TopUP() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-4  flex min-h-screen flex-col items-center bg-custom-gradient"
+        className="p-4 flex min-h-screen flex-col items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
@@ -35,7 +35,7 @@ function TopUP() {
             Top Up Details
           </h1>
 
-          <div className="mt-6 lg:mt-10 ">
+          <div className="mt-6 lg:mt-10 overflow-x-auto">
             <table className="min-w-full ">
               <thead>
                 <tr>
@@ -62,7 +62,7 @@ function TopUP() {
                     <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
                       {moment
                         ?.utc(item?.topup_date)
-                        ?.format("DD-MM-YYYY HH:mm:ss")}
+                        ?.format('DD-MM-YYYY HH:mm:ss')}
                     </td>
                     <td className="px-6 text-center border border-yellow-500 text-text-color py-4 text-colorrspace-nowrap">
                       {item?.topup_pack_amount}
@@ -77,7 +77,7 @@ function TopUP() {
           </div>
         </div>
       </div>
-      <ButtomNavigation/>
+      <ButtomNavigation />
     </>
   );
 }

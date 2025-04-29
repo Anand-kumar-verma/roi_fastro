@@ -1,18 +1,18 @@
-import React from "react";
-import { useQuery, useQueryClient } from "react-query";
-import Navbar from "../dashboard/Navbar";
-import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
-import { endpoint } from "../utils/APIRoutes";
-import Loader from "../Shared/Loader";
-import { useFormik } from "formik";
-import { Button } from "@mui/material";
-import toast from "react-hot-toast";
-import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+import React from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+import Navbar from '../dashboard/Navbar';
+import { apiConnectorGet, apiConnectorPost } from '../utils/APIConnector';
+import { endpoint } from '../utils/APIRoutes';
+import Loader from '../Shared/Loader';
+import { useFormik } from 'formik';
+import { Button } from '@mui/material';
+import toast from 'react-hot-toast';
+import ButtomNavigation from '../Layout/ButtomNaviagatoin';
 
 function ViewProfile() {
   const client = useQueryClient();
   const { isLoading, data: profile_data } = useQuery(
-    ["profile_api"],
+    ['profile_api'],
     () => apiConnectorGet(endpoint?.profile_api),
     {
       refetchOnMount: false,
@@ -25,10 +25,10 @@ function ViewProfile() {
   const data = profile_data?.data?.result?.[0] || [];
 
   const initialValues = {
-    lgn_real_mob: data?.lgn_real_mob || data?.lgn_mobile || "",
-    lgn_real_email: data?.lgn_real_email || data?.lgn_email || "",
-    lgn_real_name: data?.lgn_real_name || data?.jnr_name || "",
-    lgn_wallet_add: data?.lgn_wallet_add || "",
+    lgn_real_mob: data?.lgn_real_mob || data?.lgn_mobile || '',
+    lgn_real_email: data?.lgn_real_email || data?.lgn_email || '',
+    lgn_real_name: data?.lgn_real_name || data?.jnr_name || '',
+    lgn_wallet_add: data?.lgn_wallet_add || '',
   };
   const fk = useFormik({
     initialValues: initialValues,
@@ -39,11 +39,11 @@ function ViewProfile() {
           endpoint?.update_profile_data,
           fk.values
         );
-        if (String(apiRes?.data?.success) === "true")
-          client.refetchQueries("profile_api");
+        if (String(apiRes?.data?.success) === 'true')
+          client.refetchQueries('profile_api');
         toast(apiRes?.data?.message);
       } catch (e) {
-        toast(e?.message || "Something went wrong.");
+        toast(e?.message || 'Something went wrong.');
       }
     },
   });
@@ -58,8 +58,8 @@ function ViewProfile() {
       >
         <div className="flex lg:w-[50%]  justify-center gap-[10%] items-center ">
           <p className="text-3xl text-text-color text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
-            {" "}
-            View Profile{" "}
+            {' '}
+            Profile{' '}
           </p>
         </div>
 
@@ -95,7 +95,7 @@ function ViewProfile() {
                 id="lgn_real_name"
                 name="lgn_real_name"
                 onChange={(e) => {
-                  data?.lgn_update_prof === "Active" && fk.handleChange(e);
+                  data?.lgn_update_prof === 'Active' && fk.handleChange(e);
                 }}
                 value={fk.values.lgn_real_name}
                 className="mt-1 p-2 lg:w-[60%] w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500"
@@ -110,7 +110,7 @@ function ViewProfile() {
                 id="lgn_real_mob"
                 name="lgn_real_mob"
                 onChange={(e) => {
-                  data?.lgn_update_prof === "Active" && fk.handleChange(e);
+                  data?.lgn_update_prof === 'Active' && fk.handleChange(e);
                 }}
                 value={fk?.values.lgn_real_mob}
                 className="mt-1 p-2 lg:w-[60%] w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500"
@@ -124,7 +124,7 @@ function ViewProfile() {
                 id="lgn_real_email"
                 name="lgn_real_email"
                 onChange={(e) => {
-                  data?.lgn_update_prof === "Active" && fk.handleChange(e);
+                  data?.lgn_update_prof === 'Active' && fk.handleChange(e);
                 }}
                 value={fk?.values.lgn_real_email}
                 className="mt-1 p-2 lg:w-[60%] w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500"
@@ -151,7 +151,7 @@ function ViewProfile() {
                 name="lgn_wallet_add"
                 placeholder="0x..."
                 onChange={(e) => {
-                  data?.lgn_update_prof === "Active" && fk.handleChange(e);
+                  data?.lgn_update_prof === 'Active' && fk.handleChange(e);
                 }}
                 value={fk.values.lgn_wallet_add}
                 className="mt-1 p-2 lg:w-[60%] w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500"
@@ -162,7 +162,7 @@ function ViewProfile() {
               (Format: 0x..), otherwise, you will be responsible for any issues.
             </div>
 
-            {data?.lgn_update_prof === "Active" && (
+            {data?.lgn_update_prof === 'Active' && (
               <Button
                 variant="contained"
                 className="!mt-2 !bg-gradient-to-r !from-green-400 !to-[#44a8e7] !rounded-full !hover:bg-text-color !hover:text-black  !p-2 !text-background"
@@ -174,7 +174,7 @@ function ViewProfile() {
           </div>
         </div>
       </div>
-      <ButtomNavigation/>
+      <ButtomNavigation />
     </>
   );
 }
