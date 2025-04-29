@@ -1,36 +1,36 @@
-import { Close, Diamond } from '@mui/icons-material';
-import moment from 'moment/moment';
-import React, { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import toast from 'react-hot-toast';
-import { BsTrophyFill } from 'react-icons/bs';
-import { FaCopy } from 'react-icons/fa';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import card1 from '../images/card1.jpg';
-import card2 from '../images/card2.jpg';
-import card3 from '../images/card3.jpg';
-import card6 from '../images/card_6.png';
-import Loader from '../Shared/Loader';
-import AddLinkIcon from '@mui/icons-material/AddLink';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import { apiConnectorGet } from '../utils/APIConnector';
-import { endpoint } from '../utils/APIRoutes';
-import Navbar from './Navbar';
-import ButtomNavigation from '../Layout/ButtomNaviagatoin';
-import AllInboxIcon from '@mui/icons-material/AllInbox';
-import { Button } from '@mui/material';
-import tether from '../images/tether.png';
-import InfoIcon from '@mui/icons-material/Info';
+import { Close, Diamond } from "@mui/icons-material";
+import moment from "moment/moment";
+import React, { useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import toast from "react-hot-toast";
+import { BsTrophyFill } from "react-icons/bs";
+import { FaCopy } from "react-icons/fa";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import card1 from "../images/card1.jpg";
+import card2 from "../images/card2.jpg";
+import card3 from "../images/card3.jpg";
+import card6 from "../images/card_6.png";
+import Loader from "../Shared/Loader";
+import AddLinkIcon from "@mui/icons-material/AddLink";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import GraphicEqIcon from "@mui/icons-material/GraphicEq";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { apiConnectorGet } from "../utils/APIConnector";
+import { endpoint } from "../utils/APIRoutes";
+import Navbar from "./Navbar";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
+import { Button } from "@mui/material";
+import tether from "../images/tether.png";
+import InfoIcon from "@mui/icons-material/Info";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState();
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const { isLoading, data: dashboard } = useQuery(
-    ['dashboard_api'],
+    ["dashboard_api"],
     () => apiConnectorGet(endpoint?.user_dashboard_api),
     {
       refetchOnMount: false,
@@ -42,7 +42,7 @@ const Dashboard = () => {
   );
   const data = dashboard?.data?.result || [];
   const { isLoading: packageLoding, data: getPackageDetails } = useQuery(
-    ['dashboard_api_package'],
+    ["dashboard_api_package"],
     () => apiConnectorGet(endpoint?.user_buy_package_details_api),
     {
       refetchOnMount: false,
@@ -55,7 +55,7 @@ const Dashboard = () => {
   const getPackageDetailsData = getPackageDetails?.data?.result || [];
 
   const { isLoading: proLoding, data: profile_data } = useQuery(
-    ['profile_api'],
+    ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
     {
       refetchOnMount: false,
@@ -74,7 +74,7 @@ const Dashboard = () => {
     options: {
       chart: {
         height: 500,
-        type: 'radialBar',
+        type: "radialBar",
         offsetY: -10,
       },
       plotOptions: {
@@ -83,25 +83,25 @@ const Dashboard = () => {
           endAngle: 135,
           dataLabels: {
             name: {
-              fontSize: '16px',
+              fontSize: "16px",
               color: undefined,
               offsetY: 120,
             },
             value: {
               offsetY: 76,
-              fontSize: '22px',
-              color: 'white',
+              fontSize: "22px",
+              color: "white",
               formatter: function (val) {
-                return val + '$';
+                return val + "$";
               },
             },
           },
         },
       },
       fill: {
-        type: 'gradient',
+        type: "gradient",
         gradient: {
-          shade: 'light',
+          shade: "light",
           shadeIntensity: 0.15,
           inverseColors: false,
           opacityFrom: 1,
@@ -112,7 +112,7 @@ const Dashboard = () => {
       stroke: {
         dashArray: 4,
       },
-      labels: ['Influencer'],
+      labels: ["Influencer"],
     },
   };
 
@@ -124,47 +124,37 @@ const Dashboard = () => {
   //5, weekly ==> rank
   //6, Rocket
   // 7, Jackpot
-  const url = 'https://t.me/fastro2025_bot/fastro';
+  const url = "https://t.me/fastro2025_bot/fastro";
 
   const handleCopy = (url) => {
     navigator.clipboard
       .writeText(url)
       .then(() => {
-        toast('Link copied to clipboard!');
+        toast("Link copied to clipboard!");
       })
       .catch((err) => {
-        console.error('Failed to copy: ', err);
+        console.error("Failed to copy: ", err);
       });
   };
 
   const state = {
     series: [
       {
-        name: 'Package',
-        data: getPackageDetailsData?.map((i) => {
-          return Number(i?.topup_pack_amount).toFixed(2);
-        }),
-      },
-      {
-        name: 'ROI',
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-      },
-      {
-        name: 'Weekly',
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+        name: "Package",
+        data: [5, 10, 20, 50, 100, 300, 500, 1000, 3000, 5000],
       },
     ],
     options: {
       chart: {
-        type: 'bar',
+        type: "bar",
         height: 350,
       },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '55%',
+          columnWidth: "55%",
           borderRadius: 5,
-          borderRadiusApplication: 'end',
+          borderRadiusApplication: "end",
         },
       },
       dataLabels: {
@@ -173,145 +163,52 @@ const Dashboard = () => {
       stroke: {
         show: true,
         width: 2,
-        colors: ['white'],
+        colors: ["white"],
       },
       xaxis: {
         categories: [
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
+          "$5",
+          "$10",
+          "$20",
+          "$50",
+          "$100",
+          "$300",
+          "$500",
+          "$1000",
+          "$3000",
+          "$5000",
         ],
+        labels: {
+          style: {
+            colors: "#ff0000", // Red color
+            fontSize: "14px",
+          },
+        },
       },
       yaxis: {
         title: {
-          text: '$ (thousands)',
+          text: "$ (Packages)",
+          style: {
+            color: "#00ff00", // Green color
+            fontSize: "14px",
+          },
+        },
+        labels: {
+          style: {
+            colors: "#0000ff", // Blue color
+            fontSize: "14px",
+          },
         },
       },
+
       fill: {
         opacity: 1,
       },
       tooltip: {
         y: {
           formatter: function (val) {
-            return '$ ' + val + ' thousands';
+            return "$ " + val + " thousands";
           },
-        },
-      },
-    },
-  };
-  let area = {
-    series: [
-      {
-        name: 'TEAM A',
-        type: 'column',
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-      },
-      {
-        name: 'TEAM B',
-        type: 'area',
-        data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-      },
-      {
-        name: 'TEAM C',
-        type: 'line',
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: 'line',
-        stacked: false,
-      },
-      stroke: {
-        width: [0, 2, 5],
-        curve: 'smooth',
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '50%',
-        },
-      },
-      fill: {
-        opacity: [0.85, 0.25, 1],
-        gradient: {
-          inverseColors: false,
-          shade: 'light',
-          type: 'vertical',
-          opacityFrom: 0.85,
-          opacityTo: 0.55,
-          stops: [0, 100, 100, 100],
-        },
-      },
-      labels: [
-        '01/01/2003',
-        '02/01/2003',
-        '03/01/2003',
-        '04/01/2003',
-        '05/01/2003',
-        '06/01/2003',
-        '07/01/2003',
-        '08/01/2003',
-        '09/01/2003',
-        '10/01/2003',
-        '11/01/2003',
-      ],
-      markers: {
-        size: 0,
-      },
-      xaxis: {
-        type: 'datetime',
-        labels: {
-          style: {
-            colors: '#3f7de0',
-          },
-        },
-        axisBorder: {
-          color: '#3f7de0',
-        },
-        axisTicks: {
-          color: '#3f7de0',
-        },
-      },
-      yaxis: {
-        title: {
-          text: 'Points',
-          style: {
-            color: '#3f7de0',
-          },
-        },
-        labels: {
-          style: {
-            colors: '#3f7de0',
-          },
-        },
-      },
-      tooltip: {
-        shared: true,
-        intersect: false,
-        style: {
-          fontSize: '12px',
-          fontFamily: undefined,
-          colors: ['#3f7de0'],
-        },
-        y: {
-          formatter: function (y) {
-            if (typeof y !== 'undefined') {
-              return y.toFixed(0) + ' points';
-            }
-            return y;
-          },
-        },
-      },
-      legend: {
-        labels: {
-          colors: '#3f7de0',
         },
       },
     },
@@ -326,7 +223,7 @@ const Dashboard = () => {
           {/* <p className="text-lg text-black  p-2 px-5 lg:mt-20 mt-10 flex justify-between">
             <Telegram
               fontSize="large"
-              className="!bg-blue-400 !text-background rounded-full p-1 !font-bold"
+              className="!bg-text-color !text-background rounded-full p-1 !font-bold"
             />
             <WhatsApp
               fontSize="large"
@@ -349,22 +246,22 @@ const Dashboard = () => {
               className="!text-background rounded-full p-1 !bg-red-600 !font-bold"
             />
           </p> */}
-          <div className="text-lg bg-gray-100 border border-rose-500 rounded opacity-75 lg:p-4 p-2 lg:px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
-            <span className="!font-bold pr-3 text-yellow-600">News:</span>
+          <div className="text-lg bg-glassy border border-rose-500 rounded opacity-75 lg:p-4 p-2 lg:px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
+            <span className="!font-bold pr-3 text-green-500">News:</span>
             <div className="w-full overflow-hidden whitespace-nowrap relative">
               <div
                 className="flex animate-marquee"
                 style={{
-                  animation: 'marquee 6s linear infinite',
+                  animation: "marquee 6s linear infinite",
                 }}
               >
-                <span className="inline-block text-red-600 text-sm">
+                <span className="inline-block text-text-color text-sm">
                   Text is the exact, original words written by an author. Text
                   is also a specific work as written by the original author.
                   Text is also commonly used to refer to a text message or to
                   send a text message. Text has several other senses as a noun.
                 </span>
-                <span className="inline-block text-red-600  text-sm">
+                <span className="inline-block text-text-color  text-sm">
                   Text is the exact, original words written by an author. Text
                   is also a specific work as written by the original author.
                   Text is also commonly used to refer to a text message or to
@@ -392,14 +289,14 @@ const Dashboard = () => {
               <div className="flex flex-col">
                 <div className="flex justify-between gap-1 items-center">
                   <div className="flex gap-2">
-                    {' '}
+                    {" "}
                     <AllInboxIcon />
                     <p className="text-[#60A5FA] text-lg">Balance</p>
                   </div>
                   <Button
                     variant="contained"
                     className="!rounded-full"
-                    onClick={() => navigate('/withdrawal')}
+                    onClick={() => navigate("/withdrawal-link")}
                   >
                     Withdrawal
                   </Button>
@@ -414,7 +311,7 @@ const Dashboard = () => {
                     Minimum 5$ is required for ROI
                   </p>
                 </div>
-                <div className="pt-4  border-b-2 border-blue-400"></div>
+                <div className="pt-4  border-b-2 border-text-color"></div>
                 <div className="flex justify-between items-center pt-8">
                   <div className="flex gap-2">
                     <p className="text-[#60A5FA] lg:text-lg text-base">
@@ -425,7 +322,7 @@ const Dashboard = () => {
                   <Button
                     variant="contained"
                     className="!rounded-full"
-                    onClick={() => navigate('/Teamdata')}
+                    onClick={() => navigate("/activation")}
                   >
                     Deposit
                   </Button>
@@ -443,7 +340,7 @@ const Dashboard = () => {
             </div>
             <div className="p-6 bg-glassy">
               <div className="grid gap-6 grid-cols-2 w-full place-items-center mb-4">
-                <div className="flex items-center  font-bold text-blue-400">
+                <div className="flex items-center  font-bold text-text-color">
                   <MonetizationOnIcon className="!text-8xl" />
                 </div>
                 <div className="text-2xl font-bold text-amber-400">
@@ -454,14 +351,14 @@ const Dashboard = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between text-blue-300">
                   <span className="font-medium">User Id</span>
-                  <span className="font-semibold text-blue-400">
+                  <span className="font-semibold text-text-color">
                     {profile?.lgn_cust_id}
                   </span>
                 </div>
 
                 {/* <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Activation Date</span>
-                  <span className="font-semibold text-blue-400">
+                  <span className="font-semibold text-text-color">
                     {moment
                       ?.utc(profile?.topup_date)
                       ?.format("DD-MM-YYYY HH:mm:ss")}
@@ -480,8 +377,8 @@ const Dashboard = () => {
                   <span
                     className={`bg-white/10 shadow px-3 py-1 rounded-lg text-2xl font-bold ${
                       Number(profile?.jnr_flush_amnt || 0) > 0
-                        ? 'animate-pulse text-red-400'
-                        : 'text-gray-400'
+                        ? "animate-pulse text-red-400"
+                        : "text-gray-400"
                     }`}
                   >
                     {Number(profile?.jnr_flush_amnt || 0)?.toFixed(0)} $
@@ -491,21 +388,21 @@ const Dashboard = () => {
             </div>
 
             <div className="p-6 bg-glassy">
-              <div className="flex flex-col gap-6">
-                <p className="text-2xl font-bold text-blue-400 text-center mb-4">
+              <div className="flex flex-col gap-3">
+                <p className="text-2xl font-bold text-text-color text-center mb-4">
                   <GraphicEqIcon className="!text-8xl" />
                 </p>
 
                 <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Direct Team</span>
-                  <span className="font-semibold text-blue-400">
+                  <span className="font-semibold text-text-color">
                     {profile?.jnr_direct_team || 0}
                   </span>
                 </div>
 
                 <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Direct TopUp Member</span>
-                  <span className="font-semibold text-blue-400">
+                  <span className="font-semibold text-text-color">
                     {profile?.jnr_direct_topup_mem || 0}
                   </span>
                 </div>
@@ -533,14 +430,12 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-glassy">
+            {/* <div className="p-6 bg-glassy">
               <div className="flex flex-col items-center gap-6">
-                {/* Referral Link Title */}
                 <p className="text-2xl font-bold  text-center flex justify-between px-4">
                   <AddLinkIcon className="!text-6xl" />
                 </p>
 
-                {/* Referral Link Display */}
                 <div className="flex items-center flex-wrap gap-3 justify-center">
                   <div className="flex items-center px-4 py-2 bg-green-200 text-blue-500 rounded-md border">
                     {url?.substring(0, 10)}...{url?.substring(15, 20)}
@@ -553,12 +448,10 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* Referral ID Title */}
                 <p className="text-2xl font-bold text-gray-800 text-center">
                   My Referral ID
                 </p>
 
-                {/* Referral ID Display */}
                 <div className="flex items-center gap-3 justify-center">
                   <div className="flex items-center px-4 py-2 bg-green-200 text-blue-500 rounded-md border">
                     {profile?.lgn_cust_id}
@@ -571,7 +464,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* <div className="text-lg bg-gray-color opacity-75 border border-rose-500 rounded py-5 p-2 px-5 lg:mt-10 mt-5 flex flex-col gap-2 justify-start">
@@ -667,7 +560,7 @@ const Dashboard = () => {
         </p>
         <div
           className={`${
-            getPackageDetailsData?.length > 0 && '!grid'
+            getPackageDetailsData?.length > 0 && "!grid"
           } lg:!grid-cols-2 grid-cols-1`}
         >
           {getPackageDetailsData?.length > 0 && (
@@ -718,44 +611,44 @@ const Dashboard = () => {
                 </button>
               </div>
               <div className=" px-2 font-bold flex justify-center items-center bg-gradient-to-r from-yellow-200 to-yellow-200 bg-clip-text text-transparent">
-                Topup:{' '}
+                Topup:{" "}
                 {moment
                   ?.utc(showPopup?.created_at)
-                  ?.format('DD-MM-YYYY HH:mm:ss')}
+                  ?.format("DD-MM-YYYY HH:mm:ss")}
               </div>
             </div>
           </div>
         )}
 
         <p className="mt-10 mx-5 flex items-center justify-between lg:gap-10 gap-1  p-3 px-5 lg:text-xl font-bold  text-lg rounded bg-glassy ">
-          Check Out Royality & Rewards{' '}
+          Check Out Royality & Rewards{" "}
           <BsTrophyFill className="!text-yellow-500" />
         </p>
 
         <div className="grid md:grid-cols-2 grid-cols-1 gap-6 place-items-center px-4 py-6">
           {[
             {
-              title: 'ROI Income',
+              title: "ROI Income",
               value: Number(data?.[0]?.roi || 0)?.toFixed(2) || 0,
-              url: '/roi_income',
+              url: "/roi_income",
               bg: card1,
             },
             {
-              title: 'Direct Income',
+              title: "Direct Income",
               value: Number(data?.[0]?.award_reward || 0)?.toFixed(2) || 0,
-              url: '/direct_income',
+              url: "/direct_income",
               bg: card2,
             },
             {
-              title: 'Level Income',
+              title: "Level Income",
               value: Number(data?.[0]?.level || 0)?.toFixed(2) || 0,
-              url: '/level_income',
+              url: "/level_income",
               bg: card3,
             },
             {
-              title: 'Reward Income',
+              title: "Reward Income",
               value: Number(data?.[0]?.weekly || 0)?.toFixed(2) || 0,
-              url: '/weekly_income',
+              url: "/weekly_income",
               bg: card6,
             },
           ].map((item, index) => (
@@ -764,8 +657,8 @@ const Dashboard = () => {
               onClick={() => navigate(item.url)}
               style={{
                 backgroundImage: `url(${item.bg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
               className="group relative flex flex-col justify-between p-6 rounded-2xl shadow-2xl w-full max-w-[400px] h-[180px] bg-gradient-to-r from-white/70 to-white/30 cursor-pointer hover:scale-110 hover:rotate-1 transition-transform duration-300 ease-in-out"
             >

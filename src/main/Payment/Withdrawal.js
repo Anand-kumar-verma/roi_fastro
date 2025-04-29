@@ -9,7 +9,7 @@ import { apiConnectorGet, apiConnectorPost } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { enCryptData } from "../../utils/Secret";
 import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
-
+import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 function Withdrawal() {
   // const [walletAddress, setWalletAddress] = useState("");
   const [data, setData] = useState("");
@@ -103,17 +103,17 @@ function Withdrawal() {
     <>
       <Navbar />
       <div
-        className=" text-white flex flex-col items-center  min-h-screen pb-10 bg-custom-gradient]"
+        className="text-text-color flex flex-col items-center  min-h-screen pb-10 bg-custom-gradient]"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <Loader isLoading={loding} />
 
         <div
-          className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient px-1 mt-5"
+          className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient px-1 mt-5 !bg-glassy "
           // style={{ backgroundImage: `url(${crypto})` }}
         >
           <Box
-            className="!cursor-pointer bg-custom-gradient  !flex !flex-col !justify-center gap-2  w-full border-2 border-white "
+            className="!cursor-pointer bg-custom-gradient  !flex !flex-col !justify-center gap-2  w-full border-2 border-text-color "
             sx={{
               // background: "#dad3d3",
               borderRadius: "5px",
@@ -121,11 +121,10 @@ function Withdrawal() {
               boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
             }}
           >
-            <p className="text-3xl text-text-color text-center font-bold my-2 bg-gradient-to-r from-green-400 to-[#44a8e7] bg-clip-text text-transparent">
-              Withdrawal
-            </p>
-
-            <div className="!text-green-500 !text-[13px] w-full p-3 overflow-x-auto bg-green-50 rounded-lg border border-rose-200">
+            <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded focus:ring-blue-500 focus:border-blue-500">
+              <AssuredWorkloadIcon className="!text-text-color !text-[80px]" />
+            </div>
+            <div className="!text-green-500 !text-[13px] w-full p-3 overflow-x-auto bg-glassy rounded-lg border border-rose-200">
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex whitespace-nowrap">
                   <p>Working Wallet : </p>
@@ -158,7 +157,7 @@ function Withdrawal() {
               </div>
             </div>
             <div className="my-3">
-              <div className="!text-rose-500 !text-[10px] w-full p-3 overflow-x-auto bg-rose-50 rounded-lg border border-rose-200">
+              <div className="!text-rose-500 !text-[10px] w-full p-3 overflow-x-auto bg-glassy  rounded-lg border border-rose-200">
                 <span className="!font-bold"> Address : </span>{" "}
                 <span className=""> {fk.values.walletAddress} </span>
               </div>
@@ -171,7 +170,7 @@ function Withdrawal() {
               name="amount"
               value={fk.values.amount}
               onChange={fk.handleChange}
-              className="p-2 !-mt-2  w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500"
+              className="p-2 !-mt-2  w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500 bg-glassy "
             />
             <p>Confirm Your Address (BEP20)*:</p>
 
@@ -180,10 +179,10 @@ function Withdrawal() {
               name="walletAddress"
               placeholder="0x..."
               value={fk.values.walletAddress}
-              className="p-2 !-mt-2 w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500"
+              className="p-2 !-mt-2 w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500 bg-glassy "
             />
             <button
-              className=" bg-gradient-to-r from-green-400 to-[#44a8e7] rounded-full hover:bg-white hover:text-black  p-2 !text-background"
+              className="  rounded-full hover:bg-white hover:text-black  p-2 !text-background bg-text-color "
               onClick={Payout}
             >
               Confirm
@@ -199,7 +198,7 @@ function Withdrawal() {
               <p className="!font-bold">{data?.status}</p>
             </div>
           </div> */}
-            <div className="!text-rose-500 !text-[10px] w-full p-3 overflow-x-auto bg-rose-50 rounded-lg border border-rose-200">
+            <div className="!text-rose-500 !text-[10px] w-full p-3 overflow-x-auto bg-glassy  rounded-lg border border-rose-200">
               Note: Please ensure that your wallet address is BEP20 Network
               (Format: 0x..), otherwise, you will be responsible for any issues.
             </div>
@@ -207,7 +206,7 @@ function Withdrawal() {
         </div>
         {/* <Footer /> */}
       </div>
-      <ButtomNavigation/>
+      <ButtomNavigation />
     </>
   );
 }

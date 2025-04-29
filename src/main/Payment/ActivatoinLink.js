@@ -24,13 +24,13 @@ const ActivatoinLink = () => {
             );
             toast.success("Copy to clipboard", { id: 1 });
           }}
-          className="!text-[10px] flex flex-col !bg-gray-200 p-5 rounded-md"
+          className="!text-[10px] flex flex-col !bg-text-color p-5 rounded-md"
         >
           <span>
             Copy Link:
             <CopyAll />
           </span>
-          <span className="!text-blue-500">{frontend}/activation-link</span>
+          <span className="!text-white">{frontend}/activation-link</span>
         </p>
       </div>
       <ButtomNavigation/>
