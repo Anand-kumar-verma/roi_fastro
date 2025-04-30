@@ -77,7 +77,7 @@ export default function Navbar() {
           <div
             className={`fixed top-0 left-0 p-4 h-full  ! transition-transform transform  ${
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } md:relative md:translate-x-0 md:flex md:gap-10 bg-custom-gradient text-text-color`}
+            } md:relative md:translate-x-0 md:flex md:gap-10 bg-custom-gradient text-white`}
           >
             <div className="flex justify-between  p-2 items-center mb-5 md:hidden">
               <img src={logo} alt="Logo" className="h-10" />
