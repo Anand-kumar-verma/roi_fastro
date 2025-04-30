@@ -438,11 +438,11 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-glassy text-white flex justify-between items-center space-y-2 rounded-xl">
+            <div className="p-6 bg-glassy  flex justify-between items-center space-y-2 rounded-xl">
               <p>FASTRO (FST) Contract:</p>
               <button
                 onClick={handleCopyy}
-                className="text-blue-400 hover:text-blue-300 transition"
+                className="text-text-color transition"
               >
                 <CopyAll className="!text-xl" />
               </button>
