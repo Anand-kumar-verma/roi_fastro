@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaUserGroup } from 'react-icons/fa6';
 
-function Levelone() {
+function Leveltwo() {
   return (
     <>
       <div className="rounded-2xl border border-[#1E293B] p-4 text-white !mb-10">
         <div className="rounded-xl bg-glassy p-4 space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-text-color font-semibold">Level 1</span>
+            <span className="text-text-color font-semibold">Level 2</span>
             <span className="text-sm text-gray-400">0 Members</span>
           </div>
           <div className="flex justify-between text-sm">
@@ -30,4 +30,4 @@ function Levelone() {
   );
 }
 
-export default Levelone;
+export default Leveltwo;

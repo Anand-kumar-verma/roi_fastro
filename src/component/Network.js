@@ -1,18 +1,22 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { Box, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
-import { FaRegClock, FaUserCheck, FaUserTimes } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
-import { IoArrowDownCircle } from "react-icons/io5";
-import { PiMicrosoftTeamsLogoLight } from "react-icons/pi";
-import { VscFileSubmodule } from "react-icons/vsc";
-import Navbar from "../dashboard/Navbar";
-import crown from "../images/crown.png";
-import ButtomNavigation from "../Layout/ButtomNaviagatoin";
-import Loader from "../Shared/Loader";
-import Levelone from "./TabComponent/Levelone";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import { Box, Tab, Tabs } from '@mui/material';
+import React, { useState } from 'react';
+import { FaRegClock, FaUserCheck, FaUserTimes } from 'react-icons/fa';
+import { FaUserGroup } from 'react-icons/fa6';
+import { IoArrowDownCircle } from 'react-icons/io5';
+import { PiMicrosoftTeamsLogoLight } from 'react-icons/pi';
+import { VscFileSubmodule } from 'react-icons/vsc';
+import Navbar from '../dashboard/Navbar';
+import crown from '../images/crown.png';
+import ButtomNavigation from '../Layout/ButtomNaviagatoin';
+import Loader from '../Shared/Loader';
+import Levelone from './TabComponent/Levelone';
+import Leveltwo from './TabComponent/Leveltwo';
+import Levelthree from './TabComponent/Levelthree';
+import Levelfour from './TabComponent/Levelfour';
+import Levelfive from './TabComponent/Levelfive';
 const Network = () => {
   const [loading, setLoading] = useState();
   const [value, setValue] = useState();
@@ -20,7 +24,7 @@ const Network = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const isMobile = "";
+  const isMobile = '';
   return (
     <>
       <Navbar />
@@ -120,68 +124,51 @@ const Network = () => {
             <p className="text-lg text-white font-semibold">0.00 USD</p>
           </div>
         </div>
-        <Box sx={{ width: "100%" }} className="!bg-glassy !p-6 ">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            variant={isMobile ? "scrollable" : "fullWidth"}
-            scrollButtons={false}
-            allowScrollButtonsMobile
-            className="!text-text-color"
-          >
-            <Tab
-              label="Level 1"
+        <Box sx={{ width: '100%' }} className="!bg-glassy ">
+          <Box sx={{ overflowX: 'auto', width: '100%' }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons={false}
+              allowScrollButtonsMobile
+              className="!text-text-color"
               sx={{
-                color: "#60A5FA",
-                "&.Mui-selected": {
-                  color: "#3f7de0",
+                px: 1,
+                '& .MuiTabs-flexContainer': {
+                  flexWrap: 'nowrap',
+                },
+                '& .MuiTabs-scroller': {
+                  overflowX: 'auto',
                 },
               }}
-            />
-            <Tab
-              label="Level 2"
-              sx={{
-                color: "#60A5FA",
-                "&.Mui-selected": {
-                  color: "#3f7de0",
-                },
-              }}
-            />
-            <Tab
-              label="Level 3"
-              sx={{
-                color: "#60A5FA",
-                "&.Mui-selected": {
-                  color: "#3f7de0",
-                },
-              }}
-            />
-            <Tab
-              label="Level 4"
-              sx={{
-                color: "#60A5FA",
-                "&.Mui-selected": {
-                  color: "#3f7de0",
-                },
-              }}
-            />
-            <Tab
-              label="Level 5"
-              sx={{
-                color: "#60A5FA",
-                "&.Mui-selected": {
-                  color: "#3f7de0",
-                },
-              }}
-            />
-          </Tabs>
+            >
+              {[1, 2, 3, 4, 5].map((level, index) => (
+                <Tab
+                  key={level}
+                  label={`Level ${level}`}
+                  sx={{
+                    px: 1,
+                    py: 1,
+                    minWidth: 'auto',
+                    color: '#60A5FA',
+                    textTransform: 'none',
+                    whiteSpace: 'nowrap',
+                    '&.Mui-selected': {
+                      color: '#3f7de0',
+                    },
+                  }}
+                />
+              ))}
+            </Tabs>
+          </Box>
 
-          <Box sx={{ p: 2 }} className="!text-text-color ">
-            {value === 0 && <div>Content for Tab 1</div>}
-            {value === 1 && <Levelone />}
-            {value === 2 && <div>Content for Tab 3</div>}
-            {value === 3 && <div>Content for Tab 4</div>}
-            {value === 4 && <div>Content for Tab 5</div>}
+          <Box sx={{ p: 2 }} className="!text-text-color">
+            {value === 0 && <Levelone />}
+            {value === 1 && <Leveltwo />}
+            {value === 2 && <Levelthree />}
+            {value === 3 && <Levelfour />}
+            {value === 4 && <Levelfive />}
           </Box>
         </Box>
       </div>
