@@ -1,43 +1,47 @@
-import { Close, Diamond } from '@mui/icons-material';
-import AllInboxIcon from '@mui/icons-material/AllInbox';
-import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import InfoIcon from '@mui/icons-material/Info';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import { Button } from '@mui/material';
-import moment from 'moment/moment';
-import React, { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import toast from 'react-hot-toast';
-import { BsTrophyFill } from 'react-icons/bs';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import card1 from '../images/card1.jpg';
-import card2 from '../images/card2.jpg';
-import card3 from '../images/card3.jpg';
-import card6 from '../images/card_6.png';
-import tether from '../images/tether.png';
-import ButtomNavigation from '../Layout/ButtomNaviagatoin';
-import Loader from '../Shared/Loader';
-import { apiConnectorGet } from '../utils/APIConnector';
-import { endpoint } from '../utils/APIRoutes';
-import Navbar from './Navbar';
-import { CopyAll } from '@mui/icons-material';
-
+import { Close, CopyAll, Diamond } from "@mui/icons-material";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { Button } from "@mui/material";
+import moment from "moment/moment";
+import React, { useEffect, useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import { BsTrophyFill } from "react-icons/bs";
+import { useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import card1 from "../images/card1.jpg";
+import card2 from "../images/card2.jpg";
+import card3 from "../images/card3.jpg";
+import card6 from "../images/card_6.png";
+import tether from "../images/tether.png";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+import Loader from "../Shared/Loader";
+import {
+  apiConnectorGet,
+  apiConnectorGetWithoutToken,
+} from "../utils/APIConnector";
+import { contractAddress, endpoint, telegram_url } from "../utils/APIRoutes";
+import Navbar from "./Navbar";
+import CustomPopup from "../component/CustomPopup";
+import toast from "react-hot-toast";
 const Dashboard = () => {
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-
-  const contractAddress = '0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0';
+  const client = useQueryClient();
   const [copied, setCopied] = useState(false);
-
-  const handleCopyy = () => {
-    navigator.clipboard.writeText(contractAddress);
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCopyy = (url) => {
+    navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
+
   const { isLoading, data: dashboard } = useQuery(
-    ['dashboard_api'],
+    ["dashboard_api"],
     () => apiConnectorGet(endpoint?.user_dashboard_api),
     {
       refetchOnMount: false,
@@ -48,8 +52,9 @@ const Dashboard = () => {
     }
   );
   const data = dashboard?.data?.result || [];
+
   const { isLoading: packageLoding, data: getPackageDetails } = useQuery(
-    ['dashboard_api_package'],
+    ["dashboard_api_package"],
     () => apiConnectorGet(endpoint?.user_buy_package_details_api),
     {
       refetchOnMount: false,
@@ -59,10 +64,11 @@ const Dashboard = () => {
       refetchOnWindowFocus: false,
     }
   );
+
   const getPackageDetailsData = getPackageDetails?.data?.result || [];
 
   const { isLoading: proLoding, data: profile_data } = useQuery(
-    ['profile_api'],
+    ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
     {
       refetchOnMount: false,
@@ -74,6 +80,36 @@ const Dashboard = () => {
   );
   const profile = profile_data?.data?.result?.[0] || [];
 
+  useEffect(() => {
+    setOpen(profile?.is_popup_open === "Active");
+  }, [profile?.is_popup_open]);
+
+  //   const { isLoading: isPopupLoading, data:popupResponse  } = useQuery(
+  //   ["popup_close"],
+  //   () => apiConnectorGet(endpoint.update_popup_status),
+  //   {
+  //     refetchOnMount: false,
+  //     refetchOnReconnect: false,
+  //     retry: false,
+  //     retryOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
+
+  const updatePopup = async () => {
+    handleClose(false);
+
+    try {
+      await apiConnectorGet(endpoint?.update_popup_status);
+
+      client.refetchQueries("profile_api");
+
+      // toast(res?.data?.message);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const ChartCount = {
     series: getPackageDetailsData?.map((i) => {
       return Number(i?.topup_pack_amount).toFixed(2);
@@ -81,7 +117,7 @@ const Dashboard = () => {
     options: {
       chart: {
         height: 500,
-        type: 'radialBar',
+        type: "radialBar",
         offsetY: -10,
       },
       plotOptions: {
@@ -90,25 +126,25 @@ const Dashboard = () => {
           endAngle: 135,
           dataLabels: {
             name: {
-              fontSize: '16px',
+              fontSize: "16px",
               color: undefined,
               offsetY: 120,
             },
             value: {
               offsetY: 76,
-              fontSize: '22px',
-              color: 'white',
+              fontSize: "22px",
+              color: "white",
               formatter: function (val) {
-                return val + '$';
+                return val + "$";
               },
             },
           },
         },
       },
       fill: {
-        type: 'gradient',
+        type: "gradient",
         gradient: {
-          shade: 'light',
+          shade: "light",
           shadeIntensity: 0.15,
           inverseColors: false,
           opacityFrom: 1,
@@ -119,7 +155,7 @@ const Dashboard = () => {
       stroke: {
         dashArray: 4,
       },
-      labels: ['Influencer'],
+      labels: ["Influencer"],
     },
   };
 
@@ -131,37 +167,25 @@ const Dashboard = () => {
   //5, weekly ==> rank
   //6, Rocket
   // 7, Jackpot
-  const url = 'https://t.me/fastro2025_bot/fastro';
-
-  const handleCopy = (url) => {
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        toast('Link copied to clipboard!');
-      })
-      .catch((err) => {
-        console.error('Failed to copy: ', err);
-      });
-  };
 
   const state = {
     series: [
       {
-        name: 'Package',
+        name: "Package",
         data: [5, 10, 20, 50, 100, 300, 500, 1000, 3000, 5000],
       },
     ],
     options: {
       chart: {
-        type: 'bar',
+        type: "bar",
         height: 350,
       },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '55%',
+          columnWidth: "55%",
           borderRadius: 5,
-          borderRadiusApplication: 'end',
+          borderRadiusApplication: "end",
         },
       },
       dataLabels: {
@@ -170,40 +194,40 @@ const Dashboard = () => {
       stroke: {
         show: true,
         width: 2,
-        colors: ['white'],
+        colors: ["white"],
       },
       xaxis: {
         categories: [
-          '$5',
-          '$10',
-          '$20',
-          '$50',
-          '$100',
-          '$300',
-          '$500',
-          '$1000',
-          '$3000',
-          '$5000',
+          "$5",
+          "$10",
+          "$20",
+          "$50",
+          "$100",
+          "$300",
+          "$500",
+          "$1K",
+          "$3K",
+          "$5K",
         ],
         labels: {
           style: {
-            colors: '#ff0000', // Red color
-            fontSize: '14px',
+            colors: "#ff0000", // Red color
+            fontSize: "14px",
           },
         },
       },
       yaxis: {
         title: {
-          text: '$ (Packages)',
+          text: "$ (Packages)",
           style: {
-            color: '#00ff00', // Green color
-            fontSize: '14px',
+            color: "#00ff00", // Green color
+            fontSize: "14px",
           },
         },
         labels: {
           style: {
-            colors: '#0000ff', // Blue color
-            fontSize: '14px',
+            colors: "#0000ff", // Blue color
+            fontSize: "14px",
           },
         },
       },
@@ -214,7 +238,7 @@ const Dashboard = () => {
       tooltip: {
         y: {
           formatter: function (val) {
-            return '$ ' + val + ' thousands';
+            return "$ " + val + " thousands";
           },
         },
       },
@@ -224,6 +248,14 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
+
+      {profile?.is_popup_open && (
+        <CustomPopup
+          onChangeFun={updatePopup}
+          open={open}
+          handleClose={handleClose}
+        />
+      )}
       <div className=" text-white lg:px-32 min-h-screen pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
@@ -259,7 +291,7 @@ const Dashboard = () => {
               <div
                 className="flex animate-marquee"
                 style={{
-                  animation: 'marquee 6s linear infinite',
+                  animation: "marquee 6s linear infinite",
                 }}
               >
                 <span className="inline-block text-text-color text-sm">
@@ -292,18 +324,43 @@ const Dashboard = () => {
           </div> */}
 
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4">
-            <div className="bg-glassy p-6 !pt-8">
+            <div className="bg-glassy p-6 !pt-4">
               <div className="flex flex-col">
-                <div className="flex justify-between gap-1 items-center">
+                <div className="flex justify-between items-center pt-8">
                   <div className="flex gap-2">
-                    {' '}
+                    <p className="text-text-color lg:text-lg text-base">
+                      Total Topup <br />
+                      Amount
+                    </p>
+                  </div>
+                  <Button
+                    variant="contained"
+                    className="!rounded-full"
+                    onClick={() => navigate("/activation")}
+                  >
+                    Deposit
+                  </Button>
+                </div>
+                <div className="text-xl font-bold text-amber-400 flex gap-2 pt-2">
+                  {Number(profile?.jnr_topup_wallet || 0)?.toFixed(2)} USD
+                  <img src={tether} alt="" className="w-6 h-6" />
+                </div>
+                <div className="flex gap-2 pt-4 justify-center">
+                  <p className="text-text-color text-sm ">
+                    RePurchase Your package to continue earning reward & ROI
+                  </p>
+                </div>
+                <div className="pt-4  border-b-2 border-text-color"></div>
+                <div className="flex justify-between gap-1 items-center mt-3">
+                  <div className="flex gap-2">
+                    {" "}
                     <AllInboxIcon />
                     <p className="text-text-color text-lg">Balance</p>
                   </div>
                   <Button
                     variant="contained"
                     className="!rounded-full"
-                    onClick={() => navigate('/withdrawal-link')}
+                    onClick={() => navigate("/withdrawal-link")}
                   >
                     Withdrawal
                   </Button>
@@ -312,81 +369,53 @@ const Dashboard = () => {
                   {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} USD
                   <img src={tether} alt="" className="w-6 h-6" />
                 </div>
-                <div className="flex gap-2 pt-4">
+                {/* <div className="flex gap-2 pt-4">
                   <InfoIcon className="text-sm !text-rose-600" />
                   <p className="text-rose-500 text-base justify-center ">
                     Minimum 5$ is required for ROI
                   </p>
-                </div>
-                <div className="pt-4  border-b-2 border-text-color"></div>
-                <div className="flex justify-between items-center pt-8">
-                  <div className="flex gap-2">
-                    <p className="text-text-color lg:text-lg text-base">
-                      Total Token <br />
-                      Achieved(FST)
-                    </p>
-                  </div>
-                  <Button
-                    variant="contained"
-                    className="!rounded-full"
-                    onClick={() => navigate('/activation')}
-                  >
-                    Deposit
-                  </Button>
-                </div>
-                <div className="text-xl font-bold text-amber-400 flex gap-2 pt-2">
-                  {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} FST
-                  <img src={tether} alt="" className="w-6 h-6" />
-                </div>
-                <div className="flex gap-2 pt-4 justify-center">
-                  <p className="text-text-color text-sm ">
-                    RePurchase Your package to continue earning reward & ROI
-                  </p>
-                </div>
+                </div> */}
+
                 <div className="flex gap-2 pt-4 flex-col items-center"></div>
               </div>
             </div>
-            <div className="p-6 bg-glassy">
-              <div className="grid gap-6 grid-cols-2 w-full place-items-center mb-4">
-                <div className="flex items-center  font-bold text-text-color">
-                  <MonetizationOnIcon className="!text-8xl" />
+            <div className="p-6 rounded-3xl bg-glassy shadow-2xl backdrop-blur-lg border border-white/10">
+              <div className="grid gap-6 grid-cols-2 w-full place-items-center mb-6">
+                <div className="flex items-center justify-center text-gold-color">
+                  <MonetizationOnIcon className="!text-9xl " />
                 </div>
-                <div className="text-2xl font-bold text-amber-400">
-                  {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} USD
+                <div className="text-right">
+                  <span className="block text-sm text-gray-400">
+                    Withdrawal Amount
+                  </span>
+                  <span className="text-3xl font-extrabold text-amber-400 tracking-wide">
+                    {Number(profile?.withdrawal_amount || 0)?.toFixed(2)} USD
+                  </span>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">User Id</span>
+              <div className="flex flex-col gap-5 text-blue-200">
+                <div className="flex justify-between">
+                  <span className="font-medium text-sm">User ID</span>
                   <span className="font-semibold text-text-color">
                     {profile?.lgn_cust_id}
                   </span>
                 </div>
 
-                {/* <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">Activation Date</span>
-                  <span className="font-semibold text-text-color">
-                    {moment
-                      ?.utc(profile?.topup_date)
-                      ?.format("DD-MM-YYYY HH:mm:ss")}
-                  </span>
-                </div> */}
-
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">Today Income</span>
+                <div className="flex justify-between">
+                  <span className="font-medium text-sm">Today Income</span>
                   <span className="font-semibold text-green-400">
                     {Number(profile?.today_income || 0)?.toFixed(2)} $
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center text-blue-300">
-                  <span className="font-medium">Flush Amount</span>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-sm">Flush Amount</span>
                   <span
-                    className={`bg-white/10 shadow px-3 py-1 rounded-lg text-2xl font-bold ${
+                    className={`shadow-inner px-4 py-1.5 rounded-xl text-2xl font-bold border ${
                       Number(profile?.jnr_flush_amnt || 0) > 0
-                        ? 'animate-pulse text-red-400'
-                        : 'text-gray-400'
+                        ? "animate-pulse text-gold-color border-gold-color"
+                        : "text-gold-color border-white/10"
                     }`}
                   >
                     {Number(profile?.jnr_flush_amnt || 0)?.toFixed(0)} $
@@ -395,22 +424,22 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-glassy">
-              <div className="flex flex-col gap-3">
+            <div className=" p-6 rounded-3xl bg-glassy shadow-2xl backdrop-blur-lg border border-white/10">
+              <div className="flex flex-col gap-">
                 <p className="text-2xl font-bold text-text-color text-center mb-4">
-                  <GraphicEqIcon className="!text-8xl" />
+                  <Diversity3Icon className="!text-8xl !text-gold-color " />
                 </p>
 
                 <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Direct Team</span>
-                  <span className="font-semibold text-text-color">
+                  <span className="font-semibold text-green-400">
                     {profile?.jnr_direct_team || 0}
                   </span>
                 </div>
 
                 <div className="flex justify-between text-blue-300">
                   <span className="font-medium">Direct TopUp Member</span>
-                  <span className="font-semibold text-text-color">
+                  <span className="font-semibold !text-gold-color">
                     {profile?.jnr_direct_topup_mem || 0}
                   </span>
                 </div>
@@ -438,13 +467,37 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-glassy  flex justify-between items-center space-y-2 rounded-xl">
+            <div className="p-6 bg-glassy  flex justify-between items-center space-y-2 rounded-xl !text-gold-color">
               <p>FASTRO (FST) Contract:</p>
+              <p>
+                {contractAddress?.substring(0, 5)}...
+                {contractAddress?.substring(
+                  contractAddress?.length - 5,
+                  contractAddress?.length
+                )}
+              </p>
               <button
-                onClick={handleCopyy}
+                onClick={() => handleCopyy(contractAddress)}
                 className="text-text-color transition"
               >
-                <CopyAll className="!text-xl" />
+                <CopyAll className="!text-xl !text-gold-color" />
+              </button>
+              {copied && <p className="text-green-400 text-xs">Copied!</p>}
+            </div>
+            <div className="p-6 bg-glassy  flex flex-col justify-between items-center space-y-2 rounded-xl !text-gold-color">
+              <p className="bg-gradient-to-r from-gold-color to-text-color bg-clip-text text-transparent font-medium">
+                Invitation Link:
+              </p>
+              <p className="bg-gradient-to-r from-gold-color via-orange-500 to-pink-500 bg-clip-text text-transparent font-medium">
+                {telegram_url + `startapp=${profile?.lgn_cust_id}`}
+              </p>
+              <button
+                onClick={() =>
+                  handleCopyy(telegram_url + `startapp=${profile?.lgn_cust_id}`)
+                }
+                className="text-text-color transition"
+              >
+                <CopyAll className="!text-xl !text-gold-color" />
               </button>
               {copied && <p className="text-green-400 text-xs">Copied!</p>}
             </div>
@@ -543,7 +596,7 @@ const Dashboard = () => {
         </p>
         <div
           className={`${
-            getPackageDetailsData?.length > 0 && '!grid'
+            getPackageDetailsData?.length > 0 && "!grid"
           } lg:!grid-cols-2 grid-cols-1`}
         >
           {getPackageDetailsData?.length > 0 && (
@@ -594,45 +647,46 @@ const Dashboard = () => {
                 </button>
               </div>
               <div className=" px-2 font-bold flex justify-center items-center bg-gradient-to-r from-yellow-200 to-yellow-200 bg-clip-text text-transparent">
-                Topup:{' '}
+                Topup:{" "}
                 {moment
                   ?.utc(showPopup?.created_at)
-                  ?.format('DD-MM-YYYY HH:mm:ss')}
+                  ?.format("DD-MM-YYYY HH:mm:ss")}
               </div>
             </div>
           </div>
         )}
 
         <p className="mt-10 mx-5 flex items-center justify-between lg:gap-10 gap-1  p-3 px-5 lg:text-xl font-bold  text-lg rounded bg-glassy ">
-          Check Out Royality & Rewards{' '}
+          Check Out Royality & Rewards{" "}
           <BsTrophyFill className="!text-yellow-500" />
         </p>
 
         <div className="grid md:grid-cols-2 grid-cols-1 gap-6 place-items-center px-4 py-6">
           {[
             {
-              title: 'ROI Income',
+              title: "ROI Income",
               value: Number(data?.[0]?.roi || 0)?.toFixed(2) || 0,
-              url: '/roi_income',
+              url: "/roi_income",
               bg: card1,
             },
             {
-              title: 'Direct Income',
-              value: Number(data?.[0]?.award_reward || 0)?.toFixed(2) || 0,
-              url: '/direct_income',
-              bg: card2,
-            },
-            {
-              title: 'Level Income',
+              title: "Level Income",
               value: Number(data?.[0]?.level || 0)?.toFixed(2) || 0,
-              url: '/level_income',
+              url: "/level_income",
               bg: card3,
             },
             {
-              title: 'Reward Income',
+              title: "Weekly Income",
               value: Number(data?.[0]?.weekly || 0)?.toFixed(2) || 0,
-              url: '/weekly_income',
+              url: "/weekly_income",
               bg: card6,
+            },
+
+            {
+              title: "Reward Income",
+              value: Number(data?.[0]?.award_reward || 0)?.toFixed(2) || 0,
+              url: "/award-reward",
+              bg: card2,
             },
           ].map((item, index) => (
             <div
@@ -640,8 +694,8 @@ const Dashboard = () => {
               onClick={() => navigate(item.url)}
               style={{
                 backgroundImage: `url(${item.bg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
               className="group relative flex flex-col justify-between p-6 rounded-2xl shadow-2xl w-full max-w-[400px] h-[180px] bg-gradient-to-r from-white/70 to-white/30 cursor-pointer hover:scale-110 hover:rotate-1 transition-transform duration-300 ease-in-out"
             >

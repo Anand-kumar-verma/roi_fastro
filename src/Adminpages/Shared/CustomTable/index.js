@@ -19,7 +19,7 @@ const CustomTable = ({
   className,
   isLoading,
   isTotal,
-  isPagination
+  isPagination,
 }) => {
   // console.log(tablerow)
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -118,17 +118,19 @@ const CustomTable = ({
       {isTotal && isTotal}
       <Box sx={{ background: "white", mt: 3 }}>
         <Stack spacing={2}>
-          {isPagination && <TablePagination
-            className={"!bg-white !bg-opacity-30"}
-            rowsPerPageOptions={[10, 15, 20]}
-            component="div"
-            count={tablerow?.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            labelRowsPerPage="Rows per page:"
-          />}
+          {isPagination && (
+            <TablePagination
+              className={"!bg-white !bg-opacity-30"}
+              rowsPerPageOptions={[10, 15, 20]}
+              component="div"
+              count={tablerow?.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              labelRowsPerPage="Rows per page:"
+            />
+          )}
         </Stack>
       </Box>
     </>

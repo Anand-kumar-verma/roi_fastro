@@ -49,9 +49,9 @@ function Teamdata() {
                         
                             value={level}
                             onChange={(e) => handleLevelChange(Number(e.target.value))}
-                            className="px-4 py-2 rounded text-black w-full bg-text-color bg-opacity-50"
+                            className="px-4 py-2 rounded text-black w-full bg-white bg-opacity-50"
                         >
-                            {[...Array(10)].map((_, index) => (
+                            {[...Array(6)].map((_, index) => (
                                 <option key={index} value={index + 1}>
                                     Level {index + 1}
                                 </option>
@@ -68,9 +68,9 @@ function Teamdata() {
                                     <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                                         Date
                                     </th>
-                                    <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
+                                    {/* <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                                         Email
-                                    </th>
+                                    </th> */}
                                     <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                                         Customer ID
                                     </th>
@@ -85,16 +85,16 @@ function Teamdata() {
                             <tbody className="">
                                 {data?.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">{index + 1}</td>
-                                        <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
+                                        <td className="px-6 py-4  border border-yellow-500 text-white text-center text-colorspace-nowrap">{index + 1}</td>
+                                        <td className="px-6 py-4  border border-yellow-500 text-white text-center text-colorspace-nowrap">
                                             {moment?.utc(item?.jnr_topup_date)?.format("DD-MM-YYYY HH:mm:ss")}
                                         </td>
-                                        <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
+                                        {/* <td className="px-6 py-4 border border-yellow-500 text-white text-center text-colorspace-nowrap">
                                             {item?.lgn_email}
-                                        </td>
-                                        <td className="px-6 text-center border border-yellow-500 text-text-color py-4 text-colorspace-nowrap">{item?.lgn_cust_id}</td>
-                                        <td className="px-6  text-center border border-yellow-500 text-text-color py-4 text-colorspace-nowrap"> $ {Number(item?.jnr_topup_wallet)?.toFixed(0, 2)}</td>
-                                        <td className="px-6  text-center border border-yellow-500 text-text-color py-4 text-colorspace-nowrap">Level {level} </td>
+                                        </td> */}
+                                        <td className="px-6 text-center border border-yellow-500 text-white py-4 text-colorspace-nowrap">{item?.lgn_cust_id}</td>
+                                        <td className="px-6  text-center border border-yellow-500 text-white py-4 text-colorspace-nowrap"> $ {Number(item?.jnr_topup_wallet)?.toFixed(0, 2)}</td>
+                                        <td className="px-6  text-center border border-yellow-500 text-white py-4 text-colorspace-nowrap">Level {level} </td>
                                     </tr>
                                 ))}
                             </tbody>

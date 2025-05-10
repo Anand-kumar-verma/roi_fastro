@@ -3,7 +3,11 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      dropShadow: {
+        "glow": "0 0 10px #FFD700",
+      },
       colors: {
+        "gold-color": "#FFD700",
         "background": "#ffffff",
         "text-color": "#3f7de0",
         "gray-color": "#f2f0ef",

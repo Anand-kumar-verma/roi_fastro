@@ -135,7 +135,6 @@ function Activation() {
 
     try {
       const dummyData = await PayinZpDummy();
-      console.log(dummyData);
       if (dummyData?.success == false) {
         setLoding(false);
         return toast(dummyData?.message);

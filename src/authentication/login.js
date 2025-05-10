@@ -89,10 +89,6 @@ const Login = () => {
   };
   const loginFn = async (reqBody) => {
     setLoading(true);
-    // const reqBodyy = {
-    //   username: String(reqBody.id),
-    //   password: String(reqBody.id),
-    // };
 
     const reqBodyy = {
       mobile: String(datatele?.id),

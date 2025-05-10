@@ -41,8 +41,8 @@ function Withdrawal() {
 
       wallet_type: selectedOption,
     };
-    if (fk.values.amount === "" || Number(fk.values.amount) < 10)
-      return toast("Amount should be grater or equal to 10$", { id: 1 });
+    if (fk.values.amount === "" || Number(fk.values.amount) < 2)
+      return toast("Amount should be grater or equal to 2$", { id: 1 });
     if (!fk.values.walletAddress)
       return toast("Please Update Your Profile before withdrawal request.", {
         id: 1,
@@ -102,109 +102,93 @@ function Withdrawal() {
   return (
     <>
       <Navbar />
-      <div
-        className="text-text-color flex flex-col items-center  min-h-screen pb-10 bg-custom-gradient]"
-        // style={{ backgroundImage: `url(${crypto})` }}
-      >
+      <div className="text-gold-color flex flex-col items-center min-h-screen pb-10 bg-custom-gradient relative">
         <Loader isLoading={loding} />
 
-        <div
-          className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient px-1 mt-5 !bg-glassy "
-          // style={{ backgroundImage: `url(${crypto})` }}
-        >
+        <div className="flex min-h-screen flex-col justify-center items-center px-3 mt-5 w-full lg:w-[60%]">
           <Box
-            className="!cursor-pointer bg-custom-gradient  !flex !flex-col !justify-center gap-2  w-full border-2 border-text-color "
+            className="w-full glass-card border border-gold-color rounded-xl p-5 shadow-xl backdrop-blur-md"
             sx={{
-              // background: "#dad3d3",
-              borderRadius: "5px",
-              padding: 2,
-              boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+              boxShadow: "rgba(0, 0, 0, 0.1) 0px 8px 24px",
             }}
           >
-            <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded focus:ring-blue-500 focus:border-blue-500">
-              <AssuredWorkloadIcon className="!text-text-color !text-[80px]" />
+            {/* Icon Header */}
+            <div className="flex justify-center mb-4">
+              <AssuredWorkloadIcon
+                className="text-gold-color text-[80px] hover:scale-105 transition-transform duration-300"
+                fontSize="100"
+              />
             </div>
-            <div className="!text-green-500 !text-[13px] w-full p-3 overflow-x-auto bg-glassy rounded-lg border border-rose-200">
-              <div className="grid grid-cols-2 gap-2">
-                <div className="flex whitespace-nowrap">
-                  <p>Working Wallet : </p>
-                  <p>{Number(userData?.jnr_curr_wallet || 0).toFixed(2)}</p>
-                </div>
 
-                <div className="flex whitespace-nowrap">
-                  <p>Fund Wallet : </p>
-                  <p>{Number(userData?.jnr_topup_wallet || 0).toFixed(2)}</p>
-                </div>
-                <label className="!flex !items-center gap-1">
-                  <input
-                    type="radio"
-                    // value="option1"
-                    checked={selectedOption === 2}
-                    onChange={() => setSelectedOption(2)}
-                  />
-                  Working Wallet
-                </label>
-
-                <label className="!flex !items-center gap-1">
-                  <input
-                    type="radio"
-                    // value="option1"
-                    checked={selectedOption === 1}
-                    onChange={() => setSelectedOption(1)}
-                  />
-                  Fund Wallet
-                </label>
+            {/* Wallet Info */}
+            <div className="grid grid-cols-2 gap-4 bg-glassy p-4 border border-rose-200 rounded-lg text-sm">
+              <div className="flex flex-col">
+                <span className="font-medium text-yellow-400 ">
+                  Current Balance
+                </span>
+                <span className="!text-green-500 !text-lg">
+                  {Number(userData?.jnr_curr_wallet || 0).toFixed(2)} USD
+                </span>
               </div>
             </div>
-            <div className="my-3">
-              <div className="!text-rose-500 !text-[10px] w-full p-3 overflow-x-auto bg-glassy  rounded-lg border border-rose-200">
-                <span className="!font-bold"> Address : </span>{" "}
-                <span className=""> {fk.values.walletAddress} </span>
-              </div>
-            </div>
-            <p>Amount:</p>
-            <input
-              type="number"
-              placeholder="Entre Amount"
-              id="amount"
-              name="amount"
-              value={fk.values.amount}
-              onChange={fk.handleChange}
-              className="p-2 !-mt-2  w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500 bg-glassy "
-            />
-            <p>Confirm Your Address (BEP20)*:</p>
 
-            <input
-              id="walletAddress"
-              name="walletAddress"
-              placeholder="0x..."
-              value={fk.values.walletAddress}
-              className="p-2 !-mt-2 w-full border border-yellow-500 rounded focus:ring-blue-500 focus:border-blue-500 bg-glassy "
-            />
+            {/* Address Display */}
+            <div className="my-4 text-xs bg-glassy border border-rose-200 p-3 rounded-lg flex flex-col">
+              <strong className="text-gold-color">Address:</strong>
+              <span className="ml-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 bg-clip-text text-transparent font-medium">
+                {fk.values.walletAddress}
+              </span>
+            </div>
+
+            {/* Amount Input */}
+            <div className="mb-3">
+              <label htmlFor="amount" className="text-sm font-medium">
+                Amount
+              </label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="Enter Amount"
+                value={fk.values.amount}
+                onChange={fk.handleChange}
+                className="mt-1 w-full p-2 !text-white border border-yellow-500 rounded-lg bg-glassy focus:outline-none focus:ring focus:ring-yellow-300 transition duration-200"
+              />
+            </div>
+
+            {/* Wallet Address Input */}
+            <div className="mb-3">
+              <label htmlFor="walletAddress" className="text-sm font-medium">
+                Confirm Wallet Address (BEP20)
+              </label>
+              <input
+                id="walletAddress"
+                name="walletAddress"
+                placeholder="0x..."
+                value={fk.values.walletAddress}
+                // onChange={fk.handleChange}
+                readOnly
+                className="mt-1 w-full p-2 border border-yellow-500 rounded-lg bg-glassy focus:outline-none font-medium text-sm
+             text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500"
+              />
+            </div>
+
+            {/* Confirm Button */}
             <button
-              className="  rounded-full hover:bg-white hover:text-black  p-2 !text-background bg-text-color "
               onClick={Payout}
+              className="w-full mt-4 bg-gold-color text-background p-2 rounded-full font-semibold hover:bg-white hover:text-black transition duration-300"
             >
               Confirm
             </button>
-            {/* <div className="m-3">
-            <div className=" flex flex-wrap justify-start">
-              <p>Transaction Hash : </p>{" "}
-              <p className="!text-[9px] whitespace-break-spaces">{data?.hex}</p>
-            </div>
 
-            <div className="flex flex-wrap justify-start !gap-4">
-              <p>Transaction Status : </p>{" "}
-              <p className="!font-bold">{data?.status}</p>
-            </div>
-          </div> */}
-            <div className="!text-rose-500 !text-[10px] w-full p-3 overflow-x-auto bg-glassy  rounded-lg border border-rose-200">
-              Note: Please ensure that your wallet address is BEP20 Network
-              (Format: 0x..), otherwise, you will be responsible for any issues.
+            {/* Note */}
+            <div className="text-[10px] text-rose-500 mt-4 p-3 border border-rose-200 rounded-lg bg-glassy">
+              <strong>Note:</strong> Please ensure that your wallet address is
+              BEP20 Network (Format: 0x..). You will be responsible for any
+              incorrect entries.
             </div>
           </Box>
         </div>
-        {/* <Footer /> */}
       </div>
       <ButtomNavigation />
     </>

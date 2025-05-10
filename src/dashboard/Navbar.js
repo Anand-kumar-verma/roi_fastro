@@ -89,11 +89,20 @@ export default function Navbar() {
             <p
               className="flex items-center gap-2 cursor-pointer p-2 "
               onClick={() => {
-                navigate("/dashboard");
+                navigate("/home");
                 window.location.reload();
               }}
             >
               <FaHome className="text-blue-400" /> Home
+            </p>
+            <p
+              className="flex items-center gap-2 cursor-pointer p-2 "
+              onClick={() => {
+                navigate("/dashboard");
+                window.location.reload();
+              }}
+            >
+              <FaHome className="text-blue-400" /> Dashboard
             </p>
             <div
               className="relative dropdown"
@@ -115,13 +124,13 @@ export default function Navbar() {
                     <Lock className="text-blue-400" fontSize="small" />
                     <p>Withdrawal</p>
                   </div>
-                  <div
+                  {/* <div
                     className="cursor-pointer flex items-center gap-2 py-1 hover:text-blue-400 text-gray-800"
                     onClick={() => navigate("/password")}
                   >
                     <KeyOff className="text-blue-400" fontSize="small" />
                     <p>Password</p>
-                  </div>
+                  </div> */}
                   <div
                     className="cursor-pointer flex items-center gap-2 py-1 hover:text-blue-400 text-gray-800"
                     onClick={() => navigate("/view")}
