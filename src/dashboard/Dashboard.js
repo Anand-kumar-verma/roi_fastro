@@ -9,6 +9,7 @@ import ReactApexChart from "react-apexcharts";
 import { BsTrophyFill } from "react-icons/bs";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import CustomPopup from "../component/CustomPopup";
 import card1 from "../images/card1.jpg";
 import card2 from "../images/card2.jpg";
 import card3 from "../images/card3.jpg";
@@ -16,13 +17,9 @@ import card6 from "../images/card_6.png";
 import tether from "../images/tether.png";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
-import {
-  apiConnectorGet,
-  apiConnectorGetWithoutToken,
-} from "../utils/APIConnector";
+import { apiConnectorGet } from "../utils/APIConnector";
 import { contractAddress, endpoint, telegram_url } from "../utils/APIRoutes";
 import Navbar from "./Navbar";
-import CustomPopup from "../component/CustomPopup";
 import toast from "react-hot-toast";
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
@@ -64,9 +61,20 @@ const Dashboard = () => {
       refetchOnWindowFocus: false,
     }
   );
-
   const getPackageDetailsData = getPackageDetails?.data?.result || [];
 
+  const { isLoading: LevelBusinessLoding, data: LevelBusiness } = useQuery(
+    ["level_business"],
+    () => apiConnectorGet(endpoint?.level_business),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const level_business = LevelBusiness?.data?.result || {};
   const { isLoading: proLoding, data: profile_data } = useQuery(
     ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
@@ -108,6 +116,21 @@ const Dashboard = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+  const compoundWallet = async () => {
+    setLoading(true);
+    handleClose(false);
+
+    try {
+      const res = await apiConnectorGet(endpoint?.compounding_wallet);
+
+      client.refetchQueries("profile_api");
+
+      toast(res?.data?.message);
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
   };
 
   const ChartCount = {
@@ -325,6 +348,19 @@ const Dashboard = () => {
 
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4">
             <div className="bg-glassy p-6 !pt-4">
+              <div className="relative w-full">
+                <div className="absolute inset-0 rounded-full pointer-events-none">
+                  <div className="w-full h-full rounded-full border-2 border-transparent bg-gradient-to-r from-black via-text-color to-text-color animate-glow bg-[length:200%_auto] bg-clip-border"></div>
+                </div>
+                <Button
+                  variant="outlined"
+                  className="!relative !z-10 !w-full !rounded-full !border-gold-color !text-gold-color !bg-transparent hover:!bg-violet-600/20"
+                  onClick={compoundWallet}
+                >
+                  Compound your wallet
+                </Button>
+              </div>
+
               <div className="flex flex-col">
                 <div className="flex justify-between items-center pt-8">
                   <div className="flex gap-2">
@@ -467,7 +503,127 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-glassy  flex justify-between items-center space-y-2 rounded-xl !text-gold-color">
+            <div className="lg:col-span-2 p-6 rounded-3xl bg-custom-gradient shadow-xl border border-yellow-500/30">
+              <div className="text-center">
+                <h1 className="text-3xl font-extrabold text-gold-color tracking-wide drop-shadow">
+                  🎁 Daily Rewards
+                </h1>
+                <div className="flex justify-center items-center gap-2 mt-4 text-green-400 text-xl font-semibold">
+                  <span>✅ PACKAGE PURCHASE SUCCESSFUL</span>
+                </div>
+                <p className="text-gray-300 text-sm mt-1">
+                  You have successfully purchased this premium package.
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <table className="w-full text-left border-separate border-spacing-y-3">
+                  <tbody>
+                    {[
+                      ["Package Amount", `${profile?.topup_amount || 0} $`],
+                      [
+                        "Purchase Date",
+                        profile?.jnr_topup_date
+                          ? moment(profile?.jnr_topup_date).format("DD-MM-YYYY")
+                          : "---",
+                      ],
+                      ["Daily ROI", "5 %"],
+                      ["Contract Duration", "6x"],
+                      ["Total ROI", `${profile?.topup_amount * 6 || 0} $`],
+                      ["Achieved ROI", `${profile?.total_income || 0} $`],
+                      [
+                        "Joining Date",
+                        profile?.jnr_created_at
+                          ? moment(profile?.jnr_created_at).format("DD-MM-YYYY")
+                          : "---",
+                      ],
+                    ].map(([label, value], i) => (
+                      <tr
+                        key={i}
+                        className="bg-white/10 rounded-lg transition hover:bg-black/20"
+                      >
+                        <td className="py-2 px-4 text-sm text-slate-200 font-medium">
+                          {label}
+                        </td>
+                        <td className="py-2 px-4 text-sm font-semibold text-gold-color">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="lg:col-span-2 p-6 rounded-3xl bg-custom-gradient shadow-2xl border border-yellow-500/30">
+              <div className="text-center">
+                <h1 className="text-4xl font-extrabold text-gold-color tracking-wide drop-shadow-md mb-2">
+                  🏆 Award Rewards
+                </h1>
+                <p className="text-sm text-slate-300">
+                  Unlock milestones as your left business grows
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <table className="w-full text-left border-separate border-spacing-y-3">
+                  <tbody>
+                    {[
+                      [
+                        "Only Left Business Level (1):",
+                        `${
+                          Number(level_business?.level_one)?.toFixed(2) || 0
+                        } $ — Reward: $50`,
+                      ],
+                      [
+                        "Left Business Level (1,2):",
+                        `${
+                          Number(level_business?.level_two)?.toFixed(2) || 0
+                        } $ — Reward: $150`,
+                      ],
+                      [
+                        "Left Business Level (1,2,3):",
+                        `${
+                          Number(level_business?.level_three)?.toFixed(2) || 0
+                        } $ — Reward: $700 (iPhone)`,
+                      ],
+                      [
+                        "Left Business Level (1,2,3,4):",
+                        `${
+                          Number(level_business?.level_four)?.toFixed(2) || 0
+                        } $ — Reward: $1200 (Umrah Trip)`,
+                      ],
+                      [
+                        "Left Business Level (1,2,3,4,5):",
+                        `${
+                          Number(level_business?.level_five)?.toFixed(2) || 0
+                        } $ — Reward: $5000 (Car Fund)`,
+                      ],
+                      [
+                        "Left Business Level (1,2,3,4,5,6):",
+                        `${
+                          Number(level_business?.level_six)?.toFixed(2) || 0
+                        } $ — Reward: $12000 (Bungalow Fund)`,
+                      ],
+                    ].map(([label, value], i) => (
+                      <tr
+                        key={i}
+                        className="bg-white/10 rounded-xl hover:bg-black/30 transition duration-200"
+                      >
+                        <td className="py-3 px-4 text-sm text-slate-200 font-medium">
+                          {label}
+                        </td>
+                        <td className="py-3 px-4 text-sm font-semibold text-gold-color">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4 ">
+            <div className="p-6   flex justify-between items-center space-y-2 rounded-xl !text-gold-color bg-custom-gradient shadow-xl border border-yellow-500/30">
               <p>FASTRO (FST) Contract:</p>
               <p>
                 {contractAddress?.substring(0, 5)}...
@@ -484,7 +640,7 @@ const Dashboard = () => {
               </button>
               {copied && <p className="text-green-400 text-xs">Copied!</p>}
             </div>
-            <div className="p-6 bg-glassy  flex flex-col justify-between items-center space-y-2 rounded-xl !text-gold-color">
+            <div className="p-6 bg-custom-gradient shadow-xl border border-yellow-500/30  flex flex-col justify-between items-center space-y-2 rounded-xl !text-gold-color">
               <p className="bg-gradient-to-r from-gold-color to-text-color bg-clip-text text-transparent font-medium">
                 Invitation Link:
               </p>

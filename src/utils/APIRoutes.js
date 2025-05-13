@@ -2,7 +2,7 @@
 
 export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://192.168.110.149:9009";
+// export const domain = "http://192.168.75.149:9009";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";
@@ -33,4 +33,5 @@ export const endpoint = {
   wallet_user_data: `${domain}/api/v2/get-wallet-data-user`,
   update_profile_data: `${domain}/api/v2/update-profile`,
   update_popup_status: `${domain}/api/v2/udpate-popup-status`,
+  level_business: `${domain}/api/v2/get-business-till-level`,
 };

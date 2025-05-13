@@ -98,14 +98,14 @@ const Login = () => {
       username: String(reqBody.id),
       password: String(reqBody.id),
     };
-    // const reqBodyy = {
-    //   mobile: String("1840589027"),
-    //   email: String("1840589027"),
-    //   full_name: String(datatele?.username),
-    //   referral_id: String("1234567890"),
-    //   username: String("1840589027"),
-    //   password: String("1840589027"),
-    // };
+      // const reqBodyy = {
+      //   mobile: String("1840589027"),
+      //   email: String("1840589027"),
+      //   full_name: String(datatele?.username),
+      //   referral_id: String("1234567890"),
+      //   username: String("1840589027"),
+      //   password: String("1840589027"),
+      // };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {

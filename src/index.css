@@ -109,3 +109,16 @@ code {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   color: #3f7de0; /* no quotes needed */
 }
+
+@keyframes glow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 100% center;
+  }
+}
+
+.animate-glow {
+  animation: glow 6s linear infinite;
+}
