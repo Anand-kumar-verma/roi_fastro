@@ -23,6 +23,18 @@ const Network = () => {
     }
   );
   const profile = profile_data?.data?.result?.[0] || [];
+     const { isLoading: LevelBusinessLoding, data: LevelBusiness } = useQuery(
+     ["level_business"],
+     () => apiConnectorGet(endpoint?.level_business),
+     {
+       refetchOnMount: false,
+       refetchOnReconnect: false,
+       retry: false,
+       retryOnMount: false,
+       refetchOnWindowFocus: false,
+     }
+   );
+   const level_business = LevelBusiness?.data?.result || {};
   return (
     <>
       <Navbar />
@@ -144,6 +156,34 @@ const Network = () => {
                 <p class="text-sm md:text-2xl text-gold-color">Topup Wallet</p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {profile?.jnr_topup_wallet || 0} USD
+
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#3a60a7] to-[#94f37e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">Total Team Business</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {level_business?.total_team_business || 0} USD
+
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#a73a5c] to-[#94f37e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">Today Team Business</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {level_business?.today_team_business || 0} USD
 
                 </p>
               </div>

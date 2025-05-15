@@ -23,6 +23,7 @@ import Jackpot from '../Income/Jackpot';
 import AwardReward from '../Income/AwardReward';
 import Network from '../component/Network';
 import Referral from '../component/Referral';
+import PriceStatics from '../dashboard/PriceStatics';
 export const routes = [
   {
     path: '/dashboard',
@@ -71,6 +72,10 @@ export const routes = [
   {
     path: '/roi_income',
     component: <RoiIncome />,
+  },
+  {
+    path: '/price-statistics',
+    component: <PriceStatics />,
   },
   {
     path: '/compound-history',

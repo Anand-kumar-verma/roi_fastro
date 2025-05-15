@@ -42,7 +42,7 @@ const Jackpot = () => {
             Jackpot Income
           </h1>
 
-          <div className="mt-6 lg:mt-10 overflow-x-auto">
+          <div className="mt-6 lg:mt-10 overflow-x-auto max-h-[400px] overflow-y-auto !pb-[20%]">
             <table className="min-w-full ">
               <thead>
                 <tr>

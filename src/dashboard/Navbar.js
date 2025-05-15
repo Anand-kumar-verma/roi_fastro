@@ -104,6 +104,15 @@ export default function Navbar() {
             >
               <FaHome className="text-blue-400" /> Dashboard
             </p>
+            <p
+              className="flex items-center gap-2 cursor-pointer p-2 "
+              onClick={() => {
+                navigate("/price-statistics");
+                // window.location.reload();
+              }}
+            >
+              <FaHome className="text-blue-400" /> Price Statistics
+            </p>
             <div
               className="relative dropdown"
               onMouseEnter={() => setOpenDropdown("affiliate")}

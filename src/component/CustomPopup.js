@@ -1,13 +1,7 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import cardImg from "../images/fast_roi_popup.jpg";
-import CloseIcon from "@mui/icons-material/Close";
-import { RiCloseCircleFill } from "react-icons/ri";
 import { FaRegWindowClose } from "react-icons/fa";
-import { Height } from "@mui/icons-material";
+import cardImg from "../images/fast_roi_popup.jpg";
 const style = {
   position: "absolute",
   top: "50%",
