@@ -279,7 +279,7 @@ const Dashboard = () => {
           handleClose={handleClose}
         />
       )}
-      <div className=" text-white lg:px-32 min-h-screen pb-10 bg-custom-gradient">
+      <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
           {/* <p className="text-lg text-black  p-2 px-5 lg:mt-20 mt-10 flex justify-between">

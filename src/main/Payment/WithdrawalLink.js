@@ -12,7 +12,7 @@ const WithdrawalLink = () => {
     <>
       <Navbar />
       <div
-        className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient"
+        className="flex h-screen overflow-y-scroll flex-col justify-center items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <p

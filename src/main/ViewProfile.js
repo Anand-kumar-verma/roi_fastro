@@ -53,7 +53,7 @@ function ViewProfile() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-3 md:p-6 mt-10 min-h-screen flex flex-col items-center justify-center  bg-custom-gradient"
+        className="p-3 md:p-6 mt-10  h-screen overflow-y-scroll  flex flex-col items-center justify-center  bg-custom-gradient"
 
         //  style={{ backgroundImage: `url(${crypto})` }}
       >

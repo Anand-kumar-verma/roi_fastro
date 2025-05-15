@@ -302,7 +302,7 @@ function Activation() {
       <Loader isLoading={loding} />
 
       <div
-        className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient p-3"
+        className="flex h-screen overflow-y-scroll flex-col justify-center items-center bg-custom-gradient p-3"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <Box className="!cursor-pointer bg-custom-gradient  lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full p-2 border border-text-color rounded-lg shadow-2xl">

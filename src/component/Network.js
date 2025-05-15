@@ -27,7 +27,7 @@ const Network = () => {
     <>
       <Navbar />
       <Loader isLoading={proLoding} />
-      <div className="md:p-6 p-4 mt-16  !pb-16 min-h-screen flex flex-col bg-custom-gradient overflow-y-auto">
+      <div className="md:p-6 p-4 mt-16  !pb-16 h-screen overflow-y-scroll flex flex-col bg-custom-gradient ">
         {/* <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded bg-glassy">
           <Diversity3Icon className="!text-text-color !text-[80px]" />
         </div>

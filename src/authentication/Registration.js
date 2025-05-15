@@ -104,7 +104,7 @@ const Registration = () => {
     <>
       <Loader isLoading={loding} />
       <div
-        className="flex justify-center items-center min-h-screen"
+        className="flex justify-center items-center "
         style={{
           backgroundImage:
             "linear-gradient(225deg, rgba(119,0,255) 0%, rgba(20, 20, 20, 1) 61%)",

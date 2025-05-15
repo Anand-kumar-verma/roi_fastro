@@ -32,7 +32,7 @@ const CompoundHistory = () => {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-0 md:p-3 min-h-screen flex flex-col text-text-color bg-custom-gradient items-center"
+        className="p-0 md:p-3 h-screen overflow-y-scroll flex flex-col text-text-color bg-custom-gradient items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">

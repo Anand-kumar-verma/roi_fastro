@@ -80,7 +80,7 @@ const BoosterIncome = () => {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className=" text-white bg-custom-gradient p-3 min-h-screen flex flex-col  items-center"
+        className=" text-white bg-custom-gradient p-3  flex flex-col  items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">

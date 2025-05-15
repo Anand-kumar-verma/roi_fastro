@@ -27,7 +27,7 @@ function TopUP() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-0 md:p-4 flex min-h-screen flex-col items-center bg-custom-gradient"
+        className="p-0 md:p-4 flex h-screen overflow-y-scroll flex-col items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">

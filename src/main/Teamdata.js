@@ -38,7 +38,7 @@ function Teamdata() {
         <>
             <Navbar />
             <Loader isLoading={isLoading} />
-            <div className="p-0 md:p-4  flex min-h-screen flex-col bg-custom-gradient items-center "
+            <div className="p-0 md:p-4  flex h-screen overflow-y-scroll flex-col bg-custom-gradient items-center "
             // style={{ backgroundImage: `url(${crypto})` }} 
 
             >

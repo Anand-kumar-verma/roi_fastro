@@ -37,9 +37,9 @@ function Referral() {
   return (
     <>
       <Navbar />
-      <div className=" text-white lg:px-32 min-h-screen pb-10 bg-custom-gradient">
+      <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={proLoding} />
-        <div className="p-6 gap-2 mt-10 min-h-screen flex flex-col bg-custom-gradient overflow-y-auto">
+        <div className="p-6 gap-2 mt-10 flex flex-col bg-custom-gradient overflow-y-auto">
           <p className="text-2xl text-gold-color pt-4">Referral Incoms</p>
           <p className="text-sm">
             Track your referral earnings and invite friends

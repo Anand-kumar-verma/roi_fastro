@@ -26,7 +26,7 @@ function RotatingCube() {
 const PageNotFound = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
+    <div className="h-screen overflow-y-scroll flex items-center justify-center bg-gray-200">
       <div className="text-center mt-4">
         <h1 className="text-4xl font-bold text-gray-900">Page Not Found</h1>
         <p className="mt-4 text-gray-600">

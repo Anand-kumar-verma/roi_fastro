@@ -158,7 +158,7 @@ const Login = () => {
     <>
       <Loader isLoading={loading} />
 
-      <div className="flex justify-center items-center min-h-screen bg-custom-gradient">
+      <div className="flex justify-center items-center h-screen overflow-y-scroll bg-custom-gradient">
         {openDialogBox && (
           <Tilt className="w-full max-w-lg lg:p-6 p-4 border-[#008eff] border rounded-xl shadow-2xl">
             <div className="bg-glassy">

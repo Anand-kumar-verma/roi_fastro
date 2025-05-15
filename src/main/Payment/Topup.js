@@ -86,7 +86,7 @@ function TopUP() {
     <>
       <Loader isLoading={loding} />
       <Navbar />
-      <div className="flex min-h-screen flex-col justify-center items-center"
+      <div className="flex h-screen overflow-y-scroll flex-col justify-center items-center"
         style={{ backgroundImage: `url(${crypto})` }}>
         <Box
 

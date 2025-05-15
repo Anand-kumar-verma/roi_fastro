@@ -38,7 +38,7 @@ const RoiIncome = () => {
       <Navbar />
       <Loader isLoading={isLoading}/>
       <div
-        className="text-text-color p-0 md:p-3 min-h-screen flex flex-col bg-custom-gradient items-center"
+        className="text-text-color p-0 md:p-3 h-screen overflow-y-scroll flex flex-col bg-custom-gradient items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">

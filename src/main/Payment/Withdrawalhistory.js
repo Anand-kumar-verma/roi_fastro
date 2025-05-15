@@ -30,7 +30,7 @@ function WithdrawalHistory() {
     <>
       <Navbar />
       <div
-        className="p-0 md:p-4 text-text-color flex min-h-screen flex-col bg-custom-gradient items-center"
+        className="p-0 md:p-4 text-text-color flex h-screen overflow-y-scroll flex-col bg-custom-gradient items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
       <Loader isLoading={isLoading}/>
