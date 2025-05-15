@@ -30,12 +30,12 @@ function WithdrawalHistory() {
     <>
       <Navbar />
       <div
-        className="p-4 text-text-color flex min-h-screen flex-col bg-custom-gradient items-center"
+        className="p-0 md:p-4 text-text-color flex min-h-screen flex-col bg-custom-gradient items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
       <Loader isLoading={isLoading}/>
         <div className="p-4 lg:w-[70%] w-full  mt-20">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
+          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-gold-color">
             Withdrawal History
           </h1>
 
@@ -44,16 +44,16 @@ function WithdrawalHistory() {
             <table className="min-w-full ">
               <thead>
                 <tr>
-                  <th className="px-6 py-3 border border-yellow-500  text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3 border border-yellow-500  text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     S No.
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Amount
                   </th>
-                  <th className="px-6 py-3   border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3   border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Status
                   </th>
                 </tr>
@@ -61,18 +61,18 @@ function WithdrawalHistory() {
               <tbody className="">
                 {withdraw_data.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4  b border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
+                    <td className="px-2 md:px-6 py-4  b border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                       {index + 1 || "No Data"}
                     </td>
-                    <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
+                    <td className="px-2 md:px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                       {moment
                         (item?.wdrl_created_at)
-                        ?.format("DD-MM-YYYY HH:mm:ss") || "No Data"}
+                        ?.format("DD-MM-YYYY") || "No Data"}
                     </td>
-                    <td className="px-6 text-center py-4   border border-yellow-500 text-text-color text-colorspace-nowrap">
-                      {item?.wdrl_amont || "0"}
+                    <td className="px-2 md:px-6 text-center py-4   border border-yellow-500 text-text-color text-colorspace-nowrap">
+                      {Number(item?.wdrl_amont)?.toFixed(2) || "0"}
                     </td>
-                    <td className={`px-6  text-center py-4   border border-yellow-500 text-text-color text-colorspace-nowrap ${item?.wdrl_status === "Success"?"!text-green-500":"!text-rose-500"}`}>
+                    <td className={`px-2 md:px-6  text-center py-4   border border-yellow-500 text-text-color text-colorspace-nowrap ${item?.wdrl_status === "Success"?"!text-green-500":"!text-rose-500"}`}>
                       {item?.wdrl_status || "No Data"}
                     </td>
                   </tr>

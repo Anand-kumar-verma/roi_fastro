@@ -39,7 +39,7 @@ code {
   border-radius: 25px;
   /* overflow: hidden; */
 }
-
+/* 
 .bubble {
   position: absolute;
   top: 0;
@@ -79,10 +79,10 @@ code {
   border-radius: 50%;
   left: 20px;
   animation: drop 60s ease-in-out infinite;
-}
+} */
 
 /* /// */
-@keyframes colorZoomChange {
+/* @keyframes colorZoomChange {
   0%,
   100% {
     color: green;
@@ -94,7 +94,7 @@ code {
     font-weight: bold;
     transform: scale(1.2);
   }
-}
+} */
 
 .animated-text {
   animation: colorZoomChange 1s infinite;

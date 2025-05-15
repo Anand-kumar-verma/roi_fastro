@@ -102,7 +102,7 @@ function Withdrawal() {
   return (
     <>
       <Navbar />
-      <div className="text-gold-color flex flex-col items-center min-h-screen pb-10 bg-custom-gradient relative">
+      <div className="text-gold-color md:mt-14 flex flex-col items-center min-h-screen pb-10 bg-custom-gradient relative">
         <Loader isLoading={loding} />
 
         <div className="flex min-h-screen flex-col justify-center items-center px-3 mt-5 w-full lg:w-[60%]">

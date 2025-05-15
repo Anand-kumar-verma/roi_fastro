@@ -53,22 +53,22 @@ function ViewProfile() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-6 mt-10 min-h-screen flex flex-col items-center justify-center  bg-custom-gradient"
+        className="p-3 md:p-6 mt-10 min-h-screen flex flex-col items-center justify-center  bg-custom-gradient"
 
         //  style={{ backgroundImage: `url(${crypto})` }}
       >
-        <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded focus:ring-blue-500 focus:border-blue-500">
+        <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-gold-color rounded focus:ring-blue-500 focus:border-blue-500">
           <AccountCircleIcon className="!text-text-color !text-[80px]" />
         </div>
 
-        <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-text-color ">
+        <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-gold-color ">
           <div className="flex !flex-col">
             {data?.jnr_achieve_reward ? (
               <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
-                <label className="block text-sm font-medium text-text-color">
+                <label className="block text-sm font-medium text-gold-color">
                   Rank *
                 </label>
-                <div className="mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded focus:ring-blue-500 focus:border-blue-500">
+                <div className="mt-1 p-2 lg:w-[60%] w-full border border-gold-color rounded focus:ring-blue-500 focus:border-blue-500">
                   {data?.jnr_achieve_reward}
                 </div>
               </div>
@@ -76,7 +76,7 @@ function ViewProfile() {
               <span></span>
             )}
             <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
-              <label className="block text-sm font-medium text-text-color">
+              <label className="block text-sm font-medium text-gold-color">
                 My Referral Id *
               </label>
               <input
@@ -85,7 +85,7 @@ function ViewProfile() {
               />
             </div>
             <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
-              <label className="block text-sm font-medium text-text-color">
+              <label className="block text-sm font-medium text-gold-color">
                 Applicant Name *
               </label>
               <input
@@ -100,7 +100,7 @@ function ViewProfile() {
               />
             </div>
             <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
-              <label className="block text-sm font-medium text-text-color">
+              <label className="block text-sm font-medium text-gold-color">
                 Mobile
               </label>
               <input
@@ -115,7 +115,7 @@ function ViewProfile() {
               />
             </div>
             <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
-              <label className="block text-sm font-medium text-text-color">
+              <label className="block text-sm font-medium text-gold-color">
                 Email Id *
               </label>
               <input
@@ -141,7 +141,7 @@ function ViewProfile() {
                 </>
               </div> */}
             <div className=" flex lg:flex-row flex-col justify-between lg:items-center ">
-              <label className="block text-sm font-medium text-text-color">
+              <label className="block text-sm font-medium text-gold-color">
                 Address (BEP20)*
               </label>
               <input

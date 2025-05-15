@@ -8,14 +8,24 @@ import { CopyAll } from "@mui/icons-material";
 import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 const ActivatoinLink = () => {
+
+  const handleCopy = (url) => {
+    navigator.clipboard
+      .writeText(url).then(() => {
+        toast("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  }
   return (
     <>
       <Navbar />
       <div
-        className="flex min-h-screen flex-col justify-center items-center bg-custom-gradient"
-        // style={{ backgroundImage: `url(${crypto})` }}
+        className="flex min-h-screen px-3 flex-col justify-center items-center bg-custom-gradient"
+      // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <p
+        {/* <p
           onClick={() => {
             copy(
               frontend +
@@ -28,12 +38,26 @@ const ActivatoinLink = () => {
         >
           <span>
             Copy Link:
-            <CopyAll />
+            <CopyAll className="text-white" />
           </span>
-          <span className="!text-white">{frontend}/activation-link</span>
-        </p>
+          <span className="!text-blue-700">{frontend}/activation-link</span>
+        </p> */}
+        <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 rounded-xl w-full max-w-sm mx-auto text-white shadow-lg">
+          <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
+            <div>
+              <p class="font-semibold text-gold-color text-lg">Copy Link:</p>
+              <div class="text-sm text-blue-100 underline break-all">
+                https://fastro.info/activation-link
+              </div>
+            </div>
+            <button onClick={()=>handleCopy("https://fastro.info/activation-link")} class="bg-white text-blue-600 p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+              <CopyAll className="text-gold-color" />
+            </button>
+          </div>
+        </div>
+
       </div>
-      <ButtomNavigation/>
+      <ButtomNavigation />
     </>
   );
 };

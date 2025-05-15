@@ -27,11 +27,11 @@ function TopUP() {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className="p-4 flex min-h-screen flex-col items-center bg-custom-gradient"
+        className="p-0 md:p-4 flex min-h-screen flex-col items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
+          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-gold-color">
             Top Up Details
           </h1>
 
@@ -39,16 +39,16 @@ function TopUP() {
             <table className="min-w-full ">
               <thead>
                 <tr>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="md:px-6 px-2 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     No.
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="md:px-6 px-2 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="md:px-6 px-2 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Amount
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
+                  <th className="md:px-6 px-2 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Status
                   </th>
                 </tr>
@@ -56,18 +56,18 @@ function TopUP() {
               <tbody className="">
                 {data?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4  border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
+                    <td className="md:px-6 px-2 py-4  border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
+                    <td className="md:px-6 px-2 text-nowrap py-4 border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
                       {moment
                         ?.utc(item?.topup_date)
-                        ?.format('DD-MM-YYYY HH:mm:ss')}
+                        ?.format('DD-MM-YYYY')}
                     </td>
-                    <td className="px-6 text-center border border-yellow-500 text-text-color py-4 text-colorrspace-nowrap">
-                      {item?.topup_pack_amount}
+                    <td className="md:px-6 px-2 text-center border border-yellow-500 text-text-color py-4 text-colorrspace-nowrap">
+                      {Number(item?.topup_pack_amount).toFixed(2)}
                     </td>
-                    <td className="px-6  text-center border border-yellow-500 py-4 text-colorrspace-nowrap text-green-500">
+                    <td className="md:px-6 px-2  text-center border border-yellow-500 py-4 text-colorrspace-nowrap text-green-500">
                       Success
                     </td>
                   </tr>

@@ -40,20 +40,20 @@ function Referral() {
       <div className=" text-white lg:px-32 min-h-screen pb-10 bg-custom-gradient">
         <Loader isLoading={proLoding} />
         <div className="p-6 gap-2 mt-10 min-h-screen flex flex-col bg-custom-gradient overflow-y-auto">
-          <p className="text-2xl text-text-color pt-4">Referral Income</p>
+          <p className="text-2xl text-gold-color pt-4">Referral Incoms</p>
           <p className="text-sm">
             Track your referral earnings and invite friends
           </p>
-          <div className="grid gap-3 lg:gap-5 items-start mt-2 p-3 lg:w-[50%] w-full border border-text-color rounded bg-glassy">
-            <p className="text-sm text-white">Share Your Referral Link</p>
+          <div className="grid gap-3 lg:gap-5 items-start mt-2 p-3 lg:w-[50%] w-full !border !border-gold-color rounded bg-glassy">
+            <p className="text-xl text-white">Share Your Referral Link</p>
             <p className="text-sm text-rose-600">
               Activate your account to start earning through referrals
             </p>
-            <p className="text-xs text-white">
+            <p className="text-xs text-white whitespace-nowrap overflow-hidden text-ellipsis">
               {telegram_url + `startapp=${profile?.lgn_cust_id}`}
             </p>
             <button
-              className="w-[40%] bg-blue-500 text-white text-sm rounded-lg py-2 px-3"
+              className="w-[40%] bg-gold-color text-white text-sm rounded-lg py-2 px-3"
               onClick={() =>
                 handleCopy(telegram_url + `startapp=${profile?.lgn_cust_id}`)
               }

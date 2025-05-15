@@ -22,7 +22,9 @@ const App = () => {
       once: false, // Whether animation should happen only once
     });
   }, []);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <Router>
       <Routes>

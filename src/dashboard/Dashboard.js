@@ -330,8 +330,8 @@ const Dashboard = () => {
                   send a text message. Text has several other senses as a noun.
                 </span>
               </div>
-              <style>{`
-                   @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); }} `}</style>
+              {/* <style>{`
+                   @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); }} `}</style> */}
             </div>
           </div>
 

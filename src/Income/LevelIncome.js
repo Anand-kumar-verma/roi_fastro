@@ -1,8 +1,7 @@
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import Navbar from "../dashboard/Navbar";
-import CustomPagination from "../Shared/CustomPagination";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
@@ -45,11 +44,11 @@ const LevelIncome = () => {
       <Navbar />
       <Loader isLoading={isLoading} />
       <div
-        className=" text-text-color p-3 min-h-screen flex flex-col bg-custom-gradient items-center"
+        className=" text-text-colorp-o  md:p-3 min-h-screen flex flex-col bg-custom-gradient items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
+          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-gold-color">
             Level Income
           </h1>
 
@@ -57,16 +56,16 @@ const LevelIncome = () => {
             <table className="min-w-full ">
               <thead>
                 <tr>
-                  <th className="px-6 py-3 border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3 border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                     S No.
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                     Amount
                   </th>
-                  <th className="px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
+                  <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                     Description
                   </th>
                 </tr>
@@ -74,18 +73,18 @@ const LevelIncome = () => {
               <tbody className="">
                 {level_data?.data?.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center whitespace-nowrap">
+                    <td className="px-2 md:px-6 py-4 border border-yellow-500 text-text-color text-center whitespace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-color text-center whitespace-nowrap">
+                    <td className="px-2 md:px-6 py-4 border border-yellow-500 text-text-color text-center whitespace-nowrap">
                       {moment(item?.ledger_created_at)?.format(
                         "DD-MM-YYYY HH:mm:ss"
                       )}
                     </td>
-                    <td className="px-6 border border-yellow-500 text-text-color text-center py-4 whitespace-nowrap">
+                    <td className="px-2 md:px-6 border border-yellow-500 text-text-color text-center py-4 whitespace-nowrap">
                       {item?.ledger_amount}
                     </td>
-                    <td className="px-6  border border-yellow-500 text-text-color text-center py-4 whitespace-nowrap">
+                    <td className="px-2 md:px-6  border border-yellow-500 text-text-color text-center py-4 whitespace-nowrap">
                       {item?.ledger_des}
                     </td>
                   </tr>

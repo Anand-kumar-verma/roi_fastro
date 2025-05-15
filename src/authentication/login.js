@@ -90,22 +90,22 @@ const Login = () => {
   const loginFn = async (reqBody) => {
     setLoading(true);
 
+    // const reqBodyy = {
+    //   mobile: String(datatele?.id),
+    //   email: String(datatele?.id),
+    //   full_name: String(datatele?.username),
+    //   referral_id: String(params),
+    //   username: String(reqBody.id),
+    //   password: String(reqBody.id),
+    // };
     const reqBodyy = {
-      mobile: String(datatele?.id),
-      email: String(datatele?.id),
+      mobile: String("1840589027"),
+      email: String("1840589027"),
       full_name: String(datatele?.username),
-      referral_id: String(params),
-      username: String(reqBody.id),
-      password: String(reqBody.id),
+      referral_id: String("1234567890"),
+      username: String("1840589027"),
+      password: String("1840589027"),
     };
-      // const reqBodyy = {
-      //   mobile: String("1840589027"),
-      //   email: String("1840589027"),
-      //   full_name: String(datatele?.username),
-      //   referral_id: String("1234567890"),
-      //   username: String("1840589027"),
-      //   password: String("1840589027"),
-      // };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {

@@ -1,8 +1,4 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import React, { useState } from "react";
-import { FaUserCheck, FaUserTimes } from "react-icons/fa";
+import { FaUserCheck, FaUserPlus, FaUserTimes } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { PiMicrosoftTeamsLogoLight } from "react-icons/pi";
 import { VscFileSubmodule } from "react-icons/vsc";
@@ -13,6 +9,7 @@ import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
+import { FaCircleUser } from "react-icons/fa6";
 const Network = () => {
   const { isLoading: proLoding, data: profile_data } = useQuery(
     ["profile_api"],
@@ -30,93 +27,140 @@ const Network = () => {
     <>
       <Navbar />
       <Loader isLoading={proLoding} />
-      <div className="p-6 mt-10 min-h-screen flex flex-col bg-custom-gradient overflow-y-auto">
-        <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded bg-glassy">
+      <div className="md:p-6 p-4 mt-16  !pb-16 min-h-screen flex flex-col bg-custom-gradient overflow-y-auto">
+        {/* <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-text-color rounded bg-glassy">
           <Diversity3Icon className="!text-text-color !text-[80px]" />
         </div>
         <p className="text-text-color text-sm md:text-base md:text-center ">
           View your referral network and earnings
-        </p>
+        </p> */}
         <div className="md:grid md:grid-cols-3 grid grid-cols-1 gap-3 pt-2">
-          <div className="bg-glassy p-6">
-            <div className="flex justify-between items-center">
+          <div className="bg-glassy !border px-5 !border-gold-color flex items-center w-full h-20">
+            <div className="flex justify-between w-full items-center">
               <div className="flex items-center gap-2">
                 <img
                   src={crown}
                   alt="Crown"
                   className="w-6 h-6 md:w-8 md:h-8"
                 />
-                <p className="text-white font-medium">Current Reward</p>
+                <p className="text-white text-sm md:text-lg font-medium text-nowrap">Current Reward</p>
               </div>
-              <p className="text-text-color font-semibold">No Reward</p>
+              <div>
+                <p className="text-text-color text-end  font-semibold">No Reward</p>
+                <p className="text-xs text-text-color text-end pt-2">
+                  Next Reward: 0.00 USD
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-text-color text-end pt-2">
-              Next Reward: 0.00 USD
-            </p>
+
           </div>
-          <div className="bg-glassy p-6 rounded-xl flex justify-between items-center shadow-md">
+          <div className="bg-glassy !border px-5 !border-gold-color flex items-center justify-between w-full h-20">
             <div className="flex items-center gap-2">
-              <AccountCircleIcon className="!text-text-color" />
-              <p className="text-white font-medium">Telegram ID</p>
+              <FaCircleUser className="!text-gold-color " size={30} />
+              <p className="text-white text-sm md:text-lg font-medium">Telegram ID</p>
             </div>
-            <p className="text-white font-semibold">{profile?.lgn_cust_id}</p>
+            <p className="text-text-color font-semibold">{profile?.lgn_cust_id || 0}</p>
           </div>
-          <div className="bg-glassy p-2 rounded-xl flex justify-between items-center shadow-md">
+          <div className="bg-glassy !border px-5 !border-gold-color flex items-center justify-between w-full h-20">
             <div className="flex items-center gap-2">
-              <PersonAddAltIcon className="!text-text-color" />
-              <p className="text-white font-medium">Sponser Telegram ID</p>
+              <FaUserPlus className="!text-gold-color" size={30} />
+              <p className="text-white text-sm md:text-lg font-medium">Sponser Telegram ID</p>
             </div>
-            <p className="text-white font-semibold">
-              {profile?.lgn_cust_id - 1}
+            <p className="text-text-color font-semibold">
+              {profile?.lgn_cust_id ? `${Number(profile?.lgn_cust_id) - 1}` : 0}
             </p>
           </div>
         </div>
-        <div className="md:grid md:grid-cols-4 grid grid-cols-2 gap-3 pt-5 mb-10">
-          <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
-            <FaUserCheck className="!w-10 !h-10" />
-            <p className="text-sm text-gray-300 font-medium ">
-              Active Referrals
-            </p>
-            <p className="text-lg text-white font-semibold">
-              {profile?.jnr_direct_topup_mem || 0} Active
-            </p>
+        <div className="md:grid  md:grid-cols-4 grid grid-cols-2 gap-3 pt-5 mb-10">
+
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#d34a4a] to-[#fe9e9e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class=" text-3xl">
+                <FaUserCheck className="!w-10 !h-10 text-[#a52828]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">Active Referrals</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">{profile?.jnr_direct_topup_mem || 0} <span class="font-normal">Active</span></p>
+              </div>
+            </div>
           </div>
-          <div className="bg-glassy p-4 gap-2 rounded-xl  flex flex-col shadow-md text-text-color">
-            <FaUserTimes className="!w-10 !h-10" />
-            <p className="text-sm text-gray-300 font-medium ">
-              Inactive Referrals
-            </p>
-            <p className="text-lg text-white font-semibold">
-              {Number(profile?.jnr_direct_team || 0) -
-                Number(profile?.jnr_direct_topup_mem || 0)}{" "}
-              Inactive
-            </p>
+
+
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#291d57] to-[#a38afb] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class=" text-3xl">
+                <FaUserTimes className="!w-10 !h-10 text-[#201355]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">Inactive Referrals</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {Number(profile?.jnr_direct_team || 0) -
+                    Number(profile?.jnr_direct_topup_mem || 0)}{" "}
+                  <span class="font-normal">Inactive</span>
+
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-glassy p-4 rounded-xl  gap-2 flex flex-col shadow-md text-text-color">
-            <FaUserGroup className="!w-10 !h-10" />
-            <p className="text-sm text-gray-300 font-medium ">
-              Total Network Size
-            </p>
-            <p className="text-lg text-white font-semibold">
-              {profile?.jnr_direct_team || 0}{" "}
-            </p>
+
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#8f8f2f] to-[#f3e17e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <FaUserGroup className="!w-10 !h-10 !text-[#5f5f12]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-nowrap text-gold-color"> Total Network Size</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {profile?.jnr_direct_team || 0}{" "}
+
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
-            <PiMicrosoftTeamsLogoLight className="!w-12 !h-12" />
-            <p className="text-sm text-gray-300 font-medium ">
-              Direct Business
-            </p>
-            <p className="text-lg text-white font-semibold">
-              ${profile?.jnr_direct_business || 0}
-            </p>
+
+
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#f74ede] to-[#f58ce0] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <PiMicrosoftTeamsLogoLight className="!w-10 !h-10 !text-[#c526ad]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl  text-gold-color">Direct Business</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  ${profile?.jnr_direct_business || 0}
+
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
+
+
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#53a73a] to-[#94f37e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">Topup Wallet</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {profile?.jnr_topup_wallet || 0} USD
+
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          {/* <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
             <VscFileSubmodule className="!w-10 !h-10" />
             <p className="text-sm text-gray-300 font-medium ">Topup Wallet</p>
             <p className="text-lg text-white font-semibold">
               {profile?.jnr_topup_wallet || 0} USD
             </p>
-          </div>
+          </div> */}
           {/* <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
             <IoArrowDownCircle className="!w-10 !h-10" />
             <p className="text-sm text-gray-300 font-medium ">
