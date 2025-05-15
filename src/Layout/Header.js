@@ -40,7 +40,7 @@ const Header = () => {
                 className="cursor-pointer"
                 onClick={() => {
                   navigate("/home");
-                  window.location.reload();
+                  // window.location.reload();
                 }}
               >
                 Dashboard
@@ -104,7 +104,7 @@ const Header = () => {
               onClick={() => {
                 navigate("/dashboard");
                 setIsDrawerOpen(false);
-                window.location.reload();
+                // window.location.reload();
               }}
             >
               <ListItemText primary="Dashboard" />
