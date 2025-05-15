@@ -105,7 +105,7 @@ function Withdrawal() {
       <div className="text-gold-color md:mt-14 flex flex-col items-center h-screen overflow-y-scroll pb-10 bg-custom-gradient relative">
         <Loader isLoading={loding} />
 
-        <div className="flex h-screen overflow-y-scroll flex-col justify-center items-center px-3 mt-5 w-full lg:w-[60%]">
+        <div className="flex h-screen  flex-col justify-center items-center px-3 mt-5 w-full lg:w-[60%]">
           <Box
             className="w-full glass-card border border-gold-color rounded-xl p-5 shadow-xl backdrop-blur-md"
             sx={{
