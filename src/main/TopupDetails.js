@@ -1,12 +1,10 @@
 import moment from 'moment';
-import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import Navbar from '../dashboard/Navbar';
-import crypto from '../images/crypto.jpg';
+import ButtomNavigation from '../Layout/ButtomNaviagatoin';
+import Loader from '../Shared/Loader';
 import { apiConnectorGet } from '../utils/APIConnector';
 import { endpoint } from '../utils/APIRoutes';
-import Loader from '../Shared/Loader';
-import ButtomNavigation from '../Layout/ButtomNaviagatoin';
 
 function TopUP() {
   const { isLoading, data: topup_data } = useQuery(

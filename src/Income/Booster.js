@@ -83,7 +83,7 @@ const BoosterIncome = () => {
         className=" text-white bg-custom-gradient p-3 min-h-screen flex flex-col  items-center"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <div className="p-4 lg:w-[70%] w-full mt-20 ">
+          <div className="mt-6 lg:mt-10 overflow-x-auto max-h-[400px] overflow-y-auto !pb-[20%]">
           <div>
             <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-text-color">
               Rocket Income

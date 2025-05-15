@@ -90,7 +90,7 @@ export default function Navbar() {
               className="flex items-center gap-2 cursor-pointer p-2 "
               onClick={() => {
                 navigate("/home");
-                window.location.reload();
+                // window.location.reload();
               }}
             >
               <FaHome className="text-blue-400" /> Home
@@ -99,10 +99,19 @@ export default function Navbar() {
               className="flex items-center gap-2 cursor-pointer p-2 "
               onClick={() => {
                 navigate("/dashboard");
-                window.location.reload();
+                // window.location.reload();
               }}
             >
               <FaHome className="text-blue-400" /> Dashboard
+            </p>
+            <p
+              className="flex items-center gap-2 cursor-pointer p-2 "
+              onClick={() => {
+                navigate("/price-statistics");
+                // window.location.reload();
+              }}
+            >
+              <FaHome className="text-blue-400" /> Price Statistics
             </p>
             <div
               className="relative dropdown"

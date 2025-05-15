@@ -1,10 +1,6 @@
-import React from "react";
-import Navbar from "../../dashboard/Navbar";
-import crypto from "../../images/crypto.jpg";
-import { frontend } from "../../utils/APIRoutes";
-import copy from "copy-to-clipboard";
-import toast from "react-hot-toast";
 import { CopyAll } from "@mui/icons-material";
+import toast from "react-hot-toast";
+import Navbar from "../../dashboard/Navbar";
 import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 const ActivatoinLink = () => {
