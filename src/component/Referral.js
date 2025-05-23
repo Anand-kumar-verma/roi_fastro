@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../dashboard/Navbar";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
@@ -40,7 +38,7 @@ function Referral() {
       <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={proLoding} />
         <div className="p-6 gap-2 mt-10 flex flex-col bg-custom-gradient overflow-y-auto">
-          <p className="text-2xl text-gold-color pt-4">Referral Incoms</p>
+          <p className="text-2xl text-gold-color pt-4">Referral</p>
           <p className="text-sm">
             Track your referral earnings and invite friends
           </p>

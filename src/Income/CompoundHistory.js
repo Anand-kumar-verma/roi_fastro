@@ -63,15 +63,13 @@ const CompoundHistory = () => {
                     <td className="md:px-6 text-sm px-2 py-4 border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                       {(page - 1) * rowsPerPage + index + 1}
                     </td>
-                    <td className="md:px-6 text-sm text-nowrap px-2 py-4 border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
-                      {moment(item?.ledger_created_at)?.format(
-                        "DD-MM-YYYY"
-                      )}
+                    <td className="md:px-6 text-sm text-nowrap px-2 py-4 border border-yellow-500 text-gold-color  text-center text-colorspace-nowrap">
+                      {moment(item?.ledger_created_at)?.format("DD-MM-YYYY")}
                     </td>
-                    <td className="md:px-6 text-sm px-2 border border-yellow-500 text-text-color text-center py-4 text-colorspace-nowrap">
+                    <td className="md:px-6 text-sm px-2 border border-yellow-500 text-green-500 text-center py-4 text-colorspace-nowrap">
                       {Number(item?.ledger_amount).toFixed(2)}
                     </td>
-                    <td className="md:px-6 text-sm px-2 border border-yellow-500 text-text-color text-center py-4 text-colorspace-nowrap">
+                    <td className="md:px-6 text-sm px-2 border border-yellow-500 text-whitetext-center py-4 text-colorspace-nowrap">
                       {item?.ledger_des}
                     </td>
                   </tr>
@@ -85,7 +83,7 @@ const CompoundHistory = () => {
           </div>
         </div>
       </div>
-      <ButtomNavigation/>
+      <ButtomNavigation />
     </>
   );
 };

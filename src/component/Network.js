@@ -34,7 +34,7 @@ const Network = () => {
        refetchOnWindowFocus: false,
      }
    );
-   const level_business = LevelBusiness?.data?.result || {};
+   const level_business = LevelBusiness?.data?.result || [];
   return (
     <>
       <Navbar />
@@ -73,7 +73,7 @@ const Network = () => {
             </div>
             <p className="text-text-color font-semibold">{profile?.lgn_cust_id || 0}</p>
           </div>
-          <div className="bg-glassy !border px-5 !border-gold-color flex items-center justify-between w-full h-20">
+          {/* <div className="bg-glassy !border px-5 !border-gold-color flex items-center justify-between w-full h-20">
             <div className="flex items-center gap-2">
               <FaUserPlus className="!text-gold-color" size={30} />
               <p className="text-white text-sm md:text-lg font-medium">Sponser Telegram ID</p>
@@ -81,7 +81,7 @@ const Network = () => {
             <p className="text-text-color font-semibold">
               {profile?.lgn_cust_id ? `${Number(profile?.lgn_cust_id) - 1}` : 0}
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="md:grid  md:grid-cols-4 grid grid-cols-2 gap-3 pt-5 mb-10">
 
@@ -169,7 +169,12 @@ const Network = () => {
               <div className="flex flex-col gap-0 md:gap-2">
                 <p class="text-sm md:text-2xl text-gold-color">Total Team Business</p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {level_business?.total_team_business || 0} USD
+                  {Number(
+                          level_business?.find(
+                            (j) =>
+                              j?.level_label === `total_team_business`
+                          )?.level_value
+                        )?.toFixed(2) || 0}{" "} USD
 
                 </p>
               </div>
@@ -183,7 +188,12 @@ const Network = () => {
               <div className="flex flex-col gap-0 md:gap-2">
                 <p class="text-sm md:text-2xl text-gold-color">Today Team Business</p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {level_business?.today_team_business || 0} USD
+                  {Number(
+                          level_business?.find(
+                            (j) =>
+                              j?.level_label === `today_team_business`
+                          )?.level_value
+                        )?.toFixed(2) || 0}{" "} USD
 
                 </p>
               </div>

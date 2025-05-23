@@ -1,14 +1,12 @@
 import moment from "moment/moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import Navbar from "../../dashboard/Navbar";
-import crypto from "../../images/crypto.jpg";
+import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
+import CustomToPagination from "../../Shared/CustomToPagination";
+import Loader from "../../Shared/Loader";
 import { apiConnectorGet } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
-import Loader from "../../Shared/Loader";
-import CustomPagination from "../../Shared/CustomPagination";
-import CustomToPagination from "../../Shared/CustomToPagination";
-import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 
 function WithdrawalHistory() {
   const [page, setPage] = useState(1);
@@ -51,7 +49,7 @@ function WithdrawalHistory() {
                     Date
                   </th>
                   <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
-                    Amount
+                    Amount($)
                   </th>
                   <th className="px-2 md:px-6 py-3   border border-yellow-500 text-center text-xs  text-yellow-700 font-semibold uppercase tracking-wider">
                     Status
@@ -64,15 +62,15 @@ function WithdrawalHistory() {
                     <td className="px-2 md:px-6 py-4  b border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
                       {index + 1 || "No Data"}
                     </td>
-                    <td className="px-2 md:px-6 py-4  border border-yellow-500 text-text-color text-center text-colorspace-nowrap">
+                    <td className="px-2 md:px-6 py-4  border border-yellow-500 text-gold-color  text-center text-colorspace-nowrap">
                       {moment
                         (item?.wdrl_created_at)
                         ?.format("DD-MM-YYYY") || "No Data"}
                     </td>
-                    <td className="px-2 md:px-6 text-center py-4   border border-yellow-500 text-text-color text-colorspace-nowrap">
+                    <td className="px-2 md:px-6 text-center py-4   border border-yellow-500 text-gold-color text-colorspace-nowrap">
                       {Number(item?.wdrl_amont)?.toFixed(2) || "0"}
                     </td>
-                    <td className={`px-2 md:px-6  text-center py-4   border border-yellow-500 text-text-color text-colorspace-nowrap ${item?.wdrl_status === "Success"?"!text-green-500":"!text-rose-500"}`}>
+                    <td className={`px-2 md:px-6  text-center py-4   border border-yellow-500 text-white text-colorspace-nowrap ${item?.wdrl_status === "Success"?"!text-green-500":"!text-rose-500"}`}>
                       {item?.wdrl_status || "No Data"}
                     </td>
                   </tr>

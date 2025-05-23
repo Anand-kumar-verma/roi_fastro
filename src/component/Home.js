@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery } from "react-query";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import slide from "../images/m.png";
-import bitcoin from "../images/in-equity-slide-1.png";
-import m from "../images/mainb.png";
+// import slide from "../images/m.png";
+// import bitcoin from "../images/in-equity-slide-1.png";
+// import m from "../images/mainb.png";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import { apiConnectorGet } from "../utils/APIConnector";
@@ -58,59 +58,73 @@ function Home() {
   const slides = [
     {
       id: 1,
-      image: slide,
+      image:"https://www.teambonding.com/wp-content/uploads/2016/10/SPINTOWIN_RGB-01.png",
     },
     {
       id: 2,
-      image: bitcoin,
+      image:
+        "https://www.nsoft.com/assets/images/_1035x690_crop_center-center_75_line/274718/Spin-and-Win-image-2.webp",
     },
     {
       id: 3,
-      image: m,
+      image:
+        "https://images.dwncdn.net/images/t_app-cover-s,f_auto/p/b7cec2e9-b927-489c-b293-0e1844d26d24/2538840230/2647_4-78277926-imgingest-343376247191459907.jpg",
     },
   ];
 
   return (
-    <div ref={scrollRef} className="bg-custom-gradient !overflow-hidden !overflow-y-scroll">
+    <div
+      ref={scrollRef}
+      className="bg-custom-gradient !overflow-hidden !overflow-y-scroll"
+    >
       <Header />
       {/* <div>
         startAppValue : {JSON.stringify(startAppValue || "")}
         datatele : {JSON.stringify(datatele || "")}
       </div> */}
       <div
-        className="w-full flex items-center justify-center  relative"
+        className="w-full flex items-center justify-center relative"
         style={{
-          backgroundImage: `url(${"https://t3.ftcdn.net/jpg/04/08/55/24/240_F_408552427_4YG6SEh8h8zcJP8AmhVXC6TMG2mDnAFh.jpg"})`,
+          backgroundImage: `url("https://t3.ftcdn.net/jpg/04/08/55/24/240_F_408552427_4YG6SEh8h8zcJP8AmhVXC6TMG2mDnAFh.jpg")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundColor: "#111022",
         }}
       >
-        <div className="!w-full hidden lg:block  py-1">
+        {/* Desktop View */}
+        <div className="w-full hidden lg:block py-1">
           <Slider {...settings}>
             {slides.map((slideData) => (
               <div
                 key={slideData?.id}
-                className="!flex justify-center px-8 mt-5 py-2 animate-pulse"
+                className="flex justify-center items-center px-8 py-4"
               >
                 <img
                   src={slideData?.image}
                   alt={`Slide ${slideData?.id}`}
-                  className="!h-[500px] w-[800px] !mt-5"
+                  className="h-[400px] w-full max-w-[1200px] object-cover rounded-lg"
                 />
               </div>
             ))}
           </Slider>
         </div>
-        <div className="!w-full lg:hidden block !overflow-hidden py-1">
+
+        {/* Mobile View */}
+        <div className="w-full lg:hidden block overflow-hidden py-1">
           <Slider {...settings}>
             {slides.map((slideData) => (
-              <div key={slideData?.id} className="p-2 animate-pulse">
-                <p className="mt-1 text-2xl py-2 text-center font-extrabold text-white">
+              <div key={slideData?.id} className="p-2">
+                <p className="mt-2 text-xl py-2 text-center font-extrabold text-white">
                   {slideData.heading}
                 </p>
-                <img src={slideData?.image} />
+                <div className="flex justify-center items-center">
+                  <img
+                    src={slideData?.image}
+                    alt={`Slide ${slideData?.id}`}
+                    className="h-[250px] w-full max-w-[95%] object-cover rounded-md"
+                  />
+                </div>
               </div>
             ))}
           </Slider>

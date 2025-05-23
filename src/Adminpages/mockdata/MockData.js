@@ -570,6 +570,17 @@ export const all_Data = [
     ),
     subcomponent: [],
   },
+  {
+    id: 4334,
+    navLink: "/fst_detail",
+    navItem: "FST Detail",
+    navIcon: (
+      <span>
+        <Compare color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
+  },
 
   {
     id: 14,

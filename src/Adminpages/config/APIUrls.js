@@ -1,15 +1,12 @@
 export const API_URLS = {
-
-
-
-
   level_bonus_data: `/api/v2/get-roi-income-details-admin`,
   stop_user_income: `/api/v2/stop-user-income`,
   inr_payout_data: `/api/v2/get-withdrawal-details-admin`,
+  inr_payout_fst_data: `/api/v2/get-fst-withdrawal-details-admin`,
   payout_request_approval: `/api/v2/withdrawal-approval-from-admin`,
+  payout_fst_request_approval: `/api/v2/fst-approval-from-admin`,
   topup_data: `/api/v2/get-topup-details-admin`,
   user_data: `/api/v2/get-user-details-admin`,
-
 
   dashboard_counter: `/api/v2/dashboard-api`,
   withdrawl_Request: `/api/v2/inr-payout-request-list`,
@@ -58,7 +55,7 @@ export const API_URLS = {
   weekly_bonus_data: `/api/v2/tget-weekly-recovery-admin-data`,
   welcome_bonus_data: `/api/v2/tget-wlcm-bonus-admin-data`,
   bet_bonus_data: `/api/v2/tget-bet-income-bonus-admin-data`,
- 
+
   vip_bonus_data: `/api/v2/vip-bonus-list-admin`,
   cashback_bonus_data: `/api/v2/cash-back-bonus-list-admin`,
   add_coupon_user: `/api/v2/add-coupon-to-user-by-admin`,
@@ -100,6 +97,4 @@ export const API_URLS = {
   get_downline_data_by_id: `/api/v2/downline-referral-data`,
   manually_winning_api: `/api/v2/manually-winning`,
   manually_update_percentage_api: `/api/v2/manually-update-percentage`,
-
-  
 };

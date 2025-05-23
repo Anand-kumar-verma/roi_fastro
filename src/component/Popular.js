@@ -1,13 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { TypeAnimation } from "react-type-animation";
-import calc from "../images/equatity.svg";
-import gif1 from "../images/gif1.gif";
-import gif2 from "../images/gif2.gif";
-import curr from "../images/in-equity-2-icon-1.svg";
-import forex from "../images/in-equity-2-icon-3.svg";
-import meta from "../images/in-equity-2-icon-4.svg";
-import Review from "./Review";
+import bgImagewingo from "../images/wingoimage.jpeg"; // 🎯 Change to Wingo game image
 
+import DoublePyramid from "../dashboard/Cone";
+import bgImage from "../images/jackpot-removebg-preview.png";
+import jackgif from "../images/KolntAno33.gif";
+import Review from "./Review";
 const Popular = ({ curr_data_bit, curr_data_Eth }) => {
   const scrollRef = useRef(null);
 
@@ -31,54 +29,7 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
       scroll();
     }
   }, []);
-  useEffect(() => {
-    // Check if script is already loaded
-    if (!document.getElementById("tradingview-widget-script")) {
-      const script = document.createElement("script");
-      script.id = "tradingview-widget-script";
-      script.src = "https://s3.tradingview.com/tv.js";
-      script.async = true;
-      document.body.appendChild(script);
 
-      script.onload = () => {
-        // Initialize TradingView widget after script loads
-        if (window.TradingView) {
-          new window.TradingView.widget({
-            width: "200%",
-            height: 500,
-            symbol: "DOT",
-            interval: "D",
-            timezone: "Etc/UTC",
-            theme: "dark",
-            style: "1",
-            locale: "en",
-            toolbar_bg: "#f1f3f6",
-            enable_publishing: false,
-            allow_symbol_change: true,
-            container_id: "tradingview_2d7e100",
-          });
-        }
-      };
-    } else {
-      // If script is already loaded, initialize immediately
-      if (window.TradingView) {
-        new window.TradingView.widget({
-          width: "200%",
-          height: 500,
-          symbol: "DOT",
-          interval: "D",
-          timezone: "Etc/UTC",
-          theme: "dark",
-          style: "1",
-          locale: "en",
-          toolbar_bg: "#f1f3f6",
-          enable_publishing: false,
-          allow_symbol_change: true,
-          container_id: "tradingview_2d7e100",
-        });
-      }
-    }
-  }, []);
   const steps = [
     {
       id: 1,
@@ -103,38 +54,56 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
   const products = [
     {
       id: 1,
-      label: "Stocks",
+      label: "Jackpot Launch",
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
+        "Starting June 1st, 50% of FST will be burned through the Jackpot launch.",
       spanClass: "bg-[#e54a41]",
       spanText: "EQ",
       bgClass: "bg-[#a7e2f2]",
     },
     {
       id: 2,
-      label: "Listed Options",
+      label: "Wingo Game",
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
+        "From July 1st, 50% of FST will be burned through the Wingo game.",
       spanClass: "bg-[#37bc9c]",
       spanText: "LQ",
       bgClass: "bg-[#a7e2f2]",
     },
     {
       id: 3,
-      label: "Futures",
+      label: "User Onboarding",
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
+        "Beginning June 15th, 10% to 30% of FST will be burned on every new user joining.",
       spanClass: "bg-[#4886d9]",
       spanText: "FU",
       bgClass: "bg-[#a7e2f2]",
     },
     {
       id: 4,
-      label: "More products",
+      label: "Transaction Burns",
       description:
-        "Access 19,000+ stocks across core and emerging markets on 40+ exchanges worldwide, all with Meta Prime.",
-      spanClass: "bg-[#fff]",
-      spanText: "---",
+        "Currently, 10% FST is already being burned on every transaction.",
+      spanClass: "bg-[#f39c12]",
+      spanText: "TX",
+      bgClass: "bg-[#a7e2f2]",
+    },
+    {
+      id: 5,
+      label: "Burning Events",
+      description:
+        "Special burning events are underway, burning over 2 million tokens.",
+      spanClass: "bg-[#9b59b6]",
+      spanText: "BE",
+      bgClass: "bg-[#a7e2f2]",
+    },
+    {
+      id: 6,
+      label: "Burn Target",
+      description:
+        "The ultimate goal is to burn all FST tokens to boost the price by 100x.",
+      spanClass: "bg-[#2ecc71]",
+      spanText: "BT",
       bgClass: "bg-[#a7e2f2]",
     },
   ];
@@ -170,33 +139,11 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
     },
   ];
 
-  const features = [
-    {
-      id: 1,
-      image: calc,
-      title: "Forex Calculators",
-    },
-    {
-      id: 2,
-      image: curr,
-      title: "Currency Analysis",
-    },
-    {
-      id: 3,
-      image: forex,
-      title: "Forex Market Insights",
-    },
-    {
-      id: 4,
-      image: meta,
-      title: "Meta Prime Forex Academy",
-    },
-  ];
   return (
     <>
       <div className="!lg:p-8 lg:py-14 p-2 py-10 ">
         <p className="text-xl lg:pl-12 p-2 font-bold text-text-color">
-          Popular Products
+          Burning Events
         </p>
         <div className="relative w-full overflow-hidden">
           <div
@@ -207,17 +154,30 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
             {[...products, ...products].map((product, index) => (
               <div
                 key={index}
-                className="p-6 shadow-2xl text-[#656d70] text-lg rounded-lg transition-all duration-500 hover:scale-95 hover:shadow-2xl hover:shadow-purple-500 !bg-[#010b13] min-w-[250px]"
+                className={`p-6 shadow-2xl text-[#656d70] 
+                text-lg rounded-lg transition-all duration-500
+                 hover:scale-95 hover:shadow-2xl hover:shadow-purple-500
+                  !bg-[#010b13] min-w-[250px] ${
+                    index % 2 === 0 ? "flip-left" : "flip-right"
+                  }`}
               >
-                <p className="font-bold text-text-color mb-4">
+                <p
+                  className={`${
+                    index % 2 === 0 ? "!text-white" : "!text-text-color"
+                  } font-bold  mb-4`}
+                >
                   <span
-                    className={`!text-text-color rounded-full p-1 mx-2 text-xs ${product.spanClass}`}
+                    className={` rounded-full p-1 mx-2 text-xs ${product.spanClass}`}
                   >
                     {product.spanText}
                   </span>
                   {product.label}
                 </p>
-                <p className="!text-text-color text-opacity-50 text-sm">
+                <p
+                  className={`text-opacity-50 text-sm ${
+                    index % 2 === 1 ? "!text-white" : "!text-text-color"
+                  }`}
+                >
                   {product.description}
                 </p>
               </div>
@@ -256,91 +216,18 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
 
       <div className="text-center flex flex-col justify-center items-center gap-8 p-8 bg-blue-50">
         <p className="mt-8 text-4xl font-bold text-black">
-          Your Gateway To Advanced Forex Trading
-        </p>
-        <p className="mt-5 text-xl text-gray-800" data-aos="fade-up">
-          Experience seamless forex trading with Meta Prime. Make smarter,
-          faster, and more precise decisions with advanced tools and real-time
-          data for currency pairs worldwide.
+          Grow Smart, Earn Fast- With FASTRO
         </p>
       </div>
 
-      <div className="px-2 py-5 bg-[#EFF6FF]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="flex flex-col justify-center">
-            <h2
-              className="text-4xl font-bold text-gray-800 mb-4"
-              data-aos="fade-right"
-            >
-              Maximize Your MLM Returns with Predictable Growth
-            </h2>
-            <p className="text-2xl text-blue-500 mb-6" data-aos="fade-right">
-              Achieve consistent and scalable returns through our carefully
-              designed MLM investment structures.
-            </p>
-            <hr className="border-t-2 border-gray-300 w-full" />
-          </div>
-          <div className="shadow-xl hover:shadow-2xl hover:shadow-emerald-400 overflow-hidden">
-            <img
-              data-aos="flip-left"
-              src={gif2}
-              alt="dashboard"
-              className="w-full rounded-lg"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="py-10 lg:pr-[6rem] bg-[#EFF6FF] ">
-        <div className="max-w-6xl mx-auto px-2 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-          <div className="shadow-xl hover:shadow-2xl hover:shadow-cyan-700 overflow-hidden">
-            <img
-              data-aos="flip-right"
-              src={gif1}
-              alt="dashboard"
-              className="w-full rounded-lg"
-            />
-          </div>
-          <div className="flex lg:pl-16 flex-col justify-center">
-            <h2
-              className="text-4xl font-bold text-gray-800 mb-4"
-              data-aos="fade-up"
-            >
-              Unlock Financial Freedom with Guaranteed MLM ROI
-            </h2>
-            <p className="text-2xl text-blue-500 mb-6" data-aos="fade-up">
-              Start building your wealth today! Our MLM platform is engineered
-              to deliver strong returns, fast payouts, and unmatched earning
-              potential.
-            </p>
-            <hr className="border-t-2 border-gray-300 w-full" />
-          </div>
-        </div>
-      </div>
-
-      <div className="flex lg:flex-row flex-col justify-center gap-16 items-center bg-blue-50 lg:p-8 text-gray-600 font-bold">
-        {features.map((feature) => (
-          <div
-            key={feature.id}
-            className="flex flex-col justify-center items-center gap-5 "
-          >
-            <img
-              src={feature.image}
-              alt={feature.title}
-              className="h-16 w-16 bg-white p-4 rounded shadow-2xl"
-            />
-            <p className="text-center">{feature.title}</p>
-          </div>
-        ))}
-      </div>
-
+      <DoublePyramid />
       <div className="text-center flex lg:flex-row flex-col justify-center lg:items-center gap-8 lg:p-16 py-10 bg-blue-50">
         <p className="lg:text-5xl text-4xl font-bold text-gray-800 text-left p-4">
           <TypeAnimation
             sequence={[
-              `Tight spreads and ultra-fast execution in forex trading`,
+              `Starting June 1st, 50% of FST will be burned through the Jackpot launch.`,
               500,
-              `Tight spreads and ultra-fast execution in forex trading`,
+              `From July 1st, 50% of FST will be burned through the Wingo game.`,
               500,
               "",
               500,
@@ -349,41 +236,182 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
             repeat={Infinity}
           />
           <p className="text-2xl text-blue-800 font-bold mt-6">
-            Best forex market prices available for excellent trading conditions.
+            Beginning June 15th, 10% to 30% of FST will be burned on every new
+            user joining.
           </p>
           <p className="border-t border-gray-400 my-5"></p>
         </p>
-        <img
-          data-aos="flip-right"
-          src={
-            "https://media.istockphoto.com/id/1271131500/vector/bitcoins-crypto-currency-concept.jpg?s=612x612&w=0&k=20&c=v-xMm4rWBTFr9zr9e2YKhDXgPau2tP-9uAxJL7skkLE="
-          }
-          alt=""
-          className="lg:h-[400px] transition-all duration-500 hover:scale-75 rounded hover:shadow-2xl hover:shadow-purple-500"
-        />
       </div>
+      <>
+        <div className="w-full min-h-screen overflow-y-auto relative bg-gradient-to-b from-[#0f0f1c] via-[#1a1c2d] to-[#000] text-white px-4 py-2">
+          {/* Background Overlay */}
+          <div
+            className="absolute inset-0 opacity-20 bg-cover bg-center z-0"
+            style={{
+              backgroundImage: `url(https://img.freepik.com/premium-vector/concept-lottery-win_144920-19.jpg)`,
+            }}
+          ></div>
 
+          {/* Floating Jackpot Icon */}
+          <div className="fixed bottom-20 right-4 w-20 h-20 rounded-full overflow-hidden border-4 border-yellow-400 z-50 shadow-lg animate-bounce">
+            <img
+              src={jackgif}
+              alt="jackpot gif"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="relative z-10 max-w-3xl mx-auto text-center bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-3xl shadow-2xl">
+            <div className="flex justify-center mb-6">
+              <img src={bgImage} alt="Jackpot Logo" className="w-48 sm:w-60" />
+            </div>
+
+            <p className="text-3xl lg:text-5xl font-extrabold text-yellow-400 mb-4 animate-pulse">
+              🎉 Coming Soon!
+            </p>
+
+            {/* Rules */}
+            <div className="bg-black bg-opacity-50 p-6 rounded-2xl text-white shadow-inner">
+              <h2 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-2">
+                <span>📜</span> Jackpot Game Rules
+              </h2>
+              <ul className="space-y-3 text-left list-none text-base sm:text-lg">
+                <li className="flex items-start gap-2">
+                  <span>🗓️</span> This game will run only on Sundays.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>⏱️</span> The game duration will be 3 minutes.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🚀</span> Launching on 1st June.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>💰</span> To play, your wallet must have 50% USD and 50%
+                  FST balance.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔥</span> All FST used will be sent to the null address.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>🎟️</span> Ticket purchase will begin from 1st June.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔢</span> Matching the last 4 digits of any number will
+                  make you a winner.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>🥇</span> Match 1 digit to win $100.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🥈</span> Match 2 digits to win $200.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>🥉</span> Match 3 digits to win $300.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🏆</span> Match 4 digits to win $400.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </>
+      <div className="text-center flex lg:flex-row flex-col justify-center lg:items-center gap-8 lg:p-16 py-10 bg-blue-50">
+        <p className="lg:text-5xl text-4xl font-bold text-gray-800 text-left p-4">
+          <TypeAnimation
+            sequence={[
+              `Beginning June 15th, 10% to 30% of FST will be burned on every new user joining.`,
+              500,
+              `Currently, 10% FST is already being burned on every transaction.`,
+              500,
+              "",
+              500,
+            ]}
+            style={{ fontSize: "50px" }}
+            repeat={Infinity}
+          />
+          <p className="text-2xl text-blue-800 font-bold mt-6">
+            Special burning events are underway, burning over 2 million tokens.
+          </p>
+          <p className="border-t border-gray-400 my-5"></p>
+        </p>
+      </div>
+      <>
+        <div className="w-full min-h-screen overflow-y-auto relative bg-gradient-to-b from-[#0e172a] via-[#1e1e2f] to-[#000] text-white px-4 py-2">
+          {/* Background Overlay */}
+          <div
+            className="absolute inset-0 opacity-20 bg-cover bg-center z-0"
+            style={{
+              backgroundImage: `url(https://img.freepik.com/free-vector/realistic-confetti-background_52683-64606.jpg)`,
+            }}
+          ></div>
+
+          {/* Main Content */}
+          <div className="relative z-10 max-w-3xl mx-auto text-center bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-3xl shadow-2xl">
+            <div className="flex justify-center mb-6">
+              <img
+                src={bgImagewingo}
+                alt="Wingo Logo"
+                className="w-48 sm:w-60 !rounded-lg"
+              />
+            </div>
+
+            <p className="text-3xl lg:text-5xl font-extrabold text-yellow-400 mb-4 animate-pulse">
+              🎉 Coming Soon!
+            </p>
+
+            {/* Rules Section */}
+            <div className="bg-black bg-opacity-50 p-6 rounded-2xl text-white shadow-inner">
+              <h2 className="text-2xl font-bold text-gold-color mb-4 flex items-center gap-2">
+                <span>📘</span> Wingo Game Rules
+              </h2>
+              <ul className="space-y-3 text-left list-none text-base sm:text-lg ">
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>🗓️</span> Game will be available every day.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🎯</span> Choose RED, GREEN, or VIOLET and bet
+                  accordingly.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>🧠</span> Predict and place your bet before the timer
+                  ends.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>⏱️</span> Each round lasts 60 seconds.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>💸</span> Win up to 2x your bet amount based on your
+                  prediction.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔥</span> All losing bets go to reward pool.
+                </li>
+                <li className="flex items-start gap-2 text-text-color">
+                  <span>🎟️</span> You can bet multiple times in one round.
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔐</span> Fair and transparent smart contract based
+                  game.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </>
       <div className="tradingview-widget-container">
         <div id="tradingview_2d7e100"></div>
       </div>
 
       <div className="text-center flex lg:flex-row-reverse flex-col justify-center lg:items-center gap-8 lg:p-16 py-10 bg-blue-50">
         <p className="text-4xl font-bold text-gray-800 text-left p-4">
-          Grow Your Investments, Grow Your Network
+          Burning FST Events
           <p className="text-2xl text-blue-800 font-bold mt-6">
-            With our MLM ROI plans, your network isn't just expanding — your
-            returns are too. It's time to turn connections into profits.
+            The ultimate goal is to burn all FST tokens to boost the price by
+            100x.
           </p>
           <p className="border-t border-gray-400 my-5"></p>
         </p>
-        <img
-          data-aos="flip-left"
-          src={
-            "https://img.freepik.com/premium-photo/graphic-people-with-word-people-their-heads_653449-2685.jpg?w=1060"
-          }
-          alt=""
-          className="lg:h-[400px] transition-all duration-500 hover:scale-75 rounded hover:shadow-2xl hover:shadow-purple-500"
-        />
       </div>
 
       <p className="text-center lg:text-4xl text-xl py-10 text-[#e68413] font-bold">

@@ -75,15 +75,15 @@ const DirectIncome = () => {
                     <td className="px-6 py-4 border border-yellow-500 text-text-color bg-black  text-center text-colorspace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 border border-yellow-500 text-text-color bg-black  text-center text-colorspace-nowrap">
+                    <td className="px-6 py-4 border border-yellow-500 text-gold-color  bg-black  text-center text-colorspace-nowrap">
                       {moment(item?.ledger_created_at)?.format(
                         "DD-MM-YYYY HH:mm:ss"
                       )}
                     </td>
-                    <td className="px-6 border border-yellow-500 text-text-color bg-black  text-center py-4 text-colorspace-nowrap">
+                    <td className="px-6 border border-yellow-500 text-green-500 bg-black  text-center py-4 text-colorspace-nowrap">
                       {item?.ledger_amount}
                     </td>
-                    <td className="px-6  border border-yellow-500 text-text-color bg-black  text-center py-4 text-colorspace-nowrap">
+                    <td className="px-6  border border-yellow-500 text-white bg-black  text-center py-4 text-colorspace-nowrap">
                       {item?.ledger_des}
                     </td>
                   </tr>

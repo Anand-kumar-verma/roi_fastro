@@ -50,7 +50,7 @@ export default function MobileNavigation() {
             sx={{ mr: 2, color: "inherit" }}
             onClick={(e) => handleClick(e)}
           >
-            <MenuIcon className="!text-blue-900"/>
+            <MenuIcon className="!text-blue-900" />
           </IconButton>
           <Typography
             variant="h6"
@@ -60,7 +60,6 @@ export default function MobileNavigation() {
           >
             Admin
           </Typography>
-          
         </Toolbar>
       </AppBar>
       <Menu
@@ -153,17 +152,17 @@ export default function MobileNavigation() {
               </Collapse>
             </React.Fragment>
           ))}
-            <List>
-        <ListItemButton
-          onClick={() => {
-            localStorage.clear();
-            sessionStorage.clear();
-            navigate("/")
-          }}
-        >
-          <ListItemText primary={"Logout"} />
-        </ListItemButton>
-      </List>
+          <List>
+            <ListItemButton
+              onClick={() => {
+                localStorage.clear();
+                sessionStorage.clear();
+                navigate("/adminlogin");
+              }}
+            >
+              <ListItemText primary={"Logout"} />
+            </ListItemButton>
+          </List>
         </List>
       </Menu>
     </Box>

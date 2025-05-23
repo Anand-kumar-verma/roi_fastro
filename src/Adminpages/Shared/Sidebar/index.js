@@ -90,7 +90,7 @@ const Sidebar = () => {
           onClick={() => {
             localStorage.clear();
             sessionStorage.clear();
-            navigate("/")
+            navigate("/adminlogin")
           }}
         >
           <ListItemIcon><Logout /></ListItemIcon>

@@ -9,15 +9,15 @@ import men from "../images/in-team-8.png";
 export default function Review() {
   const reviews = [
     {
-      name: 'Angela Nannenhorn',
-      country: 'United Kingdom',
-      text: 'Very convenient for traders, spread for gold is relatively low compared to other brokers.',
+      name: "Angela Nannenhorn",
+      country: "United Kingdom",
+      text: "Very convenient for traders, spread for gold is relatively low compared to other brokers.",
       image: women,
     },
     {
-      name: 'Wade Palmer',
-      country: 'Germany',
-      text: 'One of the best FX brokers, I have been using! Their trading conditions are excellent.',
+      name: "Wade Palmer",
+      country: "Germany",
+      text: "One of the best FX brokers, I have been using! Their trading conditions are excellent.",
       image: men,
     },
     // {
@@ -35,17 +35,17 @@ export default function Review() {
   ];
   const marketData = [
     {
-      name: 'Forex',
+      name: "Forex",
       description:
-        'Trade 40+ major, minor, and exotic currency pairs with AI-powered strategies.',
+        "Trade 40+ major, minor, and exotic currency pairs with AI-powered strategies.",
       image: t1,
-      color: 'text-blue-400',
+      color: "text-blue-400",
     },
     {
-      name: 'Indices',
-      description: 'Trade 15 global indices with AI-assisted market trends.',
+      name: "Indices",
+      description: "Trade 15 global indices with AI-assisted market trends.",
       image: t2,
-      color: 'text-green-400',
+      color: "text-green-400",
     },
     // {
     //   name: "Stocks",
@@ -80,15 +80,15 @@ export default function Review() {
   const tradingInfo = [
     {
       image: t3,
-      title: 'Best Trading Conditions',
+      title: "Best Trading Conditions",
       description:
-        'Trade precious metals like Gold and Silver with predictive AI models.',
+        "Trade precious metals like Gold and Silver with predictive AI models.",
     },
     {
       image: t2,
-      title: 'Best Forex Trading Platform',
+      title: "Best Forex Trading Platform",
       description:
-        'Trade precious metals like Gold and Silver with predictive AI models.',
+        "Trade precious metals like Gold and Silver with predictive AI models.",
     },
   ];
   return (
@@ -100,7 +100,7 @@ export default function Review() {
       <div className="grid lg:grid-cols-2 gap-8 px-5 lg:px-20">
         {reviews.map((review, index) => (
           <div
-            data-aos={index % 2 === 0 ? 'fade-right' : 'fade-left'}
+            data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
             data-aos-delay="300"
             data-aos-offset="0"
             key={index}

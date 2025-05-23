@@ -30,7 +30,6 @@ function ViewProfile() {
     lgn_real_name: data?.lgn_real_name || "",
     lgn_wallet_add: data?.lgn_wallet_add || "",
   };
-  console.log(data, "data");
   const fk = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
@@ -58,7 +57,7 @@ function ViewProfile() {
         //  style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="flex justify-center gap-[10%] items-center mt-1 p-2 lg:w-[60%] w-full border border-gold-color rounded focus:ring-blue-500 focus:border-blue-500">
-          <AccountCircleIcon className="!text-text-color !text-[80px]" />
+          <AccountCircleIcon className="!text-gold-color !text-[80px]" />
         </div>
 
         <div className="lg:px-10 py-5 p-2 lg:w-[60%] w-full !mb-10  border border-gold-color ">

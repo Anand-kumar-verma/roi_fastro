@@ -1,14 +1,14 @@
-import moment from 'moment';
-import { useQuery } from 'react-query';
-import Navbar from '../dashboard/Navbar';
-import ButtomNavigation from '../Layout/ButtomNaviagatoin';
-import Loader from '../Shared/Loader';
-import { apiConnectorGet } from '../utils/APIConnector';
-import { endpoint } from '../utils/APIRoutes';
+import moment from "moment";
+import { useQuery } from "react-query";
+import Navbar from "../dashboard/Navbar";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+import Loader from "../Shared/Loader";
+import { apiConnectorGet } from "../utils/APIConnector";
+import { endpoint } from "../utils/APIRoutes";
 
 function TopUP() {
   const { isLoading, data: topup_data } = useQuery(
-    ['topup_api'],
+    ["topup_api"],
     () => apiConnectorGet(endpoint?.get_topup_api),
     {
       refetchOnMount: false,
@@ -57,12 +57,10 @@ function TopUP() {
                     <td className="md:px-6 px-2 py-4  border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
                       {index + 1}
                     </td>
-                    <td className="md:px-6 px-2 text-nowrap py-4 border border-yellow-500 text-text-color text-center text-colorrspace-nowrap">
-                      {moment
-                        ?.utc(item?.topup_date)
-                        ?.format('DD-MM-YYYY')}
+                    <td className="md:px-6 px-2 text-nowrap py-4 border border-yellow-500 text-gold-color  text-center text-colorrspace-nowrap">
+                      {moment?.utc(item?.topup_date)?.format("DD-MM-YYYY")}
                     </td>
-                    <td className="md:px-6 px-2 text-center border border-yellow-500 text-text-color py-4 text-colorrspace-nowrap">
+                    <td className="md:px-6 px-2 text-center border border-yellow-500 text-green-500 py-4 text-colorrspace-nowrap">
                       {Number(item?.topup_pack_amount).toFixed(2)}
                     </td>
                     <td className="md:px-6 px-2  text-center border border-yellow-500 py-4 text-colorrspace-nowrap text-green-500">

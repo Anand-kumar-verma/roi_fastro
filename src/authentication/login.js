@@ -1,18 +1,19 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Tilt from "react-parallax-tilt";
 import { useNavigate } from "react-router-dom";
 import logo from "../images/fastro.png";
 import Loader from "../Shared/Loader";
-import { apiConnectorPost } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 
 const Login = () => {
   const navigate = useNavigate();
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState("");
+
   const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
   const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
   // const datatele = {
@@ -25,7 +26,6 @@ const Login = () => {
   //   photo_url:
   //     "https://t.me/i/userpic/320/V-6-0O8PvVhuIICekP0zcekmh2CzqIfqakmErSwEakU.svg",
   // };
-  const [data, setData] = useState("");
 
   useEffect(() => {
     const body = {
@@ -54,58 +54,29 @@ const Login = () => {
         password: formik.values.password,
         referral_id: formik.values.referral_id,
       };
-      RegistrationFn(reqbody);
+      // RegistrationFn(reqbody);
     },
   });
-  const RegistrationFn = async (reqbody) => {
-    setLoading(true);
-    try {
-      const response = await axios.post(endpoint?.registration_api, reqbody, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
-      toast(response?.data?.message);
-      setLoading(false);
-      if (response?.data?.message === "Login Successfully") {
-        localStorage.setItem("logindataen", response?.data?.result?.[0]?.token);
-        localStorage.setItem("uid", datatele?.id);
-        localStorage.setItem("username", datatele?.username);
-        if (response?.data?.result?.[0]?.user_type === "Admin") {
-          // navigate("/admindashboard");
-          // window.location.reload();
-        } else {
-          if (response?.data?.result?.[0]?.user_type === "User") {
-            // navigate("/home");
-            // window.location.reload();
-          }
-        }
-      }
-    } catch (e) {
-      console.log(e);
-      setLoading(false);
-    }
-  };
+
   const loginFn = async (reqBody) => {
     setLoading(true);
 
-    const reqBodyy = {
-      mobile: String(datatele?.id),
-      email: String(datatele?.id),
-      full_name: String(datatele?.username),
-      referral_id: String(params),
-      username: String(reqBody.id),
-      password: String(reqBody.id),
-    };
     // const reqBodyy = {
-    //   mobile: String("1840589027"),
-    //   email: String("1840589027"),
+    //   mobile: String(datatele?.id),
+    //   email: String(datatele?.id),
     //   full_name: String(datatele?.username),
-    //   referral_id: String("1234567890"),
-    //   username: String("1840589027"),
-    //   password: String("1840589027"),
+    //   referral_id: String(params),
+    //   username: String(reqBody.id),
+    //   password: String(reqBody.id),
     // };
+    const reqBodyy = {
+      mobile: String("1840589027"),
+      email: String("1840589027"),
+      full_name: String(datatele?.username),
+      referral_id: String("1234567890"),
+      username: String("1840589027"),
+      password: String("1840589027"),
+    };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {
@@ -139,21 +110,7 @@ const Login = () => {
       setLoading(false);
     }
   };
-  const Customerfunction = async () => {
-    const reqbody = {
-      user_id: formik.values.referral_id,
-    };
-    try {
-      const res = await apiConnectorPost(endpoint?.customer_api, reqbody);
-      setData(res?.data?.result?.[0]);
-    } catch (e) {
-      console.log("something went wrong");
-    }
-  };
 
-  useEffect(() => {
-    Customerfunction();
-  }, [formik.values.referral_id]);
   return (
     <>
       <Loader isLoading={loading} />

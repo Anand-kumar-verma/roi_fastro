@@ -1,4 +1,3 @@
-
 // import Signup from "../Adminpages/Authentication/Signup";
 // import BankList from "../Adminpages/Pages/Bank/Banklist";
 // import Changepassword from "../Adminpages/Pages/changepassword/Changepassword";
@@ -47,6 +46,7 @@ import TopUpDetail from "../Adminpages/Pages/TopUP/TopUpDetail";
 // // import INRSuccess from "../Adminpages/Pages/INRPaymentManually/INRSuccess";
 // import Master from "../Adminpages/Pages/Master/MAster";
 import UserPermission from "../Adminpages/Pages/Permission/Userpermission";
+import FstList from "../Adminpages/Pages/INRPayment/FstList";
 // import LogInApproval from "../Adminpages/Pages/player/LogInApproval";
 // import Player from "../Adminpages/Pages/player/Player";
 // import AviatorReport from "../Adminpages/Pages/Report/AvaitorReport";
@@ -63,14 +63,18 @@ import UserPermission from "../Adminpages/Pages/Permission/Userpermission";
 // import ZpToken from "../Adminpages/Pages/Zptoken/ZpToken";
 // import ZpTokenPayout from "../Adminpages/Pages/Zptoken/ZpTokenPayout";
 
-
-export const adminroutes = [ 
-
+export const adminroutes = [
   {
     id: 2,
     path: "/admindashboard",
     component: <Dashboard />,
     navItem: "Dashboard",
+  },
+  {
+    id: 49,
+    path: "/fst_detail",
+    navItem: "FST Detail",
+    component: <FstList />,
   },
   // {
   //   id: 1,
@@ -84,7 +88,7 @@ export const adminroutes = [
   //   component: <Player />,
   //   navItem: "Player",
   // },
- 
+
   // {
   //   id: 5,
   //   path: "/game-withdrawl-request",
@@ -185,37 +189,37 @@ export const adminroutes = [
   {
     id: 17,
     path: "/giftBonus",
-    component: <DirectBonus/>,
+    component: <DirectBonus />,
     navItem: "Direct Bonus",
   },
   {
     id: 41,
     path: "/salarybonus",
-    component: <BoosterBonus/>,
+    component: <BoosterBonus />,
     navItem: "Booster Bonus",
   },
   {
     id: 42,
     path: "/weeklybonus",
-    component: <WeeklyBonus/>,
+    component: <WeeklyBonus />,
     navItem: "Weekly Recovery",
   },
   {
     id: 42,
     path: "/vipbonus",
-    component: <ROIBonus/>,
+    component: <ROIBonus />,
     navItem: "ROI Bonus",
   },
   {
     id: 19,
     path: "/levelBonus",
-    component: <LevelBonus/>,
+    component: <LevelBonus />,
     navItem: "Team Trading Bonus",
   },
   {
     id: 19,
     path: "/matching",
-    component: <MatchingBonus/>,
+    component: <MatchingBonus />,
     navItem: "Matching Bonus",
   },
   // {
@@ -269,7 +273,7 @@ export const adminroutes = [
   {
     id: 30,
     path: "/user_permission",
-    component: <UserPermission/>,
+    component: <UserPermission />,
     navItem: "User Permission",
   },
   // {
@@ -353,19 +357,19 @@ export const adminroutes = [
   {
     id: 43,
     path: "/inr_Payout",
-    component: <INRPayout/>,
+    component: <INRPayout />,
     navItem: "Payout",
   },
   {
     id: 43,
     path: "/top_up",
-    component: <TopUpDetail/>,
+    component: <TopUpDetail />,
     navItem: "TopUp Detail",
   },
   {
     id: 43,
     path: "/user_detail",
-    component: <UserDetail/>,
+    component: <UserDetail />,
     navItem: "User Detail",
   },
 
@@ -387,7 +391,7 @@ export const adminroutes = [
   //   component: <BankList/>,
   //   navItem: "Bank",
   // },
- 
+
   // {
   //   id: 422,
   //   path: "/inr_Approve",
@@ -403,10 +407,10 @@ export const adminroutes = [
   {
     id: 44,
     path: "/topup",
-    component: <TopUp/>,
+    component: <TopUp />,
     navItem: "Top Up",
   },
-  
+
   // {
   //   id: 45,
   //   path: "/fund/debited-transfer-fund-history",

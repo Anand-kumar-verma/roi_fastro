@@ -1,7 +1,8 @@
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { Box, MenuItem, TextField } from "@mui/material";
 import { ethers } from "ethers";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
@@ -12,7 +13,6 @@ import {
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { enCryptData } from "../../utils/Secret";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 const tokenABI = [
   // balanceOf function ABI
   "function balanceOf(address owner) view returns (uint256)",
@@ -305,19 +305,19 @@ function Activation() {
         className="flex h-screen overflow-y-scroll flex-col justify-center items-center bg-custom-gradient p-3"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <Box className="!cursor-pointer bg-custom-gradient  lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full p-2 border border-text-color rounded-lg shadow-2xl">
-          <div className="flex justify-center gap-[10%] items-center mt-1 p-2  w-full border border-text-color rounded focus:ring-blue-500 focus:border-blue-500">
-            <AccountBalanceIcon className="!text-text-color !text-[80px]" />
+        <Box className="!cursor-pointer bg-custom-gradient  lg:!mt-10 !flex !flex-col !justify-center gap-2 lg:w-[30%] w-full p-2 border border-gold-color rounded-lg shadow-2xl">
+          <div className="flex justify-center gap-[10%] items-center mt-1 p-2  w-full border border-gold-color rounded focus:ring-blue-500 focus:border-blue-500">
+            <AccountBalanceIcon className="!text-gold-color !text-[80px]" />
           </div>
           <button
-            className="!bg-blue-600 rounded-full hover:bg-white hover:text-black  p-2 !text-background"
+            className="!bg-gradient-to-tr  from-gold-color to-text-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"
             onClick={requestAccount}
           >
             Connect Your Wallet
           </button>
           <div className="m-3 bg-glassy p-4">
             <div className="flex flex-wrap justify-start items-center">
-              <span className="!font-bold text-text-color">Address : </span>{" "}
+              <span className="!font-bold text-gold-color">Address : </span>{" "}
               <span className="!text-sm">
                 {walletAddress?.substring(0, 10)}...
                 {walletAddress?.substring(
@@ -326,13 +326,13 @@ function Activation() {
                 )}
               </span>
             </div>
-            <p className="!font-bold mt-2 text-text-color">Wallet Balance</p>
+            <p className="!font-bold mt-2 text-gold-color">Wallet Balance</p>
             <div className="flex flex-wrap justify-start items-center">
-              <p className="!font-semibold text-text-color">BNB : </p>{" "}
+              <p className="!font-semibold text-gold-color">BNB : </p>{" "}
               <p className="!text-green-500">{bnb}</p>
             </div>
             <div className="flex flex-wrap  justify-between">
-              <p className="!font-semibold flex text-text-color">
+              <p className="!font-semibold flex text-gold-color">
                 USDT(BEP20):{" "}
                 <p className="!text-green-500">
                   {Number(no_of_Tokne || 0)?.toFixed(4)}
@@ -340,7 +340,7 @@ function Activation() {
               </p>
             </div>
           </div>
-          <p className="my-2 font-bold text-text-color">Select Your Package</p>
+          <p className="my-2 font-bold text-gold-color">Select Your Package</p>
           <TextField
             select
             id="pack_id"
@@ -373,25 +373,25 @@ function Activation() {
           </TextField>
 
           <button
-            className="!bg-blue-600 rounded-full hover:bg-white hover:text-black  p-2 !text-background"
+            className="!bg-gold-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"
             onClick={sendTokenTransaction}
           >
             Confirm
           </button>
           <div className="m-3 bg-glassy p-4">
             <div className=" flex flex-wrap justify-start items-center">
-              <p className="text-text-color">Transaction Hash : </p>{" "}
-              <p className="!text-[9px] whitespace-break-spaces text-text-color">
+              <p className="text-gold-color">Transaction Hash : </p>{" "}
+              <p className="!text-[9px] whitespace-break-spaces text-gold-color">
                 {transactionHash}
               </p>
             </div>
             <div className="flex flex-wrap justify-start items-center !gap-4">
-              <p className="text-text-color">Gas Price : </p>{" "}
-              <p className="!font-bold text-text-color">{gasprice}</p>
+              <p className="text-gold-color">Gas Price : </p>{" "}
+              <p className="!font-bold text-gold-color">{gasprice}</p>
             </div>
             <div className="flex flex-wrap justify-start items-center !gap-4">
-              <p className="text-text-color">Transaction Status : </p>{" "}
-              <p className="!font-bold text-text-color">{receiptStatus}</p>
+              <p className="text-gold-color">Transaction Status : </p>{" "}
+              <p className="!font-bold text-gold-color">{receiptStatus}</p>
             </div>
           </div>
         </Box>

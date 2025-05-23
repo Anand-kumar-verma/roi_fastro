@@ -7,6 +7,7 @@ import "../src/index.css";
 import AdminLayout from "./Adminpages/Layout";
 import { adminroutes } from "./AdminRoutes";
 import "./App.css";
+import AdminLogin from "./authentication/AdminLogin";
 import Login from "./authentication/login";
 import Registration from "./authentication/Registration";
 import Home from "./component/Home";
@@ -46,6 +47,7 @@ const App = () => {
 
         {/* Public Routes */}
         <Route path="/home" element={<Home />} />
+        <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/activation-link" element={<Activation />} />

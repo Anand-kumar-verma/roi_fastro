@@ -5,7 +5,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { Button } from "@mui/material";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
+import toast from "react-hot-toast";
 import { BsTrophyFill } from "react-icons/bs";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -17,10 +17,11 @@ import card6 from "../images/card_6.png";
 import tether from "../images/tether.png";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
-import { apiConnectorGet } from "../utils/APIConnector";
+import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { contractAddress, endpoint, telegram_url } from "../utils/APIRoutes";
 import Navbar from "./Navbar";
-import toast from "react-hot-toast";
+import LevelwiseBusiness from "./LevelwiseBusiness";
+import { enCryptData } from "../utils/Secret";
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -50,31 +51,6 @@ const Dashboard = () => {
   );
   const data = dashboard?.data?.result || [];
 
-  const { isLoading: packageLoding, data: getPackageDetails } = useQuery(
-    ["dashboard_api_package"],
-    () => apiConnectorGet(endpoint?.user_buy_package_details_api),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const getPackageDetailsData = getPackageDetails?.data?.result || [];
-
-  const { isLoading: LevelBusinessLoding, data: LevelBusiness } = useQuery(
-    ["level_business"],
-    () => apiConnectorGet(endpoint?.level_business),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const level_business = LevelBusiness?.data?.result || {};
   const { isLoading: proLoding, data: profile_data } = useQuery(
     ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
@@ -133,55 +109,6 @@ const Dashboard = () => {
     setLoading(false);
   };
 
-  const ChartCount = {
-    series: getPackageDetailsData?.map((i) => {
-      return Number(i?.topup_pack_amount).toFixed(2);
-    }),
-    options: {
-      chart: {
-        height: 500,
-        type: "radialBar",
-        offsetY: -10,
-      },
-      plotOptions: {
-        radialBar: {
-          startAngle: -135,
-          endAngle: 135,
-          dataLabels: {
-            name: {
-              fontSize: "16px",
-              color: undefined,
-              offsetY: 120,
-            },
-            value: {
-              offsetY: 76,
-              fontSize: "22px",
-              color: "white",
-              formatter: function (val) {
-                return val + "$";
-              },
-            },
-          },
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          shadeIntensity: 0.15,
-          inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 50, 65, 91],
-        },
-      },
-      stroke: {
-        dashArray: 4,
-      },
-      labels: ["Influencer"],
-    },
-  };
-
   //0, roi
   //1, level ==> Booster
   //2, direct
@@ -191,83 +118,27 @@ const Dashboard = () => {
   //6, Rocket
   // 7, Jackpot
 
-  const state = {
-    series: [
-      {
-        name: "Package",
-        data: [5, 10, 20, 50, 100, 300, 500, 1000, 3000, 5000],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          borderRadius: 5,
-          borderRadiusApplication: "end",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["white"],
-      },
-      xaxis: {
-        categories: [
-          "$5",
-          "$10",
-          "$20",
-          "$50",
-          "$100",
-          "$300",
-          "$500",
-          "$1K",
-          "$3K",
-          "$5K",
-        ],
-        labels: {
-          style: {
-            colors: "#ff0000", // Red color
-            fontSize: "14px",
-          },
-        },
-      },
-      yaxis: {
-        title: {
-          text: "$ (Packages)",
-          style: {
-            color: "#00ff00", // Green color
-            fontSize: "14px",
-          },
-        },
-        labels: {
-          style: {
-            colors: "#0000ff", // Blue color
-            fontSize: "14px",
-          },
-        },
-      },
-
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return "$ " + val + " thousands";
-          },
-        },
-      },
-    },
-  };
-
+  async function claimFST(id) {
+    setLoading(true);
+    const reqbody = {
+      payload: enCryptData({
+        t_id: id,
+        status_type: 1,
+      }),
+    };
+    try {
+      const res = await apiConnectorPost(endpoint?.claim_fst, reqbody);
+      if (res?.data?.message === "Transaction Performed") {
+        client.refetchQueries("dashboard_api");
+        client.refetchQueries("profile_api");
+      }
+      setLoading(false);
+      return toast(res?.data?.message);
+    } catch (e) {
+      setLoading(false);
+      return toast(e.message || "Something went wrong");
+    }
+  }
   return (
     <>
       <Navbar />
@@ -282,32 +153,6 @@ const Dashboard = () => {
       <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
-          {/* <p className="text-lg text-black  p-2 px-5 lg:mt-20 mt-10 flex justify-between">
-            <Telegram
-              fontSize="large"
-              className="!bg-text-color !text-background rounded-full p-1 !font-bold"
-            />
-            <WhatsApp
-              fontSize="large"
-              className="!text-background rounded-full p-1 !bg-green-400 !font-bold"
-            />
-            <Twitter
-              fontSize="large"
-              className="!text-background rounded-full p-1 !bg-blue-600 !font-bold"
-            />
-            <Instagram
-              fontSize="large"
-              className="!text-background rounded-full p-1 !bg-purple-600 !font-bold"
-            />
-            <Facebook
-              fontSize="large"
-              className="!text-background rounded-full p-1 !bg-blue-900 !font-bold"
-            />
-            <YouTube
-              fontSize="large"
-              className="!text-background rounded-full p-1 !bg-red-600 !font-bold"
-            />
-          </p> */}
           <div className="text-lg bg-glassy border border-rose-500 rounded opacity-75 lg:p-4 p-2 lg:px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
             <span className="!font-bold pr-3 text-green-500">News:</span>
             <div className="w-full overflow-hidden whitespace-nowrap relative">
@@ -347,14 +192,14 @@ const Dashboard = () => {
           </div> */}
 
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4">
-            <div className="bg-glassy p-6 !pt-4">
+            <div className="bg-glassy !bg-black p-6 !pt-4  !border-gold-color">
               <div className="relative w-full">
                 <div className="absolute inset-0 rounded-full pointer-events-none">
                   <div className="w-full h-full rounded-full border-2 border-transparent bg-gradient-to-r from-black via-text-color to-text-color animate-glow bg-[length:200%_auto] bg-clip-border"></div>
                 </div>
                 <Button
                   variant="outlined"
-                  className="!relative !z-10 !w-full !rounded-full !border-gold-color !text-gold-color !bg-transparent hover:!bg-violet-600/20"
+                  className="!relative !z-10 !w-full !rounded-full  !text-gold-color !bg-transparent hover:!bg-violet-600/20"
                   onClick={compoundWallet}
                 >
                   Compound your wallet
@@ -388,23 +233,40 @@ const Dashboard = () => {
                 </div>
                 <div className="pt-4  border-b-2 border-text-color"></div>
                 <div className="flex justify-between gap-1 items-center mt-3">
-                  <div className="flex gap-2">
-                    {" "}
-                    <AllInboxIcon />
-                    <p className="text-text-color text-lg">Balance</p>
+                  <div>
+                    <div className="flex gap-2 ">
+                      {" "}
+                      <AllInboxIcon />
+                      <p className="text-text-color text-lg">Balance</p>
+                    </div>
+                    <div className="text-xl pt-2 font-bold text-amber-400 flex gap-2">
+                      {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} USD
+                      <img src={tether} alt="" className="w-6 h-6" />
+                    </div>
                   </div>
-                  <Button
-                    variant="contained"
-                    className="!rounded-full"
-                    onClick={() => navigate("/withdrawal-link")}
-                  >
-                    Withdrawal
-                  </Button>
+                  <div className="flex flex-col justify-end">
+                    <Button
+                      variant="contained"
+                      className="!rounded-full !bg-gold-color !text-text-color !font-bold"
+                      onClick={() => navigate("/withdrawal-link")}
+                    >
+                      Withdrawal
+                    </Button>
+                    {Number(data?.[0]?.is_pending_id || 0) > 0 && (
+                      <Button
+                        variant="contained"
+                        className="!rounded-full !mt-2 !bg-gradient-to-r from-text-color via-orange-400 to-gold-color 
+             !text-black !font-bold animate-gradient-x bg-[length:200%_200%] shadow-xl"
+                        onClick={() =>
+                          claimFST(Number(data?.[0]?.is_pending_id || 0))
+                        }
+                      >
+                        ✨ Claim FST
+                      </Button>
+                    )}
+                  </div>
                 </div>
-                <div className="text-xl pt-2 font-bold text-amber-400 flex gap-2">
-                  {Number(profile?.jnr_curr_wallet || 0)?.toFixed(2)} USD
-                  <img src={tether} alt="" className="w-6 h-6" />
-                </div>
+
                 {/* <div className="flex gap-2 pt-4">
                   <InfoIcon className="text-sm !text-rose-600" />
                   <p className="text-rose-500 text-base justify-center ">
@@ -415,7 +277,7 @@ const Dashboard = () => {
                 <div className="flex gap-2 pt-4 flex-col items-center"></div>
               </div>
             </div>
-            <div className="p-6 rounded-3xl bg-glassy shadow-2xl backdrop-blur-lg border border-white/10">
+            <div className="p-6 rounded-3xl bg-glassy shadow-2xl !bg-black !pt-4  !border-gold-color">
               <div className="grid gap-6 grid-cols-2 w-full place-items-center mb-6">
                 <div className="flex items-center justify-center text-gold-color">
                   <MonetizationOnIcon className="!text-9xl " />
@@ -430,14 +292,21 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-5 text-blue-200">
+              <div className="flex flex-col gap-1 text-blue-200">
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">User ID</span>
-                  <span className="font-semibold text-text-color">
+                  <span className="font-semibold !text-white">
                     {profile?.lgn_cust_id}
                   </span>
                 </div>
 
+                <div className="flex justify-between">
+                  <span className="font-medium text-sm">FST Withdrawal</span>
+                  <span className="font-semibold text-green-400">
+                    {Number(profile?.fst_withdrawal_amount || 0)?.toFixed(2)}{" "}
+                    FST
+                  </span>
+                </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">Today Income</span>
                   <span className="font-semibold text-green-400">
@@ -460,42 +329,49 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className=" p-6 rounded-3xl bg-glassy shadow-2xl backdrop-blur-lg border border-white/10">
-              <div className="flex flex-col gap-">
-                <p className="text-2xl font-bold text-text-color text-center mb-4">
-                  <Diversity3Icon className="!text-8xl !text-gold-color " />
-                </p>
+            <div className="p-6 rounded-3xl bg-black bg-opacity-60 shadow-2xl border border-gold-color backdrop-blur-md">
+              {/* Header Icon */}
+              <div className="flex items-center justify-center text-gold-color">
+                <Diversity3Icon className="!text-9xl " />
+              </div>
 
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">Direct Team</span>
+              {/* Stats Section */}
+              <div className="flex flex-col gap-3 text-blue-300">
+                {/* Direct Team */}
+                <div className="flex justify-between items-center border-b border-white/10 pb-1">
+                  <span className="font-medium">👥 Direct Team</span>
                   <span className="font-semibold text-green-400">
                     {profile?.jnr_direct_team || 0}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">Direct TopUp Member</span>
-                  <span className="font-semibold !text-gold-color">
+                {/* Direct TopUp Member */}
+                <div className="flex justify-between items-center border-b border-white/10 pb-1">
+                  <span className="font-medium">💸 Direct TopUp Member</span>
+                  <span className="font-semibold text-gold-color">
                     {profile?.jnr_direct_topup_mem || 0}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">Total Income</span>
+                {/* Total Income */}
+                <div className="flex justify-between items-center border-b border-white/10 pb-1">
+                  <span className="font-medium">💰 Total Income</span>
                   <span className="font-semibold text-green-400">
                     {Number(profile?.total_income || 0)?.toFixed(2)} $
                   </span>
                 </div>
 
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">TopUp Amount</span>
+                {/* TopUp Amount */}
+                <div className="flex justify-between items-center border-b border-white/10 pb-1">
+                  <span className="font-medium">🏦 TopUp Amount</span>
                   <span className="font-semibold text-amber-400">
                     {Number(profile?.jnr_topup_wallet || 0)?.toFixed(2)} $
                   </span>
                 </div>
 
-                <div className="flex justify-between text-blue-300">
-                  <span className="font-medium">Team Income</span>
+                {/* Team Income */}
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">🎯 Team Income</span>
                   <span className="font-semibold text-green-400">
                     {Number(profile?.team_income || 0)?.toFixed(2)} $
                   </span>
@@ -503,7 +379,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-2 p-6 rounded-3xl bg-custom-gradient shadow-xl border border-yellow-500/30">
+            <div className="lg:col-span-2 p-6 rounded-3xl bg-custom-gradient shadow-xl border !border-gold-color">
               <div className="text-center">
                 <h1 className="text-3xl font-extrabold text-gold-color tracking-wide drop-shadow">
                   🎁 Daily Rewards
@@ -554,73 +430,7 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-            <div className="lg:col-span-2 p-6 rounded-3xl bg-custom-gradient shadow-2xl border border-yellow-500/30">
-              <div className="text-center">
-                <h1 className="text-4xl font-extrabold text-gold-color tracking-wide drop-shadow-md mb-2">
-                  🏆 Award Rewards
-                </h1>
-                <p className="text-sm text-slate-300">
-                  Unlock milestones as your left business grows
-                </p>
-              </div>
-
-              <div className="mt-10">
-                <table className="w-full text-left border-separate border-spacing-y-3">
-                  <tbody>
-                    {[
-                      [
-                        "Only Left Business Level (1):",
-                        `${
-                          Number(level_business?.level_one)?.toFixed(2) || 0
-                        } $ — Reward: $50`,
-                      ],
-                      [
-                        "Left Business Level (1,2):",
-                        `${
-                          Number(level_business?.level_two)?.toFixed(2) || 0
-                        } $ — Reward: $150`,
-                      ],
-                      [
-                        "Left Business Level (1,2,3):",
-                        `${
-                          Number(level_business?.level_three)?.toFixed(2) || 0
-                        } $ — Reward: $700 (iPhone)`,
-                      ],
-                      [
-                        "Left Business Level (1,2,3,4):",
-                        `${
-                          Number(level_business?.level_four)?.toFixed(2) || 0
-                        } $ — Reward: $1200 (Umrah Trip)`,
-                      ],
-                      [
-                        "Left Business Level (1,2,3,4,5):",
-                        `${
-                          Number(level_business?.level_five)?.toFixed(2) || 0
-                        } $ — Reward: $5000 (Car Fund)`,
-                      ],
-                      [
-                        "Left Business Level (1,2,3,4,5,6):",
-                        `${
-                          Number(level_business?.level_six)?.toFixed(2) || 0
-                        } $ — Reward: $12000 (Bungalow Fund)`,
-                      ],
-                    ].map(([label, value], i) => (
-                      <tr
-                        key={i}
-                        className="bg-white/10 rounded-xl hover:bg-black/30 transition duration-200"
-                      >
-                        <td className="py-3 px-4 text-sm text-slate-200 font-medium">
-                          {label}
-                        </td>
-                        <td className="py-3 px-4 text-sm font-semibold text-gold-color">
-                          {value}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <LevelwiseBusiness />
           </div>
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4 ">
             <div className="p-6   flex justify-between items-center space-y-2 rounded-xl !text-gold-color bg-custom-gradient shadow-xl border border-yellow-500/30">
@@ -658,138 +468,7 @@ const Dashboard = () => {
               {copied && <p className="text-green-400 text-xs">Copied!</p>}
             </div>
           </div>
-
-          {/* <div className="text-lg bg-gray-color opacity-75 border border-rose-500 rounded py-5 p-2 px-5 lg:mt-10 mt-5 flex flex-col gap-2 justify-start">
-            <p className=" !text-green-500 bg-white !text-xs lg:!text-xl p-1  w-fit rounded">
-              {profile?.topup_date && 'Activated'}
-            </p>
-            <div className=" !text-text-color flex justify-between lg:flex-row flex-col lg:mt-0 mt-2   !text-xs lg:!text-lg p-1 ">
-              <p className=" !text-text-color rounded bg-blue-600 px-4 !text-xs lg:!text-lg p-1 font-bold w-fit flex items-center">
-                {' '}
-                My Wallet Fund :{' '}
-                <span className="bg-white text-black text-lg  mb-1 p-1 ">
-                  {profile?.jnr_curr_wallet} USD
-                </span>
-              </p>
-              <Button
-                variant="contained"
-                className="lg:!mt-0 !mt-2 "
-                onClick={compoundFuncCalled}
-              >
-                Compound
-              </Button>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">User ID</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.lgn_cust_id}
-              </p>
-            </div>
-
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Activation Date</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {moment
-                  ?.utc(profile?.topup_date)
-                  ?.format('DD-MM-YYYY HH:mm:ss')}
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Direct Bussiness</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.jnr_direct_business}
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Direct Team</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.jnr_direct_team}
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Direct TopUp Member</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.jnr_direct_topup_mem}
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Today Income</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.today_income} $
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Total Income</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {profile?.total_income} $
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">TopUp Amount</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {Number(profile?.jnr_topup_wallet)?.toFixed(0, 2)} $
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p className="">Team Income</p>
-              <p className="bg-white text-black rounded-xl font-bold text-sm p-1">
-                {Number(profile?.team_income)?.toFixed(0, 2)} $
-              </p>
-            </div>
-            <div className=" !text-text-color flex justify-between  !text-xs lg:!text-lg p-1 ">
-              <p style={{ fontWeight: 'bold' }}>Flush Amount</p>
-              <p
-                className={`bg-white rounded-xl  p-1  text-2xl ${Number(profile?.jnr_flush_amnt || 0) > 0 && 'animated-text'
-                  }`}
-              >
-                {Number(profile?.jnr_flush_amnt)?.toFixed(0, 2)} $
-              </p>
-            </div>
-          </div> */}
         </div>
-        <p className="mt-16 p-5  mb-5 text-xl text-center font-bold">
-          Packages
-        </p>
-        <div
-          className={`${
-            getPackageDetailsData?.length > 0 && "!grid"
-          } lg:!grid-cols-2 grid-cols-1`}
-        >
-          {getPackageDetailsData?.length > 0 && (
-            <ReactApexChart
-              className="!text-text-color"
-              options={ChartCount.options}
-              series={ChartCount.series}
-              type="radialBar"
-              height={400}
-            />
-          )}
-          <ReactApexChart
-            options={state.options}
-            series={state.series}
-            type="bar"
-            height={350}
-          />
-        </div>
-        <div className=" -z-50 opacity-50">
-          <div className="bubble"></div>
-          <div className="bubble1"></div>
-          <div className="bubble2"></div>
-          <div className="bubble3"></div>
-        </div>
-
-        <style>
-          {`
-    @keyframes glow {
-      from {
-        opacity: 0.3;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-  `}
-        </style>
 
         {showPopup && (
           <div className="popup fixed inset-0 bg-gray-color bg-opacity-50 flex items-center justify-center">

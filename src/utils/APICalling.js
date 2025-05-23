@@ -62,7 +62,7 @@ export const price_statics = [
     token_cnt: 1.5,
   },
   {
-    start1: "01 Aug 2025",
+    start1: "08 Aug 2025",
     end1: "15 Aug 2025",
     burning_event: "1",
     dollar: 1,
@@ -111,3 +111,4 @@ export const price_statics = [
     token_cnt: 0.001,
   },
 ];
+ 

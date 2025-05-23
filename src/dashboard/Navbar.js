@@ -19,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 import logo from "../images/fastro.png";
 import { logOutFunction } from "../utils/APICalling";
 import fastroLogo from "../images/fastro.png";
-
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 export default function Navbar() {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -111,7 +112,7 @@ export default function Navbar() {
                 // window.location.reload();
               }}
             >
-              <FaHome className="text-blue-400" /> Price Statistics
+              <CurrencyExchangeIcon className="text-blue-400 !text-sm" /> Price Statistics
             </p>
             <div
               className="relative dropdown"
@@ -254,6 +255,12 @@ export default function Navbar() {
               onClick={() => navigate("/view")}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Profile
+            </p>
+            <p
+              className="flex items-center gap-2 cursor-pointer p-2 "
+              onClick={() => navigate("/game-project")}
+            >
+              <SportsEsportsIcon className="text-blue-400" /> Project
             </p>
             <div
               className="cursor-pointer py-1 flex items-center gap-2 lg:hidden hover:text-blue-400 "
