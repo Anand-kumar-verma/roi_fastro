@@ -25,6 +25,7 @@ import AssociateSignUp from "../main/Signup";
 import Teamdata from "../main/Teamdata";
 import TopUP from "../main/TopupDetails";
 import ViewProfile from "../main/ViewProfile";
+import Wingo from "../wingo/wingo/Wingo";
 export const routes = [
   {
     path: "/dashboard",
@@ -133,5 +134,9 @@ export const routes = [
   {
     path: "/referral",
     component: <Referral />,
+  },
+  {
+    path: "/wingo",
+    component: <Wingo />,
   },
 ];

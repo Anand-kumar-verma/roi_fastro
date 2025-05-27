@@ -5,10 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from 'react-redux';
+import store from './wingo/redux/store/store';
+import { SocketProvider } from './wingo/shared/socket/SocketContext';
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    <Provider store={store}>
+    <SocketProvider>
     <QueryClientProvider client={queryClient}>
       <App />
       <Toaster
@@ -26,6 +31,8 @@ root.render(
         limit={1}
       />
     </QueryClientProvider>
+    </SocketProvider>
+  </Provider>
 );
 
 reportWebVitals();

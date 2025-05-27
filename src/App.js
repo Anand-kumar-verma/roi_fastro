@@ -7,6 +7,7 @@ import "../src/index.css";
 import AdminLayout from "./Adminpages/Layout";
 import { adminroutes } from "./AdminRoutes";
 import "./App.css";
+import "./wingo/assets/style/main.css";
 import AdminLogin from "./authentication/AdminLogin";
 import Login from "./authentication/login";
 import Registration from "./authentication/Registration";
