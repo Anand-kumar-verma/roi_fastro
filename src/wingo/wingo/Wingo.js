@@ -29,6 +29,7 @@ import Wingo5Min from "./component/Wingo5Min";
 import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import { useDispatch } from "react-redux";
 import { wallet_real_balanceFn } from "../redux/slices/counterSlice";
+import Navbar from "../../dashboard/Navbar";
 function Wingo() {
   const [musicicon, setmusicicon] = useState(true);
   const [value, setValue] = useState(1);
@@ -93,7 +94,26 @@ function Wingo() {
     }
   }, []);
   return (
-    <Container>
+   
+    <Container
+  maxWidth={false}
+  disableGutters
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start", // or "center" for vertical center
+    minHeight: "100vh",
+    backgroundColor: "#000", // optional, for consistent look
+    paddingTop: 2,
+  }}
+>
+  <Box
+    sx={{
+      width: "100%",
+      maxWidth: "400px",
+      backgroundColor: "#000", // optional
+    }}
+  >
       <Box
         sx={{
           padding: 1,
@@ -298,7 +318,9 @@ function Wingo() {
           <WinLossPopup gid={isAppliedbet?.split("_")?.[0]} />
         </Dialog>
       )}
+      </Box>
     </Container>
+
   );
 }
 

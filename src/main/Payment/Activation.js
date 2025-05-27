@@ -85,7 +85,7 @@ function Activation() {
         const nativeBalance = await provider.getBalance(userAccount);
         setBnb(ethers.utils.formatEther(nativeBalance));
         // Create a contract instance for the ZP token
-        console.log(address?.token_contract_add);
+        // console.log(address?.token_contract_add);
         const tokenContract = new ethers.Contract(
           address?.token_contract_add,
           tokenABI,
@@ -198,7 +198,7 @@ function Activation() {
 
       setTransactionHash(transactionResponse.hash);
       setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
-      console.log(receipt);
+      // console.log(receipt);
       // Call PayinZp function with appropriate status and gas price
       if (receipt.status === 1) {
         PayinZp(
