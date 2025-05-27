@@ -84,9 +84,10 @@ const Dashboard = () => {
     handleClose(false);
 
     try {
-      await apiConnectorGet(endpoint?.update_popup_status);
-
-      client.refetchQueries("profile_api");
+      const res = await apiConnectorGet(endpoint?.update_popup_status);
+      if (res?.data?.success) {
+        client.refetchQueries("profile_api");
+      }
 
       // toast(res?.data?.message);
     } catch (e) {
@@ -99,9 +100,10 @@ const Dashboard = () => {
 
     try {
       const res = await apiConnectorGet(endpoint?.compounding_wallet);
-
-      client.refetchQueries("profile_api");
-
+      if (res?.data?.success) {
+        client.refetchQueries("profile_api");
+        client.refetchQueries("dashboard_api");
+      }
       toast(res?.data?.message);
     } catch (e) {
       console.log(e);
@@ -163,17 +165,14 @@ const Dashboard = () => {
                 }}
               >
                 <span className="inline-block text-text-color text-sm">
+                  Congratulatoins! You have completed 1st Slot of FST Coin.
+                </span>
+                {/* <span className="inline-block text-text-color  text-sm">
                   Text is the exact, original words written by an author. Text
                   is also a specific work as written by the original author.
                   Text is also commonly used to refer to a text message or to
                   send a text message. Text has several other senses as a noun.
-                </span>
-                <span className="inline-block text-text-color  text-sm">
-                  Text is the exact, original words written by an author. Text
-                  is also a specific work as written by the original author.
-                  Text is also commonly used to refer to a text message or to
-                  send a text message. Text has several other senses as a noun.
-                </span>
+                </span> */}
               </div>
               {/* <style>{`
                    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); }} `}</style> */}
@@ -306,6 +305,21 @@ const Dashboard = () => {
                     {Number(profile?.fst_withdrawal_amount || 0)?.toFixed(2)}{" "}
                     FST
                   </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-sm">
+                    FST Slot Count 2:{" "}
+                  </span>
+                  <span className="font-semibold text-green-400">
+                    100000 /{" "}
+                    {(Number(data?.[0]?.total_fst_with || 0) - 172526)
+                      .toString()
+                      .padStart(6, "0")}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-sm">FST Live Price: </span>
+                  <span className="font-semibold text-green-400">0.02 $</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">Today Income</span>

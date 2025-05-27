@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState("");
+  // const [data, setData] = useState("");
 
   const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
   const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
@@ -61,22 +61,22 @@ const Login = () => {
   const loginFn = async (reqBody) => {
     setLoading(true);
 
-    // const reqBodyy = {
-    //   mobile: String(datatele?.id),
-    //   email: String(datatele?.id),
-    //   full_name: String(datatele?.username),
-    //   referral_id: String(params),
-    //   username: String(reqBody.id),
-    //   password: String(reqBody.id),
-    // };
     const reqBodyy = {
-      mobile: String("1840589027"),
-      email: String("1840589027"),
+      mobile: String(datatele?.id),
+      email: String(datatele?.id),
       full_name: String(datatele?.username),
-      referral_id: String("1234567890"),
-      username: String("1840589027"),
-      password: String("1840589027"),
+      referral_id: String(params),
+      username: String(reqBody.id),
+      password: String(reqBody.id),
     };
+    // const reqBodyy = {
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
+    //   full_name: String(datatele?.username),
+    //   referral_id: String("1234567890"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
+    // };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {
@@ -138,7 +138,7 @@ const Login = () => {
                     className="w-full p-3 mt-1 text-black placeholder:text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />
-                  <span className="text-white !px-2">{data?.jnr_name}</span>
+                  {/* <span className="text-white !px-2">{data?.jnr_name}</span> */}
                 </div>
 
                 <button

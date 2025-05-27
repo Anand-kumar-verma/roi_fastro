@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import WingoCountdown from "./ColorPrediction";
 import JackpotCountdown from "./JackpotCountdown";
@@ -37,6 +37,7 @@ const GameProject = () => {
 
       {/* Game Sections */}
       <div className="w-full min-h-screen bg-[#0e172a] text-white">
+        {/* {activeTab === "jackpot" && <JackpotWheel />} */}
         {activeTab === "jackpot" && <JackpotCountdown />}
         {activeTab === "wingo" && <WingoCountdown />}
       </div>
