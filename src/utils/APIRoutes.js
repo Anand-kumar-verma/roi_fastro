@@ -36,4 +36,7 @@ export const endpoint = {
   update_profile_data: `${domain}/api/v2/update-profile`,
   update_popup_status: `${domain}/api/v2/udpate-popup-status`,
   level_business: `${domain}/api/v2/get-business-till-level`,
+  add_burning_count: `${domain}/api/v2/add-burning-count`,
+  get_burning_count: `${domain}/api/v2/burning-event-count`,
+  
 };
