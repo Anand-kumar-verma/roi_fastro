@@ -15,6 +15,7 @@ export const SocketProvider = ({ children }) => {
   );
 };
 
+//data
 export const useSocket = () => {
   const socket = useContext(SocketContext);
   if (!socket) {
