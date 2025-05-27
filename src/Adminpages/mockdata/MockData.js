@@ -2,6 +2,7 @@ import {
   ColorizeRounded,
   Compare,
   Games,
+  LeaderboardSharp,
   LoginOutlined,
   RowingSharp,
   SelfImprovement,
@@ -613,6 +614,17 @@ export const all_Data = [
         <ViewCarouselIcon color="#15317E" fontSize="medium" />
       </span>
     ),
+  },
+   {
+    id: 11,
+    navLink: "/burningevent",
+    navItem: "Burning Event",
+    navIcon: (
+      <span>
+        <LeaderboardSharp color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
   },
   // {
   //   id: 8,

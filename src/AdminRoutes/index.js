@@ -47,6 +47,7 @@ import TopUpDetail from "../Adminpages/Pages/TopUP/TopUpDetail";
 // import Master from "../Adminpages/Pages/Master/MAster";
 import UserPermission from "../Adminpages/Pages/Permission/Userpermission";
 import FstList from "../Adminpages/Pages/INRPayment/FstList";
+import BurningEvent from "../Adminpages/Pages/burning/BurningEvent";
 // import LogInApproval from "../Adminpages/Pages/player/LogInApproval";
 // import Player from "../Adminpages/Pages/player/Player";
 // import AviatorReport from "../Adminpages/Pages/Report/AvaitorReport";
@@ -373,12 +374,12 @@ export const adminroutes = [
     navItem: "User Detail",
   },
 
-  // {
-  //   id: 422,
-  //   path: "/inr_Pending",
-  //   component: <INRPending/>,
-  //   navItem: "INR Pending",
-  // },
+  {
+    id: 422,
+    path: "/burningevent",
+    component: <BurningEvent/>,
+    navItem: "Burning  Event",
+  },
   // {
   //   id: 422,
   //   path: "/inr_Success",

@@ -16,6 +16,7 @@ import Referral from "../component/Referral";
 import Dashbaord from "../dashboard/Dashboard";
 import GameProject from "../dashboard/GameProject";
 import PriceStatics from "../dashboard/PriceStatics";
+import Burning from "../main/Burning";
 import EditPassword from "../main/EditPassword";
 import ActivatoinLink from "../main/Payment/ActivatoinLink";
 import Withdrawal from "../main/Payment/Withdrawal";
@@ -133,5 +134,9 @@ export const routes = [
   {
     path: "/referral",
     component: <Referral />,
+  },
+  {
+    path: "/burning",
+    component: <Burning />,
   },
 ];
