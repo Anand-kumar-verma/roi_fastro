@@ -443,7 +443,7 @@ const Chart = ({ gid }) => {
       <Box sx={{ background: "white", mt: 3 }}>
         <Stack spacing={2}>
           <TablePagination
-            sx={{ background: "#FBA343", color: "white" }}
+            sx={{ background: "#7700ff", color: "white" }}
             rowsPerPageOptions={[10]}
             component="div"
             count={game_history?.length}
