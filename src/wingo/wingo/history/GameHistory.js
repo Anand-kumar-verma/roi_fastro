@@ -74,101 +74,119 @@ const GameHistory = ({ gid }) => {
             }}
           >
             {visibleRows?.map((i, index) => {
-              return (
-                <TableRow>
-                  <TableCell align="center">{i?.tr_transaction_id}</TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ fontSize: "20px", fontWeight: 900, color: "red" }}
-                  >
-                    {i?.tr41_slot_id-1}
-                  </TableCell>
-                  <TableCell align="center">
-                    {i?.tr41_slot_id-1 > 4 ? "Big" : "Small"}
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {[1, 3, 7, 9].includes(i?.tr41_slot_id-1) ? (
-                      <Typography
-                        sx={{
-                          width: "10px",
-                          height: "10px",
-                          borderRadius: "50%",
-                          mt: "10px",
-                          mx: "4px",
-                          background: "green",
-                        }}
-                      ></Typography>
-                    ) : [2, 4, 6, 8].includes(i?.tr41_slot_id-1) ? (
-                      <Typography
-                        sx={{
-                          width: "10px",
-                          height: "10px",
-                          borderRadius: "50%",
-                          mt: "10px",
-                          mx: "4px",
-                          background: "red",
-                        }}
-                      ></Typography>
-                    ) : i?.tr41_slot_id-1 == 0 ? (
-                      <div className="flex">
-                        <Typography
-                          sx={{
-                            width: "10px",
-                            height: "10px",
-                            borderRadius: "50%",
-                            mt: "10px",
-                            mx: "4px",
-                            background: "red",
-                          }}
-                        ></Typography>
-                        <Typography
-                          sx={{
-                            width: "10px",
-                            height: "10px",
-                            borderRadius: "50%",
-                            mt: "10px",
-                            mx: "4px",
-                            background: "#BF6DFE",
-                          }}
-                        ></Typography>
-                      </div>
-                    ) : (
-                      i?.tr41_slot_id-1 == 5 && (
-                        <div className="flex ">
-                          <Typography
-                            sx={{
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50%",
-                              mt: "10px",
-                              mx: "4px",
-                              background: "green",
-                            }}
-                          ></Typography>
-                          <Typography
-                            sx={{
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50%",
-                              mt: "10px",
-                              mx: "4px",
-                              background: "#BF6DFE",
-                            }}
-                          ></Typography>
-                        </div>
-                      )
-                    )}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                       return (
+                         <TableRow className="!text-white">
+                         <TableCell align="center" className="!text-white">{i?.gamesno}</TableCell>
+                           <TableCell
+                             align="center"
+                             sx={{ fontSize: "20px", fontWeight: 900, color: "red" }}
+                           >
+                             <span
+                               className={`
+         fp25 fw700
+                         ${
+                           (i?.number === "0" &&
+                             "!bg-gradient-to-t from-red-500 to-violet-400") ||
+                           (i?.number === "5" &&
+                             "!bg-gradient-to-t from-violet-400 to-green-400") ||
+                           ((i?.number === "1" ||
+                             i?.number === "3" ||
+                             i?.number === "7" ||
+                             i?.number === "9" ||
+                             i?.number === "10") &&
+                             "bg-gradient-to-t from-green-400 to-green-900") ||
+                           ((i?.number === "2" ||
+                             i?.number === "4" ||
+                             i?.number === "6" ||
+                             i?.number === "8" ||
+                             i?.number === "30") &&
+                             "bg-gradient-to-tl from-red-400 to-red-900") ||
+                           (i?.number === "50" && "bg-[#3183ee]") ||
+                           (i?.number === "40" && "bg-[#f1be24]") ||
+                           (i?.number === "20" && "bg-[#eb2feb]")
+                         }
+                         transparentColor font-bold !text-white px-1
+                         `}
+                             >
+                               {i?.number}
+                             </span>
+                           </TableCell>
+                           <TableCell align="center"  className="!text-white">
+                             {Number(i?.number) <= 4 ? "SMALL" : "BIG"}
+                           </TableCell>
+                           <TableCell
+                             align="center"
+                             className="!mt-2"
+                             sx={{
+                               display: "flex",
+                               justifyContent: "center",
+                               alignItems: "center",
+                             }}
+                           >
+                             {i?.number === "0" || i?.number === "5" ? (
+                               <div className="!flex !gap-1">
+                                 <div
+                                   className={`!w-[10px] !h-[10px] !rounded-full ${
+                                     (i?.number === "0" && " bg-[#be4345]") ||
+                                     (i?.number === "5" && "bg-[#249357]")
+                                   }`}
+                                 ></div>
+                                 <div
+                                   className={`!w-[10px] !h-[10px] !rounded-full ${
+                                     (i?.number === "0" && "bg-[#b065e9]") ||
+                                     (i?.number === "5" && "bg-[#b065e9]")
+                                   }`}
+                                 ></div>
+                               </div>
+                             ) : (
+                               <>
+                                 {((i?.number === "1" ||
+                                   i?.number === "3" ||
+                                   i?.number === "7" ||
+                                   i?.number === "9" ||
+                                   i?.number === "10") && (
+                                   <div
+                                     className={`!w-[10px] !h-[10px] !rounded-full ${
+                                       (i?.number === "1" ||
+                                         i?.number === "3" ||
+                                         i?.number === "7" ||
+                                         i?.number === "9" ||
+                                         i?.number === "10") &&
+                                       "bg-[#249357]"
+                                     }`}
+                                   ></div>
+                                 )) ||
+                                   ((i?.number === "2" ||
+                                     i?.number === "4" ||
+                                     i?.number === "6" ||
+                                     i?.number === "8" ||
+                                     i?.number === "30") && (
+                                     <div
+                                       className={`!w-[10px] !h-[10px] !rounded-full ${
+                                         (i?.number === "2" ||
+                                           i?.number === "4" ||
+                                           i?.number === "6" ||
+                                           i?.number === "8" ||
+                                           i?.number === "30") &&
+                                         "bg-[#be4345]"
+                                       }`}
+                                     ></div>
+                                   )) || (
+                                     <div
+                                       className={`!w-[10px] !h-[10px] !rounded-full ${
+                                         (i?.number === "50" && "bg-[#68A1ED]") ||
+                                         (i?.number === "40" && "bg-[#D8B23E]") ||
+                                         (i?.number === "20" && "bg-[#FE63FF]")
+                                       }`}
+                                     ></div>
+                                   )}
+                               </>
+                             )}
+                           </TableCell>
+                         </TableRow>
+                       );
+                     })}
+          
           </TableBody>
         </Table>
       </TableContainer>

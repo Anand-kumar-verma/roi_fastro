@@ -28,12 +28,13 @@ import six from "../assets/images/n6-a56e0b9a.png";
 import seven from "../assets/images/n7-5961a17f.png";
 import eight from "../assets/images/n8-d4d951a4.png";
 import nine from "../assets/images/n9-a20f6f42 (1).png";
-import { endpoint } from "../services/urls";
 import FalseCheck from "../shared/check/FalseCheck";
 import SuccessCheck from "../shared/check/SuccessCheck";
 import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import theme from "../utils/theme";
 import Howtoplay from "./component/Howtoplay";
+import { apiConnectorPost } from "../../utils/APIConnector";
+import { endpoint } from "../../utils/APIRoutes";
 
 const BetNumber = ({ timing, gid }) => {
   const user_id = localStorage.getItem("user_id");
@@ -115,7 +116,7 @@ const BetNumber = ({ timing, gid }) => {
     };
 
     try {
-      const response = await axios.post(`${endpoint.bet_placed}`, reqBody);
+      const response = await apiConnectorPost(`${endpoint.bet_placed}`, reqBody);
       if (response?.data?.error === "200") {
         if (response?.data?.msg === "Bid Placed Successfully.") {
           const toastID =   toast(

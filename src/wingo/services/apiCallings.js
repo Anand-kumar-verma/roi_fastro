@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { endpoint } from "./urls";
+import { apiConnectorGet } from "../../utils/APIConnector";
 
 export const storeCookies = () => {
   let expirationDate = new Date();
@@ -82,11 +83,7 @@ export const getBetFunction = async (setBet) => {
 
 export const My_All_HistoryFn = async (gid) => {
   try {
-    const reqBody = {
-      id: localStorage.getItem("user_id"),
-      gameid: gid,
-    };
-    const response = await axios.post(`${endpoint.my_history}`, reqBody);
+    const response = await apiConnectorGet(`${endpoint.my_history}?limit=100&gameid=${gid}`);
     return response;
   } catch (e) {
     toast(e?.message);

@@ -39,10 +39,11 @@ import GameHistory from "../history/GameHistory";
 import MyHistory from "../history/MyHistory";
 import Howtoplay from "./Howtoplay";
 import axios from "axios";
-import { endpoint } from "../../services/urls";
 import { gameHistory_trx_one_minFn } from "../../redux/slices/counterSlice";
 import { useQuery } from "react-query";
 import toast from "react-hot-toast";
+import { endpoint } from "../../../utils/APIRoutes";
+import { apiConnectorGet, apiConnectorPost } from "../../../utils/APIConnector";
 
 function Wingo1Min() {
   const socket = useSocket();
@@ -128,11 +129,7 @@ function Wingo1Min() {
 
   const GameHistoryFn = async (gid) => {
     try {
-      const reqBody = {
-        gameid: gid,
-        limit: 100,
-      };
-      const response = await axios.post(`${endpoint.game_history}`, reqBody);
+      const response = await apiConnectorGet(`${endpoint.game_history}?limit=100&gameid=${gid}`);
       return response;
     } catch (e) {
       toast(e?.message);

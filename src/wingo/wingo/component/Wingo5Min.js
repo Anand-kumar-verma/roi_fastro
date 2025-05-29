@@ -29,8 +29,9 @@ import timerbg1 from "../../assets/images/timerbg.png";
 import timerbg2 from "../../assets/images/timerbg2.png";
 import Howtoplay from "./Howtoplay";
 import axios from "axios";
-import { endpoint } from "../../services/urls";
 import toast from "react-hot-toast";
+import { apiConnectorGet } from "../../../utils/APIConnector";
+import { endpoint } from "../../../utils/APIRoutes";
 
 
 
@@ -147,11 +148,7 @@ function Wingo5Min() {
 
   const GameHistoryFn = async (gid) => {
     try {
-      const reqBody = {
-        gameid: gid,
-        limit: 100,
-      };
-      const response = await axios.post(`${endpoint.game_history}`, reqBody);
+      const response = await apiConnectorGet(`${endpoint.game_history}?limit=100&gameid=${gid}`);
       return response;
     } catch (e) {
       toast(e?.message);
