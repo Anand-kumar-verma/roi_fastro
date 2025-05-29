@@ -131,14 +131,14 @@ function Wingo() {
             <Box component="img" src={backbtn} width={25}></Box>
           </NavLink>
           <Stack direction="row">
-            <NavLink to={"/CustomerService"}>
+            {/* <NavLink to={"/CustomerService"}>
               <Box
                 component="img"
                 src={asistant}
                 width={25}
                 sx={{ mr: 2 }}
               ></Box>
-            </NavLink>
+            </NavLink> */}
             <NavLink onClick={() => setmusicicon(!musicicon)}>
               {musicicon === true ? (
                 <Box component="img" src={music} width={25}></Box>
@@ -196,7 +196,7 @@ function Wingo() {
               Wallet balance{" "}
             </Typography>
           </Stack>
-          <Stack
+          {/* <Stack
             direction="row"
             alignItems="center"
             justifyContent="space-between"
@@ -211,7 +211,7 @@ function Wingo() {
             <Button onClick={() => navigate("/deposit")} sx={style.depositebtn}>
               Deposit
             </Button>
-          </Stack>
+          </Stack> */}
         </Box>
         <Stack
           direction="row"

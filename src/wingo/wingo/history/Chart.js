@@ -124,58 +124,7 @@ const Chart = ({ gid }) => {
 
   return (
     <Box className="chartTable">
-      <Stack direction="row" className="onegotextbox">
-        <Typography variant="body1" color="initial" className="!text-[#F48901] !py-2">
-          {/* <Box
-            component="img"
-            src={history}
-            width={25}
-            sx={{ marginRight: "10px" }}
-          ></Box>{" "} */}
-          Statistic(last 100 Periods)
-        </Typography>
-      </Stack>
-      <Box
-        sx={{
-          borderBottom: "1px solid white",
-        }}
-      >
-        <div className="flex justify-between">
-          <span className="!text-sm">Winning Number</span>
-          <Box className="flex items-center justify-between !w-[80%]  lg:!w-[70%]">
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]?.map((i) => {
-              return (
-                <div
-                  className={`circleNumberbody !bg-white !text-black !border-[1px] !border-black `}
-                >
-                  {i}
-                </div>
-              );
-            })}
-          </Box>
-        </div>
-      </Box>
-      <Box
-        sx={{
-          borderBottom: "1px solid white",
-          paddingTop: "5px",
-        }}
-      >
-        <div className="flex justify-between">
-          <span className="!text-sm">Missing Number</span>
-          <Box className="flex items-center justify-between !w-[80%]  lg:!w-[70%]">
-            {preData?.map((i) => {
-              return (
-                <div
-                  className={`circleNumberbody-number !bg-white !text-red-600 !border-[1px] !border-red-600 !text-[5px] `}
-                >
-                  {i+1}
-                </div>
-              );
-            })}
-          </Box>
-        </div>
-      </Box>
+  
       <div className="relative !h-[65vh] overflow-auto !w-[100%] no-scrollbar !overflow-x-hidden">
         <div className="absolute !w-[100%]">
          {visibleRows?.map((i, indexi) => {

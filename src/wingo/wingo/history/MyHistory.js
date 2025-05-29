@@ -9,6 +9,9 @@ import { useQuery } from "react-query";
 import { My_All_HistoryFn } from "../../services/apiCallings";
 import { rupees, zubgback } from "../../services/urls";
 import CustomCircularProgress from "../../shared/loder/CustomCircularProgress";
+import { apiConnectorGet } from "../../../utils/APIConnector";
+import { endpoint } from "../../../utils/APIRoutes";
+import toast from "react-hot-toast";
 
 const MyHistory = ({ gid }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -23,7 +26,7 @@ const MyHistory = ({ gid }) => {
 
   const { isLoading: myhistory_loding_all, data: my_history_all } = useQuery(
     ["myAllhistory", gid],
-    () => My_All_HistoryFn(gid),
+    () => MyHistoryFn(gid),
     {
       refetchOnMount: false,
       refetchOnReconnect: true,
@@ -31,6 +34,17 @@ const MyHistory = ({ gid }) => {
   );
 
   const my_history_data_all = my_history_all?.data?.earning || [];
+  const MyHistoryFn = async (gid) => {
+    try {
+      const response = await apiConnectorGet(
+        `${endpoint.my_history}?limit=100&gameid=${gid}`
+      );
+      return response;
+    } catch (e) {
+      toast(e?.message);
+      console.log(e);
+    }
+  };
 
   const visibleRows = React.useMemo(
     () =>

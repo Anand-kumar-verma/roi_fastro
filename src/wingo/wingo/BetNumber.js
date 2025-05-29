@@ -49,23 +49,7 @@ const BetNumber = ({ timing, gid }) => {
     balance: "1",
     qnt: "1",
   };
-  // useEffect(() => {
-  //   getBalanceFunction(setBalance);
-  // }, []);
-
-  // const { data: wallet_amount } = useQuery(
-  //   ["wallet_amount_amount"],
-  //   () => getBalanceFunction(setBalance),
-  //   {
-      
-  //     refetchOnMount: false,
-  //     refetchOnReconnect: false,
-  //     retry:false,
-  //     retryOnMount:false,
-  //     refetchOnWindowFocus:false
-  //   }
-  // );
-  // const wallet_amount_data = wallet_amount?.data?.earning || 0;
+  
 
   const fk = useFormik({
     initialValues: initialValue,
