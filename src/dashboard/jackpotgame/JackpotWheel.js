@@ -51,13 +51,7 @@ export const JackpotWheel = () => {
     audio.currentTime = 0;
 
     const winningNumber = Number(wheelData[prizeNumber].option?.split(" ")[0]);
-
-    if (winningNumber === myNumber) {
-      // toast(`Congratulations! You are the Winner.`);
-      setMyWallet((myWallet || 1) * 2);
-    } else {
-      // toast(`Best of luck next time!`);
-    }
+    setMyWallet((myWallet || 1) * 2);
     try {
       const reqbody = {
         result: String(winningNumber),

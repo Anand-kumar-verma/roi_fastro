@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/Loader";
 import {
   apiConnectorGetWithoutToken,
+  apiConnectorPost,
   apiConnectorPostWithdouToken,
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
@@ -53,7 +54,7 @@ function DepositUSDT() {
   const fk = useFormik({
     initialValues: {
       inr_value: "",
-      pack_id: "SelectPackage",
+      req_amount: "",
     },
   });
   async function requestAccount() {
@@ -123,10 +124,10 @@ function DepositUSDT() {
       return;
     }
 
-    if (fk.values.pack_id === "SelectPackage") {
-      setLoding(false);
-      return toast("Select Your Package.");
-    }
+    // if (fk.values.pack_id === "SelectPackage") {
+    //   setLoding(false);
+    //   return toast("Select Your Package.");
+    // }
 
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
@@ -227,9 +228,7 @@ function DepositUSDT() {
     setLoding(true);
 
     const reqbody = {
-      req_amount: Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ),
+      req_amount: Number(fk.values.req_amount),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: tr_hash,
       u_trans_status: status,
@@ -238,10 +237,12 @@ function DepositUSDT() {
       gas_price: gasPrice,
       pkg_id: fk.values.pack_id,
       last_id: id,
+      table_id:data_eligible,
+      tr_type:1
     };
     try {
       const res = await apiConnectorPostWithdouToken(
-        endpoint?.paying_api,
+        endpoint?.game_paying,
         {
           payload: enCryptData(reqbody),
         },
@@ -257,8 +258,7 @@ function DepositUSDT() {
 
   async function PayinZpDummy() {
     const reqbody = {
-      req_amount: Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
+      req_amount: Number(fk.values.req_amount
       ),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: "xxxxxxxxxx",
@@ -266,7 +266,6 @@ function DepositUSDT() {
       currentBNB: 0,
       currentZP: no_of_Tokne,
       gas_price: "",
-      pkg_id: fk.values.pack_id,
     };
 
     try {
@@ -282,7 +281,6 @@ function DepositUSDT() {
       console.log(e);
     }
   }
-
   const { data: user } = useQuery(
     ["package_api"],
     () =>
@@ -296,6 +294,20 @@ function DepositUSDT() {
     }
   );
   const res = user?.data?.result || [];
+
+  const { data: ele } = useQuery(
+    ["eleigible"],
+    () => apiConnectorPost(endpoint?.eligible_paying, { type: 1 }),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const data_eligible = ele?.data?.message
 
   return (
     <>
@@ -340,12 +352,13 @@ function DepositUSDT() {
               </p>
             </div>
           </div>
-          <p className="my-2 font-bold text-gold-color">Select Your Package</p>
+          <p className="my-2 font-bold text-gold-color">No  of ticket
+          </p>
           <TextField
-            select
-            id="pack_id"
-            name="pack_id"
-            value={fk.values.pack_id}
+          className="!bg-white"
+            id="req_amount"
+            name="req_amount"
+            value={fk.values.req_amount}
             onChange={fk.handleChange}
             sx={{
               "& .MuiSelect-select": {
@@ -364,12 +377,7 @@ function DepositUSDT() {
               },
             }}
           >
-            <MenuItem value="SelectPackage">Select Package</MenuItem>
-            {res?.map((item) => (
-              <MenuItem key={item?.pack_id} value={item?.pack_id}>
-                {item?.pack_name}
-              </MenuItem>
-            ))}
+           
           </TextField>
 
           <button

@@ -18,6 +18,8 @@ import GameProject from "../dashboard/GameProject";
 import PriceStatics from "../dashboard/PriceStatics";
 import Burning from "../main/Burning";
 import BuyTicket from "../main/Buy/Buyticket";
+import DepositFST from "../main/Buy/DepositFst";
+import DepositUSDT from "../main/Buy/DepositUsdt";
 import EditPassword from "../main/EditPassword";
 import ActivatoinLink from "../main/Payment/ActivatoinLink";
 import Withdrawal from "../main/Payment/Withdrawal";
@@ -148,5 +150,13 @@ export const routes = [
   {
     path: "/burning",
     component: <Burning />,
+  },
+  {
+    path: "/game-fst",
+    component: <DepositFST />,
+  },
+  {
+    path: "/game-usdt",
+    component: <DepositUSDT />,
   }
 ];
