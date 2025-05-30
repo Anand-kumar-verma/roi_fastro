@@ -22,8 +22,7 @@ export const JackpotWheel = () => {
   const handleSpinClick = () => {
     if (myWallet === 0) return;
     setMyWallet(myWallet - 1);
-    const newPrizeNumber = 1
-    //  Math.floor(Math.random() * wheelData.length);
+    const newPrizeNumber =  Math.floor(Math.random() * wheelData.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
@@ -54,14 +53,14 @@ export const JackpotWheel = () => {
     const winningNumber = Number(wheelData[prizeNumber].option?.split(" ")[0]);
 
     if (winningNumber === myNumber) {
-      toast(`Congratulations! You are the Winner.`);
+      // toast(`Congratulations! You are the Winner.`);
       setMyWallet((myWallet || 1) * 2);
     } else {
-      toast(`Best of luck next time!`);
+      // toast(`Best of luck next time!`);
     }
     try {
       const reqbody = {
-        result: winningNumber,
+        result: String(winningNumber),
       };
       const encryptedPayload = enCryptData(reqbody);
       const response = await apiConnectorPost(endpoint.jackpot_result, {
