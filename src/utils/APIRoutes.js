@@ -44,12 +44,13 @@ export const endpoint = {
   my_history: `${domain}/api/v2/getbet-game-results`,
   //ticket
   ticket_list: `${domain}/api/v2/jack-pot-ticket-list`,
-  fst_count: `${domain}/api/v2/get-fst-count-for-jackpot-pay`,
-  jackpot_result: `${domain}/api/v2/jack-pt-result`,
+  jackpot_result: `${domain}/api/v2/jack-pot-result`,
   top_winner: `${domain}/api/v2/get-top-winners`,
   //buy-ticket
   eligible_paying: `${domain}/api/v2/eligible-for-paying`,
   game_paying: `${domain}/api/v2/game-paying-request`,
+  fst_count: `${domain}/api/v2/get-fst-count-for-jackpot-pay`,
+
   
   
 };

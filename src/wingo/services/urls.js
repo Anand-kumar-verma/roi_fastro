@@ -8,7 +8,7 @@ export const domain_ovi_node = "https://api.zupeeter.com";
 export const rupees = "₹";
 export const zubgback = "#F48901";
 
-export const domain = "http://192.168.18.183:9000";
+export const domain = "https://play-penta.onrender.com";
 // export const baseUrl = "http://192.168.18.183:9000";
 
 // export const baseUrl = "https://webs.ferryinfotech.in";

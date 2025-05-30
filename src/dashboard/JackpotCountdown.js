@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import jackgif from "../images/KolntAno33.gif";
+// import jackgif from "../images/KolntAno33.gif";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import { JackpotWheel } from "./jackpotgame/JackpotWheel";
 import Navbar from "./Navbar";
@@ -46,13 +46,13 @@ const JackpotCountdown = () => {
               ></div>
 
               {/* Floating Jackpot Icon */}
-              <div className="fixed top-30 right-4 w-20 h-20 rounded-full overflow-hidden border-4 border-yellow-400 z-50 shadow-lg animate-bounce">
+              {/* <div className="fixed top-30 right-4 w-20 h-20 rounded-full overflow-hidden border-4 border-yellow-400 z-50 shadow-lg animate-bounce">
                 <img
                   src={jackgif}
                   alt="jackpot gif"
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </div> */}
             </>
           );
         }, [])}
