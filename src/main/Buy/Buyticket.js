@@ -51,7 +51,7 @@ const BuyTicket = () => {
           <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
             <div>
               <p class="font-semibold text-gold-color text-lg">Copy Link:</p>
-              <p class="font-semibold text-gold-color text-lg">Deposit USDT</p>
+              <p class="font-semibold text-gold-color text-lg">Deposit FST</p>
               <div class="text-sm text-blue-100 underline break-all">
                 {frontend}/game_fst
               </div>
@@ -75,7 +75,7 @@ const BuyTicket = () => {
           <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
             <div>
               <p class="font-semibold text-gold-color text-lg">Copy Link:</p>
-              <p class="font-semibold text-gold-color text-lg">Deposit FST</p>
+              <p class="font-semibold text-gold-color text-lg">Deposit USDT</p>
               <div class="text-sm text-blue-100 underline break-all">
                 {frontend}/game_usdt
               </div>

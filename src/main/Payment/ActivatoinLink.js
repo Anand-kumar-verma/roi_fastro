@@ -5,15 +5,39 @@ import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 import { frontend } from "../../utils/APIRoutes";
 
 const ActivatoinLink = () => {
-  const handleCopy = (url) => {
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        toast("Link copied to clipboard!");
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-      });
+   const handleCopy = (url) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          toast.success("Link copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.error("Failed to copy link.");
+        });
+    } else {
+      // Fallback method for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+  
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          toast.success("Link copied to clipboard!");
+        } else {
+          toast.error("Copy failed. Please try manually.");
+        }
+      } catch (err) {
+        console.error("Fallback copy failed: ", err);
+        toast.error("Clipboard not supported in this browser.");
+      }
+  
+      document.body.removeChild(textArea);
+    }
   };
   return (
     <>
