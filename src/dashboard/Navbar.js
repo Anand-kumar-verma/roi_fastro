@@ -172,6 +172,12 @@ export default function Navbar() {
             >
               <BsTrophy className="text-blue-400" /> Activation
             </p>
+             {/* <p
+              className="flex items-center gap-1 cursor-pointer p-2 "
+              onClick={() => navigate("/buy")}
+            >
+              <BsTrophy className="text-blue-400" /> Buy Ticket
+            </p> */}
             <p
               className="flex items-center gap-1 cursor-pointer p-2 "
               onClick={() => navigate("/topup_detail")}
