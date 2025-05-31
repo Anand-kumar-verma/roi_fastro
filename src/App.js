@@ -1,28 +1,31 @@
 import "animate.css";
-import Aos from "aos";
-import "aos/dist/aos.css";
+// import Aos from "aos";
+// import "aos/dist/aos.css";
 import { useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "../src/index.css";
 import AdminLayout from "./Adminpages/Layout";
 import { adminroutes } from "./AdminRoutes";
 import "./App.css";
+import "./wingo/assets/style/main.css";
 import AdminLogin from "./authentication/AdminLogin";
 import Login from "./authentication/login";
 import Registration from "./authentication/Registration";
 import Home from "./component/Home";
 import Activation from "./main/Payment/Activation";
 import { routes } from "./routes/Routes";
+import DepositFST from "./main/Buy/DepositFst";
+import DepositUSDT from "./main/Buy/DepositUsdt";
 
 const App = () => {
   const user = localStorage.getItem("logindataen");
 
-  useEffect(() => {
-    Aos.init({
-      duration: 2000, // Animation duration in milliseconds
-      once: false, // Whether animation should happen only once
-    });
-  }, []);
+  // useEffect(() => {
+  //   Aos.init({
+  //     duration: 2000, // Animation duration in milliseconds
+  //     once: false, // Whether animation should happen only once
+  //   });
+  // }, []);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -46,6 +49,8 @@ const App = () => {
         ))}
 
         {/* Public Routes */}
+        <Route path="/game-usdt" element={<DepositUSDT />} />
+        <Route path="/game-fst" element={<DepositFST />} />
         <Route path="/home" element={<Home />} />
         <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/" element={<Login />} />

@@ -18,6 +18,8 @@ import GameProject from "../dashboard/GameProject";
 import PriceStatics from "../dashboard/PriceStatics";
 import Burning from "../main/Burning";
 import BuyTicket from "../main/Buy/Buyticket";
+import DepositFST from "../main/Buy/DepositFst";
+import DepositUSDT from "../main/Buy/DepositUsdt";
 import EditPassword from "../main/EditPassword";
 import ActivatoinLink from "../main/Payment/ActivatoinLink";
 import Withdrawal from "../main/Payment/Withdrawal";
@@ -27,6 +29,7 @@ import AssociateSignUp from "../main/Signup";
 import Teamdata from "../main/Teamdata";
 import TopUP from "../main/TopupDetails";
 import ViewProfile from "../main/ViewProfile";
+import Wingo from "../wingo/wingo/Wingo";
 export const routes = [
   {
     path: "/dashboard",
@@ -141,7 +144,19 @@ export const routes = [
     component: <Referral />,
   },
   {
+    path: "/wingo",
+    component: <Wingo />,
+  },
+  {
     path: "/burning",
     component: <Burning />,
   },
+  {
+    path: "/game-fst",
+    component: <DepositFST />,
+  },
+  {
+    path: "/game-usdt",
+    component: <DepositUSDT />,
+  }
 ];

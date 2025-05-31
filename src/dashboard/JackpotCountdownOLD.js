@@ -4,7 +4,7 @@ import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import { JackpotWheel } from "./jackpotgame/JackpotWheel";
 import Navbar from "./Navbar";
 
-const JackpotCountdown = () => {
+const JackpotCountdownOLD = () => {
   const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
@@ -152,4 +152,4 @@ const JackpotCountdown = () => {
   );
 };
 
-export default JackpotCountdown;
+export default JackpotCountdownOLD;
