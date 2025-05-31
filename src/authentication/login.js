@@ -42,44 +42,44 @@ const Login = () => {
     password: String(datatele?.id),
     referral_id: String(params),
   };
-
+ 
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      const reqbody = {
-        full_name: formik.values.full_name,
-        email: formik.values.email,
-        mobile: formik.values.mobile,
-        password: formik.values.password,
-        referral_id: formik.values.referral_id,
-      };
+      // const reqbody = {
+      //   full_name: formik.values.full_name,
+      //   email: formik.values.email,
+      //   mobile: formik.values.mobile,
+      //   password: formik.values.password,
+      //   referral_id: formik.values.referral_id,
+      // };
       // RegistrationFn(reqbody);
     },
   });
 
   const loginFn = async (reqBody) => {
     setLoading(true);
-    if (!datatele?.id || datatele?.id == "" || datatele?.id === null) {
-      setLoading(false);
-      return toast("Your Telegram security is not allow for login!");
-    }
-    const reqBodyy = {
-      mobile: String(datatele?.id),
-      email: String(datatele?.id),
-      full_name: String(datatele?.username || "N/A"),
-      referral_id: String(params),
-      username: String(reqBody.id),
-      password: String(reqBody.id),
-    };
+    // if (!datatele?.id || datatele?.id == "" || datatele?.id === null) {
+    //   setLoading(false);
+    //   return toast("Your Telegram security is not allow for login!");
+    // }
     // const reqBodyy = {
-    //   mobile: String("1840589027"),
-    //   email: String("1840589027"),
-    //   full_name: String(datatele?.username),
-    //   referral_id: String("1234567890"),
-    //   username: String("1840589027"),
-    //   password: String("1840589027"),
+    //   mobile: String(datatele?.id),
+    //   email: String(datatele?.id),
+    //   full_name: String(datatele?.username || "N/A"),
+    //   referral_id: String(params),
+    //   username: String(reqBody.id),
+    //   password: String(reqBody.id),
     // };
+    const reqBodyy = {
+      mobile: String("1840589027"),
+      email: String("1840589027"),
+      full_name: String(datatele?.username),
+      referral_id: String("1234567890"),
+      username: String("1840589027"),
+      password: String("1840589027"),
+    };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {
