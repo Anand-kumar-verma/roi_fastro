@@ -32,6 +32,19 @@ function DepositUSDT() {
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
   const base64String = atob(IdParam);
+  const { data: ele } = useQuery(
+    ["eleigible"],
+    () => apiConnectorPost(endpoint?.eligible_paying, { type: 1 }),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const data_eligible = ele?.data?.message;
 
   const { data: general_address } = useQuery(
     ["contract_address_api"],
@@ -54,7 +67,7 @@ function DepositUSDT() {
   const fk = useFormik({
     initialValues: {
       inr_value: "",
-      req_amount: "",
+      req_amount: 0,
     },
   });
   async function requestAccount() {
@@ -106,15 +119,15 @@ function DepositUSDT() {
   }
 
   async function sendTokenTransaction() {
+    if (data_eligible !== "success")
+      return toast(data_eligible, {
+        id: 1,
+      });
     if (!address?.receiving_key) return toast("Please add Receiving Address");
     if (!address?.token_contract_add)
       return toast("Please add your contract Address");
     if (!walletAddress) return toast("Please Connect your wallet.");
-    if (
-      Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ) > no_of_Tokne
-    )
+    if (Number(fk.values.req_amount) > no_of_Tokne)
       return toast("Your Wallet Amount is low.");
     setLoding(true);
 
@@ -146,12 +159,7 @@ function DepositUSDT() {
       const signer = provider.getSigner();
 
       const tokenAmount = ethers.utils.parseUnits(
-        String(
-          Number(
-            res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-              ?.pack_amount
-          )?.toFixed(6)
-        ),
+        String(Number(fk.values.req_amount)?.toFixed(6)),
         18
       ); // Calculate the token amount to transfer
 
@@ -237,8 +245,8 @@ function DepositUSDT() {
       gas_price: gasPrice,
       pkg_id: fk.values.pack_id,
       last_id: id,
-      table_id:data_eligible,
-      tr_type:1
+      table_id: data_eligible,
+      tr_type: 1,
     };
     try {
       const res = await apiConnectorPostWithdouToken(
@@ -258,8 +266,7 @@ function DepositUSDT() {
 
   async function PayinZpDummy() {
     const reqbody = {
-      req_amount: Number(fk.values.req_amount
-      ),
+      req_amount: Number(fk.values.req_amount),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: "xxxxxxxxxx",
       u_trans_status: 1,
@@ -281,33 +288,6 @@ function DepositUSDT() {
       console.log(e);
     }
   }
-  const { data: user } = useQuery(
-    ["package_api"],
-    () =>
-      apiConnectorGetWithoutToken(endpoint?.package_list_api, {}, base64String),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const res = user?.data?.result || [];
-
-  const { data: ele } = useQuery(
-    ["eleigible"],
-    () => apiConnectorPost(endpoint?.eligible_paying, { type: 1 }),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const data_eligible = ele?.data?.message
 
   return (
     <>
@@ -352,10 +332,9 @@ function DepositUSDT() {
               </p>
             </div>
           </div>
-          <p className="my-2 font-bold text-gold-color">No  of ticket
-          </p>
+          <p className="my-2 font-bold text-gold-color">No of ticket</p>
           <TextField
-          className="!bg-white"
+            className="!bg-white"
             id="req_amount"
             name="req_amount"
             value={fk.values.req_amount}
@@ -376,9 +355,7 @@ function DepositUSDT() {
                 },
               },
             }}
-          >
-           
-          </TextField>
+          ></TextField>
 
           <button
             className="!bg-gold-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"

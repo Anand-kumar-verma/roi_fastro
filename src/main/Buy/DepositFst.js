@@ -1,5 +1,5 @@
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { ethers } from "ethers";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -51,6 +51,32 @@ function DepositFST() {
     }
   );
   const address = general_address?.data?.result?.[0] || [];
+  const { data: ele } = useQuery(
+    ["eleigible_api_1"],
+    () => apiConnectorPost(endpoint?.eligible_paying, { type: 2 }),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const data_eligible = ele?.data?.message;
+
+  const { data: fst } = useQuery(
+    ["fst_count"],
+    () => apiConnectorGet(endpoint?.fst_count),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const fst_data = fst?.data?.result?.[0]?.count || 0;
 
   const fk = useFormik({
     initialValues: {
@@ -89,13 +115,13 @@ function DepositFST() {
         // Create a contract instance for the ZP token
         // console.log(address?.token_contract_add);
         const tokenContract = new ethers.Contract(
-          address?.token_contract_add,
+          address?.fastro_contract,
           tokenABI,
           provider
         );
         // Get the balance of the ZP token for the user account
         const tokenBalance = await tokenContract.balanceOf(userAccount);
-        setno_of_Tokne(ethers.utils.formatUnits(tokenBalance, 18));
+        setno_of_Tokne(ethers.utils.formatUnits(tokenBalance, 8));
       } catch (error) {
         console.log(error);
         toast("Error connecting...", error);
@@ -107,15 +133,13 @@ function DepositFST() {
   }
 
   async function sendTokenTransaction() {
+    if (isNaN(data_eligible)) return toast(data_eligible, { id: `1` });
+    if (Number(fst_data) === 0) return toast("There is no pending FST.");
     if (!address?.receiving_key) return toast("Please add Receiving Address");
-    if (!address?.token_contract_add)
+    if (!address?.fastro_contract)
       return toast("Please add your contract Address");
     if (!walletAddress) return toast("Please Connect your wallet.");
-    if (
-      Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ) > no_of_Tokne
-    )
+    if (Number(fst_data) > no_of_Tokne)
       return toast("Your Wallet Amount is low.");
     setLoding(true);
 
@@ -147,24 +171,19 @@ function DepositFST() {
       const signer = provider.getSigner();
 
       const tokenAmount = ethers.utils.parseUnits(
-        String(
-          Number(
-            res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-              ?.pack_amount
-          )?.toFixed(6)
-        ),
-        18
+        String(Number(fst_data)?.toFixed(6)),
+        8
       ); // Calculate the token amount to transfer
 
       // Create a contract instance for the token
       const tokenContract = new ethers.Contract(
-        address?.token_contract_add,
+        address?.fastro_contract,
         tokenABI,
         signer
       );
       const gasPrice = await provider.getGasPrice();
       const gasEstimate = await tokenContract.estimateGas.transfer(
-        address?.receiving_key,
+        "0x0000000000000000000000000000000000000000",
         tokenAmount
       );
 
@@ -193,7 +212,7 @@ function DepositFST() {
 
       // Send the token transfer transaction
       const transactionResponse = await tokenContract.transfer(
-        address?.receiving_key,
+        "0x0000000000000000000000000000000000000000",
         tokenAmount
       );
       const receipt = await transactionResponse.wait();
@@ -229,7 +248,7 @@ function DepositFST() {
     setLoding(true);
 
     const reqbody = {
-      req_amount: Number(fst_data ),
+      req_amount: Number(fst_data),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: tr_hash,
       u_trans_status: status,
@@ -238,8 +257,8 @@ function DepositFST() {
       gas_price: gasPrice,
       pkg_id: fk.values.pack_id,
       last_id: id,
-      table_id:data_eligible,
-      tr_type:2
+      table_id: Number(data_eligible),
+      tr_type: 2,
     };
     try {
       const res = await apiConnectorPostWithdouToken(
@@ -259,8 +278,7 @@ function DepositFST() {
 
   async function PayinZpDummy() {
     const reqbody = {
-      req_amount: Number(fst_data
-      ),
+      req_amount: Number(fst_data),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: "xxxxxxxxxx",
       u_trans_status: 1,
@@ -283,48 +301,6 @@ function DepositFST() {
       console.log(e);
     }
   }
-
-  const { data: user } = useQuery(
-    ["package_api"],
-    () =>
-      apiConnectorGetWithoutToken(endpoint?.package_list_api, {}, base64String),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const res = user?.data?.result || [];
-
-  const { data: ele } = useQuery(
-    ["eleigible_api_1"],
-    () => apiConnectorPost(endpoint?.eligible_paying, { type: 2 }),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const data_eligible = ele?.data?.message
-
-  const { data: fst } = useQuery(
-    ["fst_count"],
-    () => apiConnectorGet(endpoint?.fst_count),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const fst_data = fst?.data?.result?.[0]?.count
- 
 
   return (
     <>
@@ -362,7 +338,7 @@ function DepositFST() {
             </div>
             <div className="flex flex-wrap  justify-between">
               <p className="!font-semibold flex text-gold-color">
-                USDT(BEP20):{" "}
+                FST(BEP20):{" "}
                 <p className="!text-green-500">
                   {Number(no_of_Tokne || 0)?.toFixed(4)}
                 </p>
@@ -371,7 +347,7 @@ function DepositFST() {
           </div>
           <p className="my-2 font-bold text-gold-color">Amount</p>
           <TextField
-          className="!bg-white"
+            className="!bg-white"
             id="req_amount"
             name="req_aount"
             value={fst_data}
@@ -392,8 +368,7 @@ function DepositFST() {
                 },
               },
             }}
-          >
-          </TextField>
+          ></TextField>
 
           <button
             className="!bg-gold-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"

@@ -70,12 +70,12 @@ const Login = () => {
     //   password: String(reqBody.id),
     // };
     const reqBodyy = {
-      mobile: String("1840589027"),
-      email: String("1840589027"),
+      mobile: String("1840589028"),
+      email: String("1840589028"),
       full_name: String(datatele?.username),
       referral_id: String("1234567890"),
-      username: String("1840589027"),
-      password: String("1840589027"),
+      username: String("1840589028"),
+      password: String("1840589028"),
     };
 
     try {

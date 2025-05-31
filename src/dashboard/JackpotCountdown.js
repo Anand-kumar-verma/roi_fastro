@@ -5,29 +5,6 @@ import { JackpotWheel } from "./jackpotgame/JackpotWheel";
 import Navbar from "./Navbar";
 
 const JackpotCountdown = () => {
-  const [timeLeft, setTimeLeft] = useState({});
-
-  useEffect(() => {
-    const targetDate = new Date("2025-06-01T00:00:00");
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        clearInterval(timer);
-        setTimeLeft({});
-      } else {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / (1000 * 60)) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-        setTimeLeft({ days, hours, minutes, seconds });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <>
       {useMemo(() => {
@@ -44,15 +21,6 @@ const JackpotCountdown = () => {
                   backgroundImage: `url(https://img.freepik.com/premium-vector/concept-lottery-win_144920-19.jpg)`,
                 }}
               ></div>
-
-              {/* Floating Jackpot Icon */}
-              {/* <div className="fixed top-30 right-4 w-20 h-20 rounded-full overflow-hidden border-4 border-yellow-400 z-50 shadow-lg animate-bounce">
-                <img
-                  src={jackgif}
-                  alt="jackpot gif"
-                  className="w-full h-full object-cover"
-                />
-              </div> */}
             </>
           );
         }, [])}
@@ -65,34 +33,9 @@ const JackpotCountdown = () => {
                   {/* <img src={bgImage} alt="Jackpot Logo" className="w-48 sm:w-60" /> */}
                   <JackpotWheel />
                 </div>
-
-                <p className="text-3xl lg:text-5xl font-extrabold text-yellow-400 mb-4 animate-pulse">
-                  🎉 Coming Soon!
-                </p>
               </>
             );
           }, [])}
-
-          {/* Countdown */}
-          {useMemo(() => {
-            return timeLeft.days !== undefined ? (
-              <div className="flex justify-center gap-4 text-xl sm:text-3xl font-bold mb-6">
-                {["days", "hours", "minutes", "seconds"].map((key) => (
-                  <div
-                    key={key}
-                    className="flex flex-col items-center bg-black bg-opacity-40 px-4 py-2 rounded-lg"
-                  >
-                    <span>{timeLeft[key]}</span>
-                    <span className="text-sm text-gray-300 capitalize">
-                      {key}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-2xl text-green-400 mb-6">🚀 It's Live Now!</p>
-            );
-          }, [timeLeft])}
 
           {/* Rules */}
           {useMemo(() => {
