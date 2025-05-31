@@ -1,11 +1,12 @@
 import {
-  KeyOff,
   Lock,
   LogoutTwoTone,
   Person,
-  Person3,
+  Person3
 } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import { useEffect, useState } from "react";
 import { BsPerson, BsTrophy } from "react-icons/bs";
 import {
   FaAffiliatetheme,
@@ -16,11 +17,8 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import logo from "../images/fastro.png";
+import { default as fastroLogo, default as logo } from "../images/fastro.png";
 import { logOutFunction } from "../utils/APICalling";
-import fastroLogo from "../images/fastro.png";
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 export default function Navbar() {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

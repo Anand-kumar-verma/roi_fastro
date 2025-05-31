@@ -23,18 +23,18 @@ const Network = () => {
     }
   );
   const profile = profile_data?.data?.result?.[0] || [];
-     const { isLoading: LevelBusinessLoding, data: LevelBusiness } = useQuery(
-     ["level_business"],
-     () => apiConnectorGet(endpoint?.level_business),
-     {
-       refetchOnMount: false,
-       refetchOnReconnect: false,
-       retry: false,
-       retryOnMount: false,
-       refetchOnWindowFocus: false,
-     }
-   );
-   const level_business = LevelBusiness?.data?.result || [];
+  const { isLoading: LevelBusinessLoding, data: LevelBusiness } = useQuery(
+    ["level_business"],
+    () => apiConnectorGet(endpoint?.level_business),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const level_business = LevelBusiness?.data?.result || [];
   return (
     <>
       <Navbar />
@@ -55,23 +55,30 @@ const Network = () => {
                   alt="Crown"
                   className="w-6 h-6 md:w-8 md:h-8"
                 />
-                <p className="text-white text-sm md:text-lg font-medium text-nowrap">Current Reward</p>
+                <p className="text-white text-sm md:text-lg font-medium text-nowrap">
+                  Current Reward
+                </p>
               </div>
               <div>
-                <p className="text-text-color text-end  font-semibold">No Reward</p>
+                <p className="text-text-color text-end  font-semibold">
+                  No Reward
+                </p>
                 <p className="text-xs text-text-color text-end pt-2">
                   Next Reward: 0.00 USD
                 </p>
               </div>
             </div>
-
           </div>
           <div className="bg-glassy !border px-5 !border-gold-color flex items-center justify-between w-full h-20">
             <div className="flex items-center gap-2">
               <FaCircleUser className="!text-gold-color " size={30} />
-              <p className="text-white text-sm md:text-lg font-medium">Telegram ID</p>
+              <p className="text-white text-sm md:text-lg font-medium">
+                Telegram ID
+              </p>
             </div>
-            <p className="text-text-color font-semibold">{profile?.lgn_cust_id || 0}</p>
+            <p className="text-text-color font-semibold">
+              {profile?.lgn_cust_id || 0}
+            </p>
           </div>
           {/* <div className="bg-glassy !border px-5 !border-gold-color flex items-center justify-between w-full h-20">
             <div className="flex items-center gap-2">
@@ -84,19 +91,22 @@ const Network = () => {
           </div> */}
         </div>
         <div className="md:grid  md:grid-cols-4 grid grid-cols-2 gap-3 pt-5 mb-10">
-
           <div class="rounded-xl p-4 bg-gradient-to-r from-[#d34a4a] to-[#fe9e9e] shadow-lg text-white">
             <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
               <div class=" text-3xl">
                 <FaUserCheck className="!w-10 !h-10 text-[#a52828]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl text-gold-color">Active Referrals</p>
-                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">{profile?.jnr_direct_topup_mem || 0} <span class="font-normal">Active</span></p>
+                <p class="text-sm md:text-2xl text-gold-color">
+                  Active Referrals
+                </p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {profile?.jnr_direct_topup_mem || 0}{" "}
+                  <span class="font-normal">Active</span>
+                </p>
               </div>
             </div>
           </div>
-
 
           <div class="rounded-xl p-4 bg-gradient-to-r from-[#291d57] to-[#a38afb] shadow-lg text-white">
             <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
@@ -104,12 +114,13 @@ const Network = () => {
                 <FaUserTimes className="!w-10 !h-10 text-[#201355]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl text-gold-color">Inactive Referrals</p>
+                <p class="text-sm md:text-2xl text-gold-color">
+                  Inactive Referrals
+                </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {Number(profile?.jnr_direct_team || 0) -
                     Number(profile?.jnr_direct_topup_mem || 0)}{" "}
                   <span class="font-normal">Inactive</span>
-
                 </p>
               </div>
             </div>
@@ -121,15 +132,16 @@ const Network = () => {
                 <FaUserGroup className="!w-10 !h-10 !text-[#5f5f12]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl text-nowrap text-gold-color"> Total Network Size</p>
+                <p class="text-sm md:text-2xl text-nowrap text-gold-color">
+                  {" "}
+                  Total Network Size
+                </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {profile?.jnr_direct_team || 0}{" "}
-
                 </p>
               </div>
             </div>
           </div>
-
 
           <div class="rounded-xl p-4 bg-gradient-to-r from-[#f74ede] to-[#f58ce0] shadow-lg text-white">
             <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
@@ -137,15 +149,15 @@ const Network = () => {
                 <PiMicrosoftTeamsLogoLight className="!w-10 !h-10 !text-[#c526ad]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl  text-gold-color">Direct Business</p>
+                <p class="text-sm md:text-2xl  text-gold-color">
+                  Direct Business
+                </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   ${profile?.jnr_direct_business || 0}
-
                 </p>
               </div>
             </div>
           </div>
-
 
           <div class="rounded-xl p-4 bg-gradient-to-r from-[#53a73a] to-[#94f37e] shadow-lg text-white">
             <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
@@ -156,7 +168,6 @@ const Network = () => {
                 <p class="text-sm md:text-2xl text-gold-color">Topup Wallet</p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {profile?.jnr_topup_wallet || 0} USD
-
                 </p>
               </div>
             </div>
@@ -167,15 +178,22 @@ const Network = () => {
                 <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl text-gold-color">Total Team Business</p>
+                <p class="text-sm md:text-2xl text-gold-color">
+                  Total Team Business
+                </p>
+                {/* <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {Number(
+                    level_business?.[0]?.total_team_business || 0
+                  )?.toFixed(2) || 0}{" "}
+                  USD
+                </p> */}
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {Number(
-                          level_business?.find(
-                            (j) =>
-                              j?.level_label === `total_team_business`
-                          )?.level_value
-                        )?.toFixed(2) || 0}{" "} USD
-
+                    level_business?.find(
+                      (j) => j?.level_label === `total_team_business`
+                    )?.level_value
+                  )?.toFixed(2) || 0}{" "}
+                  USD
                 </p>
               </div>
             </div>
@@ -186,23 +204,26 @@ const Network = () => {
                 <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl text-gold-color">Today Team Business</p>
+                <p class="text-sm md:text-2xl text-gold-color">
+                  Today Team Business
+                </p>
+                {/* <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {Number(
+                    level_business?.[0]?.today_team_business || 0
+                  )?.toFixed(2) || 0}{" "}
+                  USD
+                </p> */}
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {Number(
-                          level_business?.find(
-                            (j) =>
-                              j?.level_label === `today_team_business`
-                          )?.level_value
-                        )?.toFixed(2) || 0}{" "} USD
-
+                    level_business?.find(
+                      (j) => j?.level_label === `today_team_business`
+                    )?.level_value
+                  )?.toFixed(2) || 0}{" "}
+                  USD
                 </p>
               </div>
             </div>
           </div>
-
-
-
-
 
           {/* <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
             <VscFileSubmodule className="!w-10 !h-10" />

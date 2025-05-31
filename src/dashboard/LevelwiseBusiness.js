@@ -17,6 +17,7 @@ const LevelwiseBusiness = () => {
     }
   );
   const level_business = LevelBusiness?.data?.result || [];
+  // console.log(level_business);
   return (
     <>
       <Navbar />
@@ -49,6 +50,20 @@ const LevelwiseBusiness = () => {
                       <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap">
                         {index + 1}
                       </td>
+                      {/* <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-gold-color">
+                        {Math.floor(
+                          level_business?.[0]?.[
+                            `members_at_level_${index + 1}`
+                          ] || 0
+                        )}{" "}
+                      </td>
+                      <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
+                        {Math.floor(
+                          level_business?.[0]?.[`buss_at_level_${index + 1}`] ||
+                            0
+                        )?.toFixed(2) || 0}{" "}
+                        ${" "}
+                      </td> */}
                       <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-gold-color">
                         {Math.floor(
                           level_business?.find(
@@ -63,7 +78,8 @@ const LevelwiseBusiness = () => {
                             (j) =>
                               j?.level_label === `buss_at_level_${index + 1}`
                           )?.level_value
-                        )?.toFixed(2) || 0} ${" "}
+                        )?.toFixed(2) || 0}{" "}
+                        ${" "}
                       </td>
                     </tr>
                   ))}

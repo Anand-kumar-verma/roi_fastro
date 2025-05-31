@@ -60,23 +60,26 @@ const Login = () => {
 
   const loginFn = async (reqBody) => {
     setLoading(true);
-
-    // const reqBodyy = {
-    //   mobile: String(datatele?.id),
-    //   email: String(datatele?.id),
-    //   full_name: String(datatele?.username),
-    //   referral_id: String(params),
-    //   username: String(reqBody.id),
-    //   password: String(reqBody.id),
-    // };
+    if (!datatele?.id || datatele?.id == "" || datatele?.id === null) {
+      setLoading(false);
+      return toast("Your Telegram security is not allow for login!");
+    }
     const reqBodyy = {
-      mobile: String("1840589027"),
-      email: String("1840589027"),
-      full_name: String(datatele?.username),
-      referral_id: String("1234567890"),
-      username: String("1840589027"),
-      password: String("1840589027"),
+      mobile: String(datatele?.id),
+      email: String(datatele?.id),
+      full_name: String(datatele?.username || "N/A"),
+      referral_id: String(params),
+      username: String(reqBody.id),
+      password: String(reqBody.id),
     };
+    // const reqBodyy = {
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
+    //   full_name: String(datatele?.username),
+    //   referral_id: String("1234567890"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
+    // };
 
     try {
       const response = await axios.post(endpoint?.login_api, reqBodyy, {
@@ -96,13 +99,15 @@ const Login = () => {
         localStorage.setItem("logindataen", response?.data?.result?.[0]?.token);
         localStorage.setItem("uid", datatele?.id);
         localStorage.setItem("username", datatele?.username);
-        if (response?.data?.result?.[0]?.user_type === "Admin") {
-          navigate("/admindashboard");
-          window.location.reload();
-        } else {
-          navigate("/home");
-          window.location.reload();
-        }
+        // if (response?.data?.result?.[0]?.user_type === "Admin") {
+        //   navigate("/admindashboard");
+        //   window.location.reload();
+        // } else {
+        //   navigate("/home");
+        //   window.location.reload();
+        // }
+        navigate("/home");
+        window.location.reload();
       }
     } catch (error) {
       console.error(error);

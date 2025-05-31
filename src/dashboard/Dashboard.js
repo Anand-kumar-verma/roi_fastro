@@ -165,7 +165,7 @@ const Dashboard = () => {
                 }}
               >
                 <span className="inline-block text-text-color text-sm">
-                  Congratulatoins! You have completed 1st Slot of FST Coin.
+                  Congratulatoins! You have completed 3nd Slot of FST Coin.
                 </span>
                 {/* <span className="inline-block text-text-color  text-sm">
                   Text is the exact, original words written by an author. Text
@@ -308,18 +308,22 @@ const Dashboard = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">
-                    FST Slot Count 2:{" "}
+                    FST Slot Count 4:{" "}
                   </span>
                   <span className="font-semibold text-green-400">
                     100000 /{" "}
-                    {(Number(data?.[0]?.total_fst_with || 0) - 172526)
+                    {(
+                      Number(data?.[0]?.total_fst_with || 0) +
+                      9000 -
+                      (172526 + 124500 + 98894.375)
+                    )
                       .toString()
                       .padStart(6, "0")}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">FST Live Price: </span>
-                  <span className="font-semibold text-green-400">0.02 $</span>
+                  <span className="font-semibold text-green-400">0.08 $</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">Today Income</span>
@@ -444,7 +448,7 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-            <LevelwiseBusiness />
+            {/* <LevelwiseBusiness /> */}
           </div>
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4 ">
             <div className="p-6   flex justify-between items-center space-y-2 rounded-xl !text-gold-color bg-custom-gradient shadow-xl border border-yellow-500/30">
