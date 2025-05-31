@@ -52,7 +52,7 @@ export const routes = [
     path: "/activation",
     component: <ActivatoinLink />,
   },
-   {
+  {
     path: "/buy",
     component: <BuyTicket />,
   },

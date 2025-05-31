@@ -64,9 +64,9 @@ const Dashboard = () => {
   );
   const profile = profile_data?.data?.result?.[0] || [];
 
-  useEffect(() => {
-    setOpen(profile?.is_popup_open === "Active");
-  }, [profile?.is_popup_open]);
+  // useEffect(() => {
+  //   setOpen(profile?.is_popup_open === "Active");
+  // }, [profile?.is_popup_open]);
 
   //   const { isLoading: isPopupLoading, data:popupResponse  } = useQuery(
   //   ["popup_close"],
@@ -145,13 +145,13 @@ const Dashboard = () => {
     <>
       <Navbar />
 
-      {profile?.is_popup_open && (
+      {/* {profile?.is_popup_open && (
         <CustomPopup
           onChangeFun={updatePopup}
           open={open}
           handleClose={handleClose}
         />
-      )}
+      )} */}
       <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
