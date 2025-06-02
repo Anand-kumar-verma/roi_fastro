@@ -73,12 +73,12 @@ const Login = () => {
       password: String(reqBody.id),
     };
     // const reqBodyy = {
-    //   mobile: String("1840589028"),
-    //   email: String("1840589028"),
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
     //   full_name: String(datatele?.username),
     //   referral_id: String("1234567890"),
-    //   username: String("1840589028"),
-    //   password: String("1840589028"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
     // };
 
     try {
@@ -97,7 +97,7 @@ const Login = () => {
       }
       if (response?.data?.message === "Login Successfully") {
         localStorage.setItem("logindataen", response?.data?.result?.[0]?.token);
-        localStorage.setItem("uid", datatele?.id);
+        localStorage.setItem("uid", reqBodyy?.mobile);
         localStorage.setItem("username", datatele?.username);
         // if (response?.data?.result?.[0]?.user_type === "Admin") {
         //   navigate("/admindashboard");

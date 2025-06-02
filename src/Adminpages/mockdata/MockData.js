@@ -35,6 +35,17 @@ export const all_Data = [
     ),
     subcomponent: [],
   },
+  {
+    id: 2,
+    navLink: "/team-income",
+    navItem: "Team Income",
+    navIcon: (
+      <span>
+        <DashboardCustomizeIcon color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
+  },
 
   // {
   //   id: 2,

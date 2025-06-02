@@ -60,7 +60,9 @@ function Withdrawal() {
       setData(res?.data?.result?.[0]);
       toast(res?.data?.message);
       fk.handleReset();
-      if (String(res?.data?.success) === "true") GetWalletUserData();
+      if (String(res?.data?.success) === "true") {
+        GetWalletUserData();
+      }
     } catch (e) {
       console.log(e);
     }

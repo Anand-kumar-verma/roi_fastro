@@ -6,6 +6,7 @@ export const API_URLS = {
   payout_request_approval: `/api/v2/withdrawal-approval-from-admin`,
   payout_fst_request_approval: `/api/v2/fst-approval-from-admin`,
   topup_data: `/api/v2/get-topup-details-admin`,
+  get_team_data: `/api/v2/get-total-team-by-id`,
   user_data: `/api/v2/get-user-details-admin`,
 
   dashboard_counter: `/api/v2/dashboard-api`,

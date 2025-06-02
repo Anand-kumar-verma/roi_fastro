@@ -5,9 +5,10 @@ import CompoundHistory from "../Income/CompoundHistory";
 import DirectIncome from "../Income/DirectIncome";
 import Jackpot from "../Income/Jackpot";
 import LevelIncome from "../Income/LevelIncome";
-import MatchingIncome from "../Income/MatchingIncome";
 import RoiIncome from "../Income/RoiIncome";
+import TicketList from "../Income/TicketList";
 import WeeklyIncome from "../Income/Weekly";
+import WinnerList from "../Income/WinnerList";
 import About from "../component/About";
 import Contact from "../component/Contact";
 import Market from "../component/Market";
@@ -108,8 +109,12 @@ export const routes = [
     component: <DirectIncome />,
   },
   {
-    path: "/matching_income",
-    component: <MatchingIncome />,
+    path: "/ticket-list",
+    component: <TicketList />,
+  },
+  {
+    path: "/winner-list",
+    component: <WinnerList />,
   },
   {
     path: "/booster_income",
@@ -158,5 +163,5 @@ export const routes = [
   {
     path: "/game-usdt",
     component: <DepositUSDT />,
-  }
+  },
 ];

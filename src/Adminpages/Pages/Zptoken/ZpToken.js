@@ -67,7 +67,6 @@ useEffect(()=>{
       <span className="">{i?.Deposit_type}</span>,
       <span className=""> {moment(i?.success_date)
         .format("DD-MM-YYYY HH:mm:ss")}</span>,
-
     ];
   });
 

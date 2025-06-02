@@ -1,5 +1,5 @@
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { ethers } from "ethers";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -9,8 +9,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/Loader";
 import {
   apiConnectorGetWithoutToken,
-  apiConnectorPost,
-  apiConnectorPostWithdouToken,
+  apiConnectorPostWithdouToken
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { enCryptData } from "../../utils/Secret";
@@ -31,10 +30,16 @@ function DepositUSDT() {
   const location = useLocation();
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
-  const base64String = atob(IdParam);
+  const base64String = IdParam?.trim();
+  // atob(IdParam);
   const { data: ele } = useQuery(
-    ["eleigible"],
-    () => apiConnectorPost(endpoint?.eligible_paying, { type: 1 }),
+    ["eleigible_usdt"],
+    () =>
+      apiConnectorPostWithdouToken(
+        endpoint?.eligible_paying,
+        { type: 1 },
+        base64String
+      ),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -45,7 +50,6 @@ function DepositUSDT() {
   );
 
   const data_eligible = ele?.data?.message;
-
   const { data: general_address } = useQuery(
     ["contract_address_api"],
     () =>
@@ -63,7 +67,6 @@ function DepositUSDT() {
     }
   );
   const address = general_address?.data?.result?.[0] || [];
-
   const fk = useFormik({
     initialValues: {
       inr_value: "",
@@ -82,30 +85,15 @@ function DepositUSDT() {
           params: [{ chainId: "0x38" }], // Chain ID for Binance Smart Chain Mainnet
         });
         const userAccount = accounts[0];
-
-        // if (profile?.[0]?.lgn_wallet_add?.toLowerCase() !== userAccount?.toLowerCase()) {
-        //     setLoding(false);
-        //     alert("Select Your correct wallet address.")
-        //     window.location.reload()
-        //     return
-
-        // }
-
         setWalletAddress(userAccount);
-        // Create a provider
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        // Get the native token balance (BNB)
         const nativeBalance = await provider.getBalance(userAccount);
         setBnb(ethers.utils.formatEther(nativeBalance));
-        // Create a contract instance for the ZP token
-        // console.log(address?.token_contract_add);
         const tokenContract = new ethers.Contract(
-          address?.token_contract_add,
+          "0x55d398326f99059fF775485246999027B3197955",
           tokenABI,
           provider
         );
-        // Get the balance of the ZP token for the user account
         const tokenBalance = await tokenContract.balanceOf(userAccount);
         setno_of_Tokne(ethers.utils.formatUnits(tokenBalance, 18));
       } catch (error) {
@@ -124,8 +112,6 @@ function DepositUSDT() {
         id: 1,
       });
     if (!address?.receiving_key) return toast("Please add Receiving Address");
-    if (!address?.token_contract_add)
-      return toast("Please add your contract Address");
     if (!walletAddress) return toast("Please Connect your wallet.");
     if (Number(fk.values.req_amount) > no_of_Tokne)
       return toast("Your Wallet Amount is low.");
@@ -136,12 +122,6 @@ function DepositUSDT() {
       setLoding(false);
       return;
     }
-
-    // if (fk.values.pack_id === "SelectPackage") {
-    //   setLoding(false);
-    //   return toast("Select Your Package.");
-    // }
-
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: "0x38" }], // Chain ID for Binance Smart Chain Mainnet
@@ -149,6 +129,7 @@ function DepositUSDT() {
 
     try {
       const dummyData = await PayinZpDummy();
+      console.log(dummyData);
       if (dummyData?.success == false) {
         setLoding(false);
         return toast(dummyData?.message);
@@ -163,9 +144,8 @@ function DepositUSDT() {
         18
       ); // Calculate the token amount to transfer
 
-      // Create a contract instance for the token
       const tokenContract = new ethers.Contract(
-        address?.token_contract_add,
+        "0x55d398326f99059fF775485246999027B3197955",
         tokenABI,
         signer
       );
@@ -283,6 +263,7 @@ function DepositUSDT() {
         },
         base64String
       );
+      console.log(res.data);
       return res?.data || {};
     } catch (e) {
       console.log(e);

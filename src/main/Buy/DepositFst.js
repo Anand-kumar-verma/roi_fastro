@@ -8,10 +8,8 @@ import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/Loader";
 import {
-  apiConnectorGet,
   apiConnectorGetWithoutToken,
-  apiConnectorPost,
-  apiConnectorPostWithdouToken,
+  apiConnectorPostWithdouToken
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { enCryptData } from "../../utils/Secret";
@@ -32,7 +30,8 @@ function DepositFST() {
   const location = useLocation();
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
-  const base64String = atob(IdParam);
+  const base64String = IdParam?.trim();
+  // atob(IdParam);
 
   const { data: general_address } = useQuery(
     ["contract_address_api"],
@@ -53,7 +52,12 @@ function DepositFST() {
   const address = general_address?.data?.result?.[0] || [];
   const { data: ele } = useQuery(
     ["eleigible_api_1"],
-    () => apiConnectorPost(endpoint?.eligible_paying, { type: 2 }),
+    () =>
+      apiConnectorPostWithdouToken(
+        endpoint?.eligible_paying,
+        { type: 2 },
+        base64String
+      ),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -67,7 +71,7 @@ function DepositFST() {
 
   const { data: fst } = useQuery(
     ["fst_count"],
-    () => apiConnectorGet(endpoint?.fst_count),
+    () => apiConnectorGetWithoutToken(endpoint?.fst_count, {}, base64String),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -115,7 +119,7 @@ function DepositFST() {
         // Create a contract instance for the ZP token
         // console.log(address?.token_contract_add);
         const tokenContract = new ethers.Contract(
-          address?.fastro_contract,
+          "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0",
           tokenABI,
           provider
         );
@@ -136,7 +140,7 @@ function DepositFST() {
     if (isNaN(data_eligible)) return toast(data_eligible, { id: `1` });
     if (Number(fst_data) === 0) return toast("There is no pending FST.");
     if (!address?.receiving_key) return toast("Please add Receiving Address");
-    if (!address?.fastro_contract)
+    if (!"0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0")
       return toast("Please add your contract Address");
     if (!walletAddress) return toast("Please Connect your wallet.");
     if (Number(fst_data) > no_of_Tokne)
@@ -177,7 +181,7 @@ function DepositFST() {
 
       // Create a contract instance for the token
       const tokenContract = new ethers.Contract(
-        address?.fastro_contract,
+        "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0",
         tokenABI,
         signer
       );

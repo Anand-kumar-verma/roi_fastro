@@ -1,10 +1,5 @@
-import React from 'react'
-import graph1 from "../images/graph1.webp";
-import Header from '../Layout/Header';
 import Footer from '../Layout/Footer';
-import { TypeAnimation } from 'react-type-animation';
-import gif1 from "../images/gif1.gif";
-import gif2 from "../images/gif2.gif";
+import Header from '../Layout/Header';
 
 export default function Market() {
 

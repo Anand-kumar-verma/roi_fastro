@@ -28,10 +28,12 @@ const INRPayout = () => {
         updated_at: to_date,
         page: page,
         count: 10,
+        search: search,
       });
       setData(res?.data?.data?.data || []);
       setTotalamount(res?.data);
       if (res) {
+        setSearch("");
         setTo_date("");
         setFrom_date("");
       }
@@ -64,8 +66,7 @@ const INRPayout = () => {
     <span>Mobile</span>,
     <span>Address</span>,
     <span>Req Amnt</span>,
-    <span>Charges</span>,
-    <span>Net Amnt</span>,
+    <span>Team Buss</span>,
     <span>Wallet Type</span>,
     <span>Date/Time</span>,
     <span>Status</span>,
@@ -80,8 +81,7 @@ const INRPayout = () => {
       <span>{i?.lgn_real_mob}</span>,
       <span>{i?.wdrl_to}</span>,
       <span>{i?.wdrl_amont}</span>,
-      <span>{i?.wdrl_charges}%</span>,
-      <span>{i?.wdrl_net_amnt}</span>,
+      <span>{i?.team_buss}</span>,
       <span>{i?.wdrl_wallet_type}</span>,
       <span className="">
         {moment(i?.wdrl_created_at).format("DD-MM-YYYY HH:mm:ss")}

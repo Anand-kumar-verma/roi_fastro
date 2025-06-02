@@ -122,7 +122,9 @@ export const JackpotWheel = () => {
                     return (
                       <span
                         key={key}
-                        className={match ? "text-gold-color blink" : ""}
+                        className={
+                          match ? "text-gold-color font-bold blink" : ""
+                        }
                       >
                         {digit}
                       </span>

@@ -30,8 +30,8 @@ function Activation() {
   const location = useLocation();
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
-  const base64String = atob(IdParam);
-
+  const base64String = IdParam?.trim();
+  //  atob(IdParam);
   const { data: general_address } = useQuery(
     ["contract_address_api"],
     () =>

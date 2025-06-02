@@ -1,10 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import WingoCountdown from "./ColorPrediction";
 import JackpotCountdown from "./JackpotCountdown";
 import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom";
-import JackpotCountdownOLD from "./JackpotCountdownOLD";
 
 const GameProject = () => {
   const [activeTab, setActiveTab] = useState("jackpot");
@@ -26,7 +25,8 @@ const GameProject = () => {
           🎉 Jackpot Game
         </button>
         <button
-          onClick={() => navigate("/wingo")}
+          // onClick={() => navigate("/wingo")}
+          onClick={() => setActiveTab("wingo")}
           className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
             activeTab === "wingo"
               ? "bg-pink-400 text-black shadow-lg"
@@ -39,8 +39,8 @@ const GameProject = () => {
 
       {/* Game Sections */}
       <div className="w-full min-h-screen bg-[#0e172a] text-white">
-        {/* {activeTab === "jackpot" && <JackpotCountdown />} */}
-        {activeTab === "jackpot" && <JackpotCountdownOLD />}
+        {activeTab === "jackpot" && <JackpotCountdown />}
+        {/* {activeTab === "jackpot" && <JackpotCountdownOLD />} */}
         {activeTab === "wingo" && <WingoCountdown />}
       </div>
 

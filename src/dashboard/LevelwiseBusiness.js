@@ -66,18 +66,12 @@ const LevelwiseBusiness = () => {
                       </td> */}
                       <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-gold-color">
                         {Math.floor(
-                          level_business?.find(
-                            (j) =>
-                              j?.level_label === `members_at_level_${index + 1}`
-                          )?.level_value
+                          level_business?.[0]?.[`tb_mem_lev_${index + 1}`] || 0
                         ) || 0}{" "}
                       </td>
                       <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
                         {Number(
-                          level_business?.find(
-                            (j) =>
-                              j?.level_label === `buss_at_level_${index + 1}`
-                          )?.level_value
+                          level_business?.[0]?.[`tb_buss_lev_${index + 1}`]
                         )?.toFixed(2) || 0}{" "}
                         ${" "}
                       </td>

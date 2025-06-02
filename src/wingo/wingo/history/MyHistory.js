@@ -1,17 +1,15 @@
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { Box, Stack, TablePagination, Typography } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import moment from "moment";
 import * as React from "react";
+import toast from "react-hot-toast";
 import { useQuery } from "react-query";
-import { My_All_HistoryFn } from "../../services/apiCallings";
-import { rupees, zubgback } from "../../services/urls";
-import CustomCircularProgress from "../../shared/loder/CustomCircularProgress";
 import { apiConnectorGet } from "../../../utils/APIConnector";
 import { endpoint } from "../../../utils/APIRoutes";
-import toast from "react-hot-toast";
+import { rupees } from "../../services/urls";
+import CustomCircularProgress from "../../shared/loder/CustomCircularProgress";
 
 const MyHistory = ({ gid }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);

@@ -2,7 +2,7 @@
 
 export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://192.168.18.214:9009";
+// export const domain = "http://192.168.136.149:9009";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";

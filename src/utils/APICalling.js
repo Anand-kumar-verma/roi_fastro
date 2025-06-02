@@ -4,7 +4,7 @@ export const logOutFunction = async () => {
   try {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = "/"; // Redirect to login page
+    window.location.reload();
   } catch (e) {
     toast(e?.message);
     console.log(e);
@@ -111,4 +111,3 @@ export const price_statics = [
     token_cnt: 0.001,
   },
 ];
- 

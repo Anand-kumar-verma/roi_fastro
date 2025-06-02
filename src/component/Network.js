@@ -134,7 +134,7 @@ const Network = () => {
               <div className="flex flex-col gap-0 md:gap-2">
                 <p class="text-sm md:text-2xl text-nowrap text-gold-color">
                   {" "}
-                  Total Network Size
+                  Total Direct
                 </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {profile?.jnr_direct_team || 0}{" "}
@@ -172,6 +172,26 @@ const Network = () => {
               </div>
             </div>
           </div>
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#a73a5c] to-[#94f37e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">Total Team</p>
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                  {Number(
+                    Number(level_business?.[0]?.tb_mem_lev_1 || 0) +
+                      Number(level_business?.[0]?.tb_mem_lev_2 || 0) +
+                      Number(level_business?.[0]?.tb_mem_lev_3 || 0) +
+                      Number(level_business?.[0]?.tb_mem_lev_4 || 0) +
+                      Number(level_business?.[0]?.tb_mem_lev_5 || 0) +
+                      Number(level_business?.[0]?.tb_mem_lev_6 || 0)
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
           <div class="rounded-xl p-4 bg-gradient-to-r from-[#3a60a7] to-[#94f37e] shadow-lg text-white">
             <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
               <div class="text-blue-500 text-3xl">
@@ -189,35 +209,12 @@ const Network = () => {
                 </p> */}
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {Number(
-                    level_business?.find(
-                      (j) => j?.level_label === `total_team_business`
-                    )?.level_value
-                  )?.toFixed(2) || 0}{" "}
-                  USD
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-xl p-4 bg-gradient-to-r from-[#a73a5c] to-[#94f37e] shadow-lg text-white">
-            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
-              <div class="text-blue-500 text-3xl">
-                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
-              </div>
-              <div className="flex flex-col gap-0 md:gap-2">
-                <p class="text-sm md:text-2xl text-gold-color">
-                  Today Team Business
-                </p>
-                {/* <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {Number(
-                    level_business?.[0]?.today_team_business || 0
-                  )?.toFixed(2) || 0}{" "}
-                  USD
-                </p> */}
-                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {Number(
-                    level_business?.find(
-                      (j) => j?.level_label === `today_team_business`
-                    )?.level_value
+                    Number(level_business?.[0]?.tb_buss_lev_1 || 0) +
+                      Number(level_business?.[0]?.tb_buss_lev_2 || 0) +
+                      Number(level_business?.[0]?.tb_buss_lev_3 || 0) +
+                      Number(level_business?.[0]?.tb_buss_lev_4 || 0) +
+                      Number(level_business?.[0]?.tb_buss_lev_5 || 0) +
+                      Number(level_business?.[0]?.tb_buss_lev_6 || 0)
                   )?.toFixed(2) || 0}{" "}
                   USD
                 </p>

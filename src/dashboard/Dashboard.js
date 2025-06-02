@@ -20,6 +20,7 @@ import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { contractAddress, endpoint, telegram_url } from "../utils/APIRoutes";
 import { enCryptData } from "../utils/Secret";
 import Navbar from "./Navbar";
+import LevelwiseBusiness from "./LevelwiseBusiness";
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -163,30 +164,13 @@ const Dashboard = () => {
                 }}
               >
                 <span className="inline-block text-text-color text-sm">
-                  Congratulatoins! You have completed 3nd Slot of FST Coin.
+                  Congratulatoins! You have completed{" "}
+                  {Number(profile?.slot_count || 1) - 1}
+                  nd Slot of FST Coin.
                 </span>
-                {/* <span className="inline-block text-text-color  text-sm">
-                  Text is the exact, original words written by an author. Text
-                  is also a specific work as written by the original author.
-                  Text is also commonly used to refer to a text message or to
-                  send a text message. Text has several other senses as a noun.
-                </span> */}
               </div>
-              {/* <style>{`
-                   @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); }} `}</style> */}
             </div>
           </div>
-
-          {/* <div className="text-lg bg-gray-color border border-rose-500 rounded opacity-75 p-2 px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
-            <p className="  !font-bold bg-gradient-to-r from-teal-600 to-yellow-500 bg-clip-text text-transparent">
-              {profile?.jnr_achieve_reward && 'Rank:'}{' '}
-              {profile?.jnr_achieve_reward}{' '} hhhh
-            </p>
-            <p className=" !text-yellow-600 p-1 !font-bold">
-              {' '}
-              Current Wallet: {profile?.jnr_curr_wallet || 0} USD
-            </p>
-          </div> */}
 
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4">
             <div className="bg-glassy !bg-black p-6 !pt-4  !border-gold-color">
@@ -264,13 +248,6 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* <div className="flex gap-2 pt-4">
-                  <InfoIcon className="text-sm !text-rose-600" />
-                  <p className="text-rose-500 text-base justify-center ">
-                    Minimum 5$ is required for ROI
-                  </p>
-                </div> */}
-
                 <div className="flex gap-2 pt-4 flex-col items-center"></div>
               </div>
             </div>
@@ -306,14 +283,13 @@ const Dashboard = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">
-                    FST Slot Count 4:{" "}
+                    FST Slot Count {Number(profile?.slot_count || 0)}:{" "}
                   </span>
                   <span className="font-semibold text-green-400">
                     100000 /{" "}
                     {(
-                      Number(data?.[0]?.total_fst_with || 0) +
-                      9000 -
-                      (172526 + 124500 + 98894.375)
+                      Number(data?.[0]?.total_fst_with || 0) -
+                      Number(profile?.token_curr_value || 0)
                     )
                       .toString()
                       .padStart(6, "0")}
@@ -421,8 +397,16 @@ const Dashboard = () => {
                       ],
                       ["Daily ROI", "5 %"],
                       ["Contract Duration", "6x"],
-                      ["Total ROI", `${profile?.topup_amount * 6 || 0} $`],
-                      ["Achieved ROI", `${profile?.total_income || 0} $`],
+                      [
+                        "Total ROI",
+                        `${Number(profile?.topup_amount * 6 || 0)?.toFixed(
+                          2
+                        )} $`,
+                      ],
+                      [
+                        "Achieved ROI",
+                        `${Number(profile?.total_income || 0)?.toFixed(2)} $`,
+                      ],
                       [
                         "Joining Date",
                         profile?.jnr_created_at
@@ -446,7 +430,7 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-            {/* <LevelwiseBusiness /> */}
+            <LevelwiseBusiness />
           </div>
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4 ">
             <div className="p-6   flex justify-between items-center space-y-2 rounded-xl !text-gold-color bg-custom-gradient shadow-xl border border-yellow-500/30">

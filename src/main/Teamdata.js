@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import Navbar from "../dashboard/Navbar";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
@@ -7,7 +7,6 @@ import CustomToPagination from "../Shared/CustomToPagination";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
-import LevelwiseBusiness from "../dashboard/LevelwiseBusiness";
 
 function Teamdata() {
   const [level, setLevel] = useState(1);
@@ -35,7 +34,7 @@ function Teamdata() {
     <>
       <Navbar />
       <Loader isLoading={isLoading} />
-     <LevelwiseBusiness />
+     {/* <LevelwiseBusiness /> */}
       <div
         className="p-0 md:p-4  flex h-screen overflow-y-scroll flex-col bg-custom-gradient items-center "
         // style={{ backgroundImage: `url(${crypto})` }}

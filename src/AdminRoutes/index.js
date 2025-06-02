@@ -48,6 +48,7 @@ import TopUpDetail from "../Adminpages/Pages/TopUP/TopUpDetail";
 import UserPermission from "../Adminpages/Pages/Permission/Userpermission";
 import FstList from "../Adminpages/Pages/INRPayment/FstList";
 import BurningEvent from "../Adminpages/Pages/burning/BurningEvent";
+import TeamIncome from "../Adminpages/Pages/TopUP/TeamIncome";
 // import LogInApproval from "../Adminpages/Pages/player/LogInApproval";
 // import Player from "../Adminpages/Pages/player/Player";
 // import AviatorReport from "../Adminpages/Pages/Report/AvaitorReport";
@@ -76,6 +77,12 @@ export const adminroutes = [
     path: "/fst_detail",
     navItem: "FST Detail",
     component: <FstList />,
+  },
+  {
+    id: 123,
+    path: "/team-income",
+    navItem: "Team Income",
+    component: <TeamIncome />,
   },
   // {
   //   id: 1,
@@ -377,7 +384,7 @@ export const adminroutes = [
   {
     id: 422,
     path: "/burningevent",
-    component: <BurningEvent/>,
+    component: <BurningEvent />,
     navItem: "Burning  Event",
   },
   // {

@@ -5,7 +5,7 @@ import ButtomNavigation from "../../Layout/ButtomNaviagatoin";
 import { frontend } from "../../utils/APIRoutes";
 
 const ActivatoinLink = () => {
-   const handleCopy = (url) => {
+  const handleCopy = (url) => {
     if (navigator?.clipboard?.writeText) {
       navigator.clipboard
         .writeText(url)
@@ -23,7 +23,7 @@ const ActivatoinLink = () => {
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
-  
+
       try {
         const successful = document.execCommand("copy");
         if (successful) {
@@ -35,7 +35,7 @@ const ActivatoinLink = () => {
         console.error("Fallback copy failed: ", err);
         toast.error("Clipboard not supported in this browser.");
       }
-  
+
       document.body.removeChild(textArea);
     }
   };
@@ -46,23 +46,6 @@ const ActivatoinLink = () => {
         className="flex h-screen overflow-y-scroll px-3 flex-col justify-center items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        {/* <p
-          onClick={() => {
-            copy(
-              frontend +
-                "/activation-link?token=" +
-                btoa(localStorage.getItem("logindataen"))
-            );
-            toast.success("Copy to clipboard", { id: 1 });
-          }}
-          className="!text-[10px] flex flex-col !bg-text-color p-5 rounded-md"
-        >
-          <span>
-            Copy Link:
-            <CopyAll className="text-white" />
-          </span>
-          <span className="!text-blue-700">{frontend}/activation-link</span>
-        </p> */}
         <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 rounded-xl w-full max-w-sm mx-auto text-white shadow-lg">
           <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
             <div>
@@ -71,19 +54,21 @@ const ActivatoinLink = () => {
                 https://fastro.info/activation-link
               </div>
             </div>
-            <button
-              onClick={() => {
-                handleCopy(
-                  frontend +
-                    "/activation-link?token=" +
-                    btoa(localStorage.getItem("logindataen"))
-                );
-                // toast.success("Copy to clipboard", { id: 1 });
-              }}
-              class="bg-white text-blue-600 p-2 rounded-full shadow-md hover:bg-gray-100 transition"
-            >
-              <CopyAll className="text-gold-color" />
-            </button>
+            {localStorage.getItem("uid") && (
+              <button
+                onClick={() => {
+                  handleCopy(
+                    frontend +
+                      "/activation-link?token=" +
+                      localStorage.getItem("uid")
+                  );
+                  // toast.success("Copy to clipboard", { id: 1 });
+                }}
+                class="bg-white text-blue-600 p-2 rounded-full shadow-md hover:bg-gray-100 transition"
+              >
+                <CopyAll className="text-gold-color" />
+              </button>
+            )}
           </div>
         </div>
       </div>
