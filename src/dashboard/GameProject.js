@@ -7,7 +7,6 @@ import Navbar from "./Navbar";
 
 const GameProject = () => {
   const [activeTab, setActiveTab] = useState("jackpot");
-  const navigate = useNavigate();
   return (
     <>
       <Navbar />

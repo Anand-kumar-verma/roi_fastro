@@ -8,6 +8,11 @@ export const API_URLS = {
   topup_data: `/api/v2/get-topup-details-admin`,
   get_team_data: `/api/v2/get-total-team-by-id`,
   user_data: `/api/v2/get-user-details-admin`,
+  get_downline_team: `/api/v2/get-downline-team`,
+  support_ticket_list: `/api/v2/support-ticket-list-admin`,
+  support_ticket_reply: `/api/v2/support-ticket-reply`,
+  jackpot_ticket_list_admin: `/api/v2/jack-pot-ticket-list-by-admin`,
+  jackpot_ticket_set_result: `/api/v2/update-jackpot-result-status`,
 
   dashboard_counter: `/api/v2/dashboard-api`,
   withdrawl_Request: `/api/v2/inr-payout-request-list`,

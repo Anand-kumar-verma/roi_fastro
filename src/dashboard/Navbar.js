@@ -1,11 +1,6 @@
-import {
-  Lock,
-  LogoutTwoTone,
-  Person,
-  Person3
-} from "@mui/icons-material";
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import { Lock, LogoutTwoTone, Person, Person3 } from "@mui/icons-material";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import { useEffect, useState } from "react";
 import { BsPerson, BsTrophy } from "react-icons/bs";
 import {
@@ -110,7 +105,8 @@ export default function Navbar() {
                 // window.location.reload();
               }}
             >
-              <CurrencyExchangeIcon className="text-blue-400 !text-sm" /> Price Statistics
+              <CurrencyExchangeIcon className="text-blue-400 !text-sm" /> Price
+              Statistics
             </p>
             <p
               className="flex items-center gap-1 cursor-pointer p-2 "
@@ -119,7 +115,8 @@ export default function Navbar() {
                 // window.location.reload();
               }}
             >
-              <CurrencyExchangeIcon className="text-blue-400 !text-sm" /> Burning Event
+              <CurrencyExchangeIcon className="text-blue-400 !text-sm" />{" "}
+              Burning Event
             </p>
             <div
               className="relative dropdown"
@@ -162,6 +159,13 @@ export default function Navbar() {
                     <Person3 className="text-blue-400" fontSize="small" />
                     <p>Team Data</p>
                   </div>
+                  <div
+                    className="cursor-pointer flex items-center gap-1 py-1 hover:text-blue-400 text-gray-800"
+                    onClick={() => navigate("/support-list-user")}
+                  >
+                    <Person3 className="text-blue-400" fontSize="small" />
+                    <p>Support Reply</p>
+                  </div>
                 </div>
               )}
             </div>
@@ -172,12 +176,12 @@ export default function Navbar() {
             >
               <BsTrophy className="text-blue-400" /> Activation
             </p>
-             <p
+            <p
               className="flex items-center gap-1 cursor-pointer p-2 "
               onClick={() => navigate("/buy")}
             >
               <BsTrophy className="text-blue-400" /> Buy Ticket
-            </p> 
+            </p>
             <p
               className="flex items-center gap-1 cursor-pointer p-2 "
               onClick={() => navigate("/topup_detail")}
@@ -275,12 +279,18 @@ export default function Navbar() {
             >
               <SportsEsportsIcon className="text-blue-400" /> Project
             </p>
-            <div
+            <p
+              className="flex items-center gap-1 cursor-pointer p-2 "
+              onClick={() => navigate("/ticket")}
+            >
+              <SportsEsportsIcon className="text-blue-400" /> Support
+            </p>
+            {/* <div
               className="cursor-pointer py-1 flex items-center gap-1 lg:hidden hover:text-blue-400 "
               onClick={logOutFunction}
             >
               <LogoutTwoTone className="text-blue-400" /> Logout
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="hidden md:flex justify-center items-center gap-10 relative">

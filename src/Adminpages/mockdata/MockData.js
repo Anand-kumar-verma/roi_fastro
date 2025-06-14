@@ -1,4 +1,5 @@
 import {
+  BoltRounded,
   ColorizeRounded,
   Compare,
   Games,
@@ -153,6 +154,17 @@ export const all_Data = [
         ),
       },
     ],
+  },
+  {
+    id: 38,
+    navLink: "/downlineteam",
+    navItem: "Downline Team",
+    navIcon: (
+      <span>
+        <BoltRounded color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
   },
   // {
   //   id: 38,
@@ -626,7 +638,7 @@ export const all_Data = [
       </span>
     ),
   },
-   {
+  {
     id: 11,
     navLink: "/burningevent",
     navItem: "Burning Event",
@@ -637,15 +649,26 @@ export const all_Data = [
     ),
     subcomponent: [],
   },
-  // {
-  //   id: 8,
-  //   navLink: "/change-password",
-  //   navItem: "Change Password",
-  //   navIcon: (
-  //     <span>
-  //       <LockResetIcon color="#15317E" fontSize="medium" />
-  //     </span>
-  //   ),
-  //   subcomponent: [],
-  // },
+  {
+    id: 8,
+    navLink: "/support-list",
+    navItem: "Support",
+    navIcon: (
+      <span>
+        <LeaderboardSharp color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
+  },
+  {
+    id: 8,
+    navLink: "/ticket-list-admin",
+    navItem: "Jackpot Ticket",
+    navIcon: (
+      <span>
+        <LeaderboardSharp color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
+  },
 ];

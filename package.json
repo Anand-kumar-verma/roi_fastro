@@ -39,6 +39,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
     "react-type-animation": "^3.2.0",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
@@ -46,7 +47,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

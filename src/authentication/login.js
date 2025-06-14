@@ -1,69 +1,33 @@
 import axios from "axios";
-import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Tilt from "react-parallax-tilt";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../images/fastro.png";
 import Loader from "../Shared/Loader";
 import { endpoint } from "../utils/APIRoutes";
+import {
+  saveToken,
+  saveUid,
+  saveUsername,
+} from "../wingo/redux/slices/counterSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [data, setData] = useState("");
+  const dispatch = useDispatch();
+  const { logindataen, uid, username } = useSelector((state) => state.aviator);
 
   const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
-  const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
   // const datatele = {
-  //   id: 1840589027,
-  //   first_name: "A.K.",
-  //   last_name: "",
-  //   username: "anad_verma",
-  //   language_code: "en",
-  //   allows_write_to_pm: true,
-  //   photo_url:
-  //     "https://t.me/i/userpic/320/V-6-0O8PvVhuIICekP0zcekmh2CzqIfqakmErSwEakU.svg",
+  //   id: "1840589028",
   // };
-
-  useEffect(() => {
-    const body = {
-      id: String(datatele?.id),
-    };
-    loginFn(body);
-  }, [datatele]);
-  // datatele
-
-  const initialValues = {
-    full_name: datatele?.username,
-    email: String(datatele?.id),
-    mobile: String(datatele?.id),
-    password: String(datatele?.id),
-    referral_id: String(params),
-  };
-
-  const formik = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    onSubmit: async (values) => {
-      // const reqbody = {
-      //   full_name: formik.values.full_name,
-      //   email: formik.values.email,
-      //   mobile: formik.values.mobile,
-      //   password: formik.values.password,
-      //   referral_id: formik.values.referral_id,
-      // };
-      // RegistrationFn(reqbody);
-    },
-  });
+  const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
 
   const loginFn = async (reqBody) => {
     setLoading(true);
-    // if (!datatele?.id || datatele?.id == "" || datatele?.id === null) {
-    //   setLoading(false);
-    //   return toast("Your Telegram security is not allow for login!");
-    // }
     const reqBodyy = {
       mobile: String(datatele?.id),
       email: String(datatele?.id),
@@ -73,12 +37,12 @@ const Login = () => {
       password: String(reqBody.id),
     };
     // const reqBodyy = {
-    //   mobile: String("1840589027"),
-    //   email: String("1840589027"),
+    //   mobile: String("1840589028"),
+    //   email: String("1840589028"),
     //   full_name: String(datatele?.username),
     //   referral_id: String("1234567890"),
-    //   username: String("1840589027"),
-    //   password: String("1840589027"),
+    //   username: String("1840589028"),
+    //   password: String("1840589028"),
     // };
 
     try {
@@ -96,30 +60,50 @@ const Login = () => {
         return;
       }
       if (response?.data?.message === "Login Successfully") {
+        dispatch(saveUid(reqBodyy?.mobile));
+        dispatch(saveToken(response?.data?.result?.[0]?.token));
+        dispatch(saveUsername(datatele?.username));
         localStorage.setItem("logindataen", response?.data?.result?.[0]?.token);
         localStorage.setItem("uid", reqBodyy?.mobile);
         localStorage.setItem("username", datatele?.username);
-        // if (response?.data?.result?.[0]?.user_type === "Admin") {
-        //   navigate("/admindashboard");
-        //   window.location.reload();
-        // } else {
-        //   navigate("/home");
-        //   window.location.reload();
-        // }
         navigate("/home");
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (error) {
-      console.error(error);
       toast.error("Error during login.");
       setLoading(false);
     }
   };
+  useEffect(() => {
+    // const bo = "1840589028";
+    // // const token =
+    // //   "4IdQcdlwTRyUYbEeuio72IpV22psFeRcYGZzWnFxteWAr2eWKxyyQ0uaPq6k5aBIFv9tnTIN0aPDGx7NTeFQz0jr7QYQHiidDDTU";
+    // const token =
+    //   "Erv3SofOGaVrtGzMOj3YSVFVEwVMI3lVQFfngJ9FRrdYA2w4rOUmPEWKH1L9mVl9kEbpMFe5r9XrDxo3CjaRvyBUGbKsnHMTPvLI";
+    // dispatch(saveUid(bo));
+    // dispatch(saveToken(token));
+    // localStorage.setItem("logindataen", token);
+    // localStorage.setItem("uid", bo);
+    // navigate("/home");
 
+    if (datatele?.id) {
+      if (datatele?.id && (!logindataen || !uid)) {
+        loginFn({
+          id: String(datatele?.id),
+        });
+      } else if (uid == datatele?.id) {
+        navigate("/home");
+      } else {
+        loginFn({
+          id: String(datatele?.id),
+        });
+      }
+    }
+  }, [datatele]);
+  // datatele
   return (
     <>
       <Loader isLoading={loading} />
-
       <div className="flex justify-center items-center h-screen overflow-y-scroll bg-custom-gradient">
         {openDialogBox && (
           <Tilt className="w-full max-w-lg lg:p-6 p-4 border-[#008eff] border rounded-xl shadow-2xl">
@@ -131,15 +115,17 @@ const Login = () => {
                 Please Enter The Referral Code
               </h2>
 
-              <form onSubmit={formik.handleSubmit}>
+              <form
+              // onSubmit={formik.handleSubmit}
+              >
                 <div className="mb-4">
                   <input
                     placeholder="Referral Code"
                     type="text"
                     id="referral_id"
                     name="referral_id"
-                    value={formik.values.referral_id}
-                    onChange={formik.handleChange}
+                    // value={formik.values.referral_id}
+                    // onChange={formik.handleChange}
                     className="w-full p-3 mt-1 text-black placeholder:text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#008eff] transition duration-300 ease-in-out transform hover:scale-105"
                     required
                   />

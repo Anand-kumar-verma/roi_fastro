@@ -9,8 +9,11 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useQueryClient } from "react-query";
+import toast from "react-hot-toast";
+import { useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
+import { apiConnectorGet } from "../../../utils/APIConnector";
+import { endpoint } from "../../../utils/APIRoutes";
 import countdownfirst from "../../assets/images/countdownfirst.mp3";
 import countdownlast from "../../assets/images/countdownlast.mp3";
 import htp from "../../assets/images/htp.png";
@@ -29,6 +32,7 @@ import timerbg2 from "../../assets/images/timerbg2.png";
 import backbanner from "../../assets/images/winbackbanner1-removebg-preview.png";
 import {
   dummycounterFun,
+  gameHistory_trx_one_minFn,
   updateNextCounter,
 } from "../../redux/slices/counterSlice";
 import { changeImages } from "../../shared/nodeSchedular";
@@ -38,12 +42,6 @@ import Chart from "../history/Chart";
 import GameHistory from "../history/GameHistory";
 import MyHistory from "../history/MyHistory";
 import Howtoplay from "./Howtoplay";
-import axios from "axios";
-import { gameHistory_trx_one_minFn } from "../../redux/slices/counterSlice";
-import { useQuery } from "react-query";
-import toast from "react-hot-toast";
-import { endpoint } from "../../../utils/APIRoutes";
-import { apiConnectorGet, apiConnectorPost } from "../../../utils/APIConnector";
 
 function Wingo1Min() {
   const socket = useSocket();

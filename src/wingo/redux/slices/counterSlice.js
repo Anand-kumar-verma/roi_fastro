@@ -4,7 +4,7 @@ export const slice = createSlice({
   name: "aviator",
   initialState: {
     value: 0,
-    user_id:localStorage.getItem("user_id"),
+    user_id: localStorage.getItem("user_id"),
     // by user enabling and dissabling music and sound
     isEnableMusic: false,
     isEnableSound: false,
@@ -18,17 +18,19 @@ export const slice = createSlice({
       localStorage.getItem("bg_music") ||
       "https://res.cloudinary.com/do7kimovl/video/upload/v1709029785/bg_music_iiovsn.mp3",
     waiting_aviator: true,
-    just_start_after_waiting:true,
-    please_reconnect_the_server:false,
-    dummycounter:1,
-    next_step:Date.now(),
-    pendingIds:[],
-    aviator_login_data:null,
-    trx_game_image_index:["A","B","C","D","E"],
-    gameHistory_trx_one_min:[],
-    myHistory_trx_one_min:[],
-    wallet_real_balance:0.0
-
+    just_start_after_waiting: true,
+    please_reconnect_the_server: false,
+    dummycounter: 1,
+    next_step: Date.now(),
+    pendingIds: [],
+    aviator_login_data: null,
+    trx_game_image_index: ["A", "B", "C", "D", "E"],
+    gameHistory_trx_one_min: [],
+    myHistory_trx_one_min: [],
+    wallet_real_balance: 0.0,
+    username: "",
+    uid: "",
+    logindataen: "",
   },
   reducers: {
     // main music and sound enabling and dessabling
@@ -59,35 +61,44 @@ export const slice = createSlice({
       state.just_start_after_waiting = actions.payload;
     },
     please_reconnect_the_serverFun: (state, actions) => {
-        console.log("Sannad",actions.payload)
+      console.log("Sannad", actions.payload);
       state.please_reconnect_the_server = actions.payload;
     },
     dummycounterFun: (state) => {
       state.dummycounter += 1;
     },
-    updateNextCounter: (state,actions) => {
-      state.next_step= actions.payload;
+    updateNextCounter: (state, actions) => {
+      state.next_step = actions.payload;
     },
-    pendingIdsFunction: (state,actions) => {
+    pendingIdsFunction: (state, actions) => {
       state.pendingIds = actions.payload;
     },
-    aviator_login_data_fn: (state,actions) => {
+    aviator_login_data_fn: (state, actions) => {
       state.aviator_login_data = actions.payload;
     },
-    trx_game_image_index_function: (state,actions) => {
+    trx_game_image_index_function: (state, actions) => {
       state.trx_game_image_index = actions.payload;
     },
-    getUserIdFn: (state,actions) => {
+    getUserIdFn: (state, actions) => {
       state.user_id = actions.payload;
     },
-    gameHistory_trx_one_minFn: (state,actions) => {
+    gameHistory_trx_one_minFn: (state, actions) => {
       state.gameHistory_trx_one_min = actions.payload;
     },
-    myHistory_trx_one_minFn: (state,actions) => {
+    myHistory_trx_one_minFn: (state, actions) => {
       state.myHistory_trx_one_min = actions.payload;
     },
-    wallet_real_balanceFn: (state,actions) => {
+    wallet_real_balanceFn: (state, actions) => {
       state.wallet_real_balance = actions.payload;
+    },
+    saveUid: (state, actions) => {
+      state.uid = actions.payload;
+    },
+    saveToken: (state, actions) => {
+      state.logindataen = actions.payload;
+    },
+    saveUsername: (state, actions) => {
+      state.username = actions.payload;
     },
   },
 });
@@ -110,7 +121,10 @@ export const {
   getUserIdFn,
   gameHistory_trx_one_minFn,
   wallet_real_balanceFn,
-  myHistory_trx_one_minFn
+  myHistory_trx_one_minFn,
+  saveUsername,
+  saveToken,
+  saveUid,
 } = slice.actions;
 
 // export const incrementAsync = amount => dispatch => {

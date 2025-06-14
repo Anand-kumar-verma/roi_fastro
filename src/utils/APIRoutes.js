@@ -1,13 +1,12 @@
-// export const domain = "https://roi-backend-1.onrender.com"; // old
-
 export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://192.168.136.149:9009";
+// export const domain = "http://192.168.18.214:9009";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";
 export const endpoint = {
   telegram_id: `${domain}/api/v2/telegram-id`,
+  ticket_raised: `${domain}/api/v2/create-tickets`,
   claim_fst: `${domain}/api/v2/fst-claim`,
   registration_api: `${domain}/api/v2/user-registration`,
   login_api: `${domain}/api/v2/user-login`,
@@ -21,6 +20,7 @@ export const endpoint = {
   compounding_wallet_history: `${domain}/api/v2/compound-wallet-history`,
   general_contact_address_api: `${domain}/api/v2/get-api-general-data`,
   roi_income_api: `${domain}/api/v2/get-roi-income-details`,
+  support_tiket_list_user: `${domain}/api/v2/support-ticket-list-admin`,
   customer_api: `${domain}/api/v2/get-user-name-by-customer-id`,
   withdrawal_api: `${domain}/api/v2/withdrawal-req`,
   withdrawal_history_api: `${domain}/api/v2/get-withdrawal-details`,
@@ -49,5 +49,6 @@ export const endpoint = {
   //buy-ticket
   eligible_paying: `${domain}/api/v2/eligible-for-paying`,
   game_paying: `${domain}/api/v2/game-paying-request`,
+  jackpot_paying: `${domain}/api/v2/jackpot-paying-request`,
   fst_count: `${domain}/api/v2/get-fst-count-for-jackpot-pay`,
 };

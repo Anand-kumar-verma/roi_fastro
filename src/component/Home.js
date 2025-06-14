@@ -8,11 +8,47 @@ import "slick-carousel/slick/slick.css";
 // import m from "../images/mainb.png";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
-import { apiConnectorGet } from "../utils/APIConnector";
+import { apiConnectorGetHome } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 import Popular from "./Popular";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const { logindataen } = useSelector((state) => state.aviator);
+
+  useQuery(
+    ["dashboard_api"],
+    () => apiConnectorGetHome(endpoint?.user_dashboard_api, {}, logindataen),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  useQuery(
+    ["profile_api"],
+    () => apiConnectorGetHome(endpoint?.profile_api, {}, logindataen),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  useQuery(
+    ["level_business"],
+    () => apiConnectorGetHome(endpoint?.level_business, {}, logindataen),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
   const settings = {
     autoplay: true,
     dots: false,
@@ -25,40 +61,43 @@ function Home() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-  const { data: bit } = useQuery(
-    ["bit_api"],
-    () =>
-      apiConnectorGet(`${endpoint?.market_api}?ids=BITCOIN&vs_currencies=BTC`),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  // const { data: bit } = useQuery(
+  //   ["bit_api"],
+  //   () =>
+  //     apiConnectorGetHome(`${endpoint?.market_api}?ids=BITCOIN&vs_currencies=BTC`),
+  //   {
+  //     refetchOnMount: false,
+  //     refetchOnReconnect: false,
+  //     retry: false,
+  //     retryOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
 
-  const curr_data_bit = bit?.data?.bitcoin?.btc;
+  // const curr_data_bit = bit?.data?.bitcoin?.btc;
+  const curr_data_bit = 10;
 
-  const { data: Eth } = useQuery(
-    ["eth_api"],
-    () =>
-      apiConnectorGet(`${endpoint?.market_api}?ids=Ethereum&vs_currencies=ETH`),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  // const { data: Eth } = useQuery(
+  //   ["eth_api"],
+  //   () =>
+  //     apiConnectorGetHome(`${endpoint?.market_api}?ids=Ethereum&vs_currencies=ETH`),
+  //   {
+  //     refetchOnMount: false,
+  //     refetchOnReconnect: false,
+  //     retry: false,
+  //     retryOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
 
-  const curr_data_Eth = Eth?.data?.ethereum?.eth;
+  // const curr_data_Eth = Eth?.data?.ethereum?.eth;
+  const curr_data_Eth = 20;
 
   const slides = [
     {
       id: 1,
-      image:"https://www.teambonding.com/wp-content/uploads/2016/10/SPINTOWIN_RGB-01.png",
+      image:
+        "https://www.teambonding.com/wp-content/uploads/2016/10/SPINTOWIN_RGB-01.png",
     },
     {
       id: 2,

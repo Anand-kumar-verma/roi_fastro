@@ -9,19 +9,7 @@ import CustomToPagination from "../Shared/CustomToPagination";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 
 const LevelIncome = () => {
-  const [dateRange, setDateRange] = useState({ from: "", to: "" });
   const [page, setPage] = useState(1);
-
-  const handleDateRangeChange = (event) => {
-    const { name, value } = event.target;
-    setDateRange({ ...dateRange, [name]: value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Date Range:", dateRange);
-  };
-
   const { isLoading, data } = useQuery(
     ["level_income_api", page],
     () =>

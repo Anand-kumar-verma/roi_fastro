@@ -186,7 +186,7 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
         </div>
       </div>
 
-      <div
+      {/* <div
         className="p-4 flex justify-center gap-5 !text-text-color overflow-x-auto"
         style={{ backgroundColor: "rgb(26, 26, 26)" }}
       >
@@ -212,7 +212,7 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
             )}
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className="text-center flex flex-col justify-center items-center gap-8 p-8 bg-blue-50">
         <p className="mt-8 text-4xl font-bold text-black">

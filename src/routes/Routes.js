@@ -6,7 +6,9 @@ import DirectIncome from "../Income/DirectIncome";
 import Jackpot from "../Income/Jackpot";
 import LevelIncome from "../Income/LevelIncome";
 import RoiIncome from "../Income/RoiIncome";
+import SupportTicketList from "../Income/SupportTicketList";
 import TicketList from "../Income/TicketList";
+import TicketListAdmin from "../Income/TicketListAdmin";
 import WeeklyIncome from "../Income/Weekly";
 import WinnerList from "../Income/WinnerList";
 import About from "../component/About";
@@ -14,6 +16,7 @@ import Contact from "../component/Contact";
 import Market from "../component/Market";
 import Network from "../component/Network";
 import Referral from "../component/Referral";
+import TicketsQuery from "../component/TicketsQuery";
 import Dashbaord from "../dashboard/Dashboard";
 import GameProject from "../dashboard/GameProject";
 import PriceStatics from "../dashboard/PriceStatics";
@@ -35,6 +38,18 @@ export const routes = [
   {
     path: "/dashboard",
     component: <Dashbaord />,
+  },
+  {
+    path: "/ticket-list-admin",
+    component: <TicketListAdmin />,
+  },
+  {
+    path: "/support-list-user",
+    component: <SupportTicketList />,
+  },
+  {
+    path: "/ticket",
+    component: <TicketsQuery />,
   },
   {
     path: "/game-project",

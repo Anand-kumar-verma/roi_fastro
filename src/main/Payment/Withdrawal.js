@@ -14,8 +14,6 @@ function Withdrawal() {
   // const [walletAddress, setWalletAddress] = useState("");
   const [data, setData] = useState("");
   const [loding, setLoding] = useState(false);
-
-  const [selectedOption, setSelectedOption] = useState(2);
   const location = useLocation();
 
   const [userData, setUserData] = useState();
@@ -25,7 +23,7 @@ function Withdrawal() {
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
   const base64String = atob(IdParam);
-
+  const withdrawalType = location.state?.type;
   const fk = useFormik({
     initialValues: {
       amount: "",
@@ -38,8 +36,7 @@ function Withdrawal() {
     const reqbody = {
       wallet_add: String(fk.values.walletAddress)?.trim(),
       amount: Number(fk.values.amount),
-
-      wallet_type: selectedOption,
+      wallet_type: withdrawalType === "jackpot" ? 3 : 2,
     };
     if (fk.values.amount === "" || Number(fk.values.amount) < 2)
       return toast("Amount should be grater or equal to 2$", { id: 1 });
@@ -70,6 +67,7 @@ function Withdrawal() {
   }
 
   async function GetWalletUserData() {
+    setLoding(true);
     try {
       const res = await apiConnectorGet(
         endpoint?.wallet_user_data,
@@ -102,7 +100,7 @@ function Withdrawal() {
   // const profile = profile_data?.data?.result || [];
   // console.log(userData);
   return (
-    <>
+    <div className="!my-[10%] ">
       <Navbar />
       <div className="text-gold-color md:mt-14 flex flex-col items-center h-screen overflow-y-scroll pb-10 bg-custom-gradient relative">
         <Loader isLoading={loding} />
@@ -129,7 +127,10 @@ function Withdrawal() {
                   Current Balance
                 </span>
                 <span className="!text-green-500 !text-lg">
-                  {Number(userData?.jnr_curr_wallet || 0).toFixed(2)} USD
+                  {withdrawalType === "jackpot"
+                    ? Number(userData?.jnr_game_winning || 0)?.toFixed(2)
+                    : Number(userData?.jnr_curr_wallet || 0).toFixed(2)}{" "}
+                  USD
                 </span>
               </div>
             </div>
@@ -193,7 +194,7 @@ function Withdrawal() {
         </div>
       </div>
       <ButtomNavigation />
-    </>
+    </div>
   );
 }
 export default Withdrawal;

@@ -1,14 +1,11 @@
 import HomeIcon from "@mui/icons-material/Home";
 import LanguageIcon from "@mui/icons-material/Language";
-import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
-import { logOutFunction } from "../utils/APICalling";
-import CachedIcon from "@mui/icons-material/Cached";
 const ButtomNavigation = () => {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const navigate = useNavigate();
@@ -75,7 +72,7 @@ const ButtomNavigation = () => {
             sx={{ minWidth: 40, padding: "2px 2px" }}
             className="text-yellow-500 hover:text-red-400 transition-all duration-300 transform hover:scale-110"
           />
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             label="Reload"
             icon={
               <CachedIcon
@@ -85,7 +82,7 @@ const ButtomNavigation = () => {
             }
             sx={{ minWidth: 40, padding: "2px 2px" }}
             className="text-yellow-500 hover:text-green-400 transition-all duration-300 transform hover:scale-110"
-          />
+          /> */}
         </BottomNavigation>
       )}
     </div>

@@ -84,11 +84,15 @@ const Jackpot = () => {
           </div>
 
           <div className="flex justify-center mt-6">
-            <CustomToPagination data={booster_data} page={page} setPage={setPage} />
+            <CustomToPagination
+              data={booster_data}
+              page={page}
+              setPage={setPage}
+            />
           </div>
         </div>
       </div>
-      <ButtomNavigation/>
+      <ButtomNavigation />
     </>
   );
 };

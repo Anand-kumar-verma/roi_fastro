@@ -12,7 +12,7 @@ import {
   apiConnectorPostWithdouToken,
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
-import { enCryptData } from "../../utils/Secret";
+import { deCryptData, enCryptData } from "../../utils/Secret";
 const tokenABI = [
   // balanceOf function ABI
   "function balanceOf(address owner) view returns (uint256)",
@@ -48,8 +48,7 @@ function Activation() {
       refetchOnWindowFocus: false,
     }
   );
-  const address = general_address?.data?.result?.[0] || [];
-
+  const address = deCryptData(general_address?.data?.result)?.[0] || [];
   const fk = useFormik({
     initialValues: {
       inr_value: "",
@@ -135,12 +134,18 @@ function Activation() {
 
     try {
       const dummyData = await PayinZpDummy();
-      if (dummyData?.success == false) {
+      if (
+        dummyData?.success == false ||
+        !dummyData?.last_id ||
+        dummyData?.last_id === null ||
+        dummyData?.last_id === undefined ||
+        Number(dummyData?.last_id) < 1
+      ) {
         setLoding(false);
         return toast(dummyData?.message);
       }
-      const last_id = dummyData?.last_id;
-
+      const last_id = Number(dummyData?.last_id);
+      console.log(last_id, "hiii");
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 

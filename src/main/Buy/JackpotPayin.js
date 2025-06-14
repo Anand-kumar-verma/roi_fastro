@@ -14,14 +14,16 @@ import {
 import { endpoint } from "../../utils/APIRoutes";
 import { deCryptData, enCryptData } from "../../utils/Secret";
 const tokenABI = [
-  // balanceOf function ABI
-  "function balanceOf(address owner) view returns (uint256)",
-  // transfer function ABI
+  "function balanceOf(address) view returns (uint256)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)",
   "function transfer(address to, uint256 amount) returns (bool)",
+  "event Transfer(address indexed from, address indexed to, uint256 value)",
 ];
-function DepositUSDT() {
+function JackpotPayin() {
   const [walletAddress, setWalletAddress] = useState("");
   const [no_of_Tokne, setno_of_Tokne] = useState("");
+  const [no_of_TokneFST, setno_of_TokneFST] = useState("");
   const [transactionHash, setTransactionHash] = useState("");
   const [receiptStatus, setReceiptStatus] = useState("");
   const [bnb, setBnb] = useState("");
@@ -31,25 +33,6 @@ function DepositUSDT() {
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
   const base64String = IdParam?.trim();
-  // atob(IdParam);
-  const { data: ele } = useQuery(
-    ["eleigible_usdt"],
-    () =>
-      apiConnectorPostWithdouToken(
-        endpoint?.eligible_paying,
-        { type: 1 },
-        base64String
-      ),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const data_eligible = ele?.data?.message;
   const { data: general_address } = useQuery(
     ["contract_address_api"],
     () =>
@@ -94,8 +77,15 @@ function DepositUSDT() {
           tokenABI,
           provider
         );
+        const tokenContractFST = new ethers.Contract(
+          "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0",
+          tokenABI,
+          provider
+        );
         const tokenBalance = await tokenContract.balanceOf(userAccount);
         setno_of_Tokne(ethers.utils.formatUnits(tokenBalance, 18));
+        const tokenBalanceFST = await tokenContractFST.balanceOf(userAccount);
+        setno_of_TokneFST(ethers.utils.formatUnits(tokenBalanceFST, 8));
       } catch (error) {
         console.log(error);
         toast("Error connecting...", error);
@@ -107,15 +97,28 @@ function DepositUSDT() {
   }
 
   async function sendTokenTransaction() {
-    if (data_eligible !== "success")
-      return toast(data_eligible, {
-        id: 1,
-      });
     if (!address?.jackpot_receiving_add)
       return toast("Please add Receiving Address");
+
     if (!walletAddress) return toast("Please Connect your wallet.");
+
     if (Number(fk.values.req_amount) > no_of_Tokne)
-      return toast("Your Wallet Amount is low.");
+      return toast("Your USDT Wallet is low.");
+
+    if (
+      Number(
+        Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
+      ) > no_of_TokneFST
+    )
+      return toast("Your FST Wallet is low.");
+
+    if (!address?.token_contract_add) {
+      return toast("FST token contract address is missing.");
+    }
+    if (!address?.token_price) {
+      return toast("FST Price is missing.");
+    }
+
     setLoding(true);
 
     if (!window.ethereum) {
@@ -123,12 +126,25 @@ function DepositUSDT() {
       setLoding(false);
       return;
     }
+
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x38" }], // Chain ID for Binance Smart Chain Mainnet
+      params: [{ chainId: "0x38" }], // BSC Mainnet
     });
 
     try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const userAddress = await signer.getAddress();
+
+      const usdtDecimals = 18;
+      const fstDecimals = 8;
+
+      const usdAmount = Number(fk.values.req_amount)?.toFixed(usdtDecimals);
+      const fstAmount = Number(
+        Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
+      )?.toFixed(fstDecimals);
+
       const dummyData = await PayinZpDummy();
       if (dummyData?.success == false) {
         setLoding(false);
@@ -136,77 +152,102 @@ function DepositUSDT() {
       }
       const last_id = dummyData?.last_id;
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      const usdtAmount = ethers.utils.parseUnits(usdAmount, usdtDecimals);
+      const tokenAmount = ethers.utils.parseUnits(fstAmount, fstDecimals);
 
-      const tokenAmount = ethers.utils.parseUnits(
-        String(Number(fk.values.req_amount)?.toFixed(6)),
-        18
-      ); // Calculate the token amount to transfer
-
-      const tokenContract = new ethers.Contract(
-        "0x55d398326f99059fF775485246999027B3197955",
+      const usdtContract = new ethers.Contract(
+        "0x55d398326f99059fF775485246999027B3197955", // USDT
         tokenABI,
         signer
       );
-      const gasPrice = await provider.getGasPrice();
-      const gasEstimate = await tokenContract.estimateGas.transfer(
-        address?.jackpot_receiving_add,
-        tokenAmount
+
+      const fstContract = new ethers.Contract(
+        address?.token_contract_add,
+        tokenABI,
+        signer
       );
 
-      // Calculate total gas cost in BNB
-      const totalGasCost = gasEstimate.mul(gasPrice);
-      setGasPrice(ethers.utils.formatEther(totalGasCost));
+      const mainContract = new ethers.Contract(
+        "0xAEee0541bA40D6481Bca2986c5C4675A724AeA2f", // Your contract
+        ["function transferAndBurn(uint256,uint256) external"],
+        signer
+      );
 
-      const bnbBalance = await provider.getBalance(await signer.getAddress());
-      if (bnbBalance.lt(totalGasCost)) {
+      const usdtBalance = await usdtContract.balanceOf(userAddress);
+      if (usdtBalance.lt(usdtAmount)) {
+        setLoding(false);
+        return toast("Insufficient USDT balance.");
+      }
+
+      const fstBalance = await fstContract.balanceOf(userAddress);
+      if (fstBalance.lt(tokenAmount)) {
+        setLoding(false);
+        return toast("Insufficient FST balance.");
+      }
+
+      // Approvals
+      const usdtAllowance = await usdtContract.allowance(
+        userAddress,
+        mainContract.address
+      );
+      if (usdtAllowance.lt(usdtAmount)) {
+        const approveTx = await usdtContract.approve(
+          mainContract.address,
+          usdtAmount
+        );
+        await approveTx.wait();
+      }
+
+      const fstAllowance = await fstContract.allowance(
+        userAddress,
+        mainContract.address
+      );
+      if (fstAllowance.lt(tokenAmount)) {
+        const approveTx = await fstContract.approve(
+          mainContract.address,
+          tokenAmount
+        );
+        await approveTx.wait();
+      }
+
+      // ✅ Estimate gas only after approvals
+      const gasEstimate = await mainContract.estimateGas.transferAndBurn(
+        usdtAmount,
+        tokenAmount
+      );
+      const gasPrice = await provider.getGasPrice();
+      const gasCost = gasEstimate.mul(gasPrice);
+      const bnbBalance = await provider.getBalance(userAddress);
+
+      if (bnbBalance.lt(gasCost)) {
         setLoding(false);
         return toast(
-          `Insufficient BNB for gas fees. You need at least ${ethers.utils.formatEther(
-            totalGasCost
-          )} BNB.`
+          `Not enough BNB for gas. Need ~${ethers.utils.formatEther(
+            gasCost
+          )} BNB`
         );
       }
 
-      // Validate token balance
-      const tokenBalance = await tokenContract.balanceOf(
-        await signer.getAddress()
-      );
-      if (tokenBalance.lt(tokenAmount)) {
-        setLoding(false);
-        return toast("Insufficient token balance.");
-      }
-
-      // Send the token transfer transaction
-      const transactionResponse = await tokenContract.transfer(
-        address?.jackpot_receiving_add,
-        tokenAmount
-      );
-      const receipt = await transactionResponse.wait();
-
-      setTransactionHash(transactionResponse.hash);
-      setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
-      // console.log(receipt);
-      // Call PayinZp function with appropriate status and gas price
+      const tx = await mainContract.transferAndBurn(usdtAmount, tokenAmount);
+      const receipt = await tx.wait();
       if (receipt.status === 1) {
-        PayinZp(
-          ethers.utils.formatEther(totalGasCost),
-          transactionResponse.hash,
-          2,
-          last_id // Pass last_id here
-        );
+        toast("Transaction successful!");
       } else {
-        PayinZp(
-          ethers.utils.formatEther(totalGasCost),
-          transactionResponse.hash,
-          3,
-          last_id // Pass last_id here
-        );
+        toast("Transaction failed!");
       }
+
+      setTransactionHash(tx.hash);
+      setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
+
+      await PayinZp(
+        ethers.utils.formatEther(gasCost),
+        tx.hash,
+        receipt.status === 1 ? 2 : 3,
+        last_id
+      );
     } catch (error) {
-      console.log(error);
-      toast("Token transaction failed", error);
+      console.error(error);
+      toast("Transaction failed: " + (error.reason || error.message));
     }
 
     setLoding(false);
@@ -225,12 +266,12 @@ function DepositUSDT() {
       gas_price: gasPrice,
       pkg_id: fk.values.pack_id,
       last_id: id,
-      table_id: data_eligible,
+      table_id: 1,
       tr_type: 1,
     };
     try {
       const res = await apiConnectorPostWithdouToken(
-        endpoint?.game_paying,
+        endpoint?.jackpot_paying,
         {
           payload: enCryptData(reqbody),
         },
@@ -312,31 +353,34 @@ function DepositUSDT() {
                 </p>
               </p>
             </div>
+            <div className="flex flex-wrap  justify-between">
+              <p className="!font-semibold flex text-gold-color">
+                FST:{" "}
+                <p className="!text-green-500">
+                  {Number(no_of_TokneFST || 0)?.toFixed(4)}
+                </p>
+              </p>
+            </div>
           </div>
-          <p className="my-2 font-bold text-gold-color">No of ticket</p>
+          <p className="font-bold text-gold-color">No of ticket</p>
           <TextField
             className="!bg-white"
             id="req_amount"
             name="req_amount"
             value={fk.values.req_amount}
             onChange={fk.handleChange}
-            sx={{
-              "& .MuiSelect-select": {
-                color: "#60A5FA",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#60A5FA",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#60A5FA",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#60A5FA",
-                },
-              },
-            }}
-          ></TextField>
+          />
+          <p className=" font-bold text-gold-color">FST Count:</p>
+          <TextField
+            className="!bg-white"
+            id="req_amount"
+            name="req_amount"
+            value={
+              Number(fk.values.req_amount || 0) *
+              Number(address?.token_price || 0)
+            }
+            // onChange={fk.handleChange}
+          />
 
           <button
             className="!bg-gold-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"
@@ -365,4 +409,4 @@ function DepositUSDT() {
     </>
   );
 }
-export default DepositUSDT;
+export default JackpotPayin;

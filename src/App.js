@@ -16,6 +16,7 @@ import Activation from "./main/Payment/Activation";
 import { routes } from "./routes/Routes";
 import DepositFST from "./main/Buy/DepositFst";
 import DepositUSDT from "./main/Buy/DepositUsdt";
+import JackpotPayin from "./main/Buy/JackpotPayin";
 
 const App = () => {
   const user = localStorage.getItem("logindataen");
@@ -50,6 +51,7 @@ const App = () => {
 
         {/* Public Routes */}
         <Route path="/game-usdt" element={<DepositUSDT />} />
+        <Route path="/jackpot-payin" element={<JackpotPayin />} />
         <Route path="/game-fst" element={<DepositFST />} />
         <Route path="/home" element={<Home />} />
         <Route path="/adminlogin" element={<AdminLogin />} />

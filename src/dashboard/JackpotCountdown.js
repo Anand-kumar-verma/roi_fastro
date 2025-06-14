@@ -3,8 +3,27 @@ import { useEffect, useMemo, useState } from "react";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import { JackpotWheel } from "./jackpotgame/JackpotWheel";
 import Navbar from "./Navbar";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { apiConnectorGet } from "../utils/APIConnector";
+import { endpoint } from "../utils/APIRoutes";
+import { useQuery } from "react-query";
+import toast from "react-hot-toast";
 
 const JackpotCountdown = () => {
+  const navigate = useNavigate();
+  const { isLoading: proLoding, data: profile_data } = useQuery(
+    ["profile_api"],
+    () => apiConnectorGet(endpoint?.profile_api),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const profile = profile_data?.data?.result?.[0] || [];
   return (
     <>
       {useMemo(() => {
@@ -36,7 +55,30 @@ const JackpotCountdown = () => {
               </>
             );
           }, [])}
-
+          {useMemo(() => {
+            return (
+              <div className="text-xl font-bold mb-4 flex items-center justify-between">
+                <p className="!text-green-500">
+                  Won: ${Number(profile?.jnr_game_winning || 0)?.toFixed(2)}
+                </p>
+                <Button
+                  variant="contained"
+                  className="!rounded-full !bg-gold-color !text-text-color !font-bold"
+                  onClick={() =>
+                    Number(profile?.jnr_game_winning || 0) > 0
+                      ? navigate("/withdrawal-link",{
+                        state: {
+                          type:"jackpot"
+                        }
+                      })
+                      : toast("Your Amount is low.", { id: 1 })
+                  }
+                >
+                  Withdrawal
+                </Button>
+              </div>
+            );
+          }, [])}
           {/* Rules */}
           {useMemo(() => {
             return (
@@ -48,12 +90,7 @@ const JackpotCountdown = () => {
                   <li className="flex items-start gap-2">
                     <span>🗓️</span> This game will run only on Sundays.
                   </li>
-                  <li className="flex items-start gap-2 text-text-color">
-                    <span>⏱️</span> The game duration will be 3 minutes.
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span>🚀</span> Launching on 1st June.
-                  </li>
+
                   <li className="flex items-start gap-2 text-text-color">
                     <span>💰</span> To play, your wallet must have 50% USD and
                     50% FST balance.
@@ -65,21 +102,20 @@ const JackpotCountdown = () => {
                   <li className="flex items-start gap-2 text-text-color">
                     <span>🎟️</span> Ticket purchase will begin from 1st June.
                   </li>
+                  <li className="flex items-start gap-2 text-text-color">
+                    <span>🥇</span> First Winner will get $500.
+                  </li>
                   <li className="flex items-start gap-2">
-                    <span>🔢</span> Matching the last 4 digits of any number
-                    will make you a winner.
+                    <span>🥈</span> Second Winner will get $300.
                   </li>
                   <li className="flex items-start gap-2 text-text-color">
-                    <span>🥇</span> Match 1 digit to win $100.
+                    <span>🥉</span> Third Winner will get $200.
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>🥈</span> Match 2 digits to win $200.
+                    <span>🏅</span> Fourth Winner will get $100.
                   </li>
                   <li className="flex items-start gap-2 text-text-color">
-                    <span>🥉</span> Match 3 digits to win $300.
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span>🏆</span> Match 4 digits to win $400.
+                    <span>🎖️</span> Fifth Winner will get $50.
                   </li>
                 </ul>
               </div>

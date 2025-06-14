@@ -9,10 +9,10 @@ import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/Loader";
 import {
   apiConnectorGetWithoutToken,
-  apiConnectorPostWithdouToken
+  apiConnectorPostWithdouToken,
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
-import { enCryptData } from "../../utils/Secret";
+import { deCryptData, enCryptData } from "../../utils/Secret";
 const tokenABI = [
   // balanceOf function ABI
   "function balanceOf(address owner) view returns (uint256)",
@@ -49,7 +49,7 @@ function DepositFST() {
       refetchOnWindowFocus: false,
     }
   );
-  const address = general_address?.data?.result?.[0] || [];
+  const address = deCryptData(general_address?.data?.result)?.[0] || [];
   const { data: ele } = useQuery(
     ["eleigible_api_1"],
     () =>

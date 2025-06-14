@@ -77,6 +77,29 @@ const LevelwiseBusiness = () => {
                       </td>
                     </tr>
                   ))}
+                <tr>
+                  <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap">
+                    Total
+                  </td>
+
+                  <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-gold-color">
+                    {Array.from({ length: 6 }, (_, index) =>
+                      Math.floor(
+                        level_business?.[0]?.[`tb_mem_lev_${index + 1}`] || 0
+                      )
+                    ).reduce((sum, val) => sum + val, 0)}{" "}
+                  </td>
+                  <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
+                    {Array.from({ length: 6 }, (_, index) =>
+                      Number(
+                        level_business?.[0]?.[`tb_buss_lev_${index + 1}`] || 0
+                      )
+                    )
+                      .reduce((sum, value) => sum + value, 0)
+                      .toFixed(2)}{" "}
+                    $
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>

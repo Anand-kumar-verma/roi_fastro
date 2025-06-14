@@ -10,9 +10,7 @@ import { endpoint } from "../utils/APIRoutes";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const [openDialogBox, setOpenDialogBox] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState("");
 
   const initialValues = {
     otp: "",

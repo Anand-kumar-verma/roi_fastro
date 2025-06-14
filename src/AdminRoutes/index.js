@@ -17,7 +17,7 @@ import DirectBonus from "../Adminpages/Pages/genealogy/DirectBonus";
 // import DebitFundHistory from "../Adminpages/Pages/fund/DebitFundhistory";
 // import Fund from "../Adminpages/Pages/fund/Fund";
 // import FundHistory from "../Adminpages/Pages/fund/FundHistory";
-// import P2pHistory from "../Adminpages/Pages/fund/P2pHistory";
+import P2pHistory from "../Adminpages/Pages/fund/P2pHistory";
 // import ApprovedRequest from "../Adminpages/Pages/gamewithdrawlrequest/ApprovedRequest";
 // import GameWithdrawlRequest from "../Adminpages/Pages/gamewithdrawlrequest/GameWithdrawlRequest";
 // import PendingRequest from "../Adminpages/Pages/gamewithdrawlrequest/PendingRequest";
@@ -61,6 +61,7 @@ import TeamIncome from "../Adminpages/Pages/TopUP/TeamIncome";
 // import GhaziabadResult from "../Adminpages/Pages/sattamatka/Ghaziabad";
 // import SetBonus from "../Adminpages/Pages/SetBonus/SetBonus";
 // import DownlineTeam from "../Adminpages/Pages/Team/DownlineTeam";
+import DownlineTeams from "../Adminpages/Pages/Team/DownlineTeams";
 // import UplineTeam from "../Adminpages/Pages/Team/UplineTeam";
 // import ZpToken from "../Adminpages/Pages/Zptoken/ZpToken";
 // import ZpTokenPayout from "../Adminpages/Pages/Zptoken/ZpTokenPayout";
@@ -71,6 +72,12 @@ export const adminroutes = [
     path: "/admindashboard",
     component: <Dashboard />,
     navItem: "Dashboard",
+  },
+  {
+    id: 123456,
+    path: "/downlineteam",
+    component: <DownlineTeams />,
+    navItem: "Team",
   },
   {
     id: 49,
@@ -140,12 +147,12 @@ export const adminroutes = [
   //   component: <Fund/>,
   //   navItem: "Credit Fund",
   // },
-  // {
-  //   id: 9,
-  //   path: "/fund/p2p-history",
-  //   component: <P2pHistory/>,
-  //   navItem: "P2P History",
-  // },
+  {
+    id: 9,
+    path: "/support-list",
+    component: <P2pHistory />,
+    navItem: "Support History",
+  },
   // {
   //   id: 11,
   //   path: "/change-password",

@@ -1,9 +1,22 @@
-import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
-import { Box, Button, Dialog, DialogActions, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useFormik } from "formik";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { apiConnectorGet } from "../../../utils/APIConnector";
+import { endpoint } from "../../../utils/APIRoutes";
 import countdownfirst from "../../assets/images/countdownfirst.mp3";
 import countdownlast from "../../assets/images/countdownlast.mp3";
+import htp from "../../assets/images/htp.png";
 import zero from "../../assets/images/n0-30bd92d1.png";
 import one from "../../assets/images/n1-dfccbff5.png";
 import two from "../../assets/images/n2-c2913607.png";
@@ -14,26 +27,21 @@ import six from "../../assets/images/n6-a56e0b9a.png";
 import seven from "../../assets/images/n7-5961a17f.png";
 import eight from "../../assets/images/n8-d4d951a4.png";
 import nine from "../../assets/images/n9-a20f6f42 (1).png";
+import timerbg1 from "../../assets/images/timerbg.png";
+import timerbg2 from "../../assets/images/timerbg2.png";
 import backbanner from "../../assets/images/winbackbanner1-removebg-preview.png";
-import htp from "../../assets/images/htp.png";
+import {
+  dummycounterFun,
+  gameHistory_trx_one_minFn,
+  updateNextCounter,
+} from "../../redux/slices/counterSlice";
 import { changeImages } from "../../shared/nodeSchedular";
 import { useSocket } from "../../shared/socket/SocketContext";
 import BetNumber from "../BetNumber";
 import Chart from "../history/Chart";
 import GameHistory from "../history/GameHistory";
-import { useDispatch, useSelector } from "react-redux";
 import MyHistory from "../history/MyHistory";
-import { useFormik } from "formik";
-import { dummycounterFun, gameHistory_trx_one_minFn, updateNextCounter } from "../../redux/slices/counterSlice";
-import timerbg1 from "../../assets/images/timerbg.png";
-import timerbg2 from "../../assets/images/timerbg2.png";
 import Howtoplay from "./Howtoplay";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { apiConnectorGet } from "../../../utils/APIConnector";
-import { endpoint } from "../../../utils/APIRoutes";
-
-
 
 function Wingo5Min() {
   const socket = useSocket();
@@ -81,7 +89,7 @@ function Wingo5Min() {
   };
   const fk = useFormik({
     initialValues: initialValue,
-    onSubmit: () => { },
+    onSubmit: () => {},
   });
 
   React.useEffect(() => {
@@ -137,18 +145,20 @@ function Wingo5Min() {
   const { isLoading, data: game_history } = useQuery(
     ["gamehistory_3min"],
     () => GameHistoryFn("3"),
-    { 
+    {
       refetchOnMount: false,
       refetchOnReconnect: false,
-      retry:false,
-      retryOnMount:false,
-      refetchOnWindowFocus:false
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
     }
   );
 
   const GameHistoryFn = async (gid) => {
     try {
-      const response = await apiConnectorGet(`${endpoint.game_history}?limit=100&gameid=${gid}`);
+      const response = await apiConnectorGet(
+        `${endpoint.game_history}?limit=100&gameid=${gid}`
+      );
       return response;
     } catch (e) {
       toast(e?.message);
@@ -226,8 +236,14 @@ function Wingo5Min() {
         >
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Button variant="text" color="primary" className="htpbutton" onClick={handleClickOpen}>
-                <Box component='img' src={htp} width={20} sx={{ mr: 1 }}></Box> How To Play
+              <Button
+                variant="text"
+                color="primary"
+                className="htpbutton"
+                onClick={handleClickOpen}
+              >
+                <Box component="img" src={htp} width={20} sx={{ mr: 1 }}></Box>{" "}
+                How To Play
               </Button>
               <Typography
                 variant="body1"
@@ -286,7 +302,14 @@ function Wingo5Min() {
                   Time remaining{" "}
                 </Typography>
                 <Box sx={{ display: "flex" }}>
-                  <Box className="timer !text-red-500 !bg-white" sx={{ backgroundImage: `url(${timerbg1})`, backgroundSize: '100%', backgroundPosition: 'center' }}>
+                  <Box
+                    className="timer !text-red-500 !bg-white"
+                    sx={{
+                      backgroundImage: `url(${timerbg1})`,
+                      backgroundSize: "100%",
+                      backgroundPosition: "center",
+                    }}
+                  >
                     {show_this_three_min_time_min?.substring(0, 1)}
                   </Box>
                   <Box className="timer1 !text-red-500 !bg-white">
@@ -298,7 +321,14 @@ function Wingo5Min() {
                     {" "}
                     {show_this_three_min_time_sec?.substring(0, 1)}
                   </Box>
-                  <Box className="timer2 !text-red-500 !bg-white" sx={{ backgroundImage: `url(${timerbg2})`, backgroundSize: '100%', backgroundPosition: 'center' }}>
+                  <Box
+                    className="timer2 !text-red-500 !bg-white"
+                    sx={{
+                      backgroundImage: `url(${timerbg2})`,
+                      backgroundSize: "100%",
+                      backgroundPosition: "center",
+                    }}
+                  >
                     {show_this_three_min_time_sec?.substring(1, 2)}
                   </Box>
                 </Box>
@@ -314,11 +344,14 @@ function Wingo5Min() {
           </Grid>
         </Box>
         <div className="relative">
-          <BetNumber timing={`${show_this_three_min_time_min}_${show_this_three_min_time_sec}`} gid={"3"} />
+          <BetNumber
+            timing={`${show_this_three_min_time_min}_${show_this_three_min_time_sec}`}
+            gid={"3"}
+          />
           {fk.values.openTimerDialog && (
             <div className="ti !w-full !z-50 top-0 !absolute rounded p-5 flex justify-center items-center">
               <div
-               className="flex gap-2 justify-cente !bg-opacity-5 !py-5"
+                className="flex gap-2 justify-cente !bg-opacity-5 !py-5"
                 sx={{ width: "100%" }}
               >
                 <div
@@ -333,7 +366,7 @@ function Wingo5Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                    className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                  className="!bg-[#F48901]  !text-white !h-56 !pb-5"
                 >
                   {show_this_three_min_time_sec?.substring(0, 1)}
                 </div>
@@ -349,7 +382,7 @@ function Wingo5Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                    className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                  className="!bg-[#F48901]  !text-white !h-56 !pb-5"
                 >
                   {show_this_three_min_time_sec?.substring(1, 2)}
                 </div>

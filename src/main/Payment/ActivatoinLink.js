@@ -49,7 +49,7 @@ const ActivatoinLink = () => {
         <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 rounded-xl w-full max-w-sm mx-auto text-white shadow-lg">
           <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
             <div>
-              <p class="font-semibold text-gold-color text-lg">Copy Link:</p>
+              <p class="font-semibold text-gold-color text-lg">Buy Package: </p>
               <div class="text-sm text-blue-100 underline break-all">
                 https://fastro.info/activation-link
               </div>

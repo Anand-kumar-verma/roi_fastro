@@ -69,7 +69,9 @@ const BuyTicket = () => {
           <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
             <div>
               <p class="font-semibold text-gold-color text-lg">Copy Link:</p>
-              <p class="font-semibold text-gold-color text-lg">Deposit USDT</p>
+              <p class="font-semibold text-gold-color text-lg">
+                Deposit USDT/FST
+              </p>
               <div class="text-sm text-blue-100 underline break-all">
                 {frontend}/game_usdt
               </div>
@@ -78,7 +80,9 @@ const BuyTicket = () => {
               <button
                 onClick={() => {
                   handleCopy(
-                    frontend + "/game-usdt?token=" + localStorage.getItem("uid")
+                    frontend +
+                      "/jackpot-payin?token=" +
+                      localStorage.getItem("uid")
                   );
                   // toast.success("Copy to clipboard", { id: 1 });
                 }}
@@ -89,7 +93,7 @@ const BuyTicket = () => {
             )}
           </div>
         </div>
-        <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 rounded-xl w-full max-w-sm mx-auto text-white shadow-lg">
+        {/* <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 rounded-xl w-full max-w-sm mx-auto text-white shadow-lg">
           <div class="bg-blue-500 p-4 rounded-lg flex items-center justify-between space-x-4">
             <div>
               <p class="font-semibold text-gold-color text-lg">Copy Link:</p>
@@ -112,7 +116,7 @@ const BuyTicket = () => {
               </button>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       <ButtomNavigation />
     </>

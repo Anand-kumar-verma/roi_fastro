@@ -1,10 +1,9 @@
 import { Close, CopyAll, Diamond } from "@mui/icons-material";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { Button } from "@mui/material";
 import moment from "moment/moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsTrophyFill } from "react-icons/bs";
 import { useQuery, useQueryClient } from "react-query";
@@ -19,8 +18,9 @@ import Loader from "../Shared/Loader";
 import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { contractAddress, endpoint, telegram_url } from "../utils/APIRoutes";
 import { enCryptData } from "../utils/Secret";
-import Navbar from "./Navbar";
 import LevelwiseBusiness from "./LevelwiseBusiness";
+import Navbar from "./Navbar";
+import CustomPopup from "../component/CustomPopup";
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -49,7 +49,6 @@ const Dashboard = () => {
     }
   );
   const data = dashboard?.data?.result || [];
-
   const { isLoading: proLoding, data: profile_data } = useQuery(
     ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
@@ -62,10 +61,9 @@ const Dashboard = () => {
     }
   );
   const profile = profile_data?.data?.result?.[0] || [];
-
-  // useEffect(() => {
-  //   setOpen(profile?.is_popup_open === "Active");
-  // }, [profile?.is_popup_open]);
+  useEffect(() => {
+    setOpen(profile?.is_popup_open === "Active");
+  }, [profile?.is_popup_open]);
 
   //   const { isLoading: isPopupLoading, data:popupResponse  } = useQuery(
   //   ["popup_close"],
@@ -81,7 +79,7 @@ const Dashboard = () => {
 
   const updatePopup = async () => {
     handleClose(false);
-
+    return;
     try {
       const res = await apiConnectorGet(endpoint?.update_popup_status);
       if (res?.data?.success) {
@@ -144,13 +142,13 @@ const Dashboard = () => {
     <>
       <Navbar />
 
-      {/* {profile?.is_popup_open && (
+      {profile?.is_popup_open === "Active" && (
         <CustomPopup
           onChangeFun={updatePopup}
           open={open}
           handleClose={handleClose}
         />
-      )} */}
+      )}
       <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
         <div className="px-8 pt-10  mt-10">
@@ -253,8 +251,9 @@ const Dashboard = () => {
             </div>
             <div className="p-6 rounded-3xl bg-glassy shadow-2xl !bg-black !pt-4  !border-gold-color">
               <div className="grid gap-6 grid-cols-2 w-full place-items-center mb-6">
-                <div className="flex items-center justify-center text-gold-color">
-                  <MonetizationOnIcon className="!text-9xl " />
+                <div className="flex items-center justify-center bg-gold-color rounded-full text-black h-24 w-24 font-extrabold text-6xl">
+                  {/* <MonetizationOnIcon className="!text-9xl " /> */}
+                  {Number(profile?.slot_count || 0)}
                 </div>
                 <div className="text-right">
                   <span className="block text-sm text-gray-400">
@@ -288,8 +287,8 @@ const Dashboard = () => {
                   <span className="font-semibold text-green-400">
                     100000 /{" "}
                     {(
-                      Number(data?.[0]?.total_fst_with || 0) -
-                      Number(profile?.token_curr_value || 0)
+                      Math.ceil(Number(data?.[0]?.total_fst_with || 0)) -
+                      Math.ceil(Number(profile?.token_curr_value || 0))
                     )
                       .toString()
                       .padStart(6, "0")}
@@ -297,7 +296,9 @@ const Dashboard = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">FST Live Price: </span>
-                  <span className="font-semibold text-green-400">0.08 $</span>
+                  <span className="font-semibold text-green-400">
+                    {Number(profile?.token_price || 0)} $
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium text-sm">Today Income</span>

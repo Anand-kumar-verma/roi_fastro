@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { FaRegWindowClose } from "react-icons/fa";
-import cardImg from "../images/fast_roi_popup.jpg";
+import cardImg from "../images/banner.png";
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,7 +20,6 @@ const style = {
 };
 
 export default function CustomPopup({
-  
   onChangeFun = () => null,
   open = false,
   handleClose,

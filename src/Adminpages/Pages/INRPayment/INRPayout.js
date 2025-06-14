@@ -20,7 +20,7 @@ const INRPayout = () => {
   const [to_date, setTo_date] = useState("");
   const [loding, setloding] = useState(false);
   const [page, setPage] = useState(1);
-  const INRPayoutFunction = async (page) => {
+  const INRPayoutFunction = async () => {
     setloding(true);
     try {
       const res = await axiosInstance.post(API_URLS?.inr_payout_data, {
@@ -42,11 +42,14 @@ const INRPayout = () => {
     }
     setloding(false);
   };
+
   useEffect(() => {
-    INRPayoutFunction(page);
+    INRPayoutFunction();
   }, [page]);
+
   async function handleWithdrawalStatus(t_id, status) {
     setloding(true);
+    console.log("HII");
     try {
       const res = await axiosInstance.post(API_URLS?.payout_request_approval, {
         payload: enCryptData({ t_id: t_id, status_type: status }),
