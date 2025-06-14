@@ -661,7 +661,7 @@ export const all_Data = [
     subcomponent: [],
   },
   {
-    id: 8,
+    id: 232,
     navLink: "/ticket-list-admin",
     navItem: "Jackpot Ticket",
     navIcon: (

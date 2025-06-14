@@ -10,8 +10,8 @@ const TicketList = () => {
   // const [dateRange, setDateRange] = useState({ from: "", to: "" });
   // const [page, setPage] = useState(1);
   const { data: apiData, isLoading } = useQuery(
-    ["ticket_api"],
-    () => apiConnectorGet(endpoint?.ticket_list),
+    ["ticket_api_all"],
+    () => apiConnectorGet(endpoint?.ticket_list+"?type=2"),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,

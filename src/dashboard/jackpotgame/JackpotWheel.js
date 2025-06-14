@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "react-query";

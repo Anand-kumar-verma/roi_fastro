@@ -22,7 +22,7 @@ const Login = () => {
 
   const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
   // const datatele = {
-  //   id: "1840589028",
+  //   id: "1840589027",
   // };
   const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
 
@@ -37,12 +37,12 @@ const Login = () => {
       password: String(reqBody.id),
     };
     // const reqBodyy = {
-    //   mobile: String("1840589028"),
-    //   email: String("1840589028"),
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
     //   full_name: String(datatele?.username),
     //   referral_id: String("1234567890"),
-    //   username: String("1840589028"),
-    //   password: String("1840589028"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
     // };
 
     try {
@@ -75,11 +75,11 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    // const bo = "1840589028";
-    // // const token =
-    // //   "4IdQcdlwTRyUYbEeuio72IpV22psFeRcYGZzWnFxteWAr2eWKxyyQ0uaPq6k5aBIFv9tnTIN0aPDGx7NTeFQz0jr7QYQHiidDDTU";
+    // const bo = "1840589027";
     // const token =
-    //   "Erv3SofOGaVrtGzMOj3YSVFVEwVMI3lVQFfngJ9FRrdYA2w4rOUmPEWKH1L9mVl9kEbpMFe5r9XrDxo3CjaRvyBUGbKsnHMTPvLI";
+    //   "4IdQcdlwTRyUYbEeuio72IpV22psFeRcYGZzWnFxteWAr2eWKxyyQ0uaPq6k5aBIFv9tnTIN0aPDGx7NTeFQz0jr7QYQHiidDDTU";
+    // // const token =
+    // //   "Erv3SofOGaVrtGzMOj3YSVFVEwVMI3lVQFfngJ9FRrdYA2w4rOUmPEWKH1L9mVl9kEbpMFe5r9XrDxo3CjaRvyBUGbKsnHMTPvLI";
     // dispatch(saveUid(bo));
     // dispatch(saveToken(token));
     // localStorage.setItem("logindataen", token);
