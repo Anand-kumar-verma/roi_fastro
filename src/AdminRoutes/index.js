@@ -62,6 +62,7 @@ import TeamIncome from "../Adminpages/Pages/TopUP/TeamIncome";
 // import SetBonus from "../Adminpages/Pages/SetBonus/SetBonus";
 // import DownlineTeam from "../Adminpages/Pages/Team/DownlineTeam";
 import DownlineTeams from "../Adminpages/Pages/Team/DownlineTeams";
+import TicketListAdmin from "../Income/TicketListAdmin";
 // import UplineTeam from "../Adminpages/Pages/Team/UplineTeam";
 // import ZpToken from "../Adminpages/Pages/Zptoken/ZpToken";
 // import ZpTokenPayout from "../Adminpages/Pages/Zptoken/ZpTokenPayout";
@@ -72,6 +73,12 @@ export const adminroutes = [
     path: "/admindashboard",
     component: <Dashboard />,
     navItem: "Dashboard",
+  },
+  {
+    id: 276,
+    path: "/ticket-list-admin",
+    component: <TicketListAdmin />,
+    navItem: "Jak Ticket",
   },
   {
     id: 123456,
@@ -211,7 +218,7 @@ export const adminroutes = [
     id: 41,
     path: "/salarybonus",
     component: <BoosterBonus />,
-    navItem: "Booster Bonus",
+    navItem: "Award Reward",
   },
   {
     id: 42,
@@ -235,7 +242,7 @@ export const adminroutes = [
     id: 19,
     path: "/matching",
     component: <MatchingBonus />,
-    navItem: "Matching Bonus",
+    navItem: "Award Reward",
   },
   // {
   //   id: 20,

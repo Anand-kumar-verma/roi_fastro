@@ -33,6 +33,7 @@ import backbanner from "../../assets/images/winbackbanner1-removebg-preview.png"
 import {
   dummycounterFun,
   gameHistory_trx_one_minFn,
+  myHistory_trx_one_minFn,
   updateNextCounter,
 } from "../../redux/slices/counterSlice";
 import { changeImages } from "../../shared/nodeSchedular";
@@ -76,35 +77,43 @@ function Wingo1Min() {
   React.useEffect(() => {
     setIsImageChange(changeImages());
   }, []);
-
   const initialValue = {
     openTimerDialog: false,
   };
   const fk = useFormik({
     initialValues: initialValue,
-    onSubmit: () => { },
+    onSubmit: () => {},
   });
 
   React.useEffect(() => {
     const handleOneMin = (onemin) => {
-      setOne_min_time(onemin);
-      // fk.setFieldValue("show_this_one_min_time", onemin);
-      if (onemin === 1) handlePlaySoundLast();
-      if ([5, 4, 3, 2].includes(onemin)) {
-        handlePlaySound();
+      const t = Number(String(onemin)?.split("_")?.[1]);
+      const time_to_be_intro = t > 0 ? 60 - t : t;
+      setOne_min_time(time_to_be_intro);
+      fk.setFieldValue("show_this_one_min_time", time_to_be_intro);
+      if (
+        time_to_be_intro === 5 ||
+        time_to_be_intro === 4 ||
+        time_to_be_intro === 3 ||
+        time_to_be_intro === 2
+      ) {
       }
-
-      if (onemin <= 10) {
+      if (time_to_be_intro <= 10) {
         fk.setFieldValue("openTimerDialog", true);
-      }
-      if (onemin === 0) {
-        // client.refetchQueries("myhistory");
-        client.refetchQueries("wallet_amount");
-        client.refetchQueries("gamehistory");
-        // client.refetchQueries("gamehistory_chart");
-        client.refetchQueries("myAllhistory");
-        dispatch(dummycounterFun());
+        Number(time_to_be_intro) <= 5 &&
+          Number(time_to_be_intro) > 0 &&
+          handlePlaySound();
+        Number(time_to_be_intro) === 0 && handlePlaySoundLast();
+      } else {
         fk.setFieldValue("openTimerDialog", false);
+      }
+      if (time_to_be_intro === 0) {
+        client.refetchQueries("myAllhistory_1");
+        client.refetchQueries("wallet_amount");
+        client.refetchQueries("gamehistory_1");
+        setTimeout(() => {
+          dispatch(dummycounterFun());
+        }, 2000);
       }
     };
     socket.on("onemin", handleOneMin);
@@ -112,9 +121,8 @@ function Wingo1Min() {
       socket.off("onemin", handleOneMin);
     };
   }, []);
-
   const { isLoading, data: game_history } = useQuery(
-    ["gamehistory"],
+    ["gamehistory_1"],
     () => GameHistoryFn("1"),
     {
       refetchOnMount: false,
@@ -127,7 +135,9 @@ function Wingo1Min() {
 
   const GameHistoryFn = async (gid) => {
     try {
-      const response = await apiConnectorGet(`${endpoint.game_history}?limit=100&gameid=${gid}`);
+      const response = await apiConnectorGet(
+        `${endpoint.game_history}?limit=100&gameid=${gid}`
+      );
       return response;
     } catch (e) {
       toast(e?.message);
@@ -139,12 +149,37 @@ function Wingo1Min() {
     dispatch(
       updateNextCounter(
         game_history?.data?.data
-          ? Number(game_history?.data?.data?.[0]?.tr_transaction_id) + 1
+          ? Number(game_history?.data?.data?.[0]?.gamesno) + 1
           : 1
       )
     );
     dispatch(gameHistory_trx_one_minFn(game_history?.data?.data));
   }, [game_history?.data?.data]);
+
+  
+  const { isLoading: myhistory_loding_all, data: my_history_all } = useQuery(
+    ["myAllhistory_1",],
+    () => MyHistoryFn(1),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+    }
+  );
+
+  const MyHistoryFn = async (gid) => {
+    try {
+      const response = await apiConnectorGet(
+        `${endpoint.my_history}?limit=100&gameid=${gid}`
+      );
+      return response;
+    } catch (e) {
+      toast(e?.message);
+      console.log(e);
+    }
+  };
+  React.useEffect(() => {
+    dispatch(myHistory_trx_one_minFn(my_history_all?.data?.data));
+  }, [my_history_all?.data?.data]);
 
   const handlePlaySoundLast = async () => {
     try {
@@ -201,7 +236,7 @@ function Wingo1Min() {
         <Box
           sx={{
             backgroundImage: `url(${backbanner})`,
-            backgroundSize: '100% 100%',
+            backgroundSize: "100% 100%",
             padding: 1,
           }}
         >
@@ -331,7 +366,7 @@ function Wingo1Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                  className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                  className=" bg-custom-gradient !text-white !h-56 !pb-5"
                 >
                   {show_this_one_min_time?.substring(0, 1)}
                 </div>
@@ -347,7 +382,7 @@ function Wingo1Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                  className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                  className="bg-custom-gradient !text-white !h-56 !pb-5"
                 >
                   {show_this_one_min_time?.substring(1, 2)}
                 </div>

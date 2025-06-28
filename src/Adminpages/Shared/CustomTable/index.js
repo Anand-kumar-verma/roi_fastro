@@ -1,17 +1,13 @@
 import {
-  Box,
   Skeleton,
-  Stack,
   Table,
   TableBody,
   TableContainer,
   TableHead,
-  TablePagination,
-  TableRow,
+  TableRow
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
-import React from "react";
 
 const CustomTable = ({
   tablehead,
@@ -21,18 +17,6 @@ const CustomTable = ({
   isTotal,
   isPagination,
 }) => {
-  // console.log(tablerow)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [page, setPage] = React.useState(0);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -53,13 +37,13 @@ const CustomTable = ({
       border: 0,
     },
   }));
-  const visibleRows = React.useMemo(
-    () => tablerow?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [page, rowsPerPage, tablerow]
-  );
+  // const visibleRows = React.useMemo(
+  //   () => tablerow?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+  //   [page, rowsPerPage, tablerow]
+  // );
   return (
     <>
-      <TableContainer sx={{}}>
+      <TableContainer sx={{}} className={className}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead className="!bg-white !bg-opacity-50">
             <TableRow>
@@ -93,7 +77,7 @@ const CustomTable = ({
                 <TableCell>No data Found</TableCell>
               </TableRow>
             ) : (
-              visibleRows?.map((row, index) => (
+              tablerow?.map((row, index) => (
                 <StyledTableRow
                   key={index}
                   className="hover:!bg-purple-200 cursor-pointer"
@@ -116,7 +100,7 @@ const CustomTable = ({
         </Table>
       </TableContainer>
       {isTotal && isTotal}
-      <Box sx={{ background: "white", mt: 3 }}>
+      {/* <Box sx={{ background: "white", mt: 3 }}>
         <Stack spacing={2}>
           {isPagination && (
             <TablePagination
@@ -132,7 +116,7 @@ const CustomTable = ({
             />
           )}
         </Stack>
-      </Box>
+      </Box> */}
     </>
   );
 };

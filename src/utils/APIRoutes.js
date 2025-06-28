@@ -1,6 +1,6 @@
-export const domain = "https://roi-backend-e231.onrender.com";
+// export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://192.168.89.149:9009";
+export const domain = "http://192.168.196.149:9009";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";
@@ -42,6 +42,7 @@ export const endpoint = {
   bet_placed: `${domain}/api/v2/bet`,
   game_history: `${domain}/api/v2/colour_result`,
   my_history: `${domain}/api/v2/getbet-game-results`,
+  game_profile: `${domain}/api/v2/game-profile`,
   //ticket
   ticket_list: `${domain}/api/v2/jack-pot-ticket-list`,
   jackpot_result: `${domain}/api/v2/jack-pot-result`,

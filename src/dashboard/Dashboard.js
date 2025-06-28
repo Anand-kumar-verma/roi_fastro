@@ -189,7 +189,7 @@ const Dashboard = () => {
                 <div className="flex justify-between items-center pt-8">
                   <div className="flex gap-2">
                     <p className="text-text-color lg:text-lg text-base">
-                      Total Topup <br />
+                      Active Topup <br />
                       Amount
                     </p>
                   </div>
@@ -202,9 +202,11 @@ const Dashboard = () => {
                   </Button>
                 </div>
                 <div className="text-xl font-bold text-amber-400 flex gap-2 pt-2">
-                  {Number(profile?.jnr_topup_wallet || 0)?.toFixed(2)} USD
+                  {Number(Number(profile?.jnr_topup_wallet || 0) - Number(profile?.jnr_collapse_pkg || 0))?.toFixed(2)} USD
                   <img src={tether} alt="" className="w-6 h-6" />
                 </div>
+                {/* <div className="!text-xs text-green-500">First Topup: <span className="!text-gold-color">{Number(profile?.jnr_first_topup || 0)?.toFixed(2)} USD</span></div>
+                <div className="!text-xs text-green-500">Re Topup: <span className="!text-gold-color">{Number(profile?.jnr_other_topup || 0)?.toFixed(2)} USD</span></div> */}
                 <div className="flex gap-2 pt-4 justify-center">
                   <p className="text-text-color text-sm ">
                     RePurchase Your package to continue earning reward & ROI
@@ -347,6 +349,18 @@ const Dashboard = () => {
                 </div>
 
                 {/* Total Income */}
+                {/* <div className="flex justify-between items-center border-b border-white/10 pb-1">
+                  <span className="font-medium">💰 First Topup Income</span>
+                  <span className="font-semibold text-green-400">
+                    {Number(profile?.jnr_first_topup_cap || 0)?.toFixed(2)} $
+                  </span>
+                </div>
+                <div className="flex justify-between items-center border-b border-white/10 pb-1">
+                  <span className="font-medium">💰 Other Topup Income</span>
+                  <span className="font-semibold text-green-400">
+                    {Number(profile?.jnr_other_topup_cap || 0)?.toFixed(2)} $
+                  </span>
+                </div> */}
                 <div className="flex justify-between items-center border-b border-white/10 pb-1">
                   <span className="font-medium">💰 Total Income</span>
                   <span className="font-semibold text-green-400">

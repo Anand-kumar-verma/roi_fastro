@@ -155,7 +155,7 @@ function Withdrawal() {
                 placeholder="Enter Amount"
                 value={fk.values.amount}
                 onChange={fk.handleChange}
-                className="mt-1 w-full p-2 !text-white border border-yellow-500 rounded-lg bg-glassy focus:outline-none focus:ring focus:ring-yellow-300 transition duration-200"
+                className="mt-1 w-full !text-xs p-2 !text-white border border-yellow-500 rounded-lg bg-glassy focus:outline-none focus:ring focus:ring-yellow-300 transition duration-200"
               />
             </div>
 
@@ -171,7 +171,7 @@ function Withdrawal() {
                 value={fk.values.walletAddress}
                 // onChange={fk.handleChange}
                 readOnly
-                className="mt-1 w-full p-2 border border-yellow-500 rounded-lg bg-glassy focus:outline-none font-medium text-sm
+                className="mt-1 w-full !text-xs p-2 border border-yellow-500 rounded-lg bg-glassy focus:outline-none font-medium
              text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500"
               />
             </div>

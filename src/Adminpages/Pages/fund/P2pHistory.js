@@ -1,19 +1,15 @@
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import {
-  Button,
-  Dialog,
-  IconButton,
-  TablePagination,
-  TextField,
-} from "@mui/material";
+import { Edit } from "@mui/icons-material";
+import CancelIcon from "@mui/icons-material/Cancel";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import { Button, Dialog, IconButton, TextField } from "@mui/material";
 import moment from "moment/moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import CustomToPagination from "../../../Shared/CustomToPagination";
 import CustomTable from "../../Shared/CustomTable";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
-import { Edit } from "@mui/icons-material";
-import toast from "react-hot-toast";
-import CustomToPagination from "../../../Shared/CustomToPagination";
+import { FilterAlt } from "@mui/icons-material";
 
 const P2pHistory = () => {
   const [loding, setloding] = useState(false);
@@ -36,10 +32,6 @@ const P2pHistory = () => {
       });
       // console.log(res?.data)
       setData(res?.data?.data || []);
-      if (res) {
-        setTo_date("");
-        setFrom_date("");
-      }
     } catch (e) {
       console.log(e);
     }
@@ -49,12 +41,12 @@ const P2pHistory = () => {
     P2pHistoryFunction();
   }, [page, search]);
 
-  async function ticketReply() {
+  async function ticketReply(t_id) {
     setloding(true);
     try {
       const result = await axiosInstance.post(API_URLS?.support_ticket_reply, {
-        t_id: openDialog,
-        reply: reply,
+        t_id: openDialog || t_id,
+        reply: reply || "No Reply",
       });
       if (result?.data?.success) {
         setOpenDialog(false);
@@ -92,8 +84,17 @@ const P2pHistory = () => {
       <span>{i?.tkt_description}</span>,
       <span>{moment(i?.tkt_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
       <span>
-        <IconButton onClick={() => setOpenDialog(i.tkt_id)}>
+        <IconButton
+          className=" !text-xs"
+          onClick={() => setOpenDialog(i.tkt_id)}
+        >
           <Edit />
+        </IconButton>
+        <IconButton
+          className="!text-rose-500 !text-xs"
+          onClick={() => ticketReply(i.tkt_id)}
+        >
+          <CancelIcon />
         </IconButton>
       </span>,
     ];
@@ -101,7 +102,7 @@ const P2pHistory = () => {
 
   return (
     <div>
-      <div className="flex px-2 !justify-start py-2 gap-2 !place-items-center">
+      <div className="flex px-2 gap-5 !justify-start py-2">
         <span className="font-bold">From:</span>
         <TextField
           type="date"
@@ -121,11 +122,27 @@ const P2pHistory = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <Button
-          onClick={() => P2pHistoryFunction()}
+          onClick={() => {
+            setPage(1); // reset to page 1 on new filter
+            P2pHistoryFunction();
+          }}
           variant="contained"
-          startIcon={<FilterAltIcon />}
+          startIcon={<FilterAlt />}
         >
           Filter
+        </Button>
+        <Button
+          onClick={() => {
+            setSearch("");
+            setTo_date("");
+            setFrom_date("");
+            setPage(1); // reset to first page
+            P2pHistoryFunction();
+          }}
+          variant="outlined"
+          startIcon={<FilterAltOffIcon />}
+        >
+          Remove Filter
         </Button>
       </div>
       <CustomTable
@@ -136,21 +153,26 @@ const P2pHistory = () => {
       <div className="flex justify-center mt-6">
         <CustomToPagination setPage={setPage} page={page} data={data} />
       </div>
-      <Dialog open={openDialog}>
-        <div className="bg-white rounded-2xl shadow-xl p-6 lg:w-1/2 w-full mx-auto">
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        fullWidth
+        maxWidth="md"
+      >
+        <div className="bg-white rounded-2xl shadow-xl p-6 w-full mx-auto max-w-3xl">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">
             Enter Your Reply
           </h2>
 
           <textarea
-            className="w-full h-32 p-3 border-2 border-gold-color rounded-md focus:outline-none focus:ring-2 focus:ring-gold-color resize-none"
+            className="w-full min-h-[120px] max-h-[300px] p-3 border-2 border-gold-color rounded-md focus:outline-none focus:ring-2 focus:ring-gold-color resize-y"
             placeholder="Type your reply here..."
             value={reply}
             onChange={(e) => setReply(e.target.value)}
             minLength={20}
           />
 
-          <div className="flex justify-end mt-4 gap-3">
+          <div className="flex justify-end mt-4 gap-3 flex-wrap">
             <button
               onClick={() => setOpenDialog(false)}
               className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"

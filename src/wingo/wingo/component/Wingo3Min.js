@@ -27,7 +27,7 @@ import nine from "../../assets/images/n9-a20f6f42 (1).png";
 import timerbg1 from "../../assets/images/timerbg.png";
 import timerbg2 from "../../assets/images/timerbg2.png";
 import backbanner from "../../assets/images/winbackbanner1-removebg-preview.png";
-import { dummycounterFun, gameHistory_trx_one_minFn, updateNextCounter } from "../../redux/slices/counterSlice";
+import { dummycounterFun, gameHistory_trx_one_minFn, myHistory_trx_one_minFn, updateNextCounter } from "../../redux/slices/counterSlice";
 import { changeImages } from "../../shared/nodeSchedular";
 import { useSocket } from "../../shared/socket/SocketContext";
 import BetNumber from "../BetNumber";
@@ -41,6 +41,7 @@ import { endpoint } from "../../../utils/APIRoutes";
 import { apiConnectorGet } from "../../../utils/APIConnector";
 
 function Wingo3Min() {
+  let preValue = 0;
   const socket = useSocket();
   const client = useQueryClient();
   const [three_min_time, setThree_min_time] = useState("0_0");
@@ -93,57 +94,50 @@ function Wingo3Min() {
   })
 
   React.useEffect(() => {
-    const handleThreeMin = (threemin) => {
+    const handleThreeMin = (onemin) => {
+      const t = Number(String(onemin)?.split('_')?.[1]);
+      const min = Number(String(onemin)?.split('_')?.[0]);
+ 
+      const time_to_be_intro = t > 0 ? 60 - t : t;
+      let threemin = `${
+        2 - (Number(t === 0 ? preValue : min) % 3)
+      }_${time_to_be_intro}`;
+      preValue = min;
+ 
       setThree_min_time(threemin);
+      fk.setFieldValue('show_this_one_min_time', threemin);
       if (
-        threemin?.split("_")?.[1] === "1" &&
-        threemin?.split("_")?.[0] === "0"
-      )
-        handlePlaySoundLast();
-      if (
-        Number(threemin?.split("_")?.[1]) <= 10 &&
-        Number(threemin?.split("_")?.[1]) > 1 && // 1 index means second
-        threemin?.split("_")?.[0] === "0" // 0 index means min
+        Number(threemin?.split('_')?.[1]) <= 10 && // 1 index means second
+        threemin?.split('_')?.[0] === '0' // 0 index means min
       ) {
-        handlePlaySound();
-      }
-
-      if (
-        Number(threemin?.split("_")?.[1]) <= 10 && // 1 index means second
-        threemin?.split("_")?.[0] === "0" // 0 index means min
-      ) {
-        fk.setFieldValue("openTimerDialog", true);
-      }
-      if (threemin?.split("_")?.[1] === "59") {
-        fk.setFieldValue("openTimerDialog", false);
+        Number(threemin?.split('_')?.[1]) <= 5 &&
+          Number(threemin?.split('_')?.[1]) > 0 &&
+          handlePlaySound();
+        Number(threemin?.split('_')?.[1]) === 0 && handlePlaySoundLast();
+        fk.setFieldValue('openTimerDialog', true);
+      } else {
+        fk.setFieldValue('openTimerDialog', false);
       }
       if (
-        threemin?.split("_")?.[1] === "25" &&
-        threemin?.split("_")?.[0] === "0"
+        threemin?.split('_')?.[1] === '0' &&
+        threemin?.split('_')?.[0] === '0'
       ) {
-        // oneMinCheckResult();
-        // oneMinColorWinning();
-      }
-      if (
-        threemin?.split("_")?.[1] === "0" &&
-        threemin?.split("_")?.[0] === "0"
-      ) {
-        client.refetchQueries("gamehistory_2min");
-        client.refetchQueries("wallet_amount");
-        // client.refetchQueries("gamehistory_chart");
-        client.refetchQueries("myAllhistory");
-        dispatch(dummycounterFun());
-        fk.setFieldValue("openTimerDialog", false);
+        client.refetchQueries('gamehistory_2min');
+        client.refetchQueries('wallet_amount');
+        client.refetchQueries('myAllhistory_2');
+        setTimeout(() => {
+          dispatch(dummycounterFun());
+        }, 2000);
       }
     };
-
-    socket.on("threemin", handleThreeMin);
-
+ 
+    socket.on('onemin', handleThreeMin);
+ 
     return () => {
-      socket.off("threemin", handleThreeMin);
+      socket.off('onemin', handleThreeMin);
     };
   }, []);
-
+ 
   const { isLoading, data: game_history } = useQuery(
     ["gamehistory_2min"],
     () => GameHistoryFn("2"),
@@ -170,12 +164,36 @@ function Wingo3Min() {
     dispatch(
       updateNextCounter(
         game_history?.data?.data
-          ? Number(game_history?.data?.data?.[0]?.tr_transaction_id) + 1
+          ? Number(game_history?.data?.data?.[0]?.gamesno) + 1
           : 1
       )
     );
     dispatch(gameHistory_trx_one_minFn(game_history?.data?.data));
   }, [game_history?.data?.data]);
+
+ const { isLoading: myhistory_loding_all, data: my_history_all } = useQuery(
+    ["myAllhistory_2",],
+    () => MyHistoryFn(2),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+    }
+  );
+
+  const MyHistoryFn = async (gid) => {
+    try {
+      const response = await apiConnectorGet(
+        `${endpoint.my_history}?limit=100&gameid=${gid}`
+      );
+      return response;
+    } catch (e) {
+      toast(e?.message);
+      console.log(e);
+    }
+  };
+  React.useEffect(() => {
+    dispatch(myHistory_trx_one_minFn(my_history_all?.data?.data));
+  }, [my_history_all?.data?.data]);
 
 
   const handlePlaySoundLast = async () => {
@@ -347,7 +365,7 @@ function Wingo3Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                    className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                    className="bg-custom-gradient !text-white !h-56 !pb-5"
                 >
                   {show_this_three_min_time_sec?.substring(0, 1)}
                 </div>
@@ -363,7 +381,7 @@ function Wingo3Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                    className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                    className="bg-custom-gradient !text-white !h-56 !pb-5"
                 >
                   {show_this_three_min_time_sec?.substring(1, 2)}
                 </div>

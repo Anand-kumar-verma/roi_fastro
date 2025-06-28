@@ -8,7 +8,6 @@ import LevelIncome from "../Income/LevelIncome";
 import RoiIncome from "../Income/RoiIncome";
 import SupportTicketList from "../Income/SupportTicketList";
 import TicketList from "../Income/TicketList";
-import TicketListAdmin from "../Income/TicketListAdmin";
 import WeeklyIncome from "../Income/Weekly";
 import WinnerList from "../Income/WinnerList";
 import About from "../component/About";
@@ -20,6 +19,7 @@ import TicketsQuery from "../component/TicketsQuery";
 import Dashbaord from "../dashboard/Dashboard";
 import GameProject from "../dashboard/GameProject";
 import PriceStatics from "../dashboard/PriceStatics";
+import TeamBusinessCount from "../dashboard/TeamBusinessCount";
 import Burning from "../main/Burning";
 import BuyTicket from "../main/Buy/Buyticket";
 import DepositFST from "../main/Buy/DepositFst";
@@ -40,9 +40,10 @@ export const routes = [
     component: <Dashbaord />,
   },
   {
-    path: "/ticket-list-admin",
-    component: <TicketListAdmin />,
+    path: "/team-business-count",
+    component: <TeamBusinessCount />,
   },
+
   {
     path: "/support-list-user",
     component: <SupportTicketList />,

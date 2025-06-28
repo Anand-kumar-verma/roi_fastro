@@ -35,6 +35,7 @@ import theme from "../utils/theme";
 import Howtoplay from "./component/Howtoplay";
 import { apiConnectorPost } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
+import { rupees } from "../services/urls";
 
 const BetNumber = ({ timing, gid }) => {
   const user_id = localStorage.getItem("user_id");
@@ -44,12 +45,13 @@ const BetNumber = ({ timing, gid }) => {
   const [random, setRandomNumber] = useState(null);
   const [loding, setLoding] = useState(false);
   const client = useQueryClient();
-  const wallet_amount_data = useSelector((state) => state.aviator.wallet_real_balance);
+  const wallet_amount_data = useSelector(
+    (state) => state.aviator.wallet_real_balance
+  );
   const initialValue = {
     balance: "1",
     qnt: "1",
   };
-  
 
   const fk = useFormik({
     initialValues: initialValue,
@@ -66,20 +68,23 @@ const BetNumber = ({ timing, gid }) => {
 
   useEffect(() => {
     if (gid === "1") {
-      if (Number(timing) <= 10) {setOpen(false)
-        fk.handleReset()
-      };
+      if (Number(timing) <= 10) {
+        setOpen(false);
+        fk.handleReset();
+      }
     } else if (gid === "2") {
       if (Number(String(timing)?.split("_")?.[0]) === 0) {
-        if (Number(String(timing)?.split("_")?.[1]) <= 10) {setOpen(false)
-          fk.handleReset()
-        };
+        if (Number(String(timing)?.split("_")?.[1]) <= 10) {
+          setOpen(false);
+          fk.handleReset();
+        }
       }
     } else {
       if (Number(String(timing)?.split("_")?.[0]) === 0) {
-        if (Number(String(timing)?.split("_")?.[1]) <= 10) {setOpen(false)
-          fk.handleReset()
-        };
+        if (Number(String(timing)?.split("_")?.[1]) <= 10) {
+          setOpen(false);
+          fk.handleReset();
+        }
       }
     }
   }, [timing]);
@@ -90,37 +95,40 @@ const BetNumber = ({ timing, gid }) => {
       userid: user_id,
       amount: Number(fk.values.balance || 1) * Number(fk.values.qnt || 1) || 0,
       number:
-        (selectNumber === "green" && 11) ||
-        (selectNumber === "voilet" && 12) ||
-        (selectNumber === "red" && 13) ||
-        (selectNumber === "Big" && 15) || // this is big
-        (selectNumber === "Small" && 14) || // this is small
-        Number(selectNumber) + 1,
+        (selectNumber === "green" && 10) ||
+        (selectNumber === "voilet" && 20) ||
+        (selectNumber === "red" && 30) ||
+        (selectNumber === "Big" && 40) || // this is big
+        (selectNumber === "Small" && 50) || // this is small
+        Number(selectNumber),
       gameid: Number(gid),
     };
 
     try {
-      const response = await apiConnectorPost(`${endpoint.bet_placed}`, reqBody);
+      const response = await apiConnectorPost(
+        `${endpoint.bet_placed}`,
+        reqBody
+      );
       if (response?.data?.error === "200") {
-        if (response?.data?.msg === "Bid Placed Successfully.") {
-          const toastID =   toast(
+        if (response?.data?.msg === "Bid placed Successfully1") {
+          const toastID = toast(
             <SuccessCheck
               message={<span className="!text-sm">{response?.data?.msg}</span>}
-            /> ,
-            setTimeout(()=>{
+            />,
+            setTimeout(() => {
               toast.dismiss(toastID);
-            },1000)
+            }, 1000)
           );
           fk.setFieldValue("isSuccessPlaceBet", true);
           localStorage.setItem("betApplied", `${gid}_true`);
         } else {
-          const toastID =   toast( 
+          const toastID = toast(
             <FalseCheck
               message={<span className="!text-sm">{response?.data?.msg}</span>}
             />,
-            setTimeout(()=>{
+            setTimeout(() => {
               toast.dismiss(toastID);
-            },1000)
+            }, 1000)
           );
         }
 
@@ -134,7 +142,7 @@ const BetNumber = ({ timing, gid }) => {
     }
     // client.refetchQueries("walletamount");
     client.refetchQueries("wallet_amount");
-    client.refetchQueries("myAllhistory");
+    client.refetchQueries("myAllhistory_"+gid);
     fk.setFieldValue("balance", "1");
     fk.setFieldValue("qnt", "1");
     setLoding(false);
@@ -157,18 +165,18 @@ const BetNumber = ({ timing, gid }) => {
       setOpen(true);
     }, 2000);
   };
-  
 
   if (loding) return <CustomCircularProgress isLoading={loding} />;
   return (
     <Box
       sx={{
         padding: 1,
-        background: "#FFFFFF",
+        // background: "#FFFFFF",
         mt: 2,
         borderRadius: "10px",
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
       }}
+      className={"bg-custom-gradient"}
     >
       <div>
         <Stack
@@ -206,7 +214,6 @@ const BetNumber = ({ timing, gid }) => {
         </Stack>
         <Box
           sx={{
-            background: "#EEEEEE",
             padding: "8px 8px 0px 8px",
             display: "flex",
             alignItems: "center",
@@ -215,7 +222,7 @@ const BetNumber = ({ timing, gid }) => {
             borderRadius: "10px",
             mt: 2,
           }}
-  
+          className={"bg-custom-gradient"}
         >
           <Box
             sx={{ width: "17%", mb: 1 }}
@@ -324,20 +331,20 @@ const BetNumber = ({ timing, gid }) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Button variant="outlined" onClick={generatenumber}
-         >
+          <Button variant="outlined" onClick={generatenumber}>
             Random
           </Button>
           {[1, 5, 10, 20, 50, 100]?.map((i) => {
             return (
               <Box
-               key={i}
-                
+                key={i}
                 onClick={() => fk.setFieldValue("qnt", i)}
-                sx={style.bacancebtn3 }
-                className={`${fk.values.qnt === i?"!bg-green-600" :"!bg-gray-400"}  cursor-pointer`}
+                sx={style.bacancebtn3}
+                className={`${
+                  fk.values.qnt === i ? "!bg-green-600" : "!bg-gray-400"
+                }  cursor-pointer`}
               >
-              X{i} 
+                X{i}
               </Box>
             );
           })}
@@ -436,8 +443,8 @@ const BetNumber = ({ timing, gid }) => {
                 borderRadius: "5px",
               }}
             >
-             Select{" "}
-             {random
+              Select{" "}
+              {random
                 ? Number(random) <= 4
                   ? `:  ${selectNumber} Small`
                   : ` : ${selectNumber} Big`
@@ -445,8 +452,7 @@ const BetNumber = ({ timing, gid }) => {
                 ? selectNumber?.toString()?.toLocaleUpperCase()
                 : Number(selectNumber) <= 4
                 ? `: ${selectNumber} Small`
-                : ` : ${selectNumber} Big`
-                } 
+                : ` : ${selectNumber} Big`}
             </Typography>
           </Box>
           <Box mt={5} px={2}>
@@ -726,7 +732,7 @@ const BetNumber = ({ timing, gid }) => {
                   fk.handleSubmit();
                 }}
               >
-                Total amount ₹
+                Total amount {rupees}
                 {Number(fk.values.balance || 1) * Number(fk.values.qnt || 1)}
               </Button>
             </Grid>
@@ -798,8 +804,8 @@ const style = {
     ["@media (max-width:340px)"]: { fontSize: "13px" },
   },
   bacancebtn3active: {
-    backgroundColorolor: "#45a049", /* Darker green when clicked */
-},
+    backgroundColorolor: "#45a049" /* Darker green when clicked */,
+  },
 
   addsumbtn: {
     padding: "4px 13px",
@@ -827,7 +833,7 @@ const style = {
     color: "white",
     fontSize: "16px",
     fontWeight: "500",
-    background :"#F48901"
+    background: "#F48901",
   },
   smlbtn: {
     width: "50%",

@@ -23,8 +23,13 @@ code {
   color: white;
 }
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 .blink {
   animation: blink 1s step-start infinite;
@@ -133,3 +138,113 @@ code {
 .animate-glow {
   animation: glow 6s linear infinite;
 }
+
+/* wingog css */
+.transparentColor {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.circleNumberbody {
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+}
+
+.circleNumberbody-number {
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 10px !important;
+}
+
+.flexrowsstart {
+  display: flex !important;
+  align-items: start !important;
+  justify-content: start !important;
+  flex-direction: column !important;
+}
+.flexrows {
+  display: flex !important;
+  align-items: end !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+}
+.flexbetween {
+  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.crlg {
+  padding-top: 123px !important;
+  font-size: 25px !important;
+  font-weight: 600 !important;
+  color: white !important;
+}
+
+.bonustext {
+  text-align: center !important;
+  font-size: 35px !important;
+  font-weight: 600 !important;
+  margin-top: 17px !important;
+}
+
+.bonusamt {
+  font-size: 35px !important;
+  font-weight: 600 !important;
+  /* margin-top: -12px !important; */
+  text-align: center !important;
+}
+
+.bonuspr {
+  text-align: center !important;
+  margin-top: 8px !important;
+  color: white ;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.bonuscl {
+  text-align: center !important;
+  margin-top: 10px !important;
+  color: white !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+.transparentColorRedPurpleBGTOP {
+  background: #c86eff !important;
+  background: linear-gradient(to bottom right,
+      #fb6161 50%,
+      #c86eff 50%) !important;
+}
+ 
+.transparentColorGreenRedBGTOP {
+  background: #18b680 !important;
+  background: linear-gradient(to bottom right,
+      #18b680 50%,
+      #c86eff 50%) !important;
+}
+
+.pio {
+  text-align: center;
+  margin: 20px 0 60px;
+  font-size: 1.25em;
+ 
+  &.success {
+    color: #73af55;
+  }
+ 
+  &.error {
+    color: #d06079;
+  }
+}
+ 

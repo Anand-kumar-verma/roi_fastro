@@ -33,6 +33,7 @@ import backbanner from "../../assets/images/winbackbanner1-removebg-preview.png"
 import {
   dummycounterFun,
   gameHistory_trx_one_minFn,
+  myHistory_trx_one_minFn,
   updateNextCounter,
 } from "../../redux/slices/counterSlice";
 import { changeImages } from "../../shared/nodeSchedular";
@@ -44,12 +45,13 @@ import MyHistory from "../history/MyHistory";
 import Howtoplay from "./Howtoplay";
 
 function Wingo5Min() {
+  // let preValue = 0;
   const socket = useSocket();
   const client = useQueryClient();
   const dispatch = useDispatch();
   const [value, setValue] = useState(1);
   const [open, setOpen] = useState(false);
-  const [one_min_time, setOne_min_time] = useState("0_0");
+  const [one_min_time, setOne_min_time] = useState(0);
   const audioRefMusic = React.useRef(null);
   const audioRefMusiclast = React.useRef(null);
   const next_step = useSelector((state) => state.aviator.next_step);
@@ -75,15 +77,7 @@ function Wingo5Min() {
     setIsImageChange(changeImages());
   }, []);
 
-  const show_this_three_min_time_sec = React.useMemo(
-    () => String(one_min_time?.split("_")?.[1]).padStart(2, "0"),
-    [one_min_time]
-  );
-  const show_this_three_min_time_min = React.useMemo(
-    () => String(one_min_time?.split("_")?.[0]).padStart(2, "0"),
-    [one_min_time]
-  );
-
+  const show_this_one_min_time = String(one_min_time).padStart(2, "0");
   const initialValue = {
     openTimerDialog: false,
   };
@@ -92,59 +86,85 @@ function Wingo5Min() {
     onSubmit: () => {},
   });
 
+  // React.useEffect(() => {
+  //   const handleFiveMin = (fivemin) => {
+  //     const t = Number(String(fivemin)?.split("_")?.[1]);
+  //     const one_min = t > 0 ? 60 - t : t;
+  //     const time_to_be_intro = one_min > 30 ? one_min - 30 : one_min;
+  //     setOne_min_time(time_to_be_intro);
+  //     fk.setFieldValue("show_this_one_min_time", time_to_be_intro);
+  //     if (
+  //       Number(fivemin?.split("_")?.[1]) <= 10 && // this is for sec
+  //       fivemin?.split("_")?.[0] === "0" // this is for minut
+  //     ) {
+  //       fk.setFieldValue("openTimerDialog", true);
+  //       Number(Number(fivemin?.split("_")?.[1])) <= 5 &&
+  //         Number(Number(fivemin?.split("_")?.[1])) > 0 &&
+  //         handlePlaySound();
+  //       Number(Number(fivemin?.split("_")?.[1])) === 0 && handlePlaySoundLast();
+  //     } else {
+  //       fk.setFieldValue("openTimerDialog", false);
+  //     }
+  //     if (
+  //       fivemin?.split("_")?.[1] === "0" &&
+  //       fivemin?.split("_")?.[0] === "0"
+  //     ) {
+  //       client.refetchQueries("gamehistory_3min");
+  //       client.refetchQueries("wallet_amount");
+  //       client.refetchQueries("myAllhistory_3");
+  //       setTimeout(() => {
+  //         dispatch(dummycounterFun());
+  //       }, 2000);
+  //     }
+  //   };
+
+  //   socket.on("onemin", handleFiveMin);
+
+  //   return () => {
+  //     socket.off("onemin", handleFiveMin);
+  //   };
+  // }, []);
+
   React.useEffect(() => {
-    const handleFiveMin = (fivemin) => {
-      setOne_min_time(fivemin);
-
-      if (fivemin?.split("_")?.[1] === "1" && fivemin?.split("_")?.[0] === "0")
-        handlePlaySoundLast();
-
+    const handleOneMin = (onemin) => {
+      const t = Number(String(onemin)?.split("_")?.[1]);
+      const one_min = t > 0 ? 60 - t : t;
+      const time_to_be_intro = one_min > 30 ? one_min - 30 : one_min;
+      setOne_min_time(time_to_be_intro);
+      fk.setFieldValue("show_this_one_min_time", time_to_be_intro);
       if (
-        Number(fivemin?.split("_")?.[1]) <= 30 &&
-        Number(fivemin?.split("_")?.[1]) > 1 && // this is for sec
-        fivemin?.split("_")?.[0] === "0" // this is for minut
+        time_to_be_intro === 5 ||
+        time_to_be_intro === 4 ||
+        time_to_be_intro === 3 ||
+        time_to_be_intro === 2
       ) {
-        handlePlaySound();
       }
-
-      if (
-        Number(fivemin?.split("_")?.[1]) <= 30 && // this is for sec
-        fivemin?.split("_")?.[0] === "0" // this is for minut
-      ) {
+      if (time_to_be_intro <= 5) {
         fk.setFieldValue("openTimerDialog", true);
-      }
-      if (fivemin?.split("_")?.[1] === "59") {
+        Number(time_to_be_intro) <= 5 &&
+          Number(time_to_be_intro) > 0 &&
+          handlePlaySound();
+        Number(time_to_be_intro) === 0 && handlePlaySoundLast();
+      } else {
         fk.setFieldValue("openTimerDialog", false);
       }
-      if (
-        fivemin?.split("_")?.[1] === "40" && // this is for sec
-        fivemin?.split("_")?.[0] === "0" // this is for minut
-      ) {
-        // oneMinCheckResult();
-        // oneMinColorWinning();
-      }
-      if (
-        fivemin?.split("_")?.[1] === "0" &&
-        fivemin?.split("_")?.[0] === "0"
-      ) {
-        client.refetchQueries("gamehistory_3min");
+      if (time_to_be_intro === 29) {
+        client.refetchQueries("gamehistory_4min");
         client.refetchQueries("wallet_amount");
-        // client.refetchQueries("gamehistory_chart");
-        client.refetchQueries("myAllhistory");
-        dispatch(dummycounterFun());
-        fk.setFieldValue("openTimerDialog", false);
+        client.refetchQueries("myAllhistory_4");
+        setTimeout(() => {
+          dispatch(dummycounterFun());
+        }, 2000);
       }
     };
-
-    socket.on("fivemin", handleFiveMin);
-
+    socket.on("onemin", handleOneMin);
     return () => {
-      socket.off("fivemin", handleFiveMin);
+      socket.off("onemin", handleOneMin);
     };
   }, []);
   const { isLoading, data: game_history } = useQuery(
-    ["gamehistory_3min"],
-    () => GameHistoryFn("3"),
+    ["gamehistory_4min"],
+    () => GameHistoryFn("4"),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -170,12 +190,35 @@ function Wingo5Min() {
     dispatch(
       updateNextCounter(
         game_history?.data?.data
-          ? Number(game_history?.data?.data?.[0]?.tr_transaction_id) + 1
+          ? Number(game_history?.data?.data?.[0]?.gamesno) + 1
           : 1
       )
     );
     dispatch(gameHistory_trx_one_minFn(game_history?.data?.data));
   }, [game_history?.data?.data]);
+  const { isLoading: myhistory_loding_all, data: my_history_all } = useQuery(
+    ["myAllhistory_4"],
+    () => MyHistoryFn(4),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: true,
+    }
+  );
+
+  const MyHistoryFn = async (gid) => {
+    try {
+      const response = await apiConnectorGet(
+        `${endpoint.my_history}?limit=100&gameid=${gid}`
+      );
+      return response;
+    } catch (e) {
+      toast(e?.message);
+      console.log(e);
+    }
+  };
+  React.useEffect(() => {
+    dispatch(myHistory_trx_one_minFn(my_history_all?.data?.data));
+  }, [my_history_all?.data?.data]);
 
   const handlePlaySoundLast = async () => {
     try {
@@ -310,16 +353,13 @@ function Wingo5Min() {
                       backgroundPosition: "center",
                     }}
                   >
-                    {show_this_three_min_time_min?.substring(0, 1)}
+                    0
                   </Box>
-                  <Box className="timer1 !text-red-500 !bg-white">
-                    {" "}
-                    {show_this_three_min_time_min?.substring(1, 2)}
-                  </Box>
+                  <Box className="timer1 !text-red-500 !bg-white"> 0</Box>
                   <Box className="timer1 !text-red-500 !bg-white">:</Box>
                   <Box className="timer1 !text-red-500 !bg-white">
                     {" "}
-                    {show_this_three_min_time_sec?.substring(0, 1)}
+                    {show_this_one_min_time?.substring(0, 1)}
                   </Box>
                   <Box
                     className="timer2 !text-red-500 !bg-white"
@@ -329,7 +369,7 @@ function Wingo5Min() {
                       backgroundPosition: "center",
                     }}
                   >
-                    {show_this_three_min_time_sec?.substring(1, 2)}
+                    {show_this_one_min_time?.substring(1, 2)}
                   </Box>
                 </Box>
                 <Typography
@@ -344,10 +384,7 @@ function Wingo5Min() {
           </Grid>
         </Box>
         <div className="relative">
-          <BetNumber
-            timing={`${show_this_three_min_time_min}_${show_this_three_min_time_sec}`}
-            gid={"3"}
-          />
+          <BetNumber timing={`${show_this_one_min_time}`} gid={"4"} />
           {fk.values.openTimerDialog && (
             <div className="ti !w-full !z-50 top-0 !absolute rounded p-5 flex justify-center items-center">
               <div
@@ -366,9 +403,9 @@ function Wingo5Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                  className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                  className="bg-custom-gradient  !text-white !h-56 !pb-5"
                 >
-                  {show_this_three_min_time_sec?.substring(0, 1)}
+                  {show_this_one_min_time?.substring(0, 1)}
                 </div>
                 <div
                   style={{
@@ -382,9 +419,9 @@ function Wingo5Min() {
                     justifyContent: "center",
                     // color: "white",
                   }}
-                  className="!bg-[#F48901]  !text-white !h-56 !pb-5"
+                  className="bg-custom-gradient !text-white !h-56 !pb-5"
                 >
-                  {show_this_three_min_time_sec?.substring(1, 2)}
+                  {show_this_one_min_time?.substring(1, 2)}
                 </div>
               </div>
             </div>
@@ -416,9 +453,9 @@ function Wingo5Min() {
             My history
           </Button>
         </Stack>
-        {value === 1 && <GameHistory gid="3" />}
-        {value === 2 && <Chart gid="3" />}
-        {value === 3 && <MyHistory gid="3" />}
+        {value === 1 && <GameHistory gid="4" />}
+        {value === 2 && <Chart gid="4" />}
+        {value === 3 && <MyHistory gid="4" />}
       </Box>
       <Dialog
         sx={{
@@ -453,95 +490,3 @@ function Wingo5Min() {
 }
 
 export default Wingo5Min;
-
-const style = {
-  bacancebtn: {
-    backgroundColor: "#40AD72",
-    padding: "4px 13px",
-    borderRadius: "20px",
-    color: "white",
-    fontSize: "17px",
-    fontWeight: "500",
-    marginLeft: "5px",
-  },
-  bacancebtn2: {
-    backgroundColor: "#40AD72",
-    padding: "4px 13px",
-    borderRadius: "1px",
-    color: "white",
-    fontSize: "17px",
-    fontWeight: "500",
-    marginLeft: "5px",
-  },
-  bacancebtn3: {
-    backgroundColor: "#40AD72",
-    padding: "1px 5px",
-    borderRadius: "6px",
-    color: "white",
-    fontSize: "14px",
-    fontWeight: "500",
-    marginLeft: "5px",
-    display: "flex",
-    alignItems: "center",
-    height: "30px",
-    ["@media (max-width:340px)"]: { fontSize: "13px" },
-  },
-  addsumbtn: {
-    backgroundColor: "#40AD72",
-    padding: "4px 13px",
-    color: "white",
-    fontSize: "17px",
-    fontWeight: "500",
-    margin: "0px 5px",
-  },
-  cancelbtn: {
-    width: "100%",
-    borderRadius: "0px",
-    color: "white",
-    backgroundColor: "#25253C",
-    padding: 1,
-  },
-  submitbtn: {
-    width: "100%",
-    borderRadius: "0px",
-    color: "white",
-    backgroundColor: "#40AD72",
-    padding: 1,
-  },
-  bigbtn: {
-    width: "50%",
-    borderRadius: "20px 0px 0px 20px",
-    color: "white",
-    fontSize: "16px",
-    fontWeight: "500",
-  },
-  smlbtn: {
-    width: "50%",
-    borderRadius: "0px 20px 20px 0px",
-    color: "white",
-    fontSize: "16px",
-    fontWeight: "500",
-    background: "#6DA7F4",
-  },
-  linetable: {
-    "&>p": {
-      fontSize: "12px",
-      color: "gray",
-      border: "1px solid gray",
-      borderRadius: "50%",
-      width: "15px",
-      height: "15px",
-      textAlign: "center",
-      padding: "2px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    alignItems: "center",
-    justifyContent: "space-between",
-    "&>p:nth-last-child(1)": {
-      width: "20px !important",
-      height: "20px !important",
-    },
-  },
-};

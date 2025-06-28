@@ -199,14 +199,39 @@ const Network = () => {
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
                 <p class="text-sm md:text-2xl text-gold-color">
-                  Total Team Business
+                  Total Team Buss
                 </p>
-                {/* <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
+                <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {Number(
-                    level_business?.[0]?.total_team_business || 0
-                  )?.toFixed(2) || 0}{" "}
+                    Number(level_business?.[0]?.tb_t_buss_lev_1 || 0) +
+                      Number(level_business?.[0]?.tb_t_buss_lev_2 || 0) +
+                      Number(level_business?.[0]?.tb_t_buss_lev_3 || 0) +
+                      Number(level_business?.[0]?.tb_t_buss_lev_4 || 0) +
+                      Number(level_business?.[0]?.tb_t_buss_lev_5 || 0) +
+                      Number(level_business?.[0]?.tb_t_buss_lev_6 || 0)
+                  )?.toFixed(2) -
+                    Number(
+                      Number(level_business?.[0]?.tb_lapps_lev_1 || 0) +
+                        Number(level_business?.[0]?.tb_lapps_lev_2 || 0) +
+                        Number(level_business?.[0]?.tb_lapps_lev_3 || 0) +
+                        Number(level_business?.[0]?.tb_lapps_lev_4 || 0) +
+                        Number(level_business?.[0]?.tb_lapps_lev_5 || 0) +
+                        Number(level_business?.[0]?.tb_lapps_lev_6 || 0)
+                    )?.toFixed(2) || 0}{" "}
                   USD
-                </p> */}
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* <div class="rounded-xl p-4 bg-gradient-to-r from-[#3a60a7] to-[#94f37e] shadow-lg text-white">
+            <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
+              <div class="text-blue-500 text-3xl">
+                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
+              </div>
+              <div className="flex flex-col gap-0 md:gap-2">
+                <p class="text-sm md:text-2xl text-gold-color">
+                  Total Team Re Buss
+                </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
                   {Number(
                     Number(level_business?.[0]?.tb_buss_lev_1 || 0) +
@@ -220,7 +245,7 @@ const Network = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
             <VscFileSubmodule className="!w-10 !h-10" />

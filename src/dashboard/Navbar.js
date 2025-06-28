@@ -73,7 +73,7 @@ export default function Navbar() {
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             } md:relative md:translate-x-0 md:flex md:gap-10 bg-custom-gradient text-white`}
           >
-            <div className="flex justify-between  p-2 items-center mb-5 md:hidden">
+            <div className="flex justify-between  px-2 py-1 items-center mb-5 md:hidden">
               <img src={logo} alt="Logo" className="h-10" />
               <FaTimes
                 className="cursor-pointer text-2xl"
@@ -81,7 +81,7 @@ export default function Navbar() {
               />
             </div>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => {
                 navigate("/home");
                 // window.location.reload();
@@ -90,7 +90,7 @@ export default function Navbar() {
               <FaHome className="text-blue-400" /> Home
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => {
                 navigate("/dashboard");
                 // window.location.reload();
@@ -99,7 +99,7 @@ export default function Navbar() {
               <FaHome className="text-blue-400" /> Dashboard
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => {
                 navigate("/price-statistics");
                 // window.location.reload();
@@ -109,7 +109,7 @@ export default function Navbar() {
               Statistics
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => {
                 navigate("/burning");
                 // window.location.reload();
@@ -124,7 +124,7 @@ export default function Navbar() {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <p
-                className="flex items-center gap-1 cursor-pointer p-2 "
+                className="flex items-center gap-1 cursor-pointer px-2 py-1 "
                 onClick={() => handleDropdownToggle("affiliate")}
               >
                 <FaAffiliatetheme className="text-blue-400" /> Affiliates
@@ -171,22 +171,28 @@ export default function Navbar() {
             </div>
 
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/activation")}
             >
               <BsTrophy className="text-blue-400" /> Activation
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/buy")}
             >
               <BsTrophy className="text-blue-400" /> Buy Ticket
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/topup_detail")}
             >
               <BsTrophy className="text-blue-400" /> Top Up Details
+            </p>
+            <p
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
+              onClick={() => navigate("/team-business-count")}
+            >
+              <BsTrophy className="text-blue-400" /> Team Buss Count
             </p>
             <div
               className="relative dropdown"
@@ -194,7 +200,7 @@ export default function Navbar() {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <p
-                className="flex items-center gap-1 cursor-pointer p-2 "
+                className="flex items-center gap-1 cursor-pointer px-2 py-1 "
                 onClick={() => handleDropdownToggle("income")}
               >
                 <FaIntercom className="text-blue-400" /> Income
@@ -256,31 +262,31 @@ export default function Navbar() {
             </div>
 
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/withdrawal-link")}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Withdrawal
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/compound-history")}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Compound
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/view")}
             >
               <FaRegMoneyBillAlt className="text-blue-400" /> Profile
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/game-project")}
             >
               <SportsEsportsIcon className="text-blue-400" /> Project
             </p>
             <p
-              className="flex items-center gap-1 cursor-pointer p-2 "
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/ticket")}
             >
               <SportsEsportsIcon className="text-blue-400" /> Support

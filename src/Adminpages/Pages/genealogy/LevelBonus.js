@@ -6,6 +6,7 @@ import CustomToPagination from "../../../Shared/CustomToPagination";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
 import CustomTable from "../../Shared/CustomTable";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 
 const LevelBonus = () => {
   const [loding, setloding] = useState(false);
@@ -15,7 +16,7 @@ const LevelBonus = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const LevelBonusFn = async (page) => {
+  const LevelBonusFn = async () => {
     setloding(true);
     try {
       const res = await axiosInstance.post(API_URLS?.level_bonus_data, {
@@ -23,13 +24,10 @@ const LevelBonus = () => {
         created_at: from_date,
         updated_at: to_date,
         page: page,
-        count: 10,
+        count: 25,
+        search:search
       });
       setData(res?.data?.data || []);
-      if (res) {
-        setTo_date("");
-        setFrom_date("");
-      }
     } catch (e) {
       console.log(e);
     }
@@ -37,7 +35,7 @@ const LevelBonus = () => {
   };
 
   useEffect(() => {
-    LevelBonusFn(page);
+    LevelBonusFn();
   }, [page]);
 
   const tablehead = [
@@ -45,8 +43,12 @@ const LevelBonus = () => {
     <span>User Id</span>,
     <span>Name</span>,
     <span>Mobile</span>,
-    <span>Type</span>,
-    <span>Amount</span>,
+    <span>Email</span>,
+    <span>Topup Amnt</span>,
+    <span>Lapps Amnt</span>,
+    <span>Net Amnt</span>,
+    <span>Curr Wallet</span>,
+    <span>Roi</span>,
     <span>Date/Time</span>,
     <span>Description</span>,
   ];
@@ -55,10 +57,18 @@ const LevelBonus = () => {
     return [
       <span>{index + 1}</span>,
       <span>{i?.lgn_cust_id}</span>,
-      <span>{i?.jnr_name}</span>,
-      <span>{i?.lgn_mobile}</span>,
-      <span>{i?.ledger_income_type}</span>,
-      <span>{i?.ledger_amount}</span>,
+      <span>{i?.lgn_real_name}</span>,
+      <span>{i?.lgn_real_mob}</span>,
+      <span>{i?.lgn_real_email}</span>,
+      <span>{i?.jnr_topup_wallet}</span>,
+      <span>{i?.jnr_collapse_pkg}</span>,
+      <span>
+        {Number(
+          Number(i?.jnr_topup_wallet || 0) - Number(i?.jnr_collapse_pkg || 0)
+        )?.toFixed(2) || "--"}
+      </span>,
+      <span>{i?.jnr_curr_wallet}</span>,
+      <span>{Number(i?.ledger_amount)?.toFixed(2)}</span>,
       <span>{moment(i?.ledger_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
       <span>{i?.ledger_des}</span>,
     ];
@@ -86,11 +96,27 @@ const LevelBonus = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <Button
-          onClick={() => LevelBonusFn()}
+          onClick={() => {
+            setPage(1); // reset to page 1 on new filter
+            LevelBonusFn();
+          }}
           variant="contained"
           startIcon={<FilterAlt />}
         >
           Filter
+        </Button>
+        <Button
+          onClick={() => {
+            setSearch("");
+            setTo_date("");
+            setFrom_date("");
+            setPage(1); // reset to first page
+            LevelBonusFn();
+          }}
+          variant="outlined"
+          startIcon={<FilterAltOffIcon />}
+        >
+          Remove Filter
         </Button>
       </div>
       <CustomTable
@@ -98,6 +124,7 @@ const LevelBonus = () => {
         tablerow={tablerow}
         isLoading={loding}
       />
+
       <CustomToPagination setPage={setPage} page={page} data={data} />
     </div>
   );

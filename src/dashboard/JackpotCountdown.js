@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 // import jackgif from "../images/KolntAno33.gif";
-import ButtomNavigation from "../Layout/ButtomNaviagatoin";
-import { JackpotWheel } from "./jackpotgame/JackpotWheel";
-import Navbar from "./Navbar";
 import { Button } from "@mui/material";
+import toast from "react-hot-toast";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
-import { useQuery } from "react-query";
-import toast from "react-hot-toast";
+import { JackpotWheel } from "./jackpotgame/JackpotWheel";
+import Navbar from "./Navbar";
 
 const JackpotCountdown = () => {
   const navigate = useNavigate();
@@ -66,11 +66,11 @@ const JackpotCountdown = () => {
                   className="!rounded-full !bg-gold-color !text-text-color !font-bold"
                   onClick={() =>
                     Number(profile?.jnr_game_winning || 0) > 0
-                      ? navigate("/withdrawal-link",{
-                        state: {
-                          type:"jackpot"
-                        }
-                      })
+                      ? navigate("/withdrawal-link", {
+                          state: {
+                            type: "jackpot",
+                          },
+                        })
                       : toast("Your Amount is low.", { id: 1 })
                   }
                 >

@@ -1,17 +1,10 @@
-// export const domain = "https://trx-timer-zupeeter-7o9k.onrender.com/";
-// export const domain = "https://zupeeter-timer.onrender.com/"; working
-
 export const domain_ovi_node = "https://api.zupeeter.com";
-// export const domain_ovi_node = "https://zupeegame.info"
-// export const domain_ovi_node = "http://192.168.85.149:8000"
 
-export const rupees = "₹";
+export const rupees = "$";
 export const zubgback = "#F48901";
 
-export const domain = "https://play-penta.onrender.com";
-// export const baseUrl = "http://192.168.18.183:9000";
+export const domain = "https://roi-backend-e231.onrender.com";
 
-// export const baseUrl = "https://webs.ferryinfotech.in";
 export const baseUrl = "https://admin.zupeeter.com/public";
 export const front_end_domain = "https://zupeeter.com";
 export const usdt_base_url = "https://zupeegame.info";

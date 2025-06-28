@@ -7,16 +7,16 @@ import "../src/index.css";
 import AdminLayout from "./Adminpages/Layout";
 import { adminroutes } from "./AdminRoutes";
 import "./App.css";
-import "./wingo/assets/style/main.css";
 import AdminLogin from "./authentication/AdminLogin";
 import Login from "./authentication/login";
 import Registration from "./authentication/Registration";
 import Home from "./component/Home";
-import Activation from "./main/Payment/Activation";
-import { routes } from "./routes/Routes";
 import DepositFST from "./main/Buy/DepositFst";
 import DepositUSDT from "./main/Buy/DepositUsdt";
 import JackpotPayin from "./main/Buy/JackpotPayin";
+import ActivationWithFST from "./main/Payment/ActivationWithFST";
+import { routes } from "./routes/Routes";
+import "./wingo/assets/style/main.css";
 
 const App = () => {
   const user = localStorage.getItem("logindataen");
@@ -57,7 +57,9 @@ const App = () => {
         <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/activation-link" element={<Activation />} />
+        {/* <Route path="/activation-link" element={<Activation />} /> */}
+        <Route path="/activation-link" element={<ActivationWithFST />} />
+        {/* <Route path="/activation-link-fst" element={<ActivationWithFST />} /> */}
         {/* <Route path="/withdrawal-link" element={<Withdrawal />} /> */}
 
         {/* Authenticated Routes */}

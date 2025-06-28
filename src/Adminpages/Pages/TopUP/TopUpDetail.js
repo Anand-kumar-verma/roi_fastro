@@ -32,6 +32,7 @@ const TopUpDetail = () => {
         page: page,
         count: 10,
         type: selectBy,
+        search: search,
       });
       setData(res?.data?.data || []);
       if (res) {

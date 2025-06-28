@@ -1,17 +1,18 @@
 import { FilterAlt } from "@mui/icons-material";
-import { Button, IconButton, Switch, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import LockIcon from "@mui/icons-material/Lock";
+import { Button, IconButton, TextField } from "@mui/material";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import CustomToPagination from "../../../Shared/CustomToPagination";
+import { enCryptData } from "../../../utils/Secret";
 import CustomTable from "../../Shared/CustomTable";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
-import moment from "moment";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import CancelIcon from "@mui/icons-material/Cancel";
-import LockIcon from "@mui/icons-material/Lock";
-import { enCryptData } from "../../../utils/Secret";
 
-import CustomToPagination from "../../../Shared/CustomToPagination";
 const INRPayout = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
@@ -32,11 +33,11 @@ const INRPayout = () => {
       });
       setData(res?.data?.data?.data || []);
       setTotalamount(res?.data);
-      if (res) {
-        setSearch("");
-        setTo_date("");
-        setFrom_date("");
-      }
+      // if (res) {
+      //   setSearch("");
+      //   setTo_date("");
+      //   setFrom_date("");
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -49,7 +50,6 @@ const INRPayout = () => {
 
   async function handleWithdrawalStatus(t_id, status) {
     setloding(true);
-    console.log("HII");
     try {
       const res = await axiosInstance.post(API_URLS?.payout_request_approval, {
         payload: enCryptData({ t_id: t_id, status_type: status }),
@@ -147,13 +147,30 @@ const INRPayout = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <Button
-          onClick={() => INRPayoutFunction()}
+          onClick={() => {
+            setPage(1); // reset to page 1 on new filter
+            INRPayoutFunction();
+          }}
           variant="contained"
           startIcon={<FilterAlt />}
         >
           Filter
         </Button>
+        <Button
+          onClick={() => {
+            setSearch("");
+            setTo_date("");
+            setFrom_date("");
+            setPage(1); // reset to first page
+            INRPayoutFunction();
+          }}
+          variant="outlined"
+          startIcon={<FilterAltOffIcon />}
+        >
+          Remove Filter
+        </Button>
       </div>
+
       <CustomTable
         isTotal={false}
         tablehead={tablehead}

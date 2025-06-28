@@ -92,6 +92,16 @@ export const all_Data = [
     ),
     subcomponent: [
       {
+        id: 8.6,
+        navLink: "/vipbonus",
+        navItem: "ROI Bonus",
+        navIcon: (
+          <span>
+            <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
+          </span>
+        ),
+      },
+      {
         id: 6.3,
         navLink: "/levelBonus",
         navItem: "Level Bonus",
@@ -101,42 +111,32 @@ export const all_Data = [
           </span>
         ),
       },
-      {
-        id: 6.4,
-        navLink: "/matching",
-        navItem: "Magic Income",
-        navIcon: (
-          <span>
-            <RowingSharp color="#15317E" fontSize="medium" />
-          </span>
-        ),
-      },
 
-      {
-        id: 8.5,
-        navLink: "/salarybonus",
-        navItem: "Booster Bonus",
-        navIcon: (
-          <span>
-            <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
-          </span>
-        ),
-      },
+      // {
+      //   id: 8.5,
+      //   navLink: "/salarybonus",
+      //   navItem: "Award Reward",
+      //   navIcon: (
+      //     <span>
+      //       <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
+      //     </span>
+      //   ),
+      // },
 
-      {
-        id: 8.5,
-        navLink: "/giftBonus",
-        navItem: "DIRECT Bonus",
-        navIcon: (
-          <span>
-            <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
-          </span>
-        ),
-      },
+      // {
+      //   id: 8.5,
+      //   navLink: "/giftBonus",
+      //   navItem: "Award Reward",
+      //   navIcon: (
+      //     <span>
+      //       <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
+      //     </span>
+      //   ),
+      // },
       {
         id: 8.5,
         navLink: "/weeklybonus",
-        navItem: "Weekly Recovery",
+        navItem: "Weekly Bonus",
         navIcon: (
           <span>
             <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
@@ -144,12 +144,12 @@ export const all_Data = [
         ),
       },
       {
-        id: 8.6,
-        navLink: "/vipbonus",
-        navItem: "ROI Bonus",
+        id: 6.4,
+        navLink: "/matching",
+        navItem: "Reward Award",
         navIcon: (
           <span>
-            <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
+            <RowingSharp color="#15317E" fontSize="medium" />
           </span>
         ),
       },

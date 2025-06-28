@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
-import WingoCountdown from "./ColorPrediction";
+import Wingo from "../wingo/wingo/Wingo";
 import JackpotCountdown from "./JackpotCountdown";
 import Navbar from "./Navbar";
 
@@ -40,7 +39,8 @@ const GameProject = () => {
       <div className="w-full min-h-screen bg-[#0e172a] text-white">
         {activeTab === "jackpot" && <JackpotCountdown />}
         {/* {activeTab === "jackpot" && <JackpotCountdownOLD />} */}
-        {activeTab === "wingo" && <WingoCountdown />}
+        {activeTab === "wingo" && <Wingo />}
+        {/* {activeTab === "wingo" && <WingoCountdown />} */}
       </div>
 
       <ButtomNavigation />

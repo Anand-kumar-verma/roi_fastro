@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { FaRegWindowClose } from "react-icons/fa";
 import cardImg from "../images/banner.png";
+// import cardImg from "../images/mentenence.png";
 const style = {
   position: "absolute",
   top: "50%",

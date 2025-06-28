@@ -5,22 +5,30 @@ import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "react-query";
 import { API_URLS } from "../Adminpages/config/APIUrls";
 import axiosInstance from "../Adminpages/config/axios";
-import Navbar from "../dashboard/Navbar";
-import ButtomNavigation from "../Layout/ButtomNaviagatoin";
-import CustomToPagination from "../Shared/CustomToPagination";
-import Loader from "../Shared/Loader";
+
+import { FilterAlt } from "@mui/icons-material";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import { Button, TextField } from "@mui/material";
 import { apiConnectorPost } from "../utils/APIConnector";
 import { domain } from "../utils/APIRoutes";
+import CustomTable from "../Adminpages/Shared/CustomTable";
+import CustomToPagination from "../Shared/CustomToPagination";
 
 const TicketListAdmin = () => {
   const client = useQueryClient();
   const [loding, setloding] = useState(false);
   const [page, setPage] = useState(1);
+  const [from_date, setFrom_date] = useState("");
+  const [to_date, setTo_date] = useState("");
+  const [search, setSearch] = useState("");
   const { data: apiData, isLoading } = useQuery(
-    ["jackpot_ticket_admin", page],
+    ["jackpot_ticket_admin", page, from_date, to_date, search], // 🧠 dynamic key
     () =>
       apiConnectorPost(domain + API_URLS.jackpot_ticket_list_admin, {
-        page: page,
+        page,
+        from_date,
+        to_date,
+        search,
       }),
     {
       refetchOnMount: false,
@@ -48,132 +56,115 @@ const TicketListAdmin = () => {
     }
     setloding(false);
   };
-  return (
-    <>
-      <Navbar />
-      <Loader isLoading={isLoading || loding} />
-      <div
-        className=" text-text-color p-3 h-screen overflow-y-scroll flex flex-col bg-custom-gradient items-center "
-        // style={{ backgroundImage: `url(${crypto})` }}
+
+  const tablehead = [
+    <span>S.No.</span>,
+    <span>User Id</span>,
+    <span>Ticket Id</span>,
+    <span>Name</span>,
+    <span>Mobile</span>,
+    <span>Email</span>,
+    <span>Result</span>,
+    <span>Status</span>,
+    <span>Date(Result)</span>,
+    <span>Date(Buy)</span>,
+    <span>Action</span>,
+  ];
+
+  const tablerow = ticketList?.data?.map((i, index) => {
+    return [
+      <span>{index + 1}</span>,
+      <span>{i?.lgn_cust_id}</span>,
+      <span>{i?.jack_ticket_id}</span>,
+      <span>{i?.lgn_real_name}</span>,
+      <span>{i?.lgn_real_mob}</span>,
+      <span>{i?.lgn_real_email}</span>,
+      <span className=" text-gold-color">
+        {`${i?.jack_release_no1 === -1 ? "-" : i.jack_release_no1}${
+          i?.jack_release_no2 === -1 ? "-" : i.jack_release_no2
+        }${i?.jack_release_no3 === -1 ? "-" : i.jack_release_no3}${
+          i?.jack_release_no4 === -1 ? "-" : i.jack_release_no4
+        }`}
+      </span>,
+      <span
+        className={` font-bold ${
+          i?.jack_win_loss === "Win" ? "text-green-500" : "text-gold-color"
+        }`}
       >
-        <div className="p-4 lg:w-[70%] w-full mt-20 ">
-          <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-gold-color">
-            Ticket List
-          </h1>
-          <div className="mt-6 lg:mt-10 overflow-x-auto max-h-[400px] overflow-y-auto !pb-[20%]">
-            <table className="min-w-full text-xs rounded overflow-hidden border border-yellow-500">
-              <table className="min-w-full text-xs rounded overflow-hidden border border-yellow-500">
-                <thead>
-                  <tr>
-                    {[
-                      "S No.",
-                      "Ticket Id",
-                      "Name",
-                      "Email",
-                      "Phone",
-                      "User ID",
-                      "Result",
-                      "Status",
-                      "Date(Result)",
-                      "Date(Buy)",
-                      "Action",
-                    ].map((title, i) => (
-                      <th
-                        key={i}
-                        className="px-4 py-2 border border-yellow-500 text-center font-semibold uppercase tracking-wide text-yellow-700"
-                      >
-                        {title}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {ticketList?.data?.map((item, index) => (
-                    <tr key={index} className="hover:bg-yellow-50 transition">
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-text-color">
-                        {index + 1}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-gold-color">
-                        {item?.jack_ticket_id}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-gold-color">
-                        {item?.lgn_real_name}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-gold-color">
-                        {item?.lgn_real_email}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-gold-color">
-                        {item?.lgn_real_mob}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-gold-color">
-                        {item?.lgn_cust_id}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-gold-color">
-                        {`${
-                          item?.jack_release_no1 === -1
-                            ? "-"
-                            : item.jack_release_no1
-                        }${
-                          item?.jack_release_no2 === -1
-                            ? "-"
-                            : item.jack_release_no2
-                        }${
-                          item?.jack_release_no3 === -1
-                            ? "-"
-                            : item.jack_release_no3
-                        }${
-                          item?.jack_release_no4 === -1
-                            ? "-"
-                            : item.jack_release_no4
-                        }`}
-                      </td>
-                      <td
-                        className={`px-4 py-2 border border-yellow-500 text-center font-bold ${
-                          item?.jack_win_loss === "Win"
-                            ? "text-green-500"
-                            : "text-gold-color"
-                        }`}
-                      >
-                        {item?.jack_result_decl_date
-                          ? item?.jack_win_loss
-                          : "--"}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-green-500">
-                        {item?.jack_result_decl_date
-                          ? moment(item?.jack_result_decl_date).format(
-                              "DD-MM-YYYY HH:mm:ss"
-                            )
-                          : "--"}
-                      </td>
-                      <td className="px-4 py-2 border border-yellow-500 text-center text-white">
-                        {moment(item?.jack_created_at).format("DD-MM-YYYY")}
-                      </td>
-                      <span>
-                        <Switch
-                          checked={
-                            item?.jack_is_pre_winn === "Active" ? true : false
-                          }
-                          className="px-4 py-2 border border-yellow-500 text-center text-white"
-                          onChange={() => UpdateCoupon(item?.jack_id)}
-                        />
-                      </span>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </table>
-          </div>
-          <div className="flex justify-center mb-6">
-            <CustomToPagination
-              data={ticketList}
-              page={page}
-              setPage={setPage}
-            />
-          </div>
-        </div>
+        {i?.jack_result_decl_date ? i?.jack_win_loss : "--"}
+      </span>,
+      <span className=" text-green-500">
+        {i?.jack_result_decl_date
+          ? moment(i?.jack_result_decl_date).format("DD-MM-YYYY HH:mm:ss")
+          : "--"}
+      </span>,
+      <span className=" text-black">
+        {moment(i?.jack_created_at).format("DD-MM-YYYY")}
+      </span>,
+      <span>
+        <Switch
+          checked={i?.jack_is_pre_winn === "Active" ? true : false}
+          className=" text-black"
+          onChange={() => UpdateCoupon(i?.jack_id)}
+        />
+      </span>,
+    ];
+  });
+
+  return (
+    <div>
+      <div className="flex px-2 gap-5 !justify-start py-2">
+        <span className="font-bold">From:</span>
+        <TextField
+          type="date"
+          value={from_date}
+          onChange={(e) => setFrom_date(e.target.value)}
+        />
+        <span className="font-bold">To:</span>
+        <TextField
+          type="date"
+          value={to_date}
+          onChange={(e) => setTo_date(e.target.value)}
+        />
+        <TextField
+          type="search"
+          placeholder="Search by user id"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button
+          onClick={() => {
+            setPage(1);
+            client.invalidateQueries(["jackpot_ticket_admin"]); // 🔁 Refetch with new filters
+          }}
+          variant="contained"
+          startIcon={<FilterAlt />}
+        >
+          Filter
+        </Button>
+
+        <Button
+          onClick={() => {
+            setSearch("");
+            setTo_date("");
+            setFrom_date("");
+            setPage(1); // reset to first page
+            // LevelBonusFn();
+          }}
+          variant="outlined"
+          startIcon={<FilterAltOffIcon />}
+        >
+          Remove Filter
+        </Button>
       </div>
-      <ButtomNavigation />
-    </>
+      <CustomTable
+        tablehead={tablehead}
+        tablerow={tablerow}
+        isLoading={loding}
+      />
+
+      <CustomToPagination setPage={setPage} page={page} data={ticketList} />
+    </div>
   );
 };
 
