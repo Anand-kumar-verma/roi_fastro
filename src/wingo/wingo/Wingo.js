@@ -32,7 +32,7 @@ import WinLossPopup from "./WinLossPopup";
 
 function Wingo() {
   const navigate = useNavigate();
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(3);
   const [opendialogbox, setOpenDialogBox] = useState(false);
   const isAppliedbet = localStorage.getItem("betApplied");
   const dummycounter = useSelector((state) => state.aviator.dummycounter);

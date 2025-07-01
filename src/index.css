@@ -201,7 +201,7 @@ code {
 .bonusamt {
   font-size: 35px !important;
   font-weight: 600 !important;
-  /* margin-top: -12px !important; */
+  margin-top: 12px !important;
   text-align: center !important;
 }
 

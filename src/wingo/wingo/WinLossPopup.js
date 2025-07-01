@@ -157,7 +157,7 @@ const WinLossPopup = () => {
                     {Number(all_result?.result) <= 4 ? "Small" : "Big"}
                   </span>
                 </div>
-                <div className="!text-[20px] !mt-4">Bonus</div>
+                <div className="!text-[20px]">Bonus</div>
               </>
             )) ||
               (status?.status === "2" && "Loss Amount")}

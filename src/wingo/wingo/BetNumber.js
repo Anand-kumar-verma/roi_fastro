@@ -429,7 +429,17 @@ const BetNumber = ({ timing, gid }) => {
               color="initial"
               sx={{ textAlign: "center", color: "white", fontWeight: "700 " }}
             >
-              Win Go {gid} Min
+              
+               Win Go{' '}
+              {gid === '1'
+                ? '1 Min'
+                : gid === '4'
+                ? '30 Sec'
+                : gid === '2'
+                ? '3 Min'
+                : gid === '3'
+                ? '5 Min'
+                : ''}
             </Typography>
             <Typography
               variant="body1"
