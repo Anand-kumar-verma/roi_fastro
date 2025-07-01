@@ -1,6 +1,6 @@
-// export const domain = "https://roi-backend-e231.onrender.com";
+export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-export const domain = "http://192.168.196.149:9009";
+// export const domain = "http://192.168.196.149:9009";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";
@@ -13,13 +13,16 @@ export const endpoint = {
   very_fy_OTP: `${domain}/api/v2/verify-otp`,
   wallet_api: `${domain}/api/v2/check-wallet-address-availability`,
   package_list_api: `${domain}/api/v2/get-package-details`,
+  get_user_wallet_by_cust_id: `${domain}/api/v2/get-user-wallet-by-cu-id`,
   paying_dummy_api: `${domain}/api/v2/activation-dummy-request`,
   paying_api: `${domain}/api/v2/activation-request`,
+  fst_buy_order: `${domain}/api/v2/fst-buy-order-req`,
   profile_api: `${domain}/api/v2/get-profile-data`,
   compounding_wallet: `${domain}/api/v2/compound-wallet`,
   compounding_wallet_history: `${domain}/api/v2/compound-wallet-history`,
   general_contact_address_api: `${domain}/api/v2/get-api-general-data`,
   roi_income_api: `${domain}/api/v2/get-roi-income-details`,
+  my_fst_orders: `${domain}/api/v2/get-my-fst-orders`,
   support_tiket_list_user: `${domain}/api/v2/support-ticket-list-admin`,
   customer_api: `${domain}/api/v2/get-user-name-by-customer-id`,
   withdrawal_api: `${domain}/api/v2/withdrawal-req`,

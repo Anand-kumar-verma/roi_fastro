@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import bgImage from "../images/wingoimage.jpeg"; // 🎯 Change to Wingo game image
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Navbar from "./Navbar";
 
-const WingoCountdown = () => {
+const MinesCountdown = () => {
   const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
-    const targetDate = new Date("2025-07-01T00:00:00");
+    const targetDate = new Date("2025-07-20T00:00:00");
     const timer = setInterval(() => {
       const now = new Date();
       const difference = targetDate - now;
@@ -43,14 +42,14 @@ const WingoCountdown = () => {
         <div className="relative z-10 max-w-3xl mx-auto text-center bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-3xl shadow-2xl">
           <div className="flex justify-center mb-6">
             <img
-              src={bgImage}
-              alt="Wingo Logo"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYf5OljBv-kOFV9XOn6dw9nX9-YYOBLM1Cag&s"
+              alt="Mines Logo"
               className="w-48 sm:w-60 !rounded-lg"
             />
           </div>
 
-         <p className="text-3xl lg:text-5xl font-extrabold text-yellow-400 mb-4 animate-pulse">
-            🎉 Coming Soon!
+          <p className="text-3xl lg:text-5xl font-extrabold text-yellow-400 mb-4 animate-pulse">
+            💣 Mines Game Coming Soon!
           </p>
 
           {/* Countdown */}
@@ -69,41 +68,32 @@ const WingoCountdown = () => {
               ))}
             </div>
           ) : (
-            <p className="text-2xl text-green-400 mb-6">🎮 It's Live Now!</p>
+            <p className="text-2xl text-green-400 mb-6">🎮 Mines is Live Now!</p>
           )}
 
           {/* Rules Section */}
           <div className="bg-black bg-opacity-50 p-6 rounded-2xl text-white shadow-inner">
             <h2 className="text-2xl font-bold text-gold-color mb-4 flex items-center gap-2">
-              <span>📘</span> Wingo Game Rules
+              <span>📘</span> Mines Game Rules
             </h2>
-            <ul className="space-y-3 text-left list-none text-base sm:text-lg ">
+            <ul className="space-y-3 text-left list-none text-base sm:text-lg">
               <li className="flex items-start gap-2 text-text-color">
-                <span>🗓️</span> Game will be available every day.
+                <span>🗓️</span> Available 24/7 — Play anytime.
               </li>
               <li className="flex items-start gap-2">
-                <span>🎯</span> Choose RED, GREEN, or VIOLET and bet
-                accordingly.
+                <span>💣</span> Avoid the mines — click safe tiles to win.
               </li>
               <li className="flex items-start gap-2 text-text-color">
-                <span>🧠</span> Predict and place your bet before the timer
-                ends.
+                <span>🎯</span> Higher risk, higher reward.
               </li>
               <li className="flex items-start gap-2">
-                <span>⏱️</span> Each round lasts 60 seconds.
+                <span>💰</span> Payout increases with each successful step.
               </li>
               <li className="flex items-start gap-2 text-text-color">
-                <span>💸</span> Win up to 2x your bet amount based on your
-                prediction.
+                <span>🚫</span> Clicking a mine ends the round with a loss.
               </li>
               <li className="flex items-start gap-2">
-                <span>🔥</span> All losing bets go to reward pool.
-              </li>
-              <li className="flex items-start gap-2 text-text-color">
-                <span>🎟️</span> You can bet multiple times in one round.
-              </li>
-              <li className="flex items-start gap-2">
-                <span>🔐</span> Fair and transparent smart contract based game.
+                <span>🔐</span> Fully fair & transparent smart contract system.
               </li>
             </ul>
           </div>
@@ -115,4 +105,4 @@ const WingoCountdown = () => {
   );
 };
 
-export default WingoCountdown;
+export default MinesCountdown;

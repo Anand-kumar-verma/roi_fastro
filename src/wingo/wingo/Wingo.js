@@ -1,29 +1,37 @@
+import { Cancel, CopyAll } from "@mui/icons-material";
 import VolumeUpIcon from "@mui/icons-material/VolumeUpOutlined";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import { Box, Container, Dialog, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { apiConnectorGet } from "../../utils/APIConnector";
-import { endpoint } from "../../utils/APIRoutes";
-import backbtn from "../assets/images/backBtn.png";
+import { endpoint, frontend } from "../../utils/APIRoutes";
 import balance from "../assets/images/balance.png";
-import music from "../assets/images/music.png";
-import musicoff from "../assets/images/musicoff.png";
 import refresh from "../assets/images/refresh.png";
 import time from "../assets/images/time.png";
 import { wallet_real_balanceFn } from "../redux/slices/counterSlice";
+import { rupees } from "../services/urls";
 import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import theme from "../utils/theme";
-import WinLossPopup from "./WinLossPopup";
 import Wingo10Min from "./component/Wingo10Min";
 import Wingo1Min from "./component/Wingo1Min";
 import Wingo3Min from "./component/Wingo3Min";
 import Wingo5Min from "./component/Wingo5Min";
-import { rupees } from "../services/urls";
+import PromotionData from "./PromotionData";
+import WinLossPopup from "./WinLossPopup";
+
 function Wingo() {
-  const [musicicon, setmusicicon] = useState(true);
+  const navigate = useNavigate();
   const [value, setValue] = useState(1);
   const [opendialogbox, setOpenDialogBox] = useState(false);
   const isAppliedbet = localStorage.getItem("betApplied");
@@ -87,6 +95,41 @@ function Wingo() {
       element.classList.remove("rotate_refresh_image");
     }
   }, []);
+
+  const handleCopy = (url) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          toast.success("Link copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.error("Failed to copy link.");
+        });
+    } else {
+      // Fallback method for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          toast.success("Link copied to clipboard!");
+        } else {
+          toast.error("Copy failed. Please try manually.");
+        }
+      } catch (err) {
+        console.error("Fallback copy failed: ", err);
+        toast.error("Clipboard not supported in this browser.");
+      }
+
+      document.body.removeChild(textArea);
+    }
+  };
   return (
     <Container
       maxWidth={false}
@@ -98,7 +141,7 @@ function Wingo() {
         minHeight: "100vh",
         backgroundColor: "#000", // optional, for consistent look
         paddingTop: 2,
-        paddingBottom:8
+        paddingBottom: 8,
       }}
     >
       <Box
@@ -120,26 +163,68 @@ function Wingo() {
             direction="row"
             sx={{ alignItems: "center", justifyContent: "space-between" }}
           >
-            <NavLink to="/dashboard">
-              <Box component="img" src={backbtn} width={25}></Box>
-            </NavLink>
-            <Stack direction="row">
-              {/* <NavLink to={"/CustomerService"}>
-              <Box
-                component="img"
-                src={asistant}
-                width={25}
-                sx={{ mr: 2 }}
-              ></Box>
-            </NavLink> */}
-              <NavLink onClick={() => setmusicicon(!musicicon)}>
+            <Button
+              variant="contained"
+              className="!rounded-full"
+              onClick={() => {
+                handleCopy(
+                  frontend + "/wingo-payin?token=" + localStorage.getItem("uid")
+                );
+                // toast.success("Copy to clipboard", { id: 1 });
+              }}
+            >
+              Deposit
+            </Button>
+            <Button
+              variant="contained"
+              className="!rounded-full !bg-gold-color !text-text-color !font-bold"
+              onClick={() =>
+                Number(profile?.jnr_wingo_game_wallet || 0) > 0
+                  ? navigate("/withdrawal-link", {
+                      state: {
+                        type: "wingo",
+                      },
+                    })
+                  : toast("Your Amount is low.", { id: 1 })
+              }
+            >
+              Withdrawal
+            </Button>
+            <Button
+              variant="contained"
+              className="!rounded-full !bg-rose-500 !text-white !font-bold"
+              onClick={() => setOpenDialogBox("promotion")}
+            >
+              Promotoin
+            </Button>
+          </Stack>
+          <Stack direction="row" className="!items-center !gap">
+            <div className="!flex !justify-between !w-full !items-center">
+              <span className="!text-xs">https://fastro.info/wingo-payin</span>
+              <span>
+                {" "}
+                {localStorage.getItem("uid") && (
+                  <CopyAll
+                    onClick={() => {
+                      handleCopy(
+                        frontend +
+                          "/wingo-payin?token=" +
+                          localStorage.getItem("uid")
+                      );
+                      // toast.success("Copy to clipboard", { id: 1 });
+                    }}
+                    className="text-gold-color !text-xs"
+                  />
+                )}
+              </span>
+            </div>
+            {/* <NavLink onClick={() => setmusicicon(!musicicon)}>
                 {musicicon === true ? (
                   <Box component="img" src={music} width={25}></Box>
                 ) : (
                   <Box component="img" src={musicoff} width={25}></Box>
                 )}
-              </NavLink>
-            </Stack>
+              </NavLink> */}
           </Stack>
         </Box>
         <Box
@@ -188,22 +273,6 @@ function Wingo() {
                 Wallet balance{" "}
               </Typography>
             </Stack>
-            {/* <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            mt={2}
-          >
-            <Button
-              onClick={() => navigate("/withdraw")}
-              sx={style.withdrawalbtn}
-            >
-              Withdraw
-            </Button>
-            <Button onClick={() => navigate("/deposit")} sx={style.depositebtn}>
-              Deposit
-            </Button>
-          </Stack> */}
           </Box>
           <Stack
             direction="row"
@@ -277,26 +346,11 @@ function Wingo() {
               </Typography>
             </NavLink>
           </Box>
-          {/* <Box sx={{ width: "30%" }}>
-            <NavLink
-              className={value === 2 ? " wingonavactive wingonav" : " wingonav"}
-              onClick={() => handleChange(2)}
-            >
-              <Box component="img" src={time} width={40}></Box>
-              <Typography variant="body1" color="initial">
-                Win Go
-              </Typography>
-              <Typography variant="body1" color="initial">
-                3 Min
-              </Typography>
-            </NavLink>
-          </Box> */}
         </Box>
         {value === 1 && <Wingo1Min />}
         {value === 2 && <Wingo3Min />}
         {value === 3 && <Wingo5Min />}
         {value === 4 && <Wingo10Min />}
-        {/* opendialogbox */}
         {opendialogbox && (
           <Dialog
             open={opendialogbox}
@@ -307,7 +361,14 @@ function Wingo() {
               },
             }}
           >
-            <WinLossPopup gid={isAppliedbet?.split("_")?.[0]} />
+            {opendialogbox === "promotion" ? (
+              <PromotionData />
+            ) : (
+              <WinLossPopup gid={isAppliedbet?.split("_")?.[0]} />
+            )}
+            <p className="!text-center !text-white">
+              <Cancel onClick={() => setOpenDialogBox(false)} />
+            </p>
           </Dialog>
         )}
       </Box>

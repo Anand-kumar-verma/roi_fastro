@@ -36,7 +36,8 @@ function Withdrawal() {
     const reqbody = {
       wallet_add: String(fk.values.walletAddress)?.trim(),
       amount: Number(fk.values.amount),
-      wallet_type: withdrawalType === "jackpot" ? 3 : 2,
+      wallet_type:
+        withdrawalType === "jackpot" ? 3 : withdrawalType === "wingo" ? 4 : 2,
     };
     if (fk.values.amount === "" || Number(fk.values.amount) < 2)
       return toast("Amount should be grater or equal to 2$", { id: 1 });
@@ -129,6 +130,8 @@ function Withdrawal() {
                 <span className="!text-green-500 !text-lg">
                   {withdrawalType === "jackpot"
                     ? Number(userData?.jnr_game_winning || 0)?.toFixed(2)
+                    : withdrawalType === "wingo"
+                    ? Number(userData?.jnr_wingo_game_wallet || 0).toFixed(2)
                     : Number(userData?.jnr_curr_wallet || 0).toFixed(2)}{" "}
                   USD
                 </span>

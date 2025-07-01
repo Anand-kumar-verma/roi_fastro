@@ -253,13 +253,13 @@ const Popular = ({ curr_data_bit, curr_data_Eth }) => {
           ></div>
 
           {/* Floating Jackpot Icon */}
-          <div className="fixed bottom-20 right-4 w-20 h-20 rounded-full overflow-hidden border-4 border-yellow-400 z-50 shadow-lg animate-bounce">
+          {/* <div className="fixed bottom-20 right-4 w-20 h-20 rounded-full overflow-hidden border-4 border-yellow-400 z-50 shadow-lg animate-bounce">
             <img
               src={jackgif}
               alt="jackpot gif"
               className="w-full h-full object-cover"
             />
-          </div>
+          </div> */}
 
           <div className="relative z-10 max-w-3xl mx-auto text-center bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-3xl shadow-2xl">
             <div className="flex justify-center mb-6">

@@ -3,6 +3,7 @@ import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Wingo from "../wingo/wingo/Wingo";
 import JackpotCountdown from "./JackpotCountdown";
 import Navbar from "./Navbar";
+import MinesCountdown from "./ColorPrediction";
 
 const GameProject = () => {
   const [activeTab, setActiveTab] = useState("jackpot");
@@ -13,16 +14,6 @@ const GameProject = () => {
       {/* Tab Header */}
       <div className="bg-[#111827] text-white px-4 py-3 flex justify-center gap-4 shadow-md pt-[20%]">
         <button
-          onClick={() => setActiveTab("jackpot")}
-          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
-            activeTab === "jackpot"
-              ? "bg-yellow-400 text-black shadow-lg"
-              : "bg-gray-700 hover:bg-gray-600"
-          }`}
-        >
-          🎉 Jackpot Game
-        </button>
-        <button
           // onClick={() => navigate("/wingo")}
           onClick={() => setActiveTab("wingo")}
           className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
@@ -31,7 +22,28 @@ const GameProject = () => {
               : "bg-gray-700 hover:bg-gray-600"
           }`}
         >
-          🎯 Wingo Game
+          Wingo
+        </button>
+        <button
+          onClick={() => setActiveTab("jackpot")}
+          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
+            activeTab === "jackpot"
+              ? "bg-yellow-400 text-black shadow-lg"
+              : "bg-gray-700 hover:bg-gray-600"
+          }`}
+        >
+          Jackpot
+        </button>
+        <button
+          // onClick={() => navigate("/wingo")}
+          onClick={() => setActiveTab("mines")}
+          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
+            activeTab === "mines"
+              ? "bg-pink-400 text-black shadow-lg"
+              : "bg-gray-700 hover:bg-gray-600"
+          }`}
+        >
+          Mines
         </button>
       </div>
 
@@ -40,7 +52,7 @@ const GameProject = () => {
         {activeTab === "jackpot" && <JackpotCountdown />}
         {/* {activeTab === "jackpot" && <JackpotCountdownOLD />} */}
         {activeTab === "wingo" && <Wingo />}
-        {/* {activeTab === "wingo" && <WingoCountdown />} */}
+        {activeTab === "mines" && <MinesCountdown />}
       </div>
 
       <ButtomNavigation />

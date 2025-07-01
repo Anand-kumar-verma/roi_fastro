@@ -17,6 +17,8 @@ import JackpotPayin from "./main/Buy/JackpotPayin";
 import ActivationWithFST from "./main/Payment/ActivationWithFST";
 import { routes } from "./routes/Routes";
 import "./wingo/assets/style/main.css";
+import WingoPayin from "./wingo/payin/Wingopayin";
+import TokenBuy from "./main/Payment/TokenBuy";
 
 const App = () => {
   const user = localStorage.getItem("logindataen");
@@ -52,12 +54,13 @@ const App = () => {
         {/* Public Routes */}
         <Route path="/game-usdt" element={<DepositUSDT />} />
         <Route path="/jackpot-payin" element={<JackpotPayin />} />
+        <Route path="/wingo-payin" element={<WingoPayin />} />
         <Route path="/game-fst" element={<DepositFST />} />
         <Route path="/home" element={<Home />} />
         <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        {/* <Route path="/activation-link" element={<Activation />} /> */}
+        <Route path="/buy-fst-token" element={<TokenBuy />} />
         <Route path="/activation-link" element={<ActivationWithFST />} />
         {/* <Route path="/activation-link-fst" element={<ActivationWithFST />} /> */}
         {/* <Route path="/withdrawal-link" element={<Withdrawal />} /> */}

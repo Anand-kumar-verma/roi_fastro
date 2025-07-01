@@ -182,6 +182,12 @@ export default function Navbar() {
             >
               <BsTrophy className="text-blue-400" /> Buy Ticket
             </p>
+            {/* <p
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
+              onClick={() => navigate("/my-fst-orders")}
+            >
+              <BsTrophy className="text-blue-400" /> FST Orders
+            </p> */}
             <p
               className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => navigate("/topup_detail")}
@@ -245,17 +251,17 @@ export default function Navbar() {
                     Weekly Income
                   </div>
 
-                  {/* <div
-                    className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate('/jackpot_income')}
-                  >
-                    Jackpot Income
-                  </div> */}
                   <div
                     className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
                     onClick={() => navigate("/award-reward")}
                   >
                     Award-Reward
+                  </div>
+                  <div
+                    className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
+                    onClick={() => navigate("/betting-income")}
+                  >
+                    Betting Income
                   </div>
                 </div>
               )}

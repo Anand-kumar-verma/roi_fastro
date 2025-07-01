@@ -1,10 +1,12 @@
 import FstList from "../Adminpages/Pages/INRPayment/FstList";
 import AwardReward from "../Income/AwardReward";
+import BettingIncome from "../Income/BettingIncome";
 import BoosterIncome from "../Income/Booster";
 import CompoundHistory from "../Income/CompoundHistory";
 import DirectIncome from "../Income/DirectIncome";
 import Jackpot from "../Income/Jackpot";
 import LevelIncome from "../Income/LevelIncome";
+import MyFSTOrders from "../Income/MyFSTOrders";
 import RoiIncome from "../Income/RoiIncome";
 import SupportTicketList from "../Income/SupportTicketList";
 import TicketList from "../Income/TicketList";
@@ -33,11 +35,24 @@ import AssociateSignUp from "../main/Signup";
 import Teamdata from "../main/Teamdata";
 import TopUP from "../main/TopupDetails";
 import ViewProfile from "../main/ViewProfile";
+import PromotionData from "../wingo/wingo/PromotionData";
 import Wingo from "../wingo/wingo/Wingo";
 export const routes = [
   {
     path: "/dashboard",
     component: <Dashbaord />,
+  },
+  {
+    path: "/promotion-data",
+    component: <PromotionData />,
+  },
+  {
+    path: "/betting-income",
+    component: <BettingIncome />,
+  },
+  {
+    path: "/my-fst-orders",
+    component: <MyFSTOrders />,
   },
   {
     path: "/team-business-count",

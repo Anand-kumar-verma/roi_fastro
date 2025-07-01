@@ -1,10 +1,10 @@
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { ethers } from "ethers";
 import { useFormik } from "formik";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/Loader";
 import {
@@ -13,13 +13,18 @@ import {
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { deCryptData, enCryptData } from "../../utils/Secret";
+import { use } from "react";
 const tokenABI = [
   // balanceOf function ABI
   "function balanceOf(address owner) view returns (uint256)",
   // transfer function ABI
   "function transfer(address to, uint256 amount) returns (bool)",
 ];
-function Activation() {
+const distributorABI = [
+  "function distribute(address to, uint256 amount) external",
+];
+function TokenBuy() {
+  const client = useQueryClient();
   const [walletAddress, setWalletAddress] = useState("");
   const [no_of_Tokne, setno_of_Tokne] = useState("");
   const [transactionHash, setTransactionHash] = useState("");
@@ -32,6 +37,31 @@ function Activation() {
   const IdParam = params?.get("token");
   const base64String = IdParam?.trim();
   //  atob(IdParam);
+
+  const {
+    data: user,
+    refetch,
+    isError,
+    error,
+  } = useQuery(
+    ["get_user_wallet"],
+    () =>
+      apiConnectorPostWithdouToken(
+        endpoint?.get_user_wallet_by_cust_id,
+        { lgn_cust_id: fk.values.user_id },
+        base64String
+      ),
+    {
+      enabled: false, // 👈 disables automatic call
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const res = user?.data?.result || [];
+
   const { data: general_address } = useQuery(
     ["contract_address_api"],
     () =>
@@ -52,7 +82,7 @@ function Activation() {
   const fk = useFormik({
     initialValues: {
       inr_value: "",
-      pack_id: "SelectPackage",
+      user_id: "",
     },
   });
   async function requestAccount() {
@@ -86,7 +116,7 @@ function Activation() {
         // Create a contract instance for the ZP token
         // console.log(address?.token_contract_add);
         const tokenContract = new ethers.Contract(
-          address?.token_contract_add,
+          "0x55d398326f99059fF775485246999027B3197955",
           tokenABI,
           provider
         );
@@ -103,138 +133,126 @@ function Activation() {
     setLoding(false);
   }
 
-  async function sendTokenTransaction() {
-    if (!address?.receiving_key) return toast("Please add Receiving Address");
-    if (!address?.token_contract_add)
-      return toast("Please add your contract Address");
-    if (!walletAddress) return toast("Please Connect your wallet.");
-    if (
-      Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ) > no_of_Tokne
-    )
-      return toast("Your Wallet Amount is low.");
-    setLoding(true);
+async function sendTokenTransaction() {
+  if (!res?.lgn_wallet_add) return toast("Please add Receiving Address");
+  if (!user?.data?.success) return toast(user?.data?.message);
+  if (!walletAddress) return toast("Please connect your wallet.");
+  if (Number(fk.values.inr_value) > no_of_Tokne)
+    return toast("Your wallet amount is low.");
 
-    if (!window.ethereum) {
-      toast("MetaMask not detected");
+  setLoding(true);
+
+  if (!window.ethereum) {
+    toast("MetaMask not detected");
+    setLoding(false);
+    return;
+  }
+
+  await window.ethereum.request({
+    method: "wallet_switchEthereumChain",
+    params: [{ chainId: "0x38" }], // BSC Mainnet
+  });
+
+  try {
+    const dummyData = await PayinZpDummy();
+    if (!dummyData?.success || !dummyData?.last_id || Number(dummyData?.last_id) < 1) {
       setLoding(false);
-      return;
+      return toast(dummyData?.message || "Transaction init failed");
     }
 
-    if (fk.values.pack_id === "SelectPackage") {
+    const last_id = Number(dummyData?.last_id);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    const tokenAmount = ethers.utils.parseUnits(
+      String(Number(fk.values.inr_value)?.toFixed(6)),
+      18
+    );
+
+    const usdtTokenAddress = "0x55d398326f99059fF775485246999027B3197955"; // USDT BEP-20
+    const distributorAddress = "0x34EEAe8338A19f29e217cF8331954A18f34176C2";
+
+    const usdtABI = [
+      "function approve(address spender, uint256 amount) public returns (bool)",
+      "function allowance(address owner, address spender) public view returns (uint256)",
+      "function balanceOf(address account) public view returns (uint256)",
+    ];
+
+    const distributorABI = [
+      "function distribute(address to, uint256 amount) external",
+    ];
+
+    const usdtContract = new ethers.Contract(usdtTokenAddress, usdtABI, signer);
+    const distributorContract = new ethers.Contract(distributorAddress, distributorABI, signer);
+
+    // ✅ Check token balance
+    const tokenBalance = await usdtContract.balanceOf(await signer.getAddress());
+    if (tokenBalance.lt(tokenAmount)) {
       setLoding(false);
-      return toast("Select Your Package.");
+      return toast("Insufficient USDT balance.");
     }
 
-    await window.ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x38" }], // Chain ID for Binance Smart Chain Mainnet
-    });
+    // ✅ Check and approve if required
+    const allowance = await usdtContract.allowance(await signer.getAddress(), distributorAddress);
+    if (allowance.lt(tokenAmount)) {
+      const approveTx = await usdtContract.approve(distributorAddress, tokenAmount);
+      await approveTx.wait();
+    }
 
+    // ✅ Estimate gas (fallback if error)
+    let gasLimit;
     try {
-      const dummyData = await PayinZpDummy();
-      if (
-        dummyData?.success == false ||
-        !dummyData?.last_id ||
-        dummyData?.last_id === null ||
-        dummyData?.last_id === undefined ||
-        Number(dummyData?.last_id) < 1
-      ) {
-        setLoding(false);
-        return toast(dummyData?.message);
-      }
-      const last_id = Number(dummyData?.last_id);
-      console.log(last_id, "hiii");
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-
-      const tokenAmount = ethers.utils.parseUnits(
-        String(
-          Number(
-            res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-              ?.pack_amount
-          )?.toFixed(6)
-        ),
-        18
-      ); // Calculate the token amount to transfer
-
-      // Create a contract instance for the token
-      const tokenContract = new ethers.Contract(
-        address?.token_contract_add,
-        tokenABI,
-        signer
-      );
-      const gasPrice = await provider.getGasPrice();
-      const gasEstimate = await tokenContract.estimateGas.transfer(
-        address?.receiving_key,
+      const estimateGas = await distributorContract.estimateGas.distribute(
+        res?.lgn_wallet_add,
         tokenAmount
       );
-
-      // Calculate total gas cost in BNB
-      const totalGasCost = gasEstimate.mul(gasPrice);
+      const gasPrice = await provider.getGasPrice();
+      const totalGasCost = estimateGas.mul(gasPrice);
       setGasPrice(ethers.utils.formatEther(totalGasCost));
 
       const bnbBalance = await provider.getBalance(await signer.getAddress());
       if (bnbBalance.lt(totalGasCost)) {
         setLoding(false);
-        return toast(
-          `Insufficient BNB for gas fees. You need at least ${ethers.utils.formatEther(
-            totalGasCost
-          )} BNB.`
-        );
+        return toast(`Insufficient BNB for gas. Need ${ethers.utils.formatEther(totalGasCost)} BNB.`);
       }
 
-      // Validate token balance
-      const tokenBalance = await tokenContract.balanceOf(
-        await signer.getAddress()
-      );
-      if (tokenBalance.lt(tokenAmount)) {
-        setLoding(false);
-        return toast("Insufficient token balance.");
-      }
-
-      // Send the token transfer transaction
-      const transactionResponse = await tokenContract.transfer(
-        address?.receiving_key,
-        tokenAmount
-      );
-      const receipt = await transactionResponse.wait();
-
-      setTransactionHash(transactionResponse.hash);
-      setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
-      // console.log(receipt);
-      // Call PayinZp function with appropriate status and gas price
-      if (receipt.status === 1) {
-        PayinZp(
-          ethers.utils.formatEther(totalGasCost),
-          transactionResponse.hash,
-          2,
-          last_id // Pass last_id here
-        );
-      } else {
-        PayinZp(
-          ethers.utils.formatEther(totalGasCost),
-          transactionResponse.hash,
-          3,
-          last_id // Pass last_id here
-        );
-      }
-    } catch (error) {
-      console.log(error);
-      toast("Token transaction failed", error);
+      gasLimit = estimateGas;
+    } catch (e) {
+      gasLimit = ethers.BigNumber.from("200000"); // fallback
     }
 
-    setLoding(false);
+    // ✅ Call distribute function
+    const tx = await distributorContract.distribute(res?.lgn_wallet_add, tokenAmount, {
+      gasLimit,
+    });
+    const receipt = await tx.wait();
+
+    setTransactionHash(tx.hash);
+    setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
+
+    if (receipt.status === 1) {
+      toast.success("Transaction successful");
+      await PayinZp(ethers.utils.formatEther(gasLimit), tx.hash, 2, last_id);
+    } else {
+      toast.error("Transaction failed");
+      await PayinZp(ethers.utils.formatEther(gasLimit), tx.hash, 3, last_id);
+    }
+
+  } catch (error) {
+    console.error(error);
+    toast.error("Token transaction failed");
   }
+
+  setLoding(false);
+}
+
 
   async function PayinZp(gasPrice, tr_hash, status, id) {
     setLoding(true);
 
     const reqbody = {
-      req_amount: Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ),
+      seller_id: res?.lgn_jnr_id,
+      req_amount: Number(fk.values.inr_value),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: tr_hash,
       u_trans_status: status,
@@ -246,7 +264,7 @@ function Activation() {
     };
     try {
       const res = await apiConnectorPostWithdouToken(
-        endpoint?.paying_api,
+        endpoint?.fst_buy_order,
         {
           payload: enCryptData(reqbody),
         },
@@ -262,9 +280,9 @@ function Activation() {
 
   async function PayinZpDummy() {
     const reqbody = {
-      req_amount: Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ),
+      seller_receiver_wallet: res?.lgn_wallet_add,
+      seller_id: res?.lgn_jnr_id,
+      req_amount: Number(fk.values.inr_value),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: "xxxxxxxxxx",
       u_trans_status: 1,
@@ -287,20 +305,6 @@ function Activation() {
       console.log(e);
     }
   }
-
-  const { data: user } = useQuery(
-    ["package_api"],
-    () =>
-      apiConnectorGetWithoutToken(endpoint?.package_list_api, {}, base64String),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const res = user?.data?.result || [];
 
   return (
     <>
@@ -345,37 +349,51 @@ function Activation() {
               </p>
             </div>
           </div>
-          <p className="my-2 font-bold text-gold-color">Select Your Package</p>
+          <p className="font-bold text-gold-color">Enter Seller Id:</p>
+          <div className="flex items-center gap-2">
+            <div className="flex flex-col">
+              <TextField
+                className="!bg-white"
+                id="user_id"
+                name="user_id"
+                value={fk.values.user_id}
+                onChange={fk.handleChange}
+              />
+              {!user?.data?.success ? (
+                <span className="!text-[10px] !text-rose-500">
+                  {user?.data?.message}
+                </span>
+              ) : (
+                <span className="!text-[10px] !text-green-500">
+                  {res?.lgn_wallet_add}
+                </span>
+              )}
+            </div>
+            <Button
+              variant="contained"
+              onClick={() => fk.values.user_id && refetch()}
+            >
+              Fetch
+            </Button>
+          </div>
+          <p className="font-bold text-gold-color">
+            Enter USD: (FST Price: {Number(address?.token_price)?.toFixed(2)})
+          </p>
           <TextField
-            select
-            id="pack_id"
-            name="pack_id"
-            value={fk.values.pack_id}
+            className="!bg-white"
+            id="inr_value"
+            name="inr_value"
+            value={fk.values.inr_value}
             onChange={fk.handleChange}
-            sx={{
-              "& .MuiSelect-select": {
-                color: "#60A5FA",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#60A5FA",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#60A5FA",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#60A5FA",
-                },
-              },
-            }}
-          >
-            <MenuItem value="SelectPackage">Select Package</MenuItem>
-            {res?.map((item) => (
-              <MenuItem key={item?.pack_id} value={item?.pack_id}>
-                {item?.pack_name}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
+          <p className="font-bold text-gold-color">Token Count:</p>
+          <TextField
+            className="!bg-white"
+            value={Number(
+              Number(fk.values.inr_value) * Number(address?.token_price) * 0.9
+            )?.toFixed(2)}
+            onChange={fk.handleChange}
+          />
 
           <button
             className="!bg-gold-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"
@@ -404,4 +422,4 @@ function Activation() {
     </>
   );
 }
-export default Activation;
+export default TokenBuy;

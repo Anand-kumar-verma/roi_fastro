@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import logo from '../images/fastro.png';
+import React, { useRef } from "react";
+import logo from "../images/fastro.png";
 
 export default function Footer() {
   const scrollRef1 = useRef(null);
@@ -75,9 +75,32 @@ export default function Footer() {
             Quick Links
           </h2>
           <ul className="list-none">
-            <li className="mb-2 text-gray-400 hover:text-blue-500">Home</li>
-            <li className="mb-2 text-gray-400 hover:text-blue-500">Markets</li>
-            <li className="mb-2 text-gray-400 hover:text-blue-500">About</li>
+            <li
+              className="mb-2 text-gray-400 hover:text-blue-500"
+              onClick={() =>
+                (document.location.href =
+                  "https://www.instagram.com/fastrofst/")
+              }
+            >
+              Instagram
+            </li>
+            <li
+              className="mb-2 text-gray-400 hover:text-blue-500"
+              onClick={() =>
+                (document.location.href =
+                  "https://www.facebook.com/profile.php?id=61577628517571")
+              }
+            >
+              Facebook
+            </li>
+            <li
+              className="mb-2 text-gray-400 hover:text-blue-500"
+              onClick={() =>
+                (document.location.href = "https://www.youtube.com/@FastroFST")
+              }
+            >
+              YouTube
+            </li>
             <li className="mb-2 text-gray-400 hover:text-blue-500">
               Contact Us
             </li>
