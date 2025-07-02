@@ -3,7 +3,7 @@ import { apiConnectorGet } from "../../utils/APIConnector";
 import { endpoint } from "../services/urls";
 
 const PromotionData = () => {
-  const { isLoading, data: wallet_amount } = useQuery(
+  const {data: wallet_amount } = useQuery(
     ["wallet_amount"],
     () => apiConnectorGet(endpoint?.game_profile),
     {
