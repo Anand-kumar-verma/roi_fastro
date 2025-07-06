@@ -10,6 +10,7 @@ import { endpoint } from "../utils/APIRoutes";
 import {
   saveToken,
   saveUid,
+  saveUserCP,
   saveUsername,
 } from "../wingo/redux/slices/counterSlice";
 
@@ -59,14 +60,17 @@ const Login = () => {
         setOpenDialogBox(true);
         return;
       }
+      console.log(response.data);
       if (response?.data?.message === "Login Successfully") {
         dispatch(saveUid(reqBodyy?.mobile));
         dispatch(saveToken(response?.data?.result?.[0]?.token));
         dispatch(saveUsername(datatele?.username));
+        dispatch(saveUserCP(response?.data?.result?.[0]?.isCP));
         localStorage.setItem("logindataen", response?.data?.result?.[0]?.token);
         localStorage.setItem("uid", reqBodyy?.mobile);
         localStorage.setItem("username", datatele?.username);
-        navigate("/home");
+        localStorage.setItem("isCP", response?.data?.result?.[0]?.isCP);
+        // navigate("/home");
         // window.location.reload();
       }
     } catch (error) {
@@ -77,7 +81,7 @@ const Login = () => {
   useEffect(() => {
     // const bo = "1840589027";
     // const token =
-    //   "AFO8ifkduOcVZIb26bV1cwr4CN4BFvVJ1UsoJ3t2QglvQB3Fa6UKKiaa5iOSDFZHI8SbHZKc0jnhwdmxHFGTUSBEcbTDZLtouS0M";
+    //   "gMKAki8JrRS0en5pENHBWeQYDvxY4tm8q8L7DMlDltQKN8h2EkQz9GCIL5kjdf9HNcNrPCRJyOIQUPXHG6aIB3WPvHIrkS2q9bVY";
     // // const token =
     // //   "XtyRTPEtH6qCmWfpnCowMMrBQSOjrpqK3e62K64GmDdG5uaOBYJHsTneCZtiMZP9hejinINRSzGpfcAqu1ucJ0Cscs2XAwqqmOTJ";
     // dispatch(saveUid(bo));

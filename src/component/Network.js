@@ -1,16 +1,19 @@
-import { FaUserCheck, FaUserPlus, FaUserTimes } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import toast from "react-hot-toast";
+import { FaUserCheck, FaUserTimes } from "react-icons/fa";
+import { FaCircleUser, FaUserGroup } from "react-icons/fa6";
 import { PiMicrosoftTeamsLogoLight } from "react-icons/pi";
 import { VscFileSubmodule } from "react-icons/vsc";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../dashboard/Navbar";
 import crown from "../images/crown.png";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
-import { FaCircleUser } from "react-icons/fa6";
 const Network = () => {
+  const navigate = useNavigate();
   const { isLoading: proLoding, data: profile_data } = useQuery(
     ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
@@ -35,6 +38,7 @@ const Network = () => {
     }
   );
   const level_business = LevelBusiness?.data?.result || [];
+  console.log(profile);
   return (
     <>
       <Navbar />
@@ -49,22 +53,45 @@ const Network = () => {
         <div className="md:grid md:grid-cols-3 grid grid-cols-1 gap-3 pt-2">
           <div className="bg-glassy !border px-5 !border-gold-color flex items-center w-full h-20">
             <div className="flex justify-between w-full items-center">
-              <div className="flex items-center gap-2">
-                <img
-                  src={crown}
-                  alt="Crown"
-                  className="w-6 h-6 md:w-8 md:h-8"
-                />
-                <p className="text-white text-sm md:text-lg font-medium text-nowrap">
-                  Current Reward
-                </p>
+              <div className="!flex !flex-col !justify-center !gap-2">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={crown}
+                    alt="Crown"
+                    className="w-6 h-6 md:w-8 md:h-8"
+                  />
+                  <p className="text-white text-sm md:text-lg font-medium text-nowrap">
+                    Current Reward
+                  </p>
+                </div>{" "}
+                {Number(profile?.jrn_rewart_wallet || 0) > 0 && (
+                  <button
+                    variant="contained"
+                    className="!rounded-full !bg-gold-color !text-text-color !font-bold !px-2 !py-1 !text-[10px]"
+                    onClick={() =>
+                      // Number(profile?.jnr_wingo_game_wallet || 0) > 0
+                      //   ? navigate("/withdrawal-link", {
+                      //       state: {
+                      //         type: "wingo",
+                      //       },
+                      //     })
+                      //   :
+                      toast("Service will start soon!", { id: 1 })
+                    }
+                  >
+                    Withdrawal
+                  </button>
+                )}
               </div>
               <div>
-                <p className="text-text-color text-end  font-semibold">
-                  No Reward
+                <p className="text-gold-color text-end  font-semibold">
+                  {Number(profile?.jnr_achieve_reward || 0) > 0
+                    ? `${profile?.jnr_achieve_reward} Reward Achieved`
+                    : "No Reward"}
                 </p>
-                <p className="text-xs text-text-color text-end pt-2">
-                  Next Reward: 0.00 USD
+                <p className="text-xs text-gold-color text-end pt-2">
+                  Award Reward:{" "}
+                  {Number(profile?.jrn_rewart_wallet || 0)?.toFixed(2)} USD
                 </p>
               </div>
             </div>
@@ -223,29 +250,21 @@ const Network = () => {
               </div>
             </div>
           </div>
-          {/* <div class="rounded-xl p-4 bg-gradient-to-r from-[#3a60a7] to-[#94f37e] shadow-lg text-white">
+          <div class="rounded-xl p-4 bg-gradient-to-r from-[#3a60a7] to-[#94f37e] shadow-lg text-white">
             <div class="flex md:flex-row flex-col md:gap-0 gap-2 justify-between items-center  h-full space-x-3">
               <div class="text-blue-500 text-3xl">
-                <VscFileSubmodule className="!w-10 !h-10 !text-[#4ff02b]" />
+                <CurrencyExchangeIcon className="!w-10 !h-10 !text-[#4ff02b]" />
               </div>
               <div className="flex flex-col gap-0 md:gap-2">
                 <p class="text-sm md:text-2xl text-gold-color">
-                  Total Team Re Buss
+                  Total Deactive Buss
                 </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {Number(
-                    Number(level_business?.[0]?.tb_buss_lev_1 || 0) +
-                      Number(level_business?.[0]?.tb_buss_lev_2 || 0) +
-                      Number(level_business?.[0]?.tb_buss_lev_3 || 0) +
-                      Number(level_business?.[0]?.tb_buss_lev_4 || 0) +
-                      Number(level_business?.[0]?.tb_buss_lev_5 || 0) +
-                      Number(level_business?.[0]?.tb_buss_lev_6 || 0)
-                  )?.toFixed(2) || 0}{" "}
-                  USD
+                  {Number(profile?.jnr_collapse_pkg)?.toFixed(2) || 0} USD
                 </p>
               </div>
             </div>
-          </div> */}
+          </div>
 
           {/* <div className="bg-glassy p-4 rounded-xl gap-2 flex flex-col shadow-md text-text-color">
             <VscFileSubmodule className="!w-10 !h-10" />

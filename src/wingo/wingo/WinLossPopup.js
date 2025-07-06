@@ -1,12 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loss from "../assets/images/loss.png";
-import win from "../assets/images/winnner.png";
-import { endpoint, rupees } from "../services/urls";
-import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import zero from "../assets/images/n0-30bd92d1.png";
 import one from "../assets/images/n1-dfccbff5.png";
 import two from "../assets/images/n2-c2913607.png";
@@ -17,6 +13,9 @@ import six from "../assets/images/n6-a56e0b9a.png";
 import seven from "../assets/images/n7-5961a17f.png";
 import eight from "../assets/images/n8-d4d951a4.png";
 import nine from "../assets/images/n9-a20f6f42 (1).png";
+import win from "../assets/images/winnner.png";
+import { rupees } from "../services/urls";
+import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 const WinLossPopup = () => {
   let array = [zero, one, two, three, four, five, six, seven, eight, nine];
   const [loding, setloding] = useState(false);

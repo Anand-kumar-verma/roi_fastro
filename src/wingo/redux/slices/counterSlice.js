@@ -29,6 +29,7 @@ export const slice = createSlice({
     myHistory_trx_one_min: [],
     wallet_real_balance: 0.0,
     username: "",
+    isCP: "",
     uid: "",
     logindataen: "",
   },
@@ -100,6 +101,9 @@ export const slice = createSlice({
     saveUsername: (state, actions) => {
       state.username = actions.payload;
     },
+    saveUserCP: (state, actions) => {
+      state.isCP = actions.payload;
+    },
   },
 });
 
@@ -125,6 +129,7 @@ export const {
   saveUsername,
   saveToken,
   saveUid,
+  saveUserCP
 } = slice.actions;
 
 // export const incrementAsync = amount => dispatch => {

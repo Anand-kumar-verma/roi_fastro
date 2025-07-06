@@ -11,13 +11,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { apiConnectorPost } from "../../utils/APIConnector";
+import { endpoint } from "../../utils/APIRoutes";
 import zero from "../assets/images/n0-30bd92d1.png";
 import one from "../assets/images/n1-dfccbff5.png";
 import two from "../assets/images/n2-c2913607.png";
@@ -28,14 +29,12 @@ import six from "../assets/images/n6-a56e0b9a.png";
 import seven from "../assets/images/n7-5961a17f.png";
 import eight from "../assets/images/n8-d4d951a4.png";
 import nine from "../assets/images/n9-a20f6f42 (1).png";
+import { rupees } from "../services/urls";
 import FalseCheck from "../shared/check/FalseCheck";
 import SuccessCheck from "../shared/check/SuccessCheck";
 import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import theme from "../utils/theme";
 import Howtoplay from "./component/Howtoplay";
-import { apiConnectorPost } from "../../utils/APIConnector";
-import { endpoint } from "../../utils/APIRoutes";
-import { rupees } from "../services/urls";
 
 const BetNumber = ({ timing, gid }) => {
   const user_id = localStorage.getItem("user_id");
@@ -142,7 +141,7 @@ const BetNumber = ({ timing, gid }) => {
     }
     // client.refetchQueries("walletamount");
     client.refetchQueries("wallet_amount");
-    client.refetchQueries("myAllhistory_"+gid);
+    client.refetchQueries("myAllhistory_" + gid);
     fk.setFieldValue("balance", "1");
     fk.setFieldValue("qnt", "1");
     setLoding(false);
@@ -429,17 +428,16 @@ const BetNumber = ({ timing, gid }) => {
               color="initial"
               sx={{ textAlign: "center", color: "white", fontWeight: "700 " }}
             >
-              
-               Win Go{' '}
-              {gid === '1'
-                ? '1 Min'
-                : gid === '4'
-                ? '30 Sec'
-                : gid === '2'
-                ? '3 Min'
-                : gid === '3'
-                ? '5 Min'
-                : ''}
+              Win Go{" "}
+              {gid === "1"
+                ? "1 Min"
+                : gid === "4"
+                ? "30 Sec"
+                : gid === "2"
+                ? "3 Min"
+                : gid === "3"
+                ? "5 Min"
+                : ""}
             </Typography>
             <Typography
               variant="body1"
@@ -478,7 +476,7 @@ const BetNumber = ({ timing, gid }) => {
                   alignItems={"center"}
                   justifyContent={"space-between"}
                 >
-                  {[1, 10, 100, 1000]?.map((i) => {
+                  {[0.1, 1, 5, 10]?.map((i) => {
                     return (
                       <Box
                         onClick={() => fk.setFieldValue("balance", i)}
@@ -743,7 +741,9 @@ const BetNumber = ({ timing, gid }) => {
                 }}
               >
                 Total amount {rupees}
-                {Number(fk.values.balance || 1) * Number(fk.values.qnt || 1)}
+                {(
+                  Number(fk.values.balance || 1) * Number(fk.values.qnt || 1)
+                )?.toFixed(4)}
               </Button>
             </Grid>
           </Grid>

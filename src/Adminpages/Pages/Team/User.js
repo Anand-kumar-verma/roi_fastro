@@ -86,7 +86,7 @@ const UserDetail = () => {
     <span>Total Income</span>,
     <span>Curr Wallet</span>,
     <span>Date/Time</span>,
-    <span>Income | Profile | DW</span>,
+    <span>Income | Profile | DW | OL</span>,
   ];
 
   const tablerow = data?.data?.map((i, index) => {
@@ -135,55 +135,85 @@ const UserDetail = () => {
             className={`!text-gray-700`}
           />
         </IconButton>
+        <IconButton onClick={() => stopIncome(i?.lgn_cust_id, "openlevel")}>
+          <DoNotDisturbAltIcon
+            className={`${
+              i?.jnr_is_open_al_level === "True"
+                ? "!text-green-500"
+                : "!text-rose-500"
+            }`}
+          />
+        </IconButton>
       </span>,
     ];
   });
 
   return (
     <div>
-      <div className="flex px-2 gap-5 !justify-start py-2">
-        <span className="font-bold">From:</span>
-        <TextField
-          type="date"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        />
-        <span className="font-bold">To:</span>
-        <TextField
-          type="date"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        />
-        <TextField
-          type="search"
-          placeholder="Search by user id"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Button
-          onClick={() => {
-            setPage(1); // reset to page 1 on new filter
-            UserBonusFn();
-          }}
-          variant="contained"
-          startIcon={<FilterAlt />}
-        >
-          Filter
-        </Button>
-        <Button
-          onClick={() => {
-            setSearch("");
-            setTo_date("");
-            setFrom_date("");
-            setPage(1); // reset to first page
-            UserBonusFn();
-          }}
-          variant="outlined"
-          startIcon={<FilterAltOffIcon />}
-        >
-          Remove Filter
-        </Button>
+      <div className="flex flex-col md:flex-row px-2 gap-4 md:gap-5 py-2 items-start md:items-end">
+        <div className="flex flex-col w-full md:w-auto">
+          <span className="font-bold mb-1">From:</span>
+          <TextField
+            type="date"
+            value={from_date}
+            onChange={(e) => setFrom_date(e.target.value)}
+            size="small"
+            fullWidth
+          />
+        </div>
+
+        <div className="flex flex-col w-full md:w-auto">
+          <span className="font-bold mb-1">To:</span>
+          <TextField
+            type="date"
+            value={to_date}
+            onChange={(e) => setTo_date(e.target.value)}
+            size="small"
+            fullWidth
+          />
+        </div>
+
+        <div className="flex flex-col w-full md:w-auto">
+          <span className="font-bold mb-1">User ID:</span>
+          <TextField
+            type="search"
+            placeholder="Search by user id"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            size="small"
+            fullWidth
+          />
+        </div>
+
+        <div className="flex gap-2 w-full md:w-auto mt-2 md:mt-0">
+          <Button
+            onClick={() => {
+              setPage(1);
+              UserBonusFn();
+            }}
+            variant="contained"
+            startIcon={<FilterAlt />}
+            fullWidth
+          >
+            Filter
+          </Button>
+          <Button
+            onClick={() => {
+              setSearch("");
+              setTo_date("");
+              setFrom_date("");
+              setPage(1);
+              UserBonusFn();
+            }}
+            variant="outlined"
+            startIcon={<FilterAltOffIcon />}
+            fullWidth
+          >
+            Remove
+          </Button>
+        </div>
       </div>
+
       <CustomTable
         tablehead={tablehead}
         tablerow={tablerow}
