@@ -21,10 +21,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const { logindataen, uid } = useSelector((state) => state.aviator);
 
-  const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
-  // const datatele = {
-  //   id: "1840589027",
-  // };
+  // const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
+  const datatele = {
+    id: "1840589027",
+  };
   const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
 
   const loginFn = async (reqBody) => {
@@ -79,30 +79,30 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    // const bo = "1840589027";
+    const bo = "1840589027";
+    const token =
+      "9BYDFgw6pc4Ngnxc04pE5yz7NTsw3JWe0IetYCUECjReS1C7EJvxq8hXDbpGn0lpANPWBhoIjJ3KXyF1SGljafwH6xnvQODEx0r5";
     // const token =
-    //   "gMKAki8JrRS0en5pENHBWeQYDvxY4tm8q8L7DMlDltQKN8h2EkQz9GCIL5kjdf9HNcNrPCRJyOIQUPXHG6aIB3WPvHIrkS2q9bVY";
-    // // const token =
-    // //   "XtyRTPEtH6qCmWfpnCowMMrBQSOjrpqK3e62K64GmDdG5uaOBYJHsTneCZtiMZP9hejinINRSzGpfcAqu1ucJ0Cscs2XAwqqmOTJ";
-    // dispatch(saveUid(bo));
-    // dispatch(saveToken(token));
-    // localStorage.setItem("logindataen", token);
-    // localStorage.setItem("uid", bo);
-    // navigate("/home");
+    //   "XtyRTPEtH6qCmWfpnCowMMrBQSOjrpqK3e62K64GmDdG5uaOBYJHsTneCZtiMZP9hejinINRSzGpfcAqu1ucJ0Cscs2XAwqqmOTJ";
+    dispatch(saveUid(bo));
+    dispatch(saveToken(token));
+    localStorage.setItem("logindataen", token);
+    localStorage.setItem("uid", bo);
+    navigate("/home");
 
-    if (datatele?.id) {
-      if (datatele?.id && (!logindataen || !uid)) {
-        loginFn({
-          id: String(datatele?.id),
-        });
-      } else if (uid == datatele?.id) {
-        navigate("/home");
-      } else {
-        loginFn({
-          id: String(datatele?.id),
-        });
-      }
-    }
+    // if (datatele?.id) {
+    //   if (datatele?.id && (!logindataen || !uid)) {
+    //     loginFn({
+    //       id: String(datatele?.id),
+    //     });
+    //   } else if (uid == datatele?.id) {
+    //     navigate("/home");
+    //   } else {
+    //     loginFn({
+    //       id: String(datatele?.id),
+    //     });
+    //   }
+    // }
   }, [datatele]);
   // datatele
   return (

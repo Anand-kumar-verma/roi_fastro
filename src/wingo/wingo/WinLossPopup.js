@@ -44,12 +44,13 @@ const WinLossPopup = () => {
           status: "1",
           amount: winAmnt,
         });
-      } else {
-        setstatus({
-          status: "2",
-          amount: amntAmnt,
-        });
-        // toast("Your Loss");
+      } 
+      else {
+        // setstatus({
+        //   status: "2",
+        //   amount: amntAmnt,
+        // });
+        toast("Your Loss");
       }
       // setstatus(response?.data?.data?.[0]);
     } catch (e) {

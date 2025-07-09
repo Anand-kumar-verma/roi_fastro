@@ -102,49 +102,77 @@ const P2pHistory = () => {
 
   return (
     <div>
-      <div className="flex px-2 gap-5 !justify-start py-2">
-        <span className="font-bold">From:</span>
-        <TextField
-          type="date"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        />
-        <span className="font-bold">To:</span>
-        <TextField
-          type="date"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        />
-        <TextField
-          type="search"
-          placeholder="Search by user id"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Button
-          onClick={() => {
-            setPage(1); // reset to page 1 on new filter
-            P2pHistoryFunction();
-          }}
-          variant="contained"
-          startIcon={<FilterAlt />}
-        >
-          Filter
-        </Button>
-        <Button
-          onClick={() => {
-            setSearch("");
-            setTo_date("");
-            setFrom_date("");
-            setPage(1); // reset to first page
-            P2pHistoryFunction();
-          }}
-          variant="outlined"
-          startIcon={<FilterAltOffIcon />}
-        >
-          Remove Filter
-        </Button>
+      <div className="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row flex-wrap gap-4 md:gap-5 items-start md:items-end">
+        {/* From Date */}
+        <div className="flex flex-col w-full md:w-48">
+          <span className="text-sm font-semibold mb-1">From:</span>
+          <TextField
+            type="date"
+            size="small"
+            value={from_date}
+            onChange={(e) => setFrom_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* To Date */}
+        <div className="flex flex-col w-full md:w-48">
+          <span className="text-sm font-semibold mb-1">To:</span>
+          <TextField
+            type="date"
+            size="small"
+            value={to_date}
+            onChange={(e) => setTo_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Search by User ID */}
+        <div className="flex flex-col w-full md:w-64">
+          <span className="text-sm font-semibold mb-1">User ID:</span>
+          <TextField
+            type="search"
+            size="small"
+            placeholder="Search by user ID"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Filter & Remove Buttons */}
+        <div className="flex gap-2 w-full md:w-auto">
+          <Button
+            onClick={() => {
+              setPage(1);
+              P2pHistoryFunction();
+            }}
+            variant="contained"
+            color="primary"
+            startIcon={<FilterAlt />}
+            className="w-full md:w-auto"
+          >
+            Filter
+          </Button>
+
+          <Button
+            onClick={() => {
+              setSearch("");
+              setTo_date("");
+              setFrom_date("");
+              setPage(1);
+              P2pHistoryFunction();
+            }}
+            variant="outlined"
+            color="secondary"
+            startIcon={<FilterAltOffIcon />}
+            className="w-full md:w-auto"
+          >
+            Remove
+          </Button>
+        </div>
       </div>
+
       <CustomTable
         tablehead={tablehead}
         tablerow={tablerow}

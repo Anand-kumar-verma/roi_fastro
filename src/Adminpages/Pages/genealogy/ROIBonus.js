@@ -76,49 +76,75 @@ const ROIBonus = () => {
 
   return (
     <div>
-      <div className="flex px-2 gap-5 !justify-start py-2">
-        <span className="font-bold">From:</span>
-        <TextField
-          type="date"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        />
-        <span className="font-bold">To:</span>
-        <TextField
-          type="date"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        />
-        <TextField
-          type="search"
-          placeholder="Search by user id"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Button
-          onClick={() => {
-            setPage(1); // reset to page 1 on new filter
-            LevelBonusFn();
-          }}
-          variant="contained"
-          startIcon={<FilterAlt />}
-        >
-          Filter
-        </Button>
-        <Button
-          onClick={() => {
-            setSearch("");
-            setTo_date("");
-            setFrom_date("");
-            setPage(1); // reset to first page
-            LevelBonusFn();
-          }}
-          variant="outlined"
-          startIcon={<FilterAltOffIcon />}
-        >
-          Remove Filter
-        </Button>
+      <div className="bg-white shadow-md rounded-xl p-4 md:p-6 flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
+        {/* Date Range */}
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full md:w-auto">
+          <label className="text-sm font-semibold">From:</label>
+          <TextField
+            type="date"
+            size="small"
+            value={from_date}
+            onChange={(e) => setFrom_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full md:w-auto">
+          <label className="text-sm font-semibold">To:</label>
+          <TextField
+            type="date"
+            size="small"
+            value={to_date}
+            onChange={(e) => setTo_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Search Field */}
+        <div className="w-full md:w-60">
+          <TextField
+            type="search"
+            size="small"
+            placeholder="Search by User ID"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2 w-full md:w-auto">
+          <Button
+            onClick={() => {
+              setPage(1);
+              LevelBonusFn();
+            }}
+            variant="contained"
+            startIcon={<FilterAlt />}
+            className="w-full md:w-auto"
+            color="primary"
+          >
+            Apply Filter
+          </Button>
+
+          <Button
+            onClick={() => {
+              setSearch("");
+              setTo_date("");
+              setFrom_date("");
+              setPage(1);
+              LevelBonusFn();
+            }}
+            variant="outlined"
+            startIcon={<FilterAltOffIcon />}
+            className="w-full md:w-auto"
+            color="secondary"
+          >
+            Clear
+          </Button>
+        </div>
       </div>
+
       <CustomTable
         tablehead={tablehead}
         tablerow={tablerow}

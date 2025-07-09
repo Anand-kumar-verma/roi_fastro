@@ -35,7 +35,7 @@ const BettingIncome = () => {
       <Navbar />
       <Loader isLoading={isLoading}/>
       <div
-        className="text-text-color p-0 md:p-3 h-screen overflow-y-scroll flex flex-col bg-custom-gradient items-center"
+        className="text-text-color p-0 md:p-3 h-screen overflow-y-scroll flex flex-col bg-custom-gradient items-center !text-xs"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
         <div className="p-4 lg:w-[70%] w-full mt-20 ">
@@ -72,7 +72,7 @@ const BettingIncome = () => {
                       )}
                     </td>
                     <td className="md:px-6 px-2 border border-yellow-500 text-green-500 text-center py-4 text-colorspace-nowrap">
-                      {Number(item?.ledger_amount)?.toFixed(2)}
+                      {Number(item?.ledger_amount)?.toFixed(5)}
                     </td>
                     <td className="md:px-6 px-2 border border-yellow-500 text-white text-center py-4 text-colorspace-nowrap">
                       {item?.ledger_des}

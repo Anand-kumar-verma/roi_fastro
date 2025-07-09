@@ -126,10 +126,7 @@ function Wingo1Min() {
     () => GameHistoryFn("1"),
     {
       refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
     }
   );
 

@@ -5,11 +5,18 @@ import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
+import { useLocation } from "react-router-dom";
 
 function TopUP() {
+  const location = useLocation();
   const { isLoading, data: topup_data } = useQuery(
-    ["topup_api"],
-    () => apiConnectorGet(endpoint?.get_topup_api),
+    ["topup_api", location?.state?.type || "mlm"],
+    () =>
+      apiConnectorGet(
+        location?.state?.type === "wingo"
+          ? endpoint?.get_topup_api_wingo
+          : endpoint?.get_topup_api
+      ),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -28,7 +35,7 @@ function TopUP() {
         className="p-0 md:p-4 flex h-screen overflow-y-scroll flex-col items-center bg-custom-gradient"
         // style={{ backgroundImage: `url(${crypto})` }}
       >
-        <div className="p-4 lg:w-[70%] w-full mt-20 ">
+        <div className="p-4 lg:w-[70%] w-full mt-20 !mb-20">
           <h1 className="text-2xl font-bold mb-6 lg:mb-10 text-center text-gold-color">
             Top Up Details
           </h1>
@@ -58,13 +65,29 @@ function TopUP() {
                       {index + 1}
                     </td>
                     <td className="md:px-6 px-2 text-nowrap py-4 border border-yellow-500 text-gold-color  text-center text-colorrspace-nowrap">
-                      {moment?.utc(item?.topup_date)?.format("DD-MM-YYYY")}
+                      {moment
+                        ?.utc(
+                          item?.[
+                            location?.state?.type === "wingo"
+                              ? "wing_dollar_timestamp"
+                              : "topup_date"
+                          ]
+                        )
+                        ?.format("DD-MM-YYYY")}
                     </td>
                     <td className="md:px-6 px-2 text-center border border-yellow-500 text-green-500 py-4 text-colorrspace-nowrap">
-                      {Number(item?.topup_pack_amount).toFixed(2)}
+                      {Number(
+                        item?.[
+                          location?.state?.type === "wingo"
+                            ? "wingo_tr_total_cr"
+                            : "topup_pack_amount"
+                        ]
+                      ).toFixed(2)}
                     </td>
                     <td className="md:px-6 px-2  text-center border border-yellow-500 py-4 text-colorrspace-nowrap text-green-500">
-                      Success
+                      {location?.state?.type === "wingo"
+                        ? item?.wing_dollar_stauts
+                        : "Success"}
                     </td>
                   </tr>
                 ))}

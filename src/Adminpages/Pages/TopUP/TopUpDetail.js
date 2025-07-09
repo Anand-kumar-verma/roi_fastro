@@ -8,11 +8,11 @@ import {
   TextField,
 } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import CustomToPagination from "../../../Shared/CustomToPagination";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
 import CustomTable from "../../Shared/CustomTable";
-import CustomToPagination from "../../../Shared/CustomToPagination";
 
 const TopUpDetail = () => {
   const [loding, setloding] = useState(false);
@@ -72,33 +72,51 @@ const TopUpDetail = () => {
   });
   return (
     <div>
-      <div className="flex px-2 gap-5 !justify-start py-2">
-        <span className="font-bold">From:</span>
-        <TextField
-          type="date"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        />
-        <span className="font-bold">To:</span>
-        <TextField
-          type="date"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        />
-        <TextField
-          type="search"
-          placeholder="Search by user id"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <FormControl variant="outlined" size="small">
+      <div className="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row md:flex-wrap gap-4 md:items-end">
+        {/* From Date */}
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full md:w-auto">
+          <span className="text-sm font-semibold">From:</span>
+          <TextField
+            type="date"
+            size="small"
+            value={from_date}
+            onChange={(e) => setFrom_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* To Date */}
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full md:w-auto">
+          <span className="text-sm font-semibold">To:</span>
+          <TextField
+            type="date"
+            size="small"
+            value={to_date}
+            onChange={(e) => setTo_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Search by User ID */}
+        <div className="w-full md:w-64">
+          <TextField
+            type="search"
+            size="small"
+            placeholder="Search by User ID"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Select Dropdown */}
+        <FormControl className="w-full md:w-40" size="small">
           <InputLabel id="select-by-label">Select by</InputLabel>
           <Select
             labelId="select-by-label"
             value={selectBy}
             onChange={(e) => setSelectBy(e.target.value)}
             label="Select by"
-            style={{ minWidth: 120 }}
           >
             <MenuItem value="total">Total</MenuItem>
             <MenuItem value="gateway">Gateway</MenuItem>
@@ -106,14 +124,20 @@ const TopUpDetail = () => {
           </Select>
         </FormControl>
 
-        <Button
-          onClick={() => TopUpBonusFn(page)}
-          variant="contained"
-          startIcon={<FilterAlt />}
-        >
-          Filter
-        </Button>
+        {/* Filter Button */}
+        <div className="w-full md:w-auto">
+          <Button
+            onClick={() => TopUpBonusFn(page)}
+            variant="contained"
+            startIcon={<FilterAlt />}
+            className="w-full md:w-auto"
+            color="primary"
+          >
+            Filter
+          </Button>
+        </div>
       </div>
+
       <CustomTable
         tablehead={tablehead}
         tablerow={tablerow}

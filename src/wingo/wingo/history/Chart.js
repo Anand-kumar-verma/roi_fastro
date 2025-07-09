@@ -317,10 +317,10 @@ const Chart = ({ gid }) => {
                     </div>
                     <Typography
                       className={`circleNumberbody ${
-                        i?.number <= 4 ? "!bg-[#468ce8] " : "!bg-[#df4be1]"
+                        Number(i?.number) <= 4 ? "!bg-[#468ce8] " : "!bg-[#df4be1]"
                       }  !h-[20px] !w-[20px] !rounded-full !text-center circleNumberbody-number !mr-1 !text-[5px] !text-white `}
                     >
-                      {i?.tr41_slot_id?.toString() <= 4 ? "S" : "B"}
+                      {Number(i?.number) <= 4 ? "S" : "B"}
                     </Typography>
                   </Box>
                 </div>

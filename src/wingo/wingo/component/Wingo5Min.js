@@ -170,7 +170,7 @@ function Wingo5Min() {
       refetchOnReconnect: false,
       retry: false,
       retryOnMount: false,
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
     }
   );
 

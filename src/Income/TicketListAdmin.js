@@ -113,50 +113,77 @@ const TicketListAdmin = () => {
 
   return (
     <div>
-      <div className="flex px-2 gap-5 !justify-start py-2">
-        <span className="font-bold">From:</span>
-        <TextField
-          type="date"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        />
-        <span className="font-bold">To:</span>
-        <TextField
-          type="date"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        />
-        <TextField
-          type="search"
-          placeholder="Search by user id"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Button
-          onClick={() => {
-            setPage(1);
-            client.invalidateQueries(["jackpot_ticket_admin"]); // 🔁 Refetch with new filters
-          }}
-          variant="contained"
-          startIcon={<FilterAlt />}
-        >
-          Filter
-        </Button>
+      <div className="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row flex-wrap gap-4 md:gap-5 items-start md:items-end">
+        {/* From Date */}
+        <div className="flex flex-col w-full md:w-48">
+          <span className="text-sm font-semibold mb-1">From:</span>
+          <TextField
+            type="date"
+            size="small"
+            value={from_date}
+            onChange={(e) => setFrom_date(e.target.value)}
+            fullWidth
+          />
+        </div>
 
-        <Button
-          onClick={() => {
-            setSearch("");
-            setTo_date("");
-            setFrom_date("");
-            setPage(1); // reset to first page
-            // LevelBonusFn();
-          }}
-          variant="outlined"
-          startIcon={<FilterAltOffIcon />}
-        >
-          Remove Filter
-        </Button>
+        {/* To Date */}
+        <div className="flex flex-col w-full md:w-48">
+          <span className="text-sm font-semibold mb-1">To:</span>
+          <TextField
+            type="date"
+            size="small"
+            value={to_date}
+            onChange={(e) => setTo_date(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Search Field */}
+        <div className="flex flex-col w-full md:w-64">
+          <span className="text-sm font-semibold mb-1">User ID:</span>
+          <TextField
+            type="search"
+            placeholder="Search by user ID"
+            size="small"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            fullWidth
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-2 w-full md:w-auto">
+          <Button
+            onClick={() => {
+              setPage(1);
+              client.invalidateQueries(["jackpot_ticket_admin"]); // 🔁 Refetch with new filters
+            }}
+            variant="contained"
+            startIcon={<FilterAlt />}
+            color="primary"
+            className="w-full md:w-auto"
+          >
+            Filter
+          </Button>
+
+          <Button
+            onClick={() => {
+              setSearch("");
+              setTo_date("");
+              setFrom_date("");
+              setPage(1);
+              // LevelBonusFn(); // Uncomment if needed
+            }}
+            variant="outlined"
+            startIcon={<FilterAltOffIcon />}
+            color="secondary"
+            className="w-full md:w-auto"
+          >
+            Remove
+          </Button>
+        </div>
       </div>
+
       <CustomTable
         tablehead={tablehead}
         tablerow={tablerow}

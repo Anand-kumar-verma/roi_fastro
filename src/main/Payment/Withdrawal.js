@@ -125,7 +125,7 @@ function Withdrawal() {
             <div className="grid grid-cols-2 gap-4 bg-glassy p-4 border border-rose-200 rounded-lg text-sm">
               <div className="flex flex-col">
                 <span className="font-medium text-yellow-400 ">
-                  Current Balance
+                  {withdrawalType?.toUpperCase()} Current Balance 
                 </span>
                 <span className="!text-green-500 !text-lg">
                   {withdrawalType === "jackpot"

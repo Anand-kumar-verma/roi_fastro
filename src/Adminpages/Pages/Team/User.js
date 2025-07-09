@@ -54,7 +54,6 @@ const UserDetail = () => {
     }
   }
   async function handleSubmit() {
-    console.log(openPopup);
     try {
       const response = await axiosInstance.post(
         API_URLS?.amount_deducted_by_admin,
@@ -150,34 +149,37 @@ const UserDetail = () => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row px-2 gap-4 md:gap-5 py-2 items-start md:items-end">
-        <div className="flex flex-col w-full md:w-auto">
-          <span className="font-bold mb-1">From:</span>
+      <div className="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row flex-wrap gap-4 md:gap-5 items-start md:items-end">
+        {/* From Date */}
+        <div className="flex flex-col w-full md:w-48">
+          <span className="text-sm font-semibold mb-1">From:</span>
           <TextField
             type="date"
+            size="small"
             value={from_date}
             onChange={(e) => setFrom_date(e.target.value)}
-            size="small"
             fullWidth
           />
         </div>
 
-        <div className="flex flex-col w-full md:w-auto">
-          <span className="font-bold mb-1">To:</span>
+        {/* To Date */}
+        <div className="flex flex-col w-full md:w-48">
+          <span className="text-sm font-semibold mb-1">To:</span>
           <TextField
             type="date"
+            size="small"
             value={to_date}
             onChange={(e) => setTo_date(e.target.value)}
-            size="small"
             fullWidth
           />
         </div>
 
-        <div className="flex flex-col w-full md:w-auto">
-          <span className="font-bold mb-1">User ID:</span>
+        {/* User ID Search */}
+        <div className="flex flex-col w-full md:w-64">
+          <span className="text-sm font-semibold mb-1">User ID:</span>
           <TextField
             type="search"
-            placeholder="Search by user id"
+            placeholder="Search by user ID"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             size="small"
@@ -185,6 +187,7 @@ const UserDetail = () => {
           />
         </div>
 
+        {/* Action Buttons */}
         <div className="flex gap-2 w-full md:w-auto mt-2 md:mt-0">
           <Button
             onClick={() => {
@@ -193,7 +196,8 @@ const UserDetail = () => {
             }}
             variant="contained"
             startIcon={<FilterAlt />}
-            fullWidth
+            className="w-full md:w-auto"
+            color="primary"
           >
             Filter
           </Button>
@@ -207,7 +211,8 @@ const UserDetail = () => {
             }}
             variant="outlined"
             startIcon={<FilterAltOffIcon />}
-            fullWidth
+            className="w-full md:w-auto"
+            color="secondary"
           >
             Remove
           </Button>

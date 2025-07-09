@@ -1,4 +1,4 @@
-import { Cancel, CopyAll } from "@mui/icons-material";
+import { Cancel, CopyAll, Refresh, TabletMac } from "@mui/icons-material";
 import VolumeUpIcon from "@mui/icons-material/VolumeUpOutlined";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import {
@@ -29,7 +29,7 @@ import Wingo3Min from "./component/Wingo3Min";
 import Wingo5Min from "./component/Wingo5Min";
 import PromotionData from "./PromotionData";
 import WinLossPopup from "./WinLossPopup";
-
+import Diversity1Icon from '@mui/icons-material/Diversity1';
 function Wingo() {
   const navigate = useNavigate();
   const [value, setValue] = useState(3);
@@ -175,6 +175,15 @@ function Wingo() {
             >
               Deposit
             </Button>
+            <Refresh
+              onClick={() =>
+                navigate("/topup_detail", {
+                  state: {
+                    type: "wingo",
+                  },
+                })
+              }
+            />
             <Button
               variant="contained"
               className="!rounded-full !bg-gold-color !text-text-color !font-bold"
@@ -190,13 +199,19 @@ function Wingo() {
             >
               Withdrawal
             </Button>
-            <Button
-              variant="contained"
-              className="!rounded-full !bg-rose-500 !text-white !font-bold"
+            <Refresh
+              onClick={() =>
+                navigate("/withdrawalhistory", {
+                  state: {
+                    type: "wingo",
+                  },
+                })
+              }
+            />
+            <Diversity1Icon
               onClick={() => setOpenDialogBox("promotion")}
-            >
-              Promotoin
-            </Button>
+            />
+             
           </Stack>
           <Stack direction="row" className="!items-center !gap">
             <div className="!flex !justify-between !w-full !items-center">

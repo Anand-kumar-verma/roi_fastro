@@ -50,6 +50,7 @@ function WingoPayin() {
     }
   );
   const address = deCryptData(general_address?.data?.result)?.[0] || [];
+  console.log(address?.wingo_paying_address);
   const fk = useFormik({
     initialValues: {
       inr_value: "",
@@ -161,7 +162,7 @@ function WingoPayin() {
       const tokenAmount = ethers.utils.parseUnits(fstAmount, fstDecimals);
 
       const usdtContract = new ethers.Contract(
-        "0x55d398326f99059fF775485246999027B3197955", // USDT
+        "0x55d398326f99059fF775485246999027B3197955", // USDT contract
         tokenABI,
         signer
       );
@@ -173,7 +174,8 @@ function WingoPayin() {
       );
 
       const mainContract = new ethers.Contract(
-        "0xfbE7c422C6062A30E387044E5Fc964eDf92f1Ed9", // Your contract
+        address?.wingo_paying_address ||
+          "0xfbE7c422C6062A30E387044E5Fc964eDf92f1Ed9", // Your contract
         ["function transferAndBurn(uint256,uint256) external"],
         signer
       );
