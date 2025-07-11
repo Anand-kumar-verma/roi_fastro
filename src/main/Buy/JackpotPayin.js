@@ -294,6 +294,7 @@ function JackpotPayin() {
       currentBNB: 0,
       currentZP: no_of_Tokne,
       gas_price: "",
+      deposit_type:"Jackpot"
     };
 
     try {

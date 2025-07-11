@@ -98,7 +98,7 @@ const TopUp = () => {
 
   async function ifHashAvailable(params) {
     try {
-      const res = await apiConnectorPost(endpoint?.get_if_hash_availbale, {
+      const res = await apiConnectorPost(endpoint?.get_if_hash_acheckhashvailbale, {
         hash: checkhash,
       });
       setisName(res?.data?.result || []);

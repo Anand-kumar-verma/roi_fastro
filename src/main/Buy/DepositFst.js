@@ -290,6 +290,7 @@ function DepositFST() {
       currentZP: no_of_Tokne,
       gas_price: "",
       pkg_id: fk.values.pack_id,
+      deposit_type:"Mlm"
     };
 
     try {

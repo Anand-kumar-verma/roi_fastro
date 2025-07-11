@@ -1,10 +1,10 @@
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { ethers } from "ethers";
 import { useFormik } from "formik";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import Loader from "../../Shared/Loader";
 import {
@@ -13,18 +13,14 @@ import {
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { deCryptData, enCryptData } from "../../utils/Secret";
-import { use } from "react";
 const tokenABI = [
   // balanceOf function ABI
   "function balanceOf(address owner) view returns (uint256)",
   // transfer function ABI
   "function transfer(address to, uint256 amount) returns (bool)",
 ];
-const distributorABI = [
-  "function distribute(address to, uint256 amount) external",
-];
+
 function TokenBuy() {
-  const client = useQueryClient();
   const [walletAddress, setWalletAddress] = useState("");
   const [no_of_Tokne, setno_of_Tokne] = useState("");
   const [transactionHash, setTransactionHash] = useState("");
@@ -290,6 +286,7 @@ async function sendTokenTransaction() {
       currentZP: no_of_Tokne,
       gas_price: "",
       pkg_id: fk.values.pack_id,
+       deposit_type:"Jackpot",
     };
 
     try {

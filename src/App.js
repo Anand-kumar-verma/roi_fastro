@@ -9,7 +9,6 @@ import { adminroutes } from "./AdminRoutes";
 import "./App.css";
 import AdminLogin from "./authentication/AdminLogin";
 import Login from "./authentication/login";
-import Registration from "./authentication/Registration";
 import Home from "./component/Home";
 import DepositFST from "./main/Buy/DepositFst";
 import DepositUSDT from "./main/Buy/DepositUsdt";
@@ -59,7 +58,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
+        {/* <Route path="/register" element={<Registration />} /> */}
         <Route path="/buy-fst-token" element={<TokenBuy />} />
         <Route path="/activation-link" element={<ActivationWithFST />} />
         {/* <Route path="/activation-link-fst" element={<ActivationWithFST />} /> */}

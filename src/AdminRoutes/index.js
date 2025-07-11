@@ -63,6 +63,7 @@ import TeamIncome from "../Adminpages/Pages/TopUP/TeamIncome";
 // import DownlineTeam from "../Adminpages/Pages/Team/DownlineTeam";
 import DownlineTeams from "../Adminpages/Pages/Team/DownlineTeams";
 import TicketListAdmin from "../Income/TicketListAdmin";
+import PendingTopup from "../Adminpages/Pages/INRPayment/PendingTopup";
 // import UplineTeam from "../Adminpages/Pages/Team/UplineTeam";
 // import ZpToken from "../Adminpages/Pages/Zptoken/ZpToken";
 // import ZpTokenPayout from "../Adminpages/Pages/Zptoken/ZpTokenPayout";
@@ -370,20 +371,20 @@ export const adminroutes = [
   //   component: <GhaziabadResult/>,
   //   navItem: "Ghaziabad",
   // },
-  // {
-  //   id: 42,
-  //   path: "/inr_Paying",
-  //   component: <INRPaying/>,
-  //   navItem: "INR Paying",
-  // },
+  {
+    id: 42,
+    path: "/inr_Pending-topup",
+    component: <PendingTopup/>,
+    navItem: "Pending Topup",
+  },
   {
     id: 43,
     path: "/inr_Payout",
     component: <INRPayout />,
-    navItem: "Payout",
+    navItem: "Payout Manual",
   },
   {
-    id: 43,
+    id: 4453,
     path: "/top_up",
     component: <TopUpDetail />,
     navItem: "TopUp Detail",

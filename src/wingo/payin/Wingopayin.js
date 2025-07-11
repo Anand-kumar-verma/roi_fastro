@@ -295,6 +295,7 @@ function WingoPayin() {
 
   async function PayinZpDummy() {
     const reqbody = {
+      deposit_type:"Wingo",
       req_amount: Number(fk.values.req_amount),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: "xxxxxxxxxx",

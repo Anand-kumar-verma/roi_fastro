@@ -8,8 +8,7 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow,
-  Typography,
+  TableRow
 } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";

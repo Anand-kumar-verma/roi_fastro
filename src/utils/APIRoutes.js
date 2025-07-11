@@ -1,6 +1,6 @@
 export const domain = "https://roi-backend-e231.onrender.com";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://10.17.199.149:9010";
+// export const domain = "http://10.243.245.149:9010";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";
@@ -34,6 +34,7 @@ export const endpoint = {
   get_topup_api: `${domain}/api/v2/get-topup-details`,
   get_topup_api_wingo: `${domain}/api/v2/get-topup-details-wingo`,
   topup_api: `${domain}/api/v2/admin-topup-id`,
+  topup_api_pending: `${domain}/api/v2/admin-pending-topup-id`,
   market_api: `${domain_market}/api/v3/simple/price`,
   team_data_api: `${domain}/api/v2/get-team-data`,
   team_data_level_api: `${domain}/api/v2/get-team-data?`,

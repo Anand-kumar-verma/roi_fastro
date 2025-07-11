@@ -361,77 +361,24 @@ export const all_Data = [
   {
     id: 11,
     navLink: "/inr_Payout",
-    navItem: "Payout",
+    navItem: "Manual Payout",
     navIcon: (
       <span>
         <Games color="#15317E" fontSize="medium" />
       </span>
     ),
-    subcomponent: [
-      {
-        id: 11.2,
-        navLink: "/inr_Payout",
-        navItem: "Payout",
-        navIcon: (
-          <span>
-            <ColorizeRounded color="#15317E" fontSize="medium" />
-          </span>
-        ),
-      },
-    ],
   },
-  // {
-  //   id: 111,
-  //   navLink: "/inr_Pending",
-  //   navItem: "INR Manually",
-  //   navIcon: (
-  //     <span>
-  //       <Games color="#15317E" fontSize="medium" />
-  //     </span>
-  //   ),
-  //   subcomponent: [
-  //     {
-  //       id: 111.1,
-  //       navLink: "/inr_Pending",
-  //       navItem: "Pending",
-  //       navIcon: (
-  //         <span>
-  //           <PlayCircleFilledSharp color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-  //     {
-  //       id: 111.4,
-  //       navLink: "/inr_Approve",
-  //       navItem: "Processing",
-  //       navIcon: (
-  //         <span>
-  //           <ColorizeRounded color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-  //     {
-  //       id: 111.2,
-  //       navLink: "/inr_Success",
-  //       navItem: "Success",
-  //       navIcon: (
-  //         <span>
-  //           <PlayCircleFilledSharp color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-  //     {
-  //       id: 111.3,
-  //       navLink: "/inr_reject",
-  //       navItem: "Reject",
-  //       navIcon: (
-  //         <span>
-  //           <ColorizeRounded color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-  //   ],
-  // },
+  {
+    id: 111,
+    navLink: "/inr_Pending-topup",
+    navItem: "Pending Topup",
+    navIcon: (
+      <span>
+        <Games color="#15317E" fontSize="medium" />
+      </span>
+    ),
+   
+  },
   // {
   //   id: 11,
   //   navLink: "/zp_token",

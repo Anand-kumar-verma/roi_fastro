@@ -1,9 +1,7 @@
-import { FilterAlt, Refresh } from "@mui/icons-material";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { Edit, FilterAlt } from "@mui/icons-material";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import LockIcon from "@mui/icons-material/Lock";
-import { Button, IconButton, TextField } from "@mui/material";
+import { Button, Dialog, IconButton, TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -12,8 +10,10 @@ import { enCryptData } from "../../../utils/Secret";
 import CustomTable from "../../Shared/CustomTable";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
+import { endpoint } from "../../../utils/APIRoutes";
+import { apiConnectorPost } from "../../../utils/APIConnector";
 
-const INRPayout = () => {
+const PendingTopup = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [totalamount, setTotalamount] = useState({});
@@ -21,10 +21,15 @@ const INRPayout = () => {
   const [to_date, setTo_date] = useState("");
   const [loding, setloding] = useState(false);
   const [page, setPage] = useState(1);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [checkhash, setcheckhash] = useState("");
+  const [isName, setisName] = useState([]);
+
   const INRPayoutFunction = async () => {
     setloding(true);
     try {
-      const res = await axiosInstance.post(API_URLS?.inr_payout_data, {
+      const res = await axiosInstance.post(API_URLS?.inr_Pending_Topup_data, {
         created_at: from_date,
         updated_at: to_date,
         page: page,
@@ -48,45 +53,72 @@ const INRPayout = () => {
     INRPayoutFunction();
   }, [page]);
 
-  async function handleWithdrawalStatus(t_id, status) {
+  async function ifHashAvailable(params) {
+    try {
+      const res = await apiConnectorPost(endpoint?.get_if_hash_availbale, {
+        hash: checkhash,
+      });
+      setisName(res?.data?.result || []);
+    } catch (e) {
+      toast("Something went wrong");
+    }
+  }
+  useEffect(() => {
+    checkhash && ifHashAvailable();
+  }, [checkhash]);
+
+  async function TopUpFn() {
+    const pack = [
+      { id: 1, amount: 5 },
+      { id: 2, amount: 10 },
+      { id: 3, amount: 20 },
+      { id: 4, amount: 50 },
+      { id: 5, amount: 100 },
+      { id: 6, amount: 300 },
+      { id: 7, amount: 500 },
+      { id: 8, amount: 1000 },
+      { id: 9, amount: 3000 },
+      { id: 10, amount: 5000 },
+    ];
+    const walletType = data?.find(
+      (i) => i?.tr_id === openDialog
+    )?.tr_deposit_type;
+    const lgn_cust_id = data?.find((i) => i?.tr_id === openDialog)?.lgn_cust_id;
+    if (!walletType) return toast("Deposit Type Not Define", { id: 1 });
+    const reqbody = {
+      t_id: openDialog,
+      topup_amnt: Number(amount),
+      type: "gateway",
+      package_id:
+        walletType === "Mlm"
+          ? pack?.find((j) => j.amount === Number(amount))?.id || 1
+          : 1,
+      user_id: lgn_cust_id?.trim(),
+      transactionType: walletType?.toLowerCase(),
+      checkhash: checkhash || "",
+    };
     setloding(true);
     try {
-      const res = await axiosInstance.post(API_URLS?.payout_request_approval, {
-        payload: enCryptData({ t_id: t_id, status_type: status }),
-      });
-      INRPayoutFunction();
+      const res = await apiConnectorPost(endpoint?.topup_api_pending, reqbody);
       toast(res?.data?.message);
+      checkhash && ifHashAvailable();
+      INRPayoutFunction()
     } catch (e) {
-      console.log("Something went wrong.");
+      console.log(e);
     }
     setloding(false);
   }
-  async function handleWalletSyc(t_id) {
-    setloding(true);
-    try {
-      const res = await axiosInstance.get(API_URLS?.wallet_sync, {
-        params: {
-          t_id: t_id,
-        },
-      });
-      INRPayoutFunction();
-      toast(res?.data?.message,{id:1});
-    } catch (e) {
-      console.log("Something went wrong.");
-    }
-    setloding(false);
-  }
+
   const tablehead = [
     <span>S.No</span>,
     <span>Name</span>,
     <span>Email</span>,
     <span>User Id</span>,
     <span>Mobile</span>,
-    <span>Count</span>,
+    <span>Deposit Type</span>,
     <span>Address</span>,
+    <span>Hash</span>,
     <span>Req Amnt</span>,
-    <span>Team Buss</span>,
-    <span>Wallet Type</span>,
     <span>Date/Time</span>,
     <span>Status</span>,
     <span>Action</span>,
@@ -98,47 +130,39 @@ const INRPayout = () => {
       <span>{i?.lgn_real_email}</span>,
       <span>{i?.lgn_cust_id}</span>,
       <span>{i?.lgn_real_mob}</span>,
-      <span>{i?.wdrl_count}</span>,
-      <p className="!flex !justify-center">
-        {i?.wdrl_to}
-        {i?.wdrl_status !== "Success" && (
-          <Refresh
-            onClick={() => handleWalletSyc(i?.wdrl_id, i?.lgn_cust_id)}
-          />
-        )}
-      </p>,
-      <span>{i?.wdrl_amont}</span>,
-      <span>{i?.team_buss}</span>,
-      <span>{i?.wdrl_wallet_type}</span>,
+      <span>{i?.tr_deposit_type}</span>,
+      <span>{i?.tr_deposit_from}</span>,
+      <span>{i?.tr_trans_hash}</span>,
+      <span>{i?.tr_amount}</span>,
       <span className="">
-        {moment(i?.wdrl_created_at).format("DD-MM-YYYY HH:mm:ss")}
+        {moment(i?.tr_date).format("DD-MM-YYYY HH:mm:ss")}
       </span>,
       <span
         className={`${
-          i?.wdrl_status === "Success"
+          i?.tr_status === "Success"
             ? "text-green-500"
-            : i?.wdrl_status === "Failed"
+            : i?.tr_status === "Failed"
             ? "!text-rose-500"
             : "!text-gray-800"
         }`}
       >
-        {i?.wdrl_status}
+        {i?.tr_status}
       </span>,
       <p>
-        {i?.wdrl_status === "Pending" ? (
-          <span className="!flex">
+        {i?.tr_status === "Failed" ? (
+          <span className="!flex !justify-center">
             <IconButton
               className="!text-green-500"
-              onClick={() => handleWithdrawalStatus(i?.wdrl_id, 1)} //       // 1: successs, 2 failed, 3 pending, 4 rejecred
+              onClick={() => setOpenDialog(i.tr_id)}
             >
-              <CheckCircleOutlineIcon />
+              <Edit />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               className="!text-rose-500"
               onClick={() => handleWithdrawalStatus(i?.wdrl_id, 4)} //      // 1: successs, 2 failed, 3 pending, 4 rejecred
             >
               <CancelIcon />
-            </IconButton>
+            </IconButton> */}
           </span>
         ) : (
           <IconButton>
@@ -232,8 +256,57 @@ const INRPayout = () => {
         page={page}
         data={totalamount?.data}
       />
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        fullWidth
+        maxWidth="md"
+      >
+        <div className="bg-white rounded-2xl shadow-xl p-6 w-full mx-auto max-w-3xl">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            Enter Your Amount
+          </h2>
+          <input
+            className="w-full min-h-[50px] mb-2 max-h-[50px] p-3 border-2 border-gold-color rounded-md focus:outline-none focus:ring-2 focus:ring-gold-color resize-y"
+            placeholder="Enter The Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <textarea
+            className="w-full min-h-[120px] max-h-[300px] p-3 border-2 border-gold-color rounded-md focus:outline-none focus:ring-2 focus:ring-gold-color resize-y"
+            placeholder="Type your hash here..."
+            value={checkhash}
+            onChange={(e) => setcheckhash(e.target.value)}
+            minLength={20}
+          />
+          <span className="!text-xs !text-rose-500">
+            {isName?.[0]?.lgn_real_name || "Not Found"}{" "}
+            {isName?.[0]?.lgn_cust_id}
+          </span>
+          <div className="flex justify-end mt-4 gap-3 flex-wrap">
+            {/* <button
+              onClick={() => setOpenDialog(false)}
+              className="px-4 py-2 bg-red-200 text-gray-800 rounded-md hover:bg-red-300"
+            >
+              Search
+            </button> */}
+            <button
+              onClick={() => setOpenDialog(false)}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={TopUpFn}
+              className="px-4 py-2 bg-gold-color text-white rounded-md hover:bg-yellow-600"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 };
 
-export default INRPayout;
+export default PendingTopup;
