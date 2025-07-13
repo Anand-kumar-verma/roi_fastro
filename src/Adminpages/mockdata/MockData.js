@@ -638,7 +638,7 @@ export const all_Data = [
   &&i?.navItem !== "Downline Team"  &&i?.navItem !== "Pending Topup"  
   &&i?.navItem !== "Top Up"  &&i?.navItem !== "FST Detail" 
   &&i?.navItem !== "User Permission"  &&i?.navItem !== "Burning Event"
-  &&i?.navItem !== "Jackpot Ticket" && i : type === "Mlm Admin" && i?.navItem !== "Wingo"
+  &&i?.navItem !== "Jackpot Ticket" && i : type === "Admin" && i?.navItem !== "Wingo"
   && i?.navItem !=="Betting Ledger"
   && i?.navItem !== "Betting Income" &&  i
 });

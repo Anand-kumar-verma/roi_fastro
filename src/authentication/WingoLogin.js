@@ -45,7 +45,7 @@ const WingoLogin = () => {
         localStorage.setItem("login_user", response?.data?.result?.[0]?.user_type);
         localStorage.setItem("uid", "ADMIN");
         localStorage.setItem("username", "ADMIN");
-        if (response?.data?.result?.[0]?.user_type === "Admin") {
+        if (response?.data?.result?.[0]?.user_type === "Wingo Admin") {
           navigate("/admindashboard");
           window.location.reload();
         } else {

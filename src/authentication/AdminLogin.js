@@ -42,6 +42,11 @@ const AdminLogin = () => {
 
       if (response?.data?.message === "Login Successfully") {
         localStorage.setItem("logindataen", response?.data?.result?.[0]?.token);
+        localStorage.setItem(
+          "login_user",
+          response?.data?.result?.[0]?.user_type
+        );
+
         localStorage.setItem("uid", "ADMIN");
         localStorage.setItem("username", "ADMIN");
         if (response?.data?.result?.[0]?.user_type === "Admin") {
