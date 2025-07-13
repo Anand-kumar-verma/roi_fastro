@@ -21,7 +21,7 @@ const GameLedgerAdmin = () => {
     setloding(true);
     try {
       const res = await axiosInstance.post(endpoint?.game_ledger, {
-        income_type: "Wingo",
+        type: "Wingo",
         created_at: from_date,
         updated_at: to_date,
         page: page,
@@ -45,13 +45,11 @@ const GameLedgerAdmin = () => {
     <span>Name</span>,
     <span>Mobile</span>,
     <span>Email</span>,
-    <span>Topup Amnt</span>,
-    <span>Lapps Amnt</span>,
-    <span>Net Amnt</span>,
-    <span>Curr Wallet</span>,
-    <span>Roi</span>,
+    <span> Amnt</span>,
+    <span>Open Amnt</span>,
+    <span>Close Amnt</span>,
+    <span>Game Type</span>,
     <span>Date/Time</span>,
-    <span>Description</span>,
   ];
 
   const tablerow = data?.data?.map((i, index) => {
@@ -61,17 +59,11 @@ const GameLedgerAdmin = () => {
       <span>{i?.lgn_real_name}</span>,
       <span>{i?.lgn_real_mob}</span>,
       <span>{i?.lgn_real_email}</span>,
-      <span>{i?.jnr_topup_wallet}</span>,
-      <span>{i?.jnr_collapse_pkg}</span>,
-      <span>
-        {Number(
-          Number(i?.jnr_topup_wallet || 0) - Number(i?.jnr_collapse_pkg || 0)
-        )?.toFixed(2) || "--"}
-      </span>,
-      <span>{i?.jnr_curr_wallet}</span>,
-      <span>{Number(i?.ledger_amount)?.toFixed(2)}</span>,
-      <span>{moment(i?.ledger_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
-      <span>{i?.ledger_des}</span>,
+      <span>{i?.gt_trad_amnt}</span>,
+      <span>{i?.gt_open_balance}</span>,
+      <span>{i?.gt_close_balance}</span>,
+      <span>{i?.gt_game_type}</span>,
+      <span>{moment(i?.gt_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
     ];
   });
 
