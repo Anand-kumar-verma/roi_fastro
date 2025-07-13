@@ -2,7 +2,6 @@ import { Box, Stack } from "@mui/material";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import SweetAlert from "sweetalert2";
-import { useSocket } from "../../../shared/socket/SocketContext";
 import pr0 from "../../Assets/number/0.png";
 import pr1 from "../../Assets/number/11.png";
 import pr2 from "../../Assets/number/22.png";
@@ -15,6 +14,7 @@ import pr8 from "../../Assets/number/8.png";
 import pr9 from "../../Assets/number/9.png";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
+import { useSocket } from "../../../wingo/shared/socket/SocketContext";
 
 
 const ColorPrediction1Min = () => {
@@ -27,25 +27,26 @@ const ColorPrediction1Min = () => {
   React.useEffect(() => {
     const handleOneMin = (onemin) => {
       const t = Number(String(onemin)?.split("_")?.[1]);
-      const time_to_be_intro = t > 0 ? 60 - t : t;
+      const one_min = t > 0 ? 60 - t : t;
+      const time_to_be_intro = one_min > 30 ? one_min - 30 : one_min;
       setOne_min_time(time_to_be_intro);
     };
    
     const handleOneMinAmount = (onemin) => {
       setAmount(JSON.parse(onemin));
     };
-
+ console.log(amount)
     socket.on("onemin", handleOneMin);
-    socket.on("oneminwingoamount", handleOneMinAmount);
+    socket.on("oneminwingoamountthreemin", handleOneMinAmount);
     return () => {
       socket.off("onemin", handleOneMin);
-      socket.off("oneminwingoamount", handleOneMinAmount);
+      socket.off("oneminwingoamountthreemin", handleOneMinAmount);
     };
   }, []);
 
   async function manuallyWinningAPI(num_type) {
     const newreqBody = {
-      gid: 1,
+      gid:4 ,
       release_no: num_type,
     };
     try {

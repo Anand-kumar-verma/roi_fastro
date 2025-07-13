@@ -379,7 +379,7 @@ function Wingo() {
             </NavLink>
           </Box>
         </Box>
-        {/* {value === 1 && <Wingo1Min />} */}
+        {value === 1 && <Wingo1Min />}
         {/* {value === 2 && <Wingo3Min />} */}
         {value === 3 && <Wingo5Min />} 
         {/* {value === 4 && <Wingo10Min />} */}

@@ -36,7 +36,8 @@ export const API_URLS = {
   update_bonus_list: `/api/v2/update-bonus-list-admin`,
   update_user_name: `/api/v2/update-user-name`,
   update_user_status: `/api/v2/update-user-status`,
-  wingo_result_api: `/api/v2/update-wingo-result`,
+  wingo_result_api: `/api/v2/set-wingo-result-by-admin`,
+  
   add_fund: `/api/v2/add-fund-to-user`,
   debit_fund: `/api/v2/fund-debited-by-admin`,
   update_bank: `/api/v2/update-bank-details-by-admin`,

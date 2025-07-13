@@ -18,6 +18,7 @@ import { routes } from "./routes/Routes";
 import "./wingo/assets/style/main.css";
 import WingoPayin from "./wingo/payin/Wingopayin";
 import TokenBuy from "./main/Payment/TokenBuy";
+import WingoLogin from "./authentication/WingoLogin";
 
 const App = () => {
   const user = localStorage.getItem("logindataen");
@@ -57,6 +58,7 @@ const App = () => {
         <Route path="/game-fst" element={<DepositFST />} />
         <Route path="/home" element={<Home />} />
         <Route path="/adminlogin" element={<AdminLogin />} />
+        <Route path="/wingologin" element={<WingoLogin />} />
         <Route path="/" element={<Login />} />
         {/* <Route path="/register" element={<Registration />} /> */}
         <Route path="/buy-fst-token" element={<TokenBuy />} />
