@@ -54,6 +54,8 @@ function Wingo1Min() {
   const audioRefMusic = React.useRef(null);
   const audioRefMusiclast = React.useRef(null);
   const client = useQueryClient();
+  const { byTimeEnablingSound } = useSelector((state) => state.aviator);
+
   const [isImageChange, setIsImageChange] = useState("1_2_3_4_5");
   const img1 = Number(isImageChange?.split("_")[0]);
   const img2 = Number(isImageChange?.split("_")[1]);
@@ -153,9 +155,8 @@ function Wingo1Min() {
     dispatch(gameHistory_trx_one_minFn(game_history?.data?.data));
   }, [game_history?.data?.data]);
 
-  
   const { isLoading: myhistory_loding_all, data: my_history_all } = useQuery(
-    ["myAllhistory_1",],
+    ["myAllhistory_1"],
     () => MyHistoryFn(1),
     {
       refetchOnMount: false,
@@ -220,15 +221,15 @@ function Wingo1Min() {
       {React.useMemo(() => {
         return (
           <>
-            <audio ref={audioRefMusic} hidden>
+            <audio ref={byTimeEnablingSound ? audioRefMusic : null} hidden>
               <source src={`${countdownfirst}`} type="audio/mp3" />
             </audio>
-            <audio ref={audioRefMusiclast} hidden>
+            <audio ref={byTimeEnablingSound ? audioRefMusiclast : null} hidden>
               <source src={`${countdownlast}`} type="audio/mp3" />
             </audio>
           </>
         );
-      }, [audioRefMusic, audioRefMusiclast])}
+      }, [audioRefMusic, audioRefMusiclast, byTimeEnablingSound])}
       <Box sx={{ px: 1, mt: 3 }}>
         <Box
           sx={{
@@ -254,7 +255,7 @@ function Wingo1Min() {
                 className="psize"
                 mt={1}
               >
-                Win Go 1Min
+                Win Go 1 Min
               </Typography>
               <Stack
                 direction="row"

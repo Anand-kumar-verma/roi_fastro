@@ -19,7 +19,10 @@ import { endpoint, frontend } from "../../utils/APIRoutes";
 import balance from "../assets/images/balance.png";
 import refresh from "../assets/images/refresh.png";
 import time from "../assets/images/time.png";
-import { wallet_real_balanceFn } from "../redux/slices/counterSlice";
+import {
+  byTimeIsEnableSound,
+  wallet_real_balanceFn,
+} from "../redux/slices/counterSlice";
 import { rupees } from "../services/urls";
 import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import theme from "../utils/theme";
@@ -29,16 +32,19 @@ import Wingo3Min from "./component/Wingo3Min";
 import Wingo5Min from "./component/Wingo5Min";
 import PromotionData from "./PromotionData";
 import WinLossPopup from "./WinLossPopup";
-import Diversity1Icon from '@mui/icons-material/Diversity1';
+import Diversity1Icon from "@mui/icons-material/Diversity1";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 function Wingo() {
   const navigate = useNavigate();
   const [value, setValue] = useState(3);
   const [opendialogbox, setOpenDialogBox] = useState(false);
   const isAppliedbet = localStorage.getItem("betApplied");
+
   const dummycounter = useSelector((state) => state.aviator.dummycounter);
   const wallet_amount_data = useSelector(
     (state) => state.aviator.wallet_real_balance
   );
+  const { byTimeEnablingSound } = useSelector((state) => state.aviator);
   const client = useQueryClient();
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -208,10 +214,7 @@ function Wingo() {
                 })
               }
             />
-            <Diversity1Icon
-              onClick={() => setOpenDialogBox("promotion")}
-            />
-             
+            <Diversity1Icon onClick={() => setOpenDialogBox("promotion")} />
           </Stack>
           <Stack direction="row" className="!items-center !gap">
             <div className="!flex !justify-between !w-full !items-center">
@@ -302,7 +305,21 @@ function Wingo() {
               mb: 2,
             }}
           >
-            <VolumeUpIcon sx={{ color: theme.palette.primary.main, mr: 1 }} />
+            {byTimeEnablingSound ? (
+              <VolumeUpIcon
+                onClick={() =>
+                  dispatch(byTimeIsEnableSound(!byTimeEnablingSound))
+                }
+                sx={{ color: theme.palette.primary.main, mr: 1 }}
+              />
+            ) : (
+              <VolumeOffIcon
+                onClick={() =>
+                  dispatch(byTimeIsEnableSound(!byTimeEnablingSound))
+                }
+                sx={{ color: theme.palette.primary.main, mr: 1 }}
+              />
+            )}
             <Typography
               variant="body1"
               color="initial"
@@ -362,10 +379,10 @@ function Wingo() {
             </NavLink>
           </Box>
         </Box>
-        {value === 1 && <Wingo1Min />}
-        {value === 2 && <Wingo3Min />}
-        {value === 3 && <Wingo5Min />}
-        {value === 4 && <Wingo10Min />}
+        {/* {value === 1 && <Wingo1Min />} */}
+        {/* {value === 2 && <Wingo3Min />} */}
+        {value === 3 && <Wingo5Min />} 
+        {/* {value === 4 && <Wingo10Min />} */}
         {opendialogbox && (
           <Dialog
             open={opendialogbox}

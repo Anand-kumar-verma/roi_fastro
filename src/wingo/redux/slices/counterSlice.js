@@ -10,7 +10,7 @@ export const slice = createSlice({
     isEnableSound: false,
     // by timing enabling and dissabling music and sound
     byTimeEnablingMusic: false,
-    byTimeEnablingSound: false,
+    byTimeEnablingSound: false, // used for wingo also
     backgroundImage_url:
       localStorage.getItem("bg_image") ||
       "https://res.cloudinary.com/do7kimovl/image/upload/v1709114502/circle_dafpdo.svg",
@@ -46,7 +46,6 @@ export const slice = createSlice({
       state.byTimeEnablingMusic = actions.payload;
     },
     byTimeIsEnableSound: (state, actions) => {
-      console.log("function  is sound enable is called", actions.payload);
       state.byTimeEnablingSound = actions.payload;
     },
     backgroundImageFun: (state, actions) => {
@@ -62,7 +61,6 @@ export const slice = createSlice({
       state.just_start_after_waiting = actions.payload;
     },
     please_reconnect_the_serverFun: (state, actions) => {
-      console.log("Sannad", actions.payload);
       state.please_reconnect_the_server = actions.payload;
     },
     dummycounterFun: (state) => {
@@ -129,7 +127,7 @@ export const {
   saveUsername,
   saveToken,
   saveUid,
-  saveUserCP
+  saveUserCP,
 } = slice.actions;
 
 // export const incrementAsync = amount => dispatch => {

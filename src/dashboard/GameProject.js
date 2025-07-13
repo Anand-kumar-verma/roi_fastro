@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import MinesCountdown from "./ColorPrediction";
 
 const GameProject = () => {
-  const [activeTab, setActiveTab] = useState("jackpot");
+  const [activeTab, setActiveTab] = useState("wingo");
   return (
     <>
       <Navbar />

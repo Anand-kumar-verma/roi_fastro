@@ -22,7 +22,6 @@ const WinnerList = () => {
   );
 
   const top_winner = apiData?.data?.result || [];
-  console.log(top_winner);
   return (
     <>
       <Navbar />

@@ -55,6 +55,8 @@ function Wingo5Min() {
   const audioRefMusic = React.useRef(null);
   const audioRefMusiclast = React.useRef(null);
   const next_step = useSelector((state) => state.aviator.next_step);
+  const { byTimeEnablingSound } = useSelector((state) => state.aviator);
+
   const [isImageChange, setIsImageChange] = useState("1_2_3_4_5");
   const img1 = Number(isImageChange?.split("_")[0]);
   const img2 = Number(isImageChange?.split("_")[1]);
@@ -85,45 +87,6 @@ function Wingo5Min() {
     initialValues: initialValue,
     onSubmit: () => {},
   });
-
-  // React.useEffect(() => {
-  //   const handleFiveMin = (fivemin) => {
-  //     const t = Number(String(fivemin)?.split("_")?.[1]);
-  //     const one_min = t > 0 ? 60 - t : t;
-  //     const time_to_be_intro = one_min > 30 ? one_min - 30 : one_min;
-  //     setOne_min_time(time_to_be_intro);
-  //     fk.setFieldValue("show_this_one_min_time", time_to_be_intro);
-  //     if (
-  //       Number(fivemin?.split("_")?.[1]) <= 10 && // this is for sec
-  //       fivemin?.split("_")?.[0] === "0" // this is for minut
-  //     ) {
-  //       fk.setFieldValue("openTimerDialog", true);
-  //       Number(Number(fivemin?.split("_")?.[1])) <= 5 &&
-  //         Number(Number(fivemin?.split("_")?.[1])) > 0 &&
-  //         handlePlaySound();
-  //       Number(Number(fivemin?.split("_")?.[1])) === 0 && handlePlaySoundLast();
-  //     } else {
-  //       fk.setFieldValue("openTimerDialog", false);
-  //     }
-  //     if (
-  //       fivemin?.split("_")?.[1] === "0" &&
-  //       fivemin?.split("_")?.[0] === "0"
-  //     ) {
-  //       client.refetchQueries("gamehistory_3min");
-  //       client.refetchQueries("wallet_amount");
-  //       client.refetchQueries("myAllhistory_3");
-  //       setTimeout(() => {
-  //         dispatch(dummycounterFun());
-  //       }, 2000);
-  //     }
-  //   };
-
-  //   socket.on("onemin", handleFiveMin);
-
-  //   return () => {
-  //     socket.off("onemin", handleFiveMin);
-  //   };
-  // }, []);
 
   React.useEffect(() => {
     const handleOneMin = (onemin) => {
@@ -260,15 +223,15 @@ function Wingo5Min() {
       {React.useMemo(() => {
         return (
           <>
-            <audio ref={audioRefMusic} hidden>
+            <audio ref={byTimeEnablingSound ? audioRefMusic : null} hidden>
               <source src={`${countdownfirst}`} type="audio/mp3" />
             </audio>
-            <audio ref={audioRefMusiclast} hidden>
+            <audio ref={byTimeEnablingSound ? audioRefMusiclast : null} hidden>
               <source src={`${countdownlast}`} type="audio/mp3" />
             </audio>
           </>
         );
-      }, [audioRefMusic, audioRefMusiclast])}
+      }, [audioRefMusic, audioRefMusiclast, byTimeEnablingSound])}
       <Box sx={{ px: 1, mt: 3 }}>
         <Box
           sx={{
@@ -294,7 +257,7 @@ function Wingo5Min() {
                 className="psize"
                 mt={1}
               >
-                Win Go 1Min
+                Win Go 30 Sec
               </Typography>
               <Stack
                 direction="row"
