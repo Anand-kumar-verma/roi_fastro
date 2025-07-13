@@ -11,12 +11,13 @@ const AdminLayout = ({ component, navItem, navLink, id }) => {
   const isMediumScreen = useMediaQuery({ maxWidth: 1000 });
 
   // const [user_exist, setuser_exist] = useState("");
-  const usertype = localStorage.getItem("user_type");
+  const usertype = localStorage.getItem("login_user");
   const user = localStorage.getItem("erp_username");
   const background = localStorage.getItem("background_url");
   const [color, setcolor] = useState(
-    background ||
-      "https://aaraerp.s3.amazonaws.com/media/background_image/background4_VxrVIay_02MDQXY_J8Ld4WR.webp"
+    usertype === "Admin"
+      ? "https://aaraerp.s3.amazonaws.com/media/background_image/background4_VxrVIay_02MDQXY_J8Ld4WR.webp"
+      : "https://wallpapers.com/images/hd/light-color-pink-and-blue-background-8zrww1yggwb8mbh3.jpg"
   );
   // const user1 = localStorage.getItem("role_user");
   const [openCustomDialogBox, setopenCustomDialogBox] = useState(false);
@@ -108,9 +109,7 @@ const AdminLayout = ({ component, navItem, navLink, id }) => {
           <span className="flex text-secondary px-2  justify-end">
             <p>
               All Rights reserved to{" "}
-              <span className="!font-bold">
-                BEST  TRADING WEBSITE  2025
-              </span>
+              <span className="!font-bold">BEST TRADING WEBSITE 2025</span>
             </p>
 
             {/* <span className="flex gap-2">

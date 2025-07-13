@@ -39,19 +39,20 @@ const GameLedgerAdmin = () => {
     GameLedgerFn();
   }, [page]);
 
+  console.log(data);
+
   const tablehead = [
     <span>S.No.</span>,
     <span>User Id</span>,
     <span>Name</span>,
     <span>Mobile</span>,
     <span>Email</span>,
-    <span>Topup Amnt</span>,
-    <span>Lapps Amnt</span>,
-    <span>Net Amnt</span>,
-    <span>Curr Wallet</span>,
-    <span>Roi</span>,
+    <span>Game Type</span>,
+    <span>Betting Amnt</span>,
+    <span>Open Bal</span>,
+    <span>Close Bal</span>,
+    <span>Bal Type</span>,
     <span>Date/Time</span>,
-    <span>Description</span>,
   ];
 
   const tablerow = data?.data?.map((i, index) => {
@@ -61,17 +62,15 @@ const GameLedgerAdmin = () => {
       <span>{i?.lgn_real_name}</span>,
       <span>{i?.lgn_real_mob}</span>,
       <span>{i?.lgn_real_email}</span>,
-      <span>{i?.jnr_topup_wallet}</span>,
-      <span>{i?.jnr_collapse_pkg}</span>,
+      <span>{i?.gt_game_type}</span>,
+      <span>{i?.gt_trad_amnt}</span>,
+      <span>{i?.gt_open_balance}</span>,
+      <span>{i?.gt_close_balance}</span>,
+      <span>{i?.gt_balance_type}</span>,
       <span>
-        {Number(
-          Number(i?.jnr_topup_wallet || 0) - Number(i?.jnr_collapse_pkg || 0)
-        )?.toFixed(2) || "--"}
+        {moment(i?.gt_created_at)
+          .format("DD-MM-YYYY HH:mm:ss")}
       </span>,
-      <span>{i?.jnr_curr_wallet}</span>,
-      <span>{Number(i?.ledger_amount)?.toFixed(2)}</span>,
-      <span>{moment(i?.ledger_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
-      <span>{i?.ledger_des}</span>,
     ];
   });
 

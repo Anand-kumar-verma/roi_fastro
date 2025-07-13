@@ -21,20 +21,11 @@ import axiosInstance from "../../config/axios";
 
 
 const ColorPrediction2Min = () => {
-  let preValue = 0;
   const socket = useSocket();
   const [amount, setAmount] = useState([]);
   const [data, setData] = useState();
-  const [three_min_time, setThree_min_time] = useState("0_0");
-  const show_this_three_min_time_sec = React.useMemo(
-    () => String(three_min_time?.split("_")?.[1]).padStart(2, "0"),
-    [three_min_time]
-  );
-
-  const show_this_three_min_time_min = React.useMemo(
-    () => String(three_min_time?.split("_")?.[0]).padStart(2, "0"),
-    [three_min_time]
-  );
+  const [one_min_time, setOne_min_time] = useState(0);
+  const show_this_one_min_time = String(one_min_time).padStart(2, "0");
 
   const image_array = [
     pr0, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9
@@ -42,13 +33,9 @@ const ColorPrediction2Min = () => {
 
   React.useEffect(() => {
     const handleThreeMin = (onemin) => {
-      const t = Number(String(onemin)?.split("_")?.[1]);
-      const min = Number(String(onemin)?.split("_")?.[0]);
+          const t = Number(String(onemin)?.split("_")?.[1]);
       const time_to_be_intro = t > 0 ? 60 - t : t;
-      let threemin = `${2 - (Number(t === 0 ? preValue : min) % 3)
-        }_${time_to_be_intro}`;
-      preValue = min;
-      setThree_min_time(threemin);
+      setOne_min_time(time_to_be_intro);
     };
     const handleThreeMinAmount = (threemin) => {
       setAmount(JSON.parse(threemin))
@@ -100,18 +87,18 @@ const ColorPrediction2Min = () => {
         {React.useMemo(() => {
           return (
             <Stack direction="row" className="!text-2xl">
-              <Box className="timerBoxone">{show_this_three_min_time_min?.substring(0, 1)}</Box>
-              <Box className="timerBox">{show_this_three_min_time_min?.substring(1, 2)}</Box>
+              <Box className="timerBoxone">0</Box>
+              <Box className="timerBox">0</Box>
               <Box className={" !font-bold"}>:</Box>
               <Box className="timerBox">
-                {show_this_three_min_time_sec?.substring(0, 1)}
+                {show_this_one_min_time?.substring(0, 1)}
               </Box>
               <Box className="timerBoxfour">
-                {show_this_three_min_time_sec?.substring(1, 2)}
+                {show_this_one_min_time?.substring(1, 2)}
               </Box>
             </Stack>
           );
-        }, [show_this_three_min_time_sec])}
+        }, [show_this_one_min_time])}
         {data && (
           <div className="font-bold bg-white w-fit py-1 px-2">Number: {data}</div>
         )}
