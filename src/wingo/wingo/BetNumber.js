@@ -66,27 +66,29 @@ const BetNumber = ({ timing, gid }) => {
   });
 
   useEffect(() => {
-    if (gid === "1") {
+    if (gid === '1') {
       if (Number(timing) <= 10) {
         setOpen(false);
-        fk.handleReset();
       }
-    } else if (gid === "2") {
-      if (Number(String(timing)?.split("_")?.[0]) === 0) {
-        if (Number(String(timing)?.split("_")?.[1]) <= 10) {
+    } else if (gid === '2') {
+      if (Number(String(timing)?.split('_')?.[0]) === 0) {
+        if (Number(String(timing)?.split('_')?.[1]) <= 10) {
           setOpen(false);
-          fk.handleReset();
         }
       }
+    } else if (gid === '4') {
+      if (Number(String(timing)?.split('_')?.[0]) <= 5) {
+        setOpen(false);
+      }
     } else {
-      if (Number(String(timing)?.split("_")?.[0]) === 0) {
-        if (Number(String(timing)?.split("_")?.[1]) <= 10) {
+      if (Number(String(timing)?.split('_')?.[0]) === 0) {
+        if (Number(String(timing)?.split('_')?.[1]) <= 10) {
           setOpen(false);
-          fk.handleReset();
         }
       }
     }
   }, [timing]);
+
 
   async function betFunctionStart() {
     setLoding(true);

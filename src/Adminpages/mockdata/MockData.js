@@ -5,6 +5,7 @@ import {
   Games,
   LeaderboardSharp,
   LoginOutlined,
+  PlayCircleFilledSharp,
   RowingSharp,
   SelfImprovement,
   WheelchairPickupOutlined,
@@ -13,6 +14,7 @@ import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
+const type = localStorage.getItem("login_user")
 export const all_Data = [
   // {
   //   id: 1,
@@ -165,7 +167,8 @@ export const all_Data = [
       </span>
     ),
     subcomponent: [],
-  },
+  }, 
+  
   // {
   //   id: 38,
   //   navLink: "/set_bonus",
@@ -252,49 +255,38 @@ export const all_Data = [
   //   ],
   // },
 
-  // {
-  //   id: 11,
-  //   navLink: "/color-prediction-1-min",
-  //   navItem: "Wingo",
-  //   navIcon: (
-  //     <span>
-  //       <Games color="#15317E" fontSize="medium" />
-  //     </span>
-  //   ),
-  //   subcomponent: [
-  //     {
-  //       id: 11.1,
-  //       navLink: "/color-prediction-1-min",
-  //       navItem: "Wingo 1 Min",
-  //       navIcon: (
-  //         <span>
-  //           <PlayCircleFilledSharp color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-  //     {
-  //       id: 11.2,
-  //       navLink: "/color-prediction-2-min",
-  //       navItem: "Wingo 2 Min",
-  //       navIcon: (
-  //         <span>
-  //           <ColorizeRounded color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-  //     {
-  //       id: 11.3,
-  //       navLink: "/color-prediction-3-min",
-  //       navItem: "Wingo 3 Min",
-  //       navIcon: (
-  //         <span>
-  //           <HistoryEdu color="#15317E" fontSize="medium" />
-  //         </span>
-  //       ),
-  //     },
-
-  //   ],
-  // },
+  {
+    id: 11,
+    navLink: "/color-prediction-1-min",
+    navItem: "Wingo",
+    navIcon: (
+      <span>
+        <Games color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [
+      {
+        id: 11.1,
+        navLink: "/color-prediction-1-min",
+        navItem: "Wingo 30 Sec",
+        navIcon: (
+          <span>
+            <PlayCircleFilledSharp color="#15317E" fontSize="medium" />
+          </span>
+        ),
+      },
+      {
+        id: 11.2,
+        navLink: "/color-prediction-2-min",
+        navItem: "Wingo 1 Min",
+        navIcon: (
+          <span>
+            <ColorizeRounded color="#15317E" fontSize="medium" />
+          </span>
+        ),
+      },
+    ],
+  },
   // {
   //   id: 55,
   //   navLink: "/roulette_result",
@@ -597,6 +589,28 @@ export const all_Data = [
     subcomponent: [],
   },
   {
+    id: 38,
+    navLink: "/bettingincomeadmin",
+    navItem: "Betting Income",
+    navIcon: (
+      <span>
+        <BoltRounded color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
+  },
+  {
+    id: 8,
+    navLink: "/bettingledger",
+    navItem: "Betting Ledger",
+    navIcon: (
+      <span>
+        <LeaderboardSharp color="#15317E" fontSize="medium" />
+      </span>
+    ),
+    subcomponent: [],
+  },
+  {
     id: 8,
     navLink: "/support-list",
     navItem: "Support",
@@ -618,4 +632,13 @@ export const all_Data = [
     ),
     subcomponent: [],
   },
-];
+]?.filter((i) => {
+  return type === "Wingo Admin" ? i?.navItem !== "Team Income" &&
+  i?.navItem !== "Income"
+  &&i?.navItem !== "Downline Team"  &&i?.navItem !== "Pending Topup"  
+  &&i?.navItem !== "Top Up"  &&i?.navItem !== "FST Detail" 
+  &&i?.navItem !== "User Permission"  &&i?.navItem !== "Burning Event"
+  &&i?.navItem !== "Jackpot Ticket" && i : type === "Mlm Admin" && i?.navItem !== "Wingo"
+  && i?.navItem !=="Betting Ledger"
+  && i?.navItem !== "Betting Income" &&  i
+});

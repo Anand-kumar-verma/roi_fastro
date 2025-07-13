@@ -1,7 +1,7 @@
 // SocketContext.js
 import React, { createContext, useContext, useMemo } from 'react';
 import io from 'socket.io-client';
-import { domain } from '../../services/urls';
+import { domain } from '../../../utils/APIRoutes';
 
 const SocketContext = createContext();
 

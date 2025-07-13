@@ -2,7 +2,7 @@ import { Box, Stack } from "@mui/material";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import SweetAlert from "sweetalert2";
-import { useSocket } from "../../../shared/socket/SocketContext";
+
 import pr0 from "../../Assets/number/0.png";
 import pr1 from "../../Assets/number/11.png";
 import pr2 from "../../Assets/number/22.png";
@@ -13,7 +13,9 @@ import pr6 from "../../Assets/number/6.png";
 import pr7 from "../../Assets/number/7.png";
 import pr8 from "../../Assets/number/8.png";
 import pr9 from "../../Assets/number/9.png";
+import { apiConnectorPost } from "../../../utils/APIConnector";
 import { API_URLS } from "../../config/APIUrls";
+import { useSocket } from "../../../wingo/shared/socket/SocketContext";
 import axiosInstance from "../../config/axios";
 
 
@@ -52,16 +54,16 @@ const ColorPrediction2Min = () => {
       setAmount(JSON.parse(threemin))
     };
     socket.on("onemin", handleThreeMin);
-    socket.on("oneminwingoamountthreemin", handleThreeMinAmount);
+    socket.on("oneminwingoamount", handleThreeMinAmount);
     return () => {
       socket.off("onemin", handleThreeMin);
-      socket.on("oneminwingoamountthreemin", handleThreeMinAmount);
+      socket.on("oneminwingoamount", handleThreeMinAmount);
     };
   }, []);
 
   async function manuallyWinningAPI(num_type) {
     const newreqBody = {
-      gid: 2,
+      gid: 1,
       release_no: num_type,
     };
     try {

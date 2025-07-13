@@ -64,6 +64,11 @@ import TeamIncome from "../Adminpages/Pages/TopUP/TeamIncome";
 import DownlineTeams from "../Adminpages/Pages/Team/DownlineTeams";
 import TicketListAdmin from "../Income/TicketListAdmin";
 import PendingTopup from "../Adminpages/Pages/INRPayment/PendingTopup";
+import ColorPrediction1Min from "../Adminpages/Pages/colorprediction/ColorPrediction1Min";
+import ColorPrediction2Min from "../Adminpages/Pages/colorprediction/ColorPrediction2Min";
+import BettingIncome from "../Income/BettingIncome";
+import BettingBonusAdmin from "../Adminpages/Pages/genealogy/BettingBonus";
+import GameLedgerAdmin from "../Adminpages/Pages/genealogy/GameLedger";
 // import UplineTeam from "../Adminpages/Pages/Team/UplineTeam";
 // import ZpToken from "../Adminpages/Pages/Zptoken/ZpToken";
 // import ZpTokenPayout from "../Adminpages/Pages/Zptoken/ZpTokenPayout";
@@ -251,18 +256,18 @@ export const adminroutes = [
   //   component: <PendingRequest/>,
   //   navItem: "Gateway Pending Request",
   // },
-  // {
-  //   id: 23,
-  //   path: "/color-prediction-1-min",
-  //   component: <ColorPrediction1Min/>,
-  //   navItem: "Color Prediction 1 Min",
-  // },
-  // {
-  //   id: 24,
-  //   path: "/color-prediction-2-min",
-  //   component: <ColorPrediction2Min/>,
-  //   navItem: "Color Prediction 2 Min",
-  // },
+  {
+    id: 23,
+    path: "/color-prediction-1-min",
+    component: <ColorPrediction1Min/>,
+    navItem: "Color Prediction 30 Sec",
+  },
+  {
+    id: 24,
+    path: "/color-prediction-2-min",
+    component: <ColorPrediction2Min/>,
+    navItem: "Color Prediction 1 Min",
+  },
   // {
   //   id: 25,
   //   path: "/color-prediction-3-min",
@@ -299,6 +304,19 @@ export const adminroutes = [
     component: <UserPermission />,
     navItem: "User Permission",
   },
+  {
+    id: 30,
+    path: "/bettingincomeadmin",
+    component: <BettingBonusAdmin />,
+    navItem: "Betting Income",
+  },
+  {
+    id: 30,
+    path: "/bettingledger",
+    component: <GameLedgerAdmin />,
+    navItem: "Betting Ledger",
+  },
+  
   // {
   //   id: 31,
   //   path: "/daybook_report",
