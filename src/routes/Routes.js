@@ -35,6 +35,7 @@ import AssociateSignUp from "../main/Signup";
 import Teamdata from "../main/Teamdata";
 import TopUP from "../main/TopupDetails";
 import ViewProfile from "../main/ViewProfile";
+import MinesHistory from "../mines/History";
 import PromotionData from "../wingo/wingo/PromotionData";
 import Wingo from "../wingo/wingo/Wingo";
 export const routes = [
@@ -195,4 +196,10 @@ export const routes = [
     path: "/game-usdt",
     component: <DepositUSDT />,
   },
+  //mines
+  {
+    path: "/mines_history",
+    component: <MinesHistory />,
+  },
+  
 ];

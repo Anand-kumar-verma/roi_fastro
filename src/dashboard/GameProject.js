@@ -4,6 +4,7 @@ import Wingo from "../wingo/wingo/Wingo";
 import JackpotCountdown from "./JackpotCountdown";
 import Navbar from "./Navbar";
 import MinesCountdown from "./ColorPrediction";
+import Mines from "../mines/Mines";
 
 const GameProject = () => {
   const [activeTab, setActiveTab] = useState("wingo");
@@ -52,7 +53,7 @@ const GameProject = () => {
         {activeTab === "jackpot" && <JackpotCountdown />}
         {/* {activeTab === "jackpot" && <JackpotCountdownOLD />} */}
         {activeTab === "wingo" && <Wingo />}
-        {activeTab === "mines" && <MinesCountdown />}
+        {activeTab === "mines" && <Mines />}
       </div>
 
       <ButtomNavigation />
