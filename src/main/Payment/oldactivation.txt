@@ -122,7 +122,7 @@ function ActivationWithFST() {
       Number(
         res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
       ) *
-        (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0) >
+        dollar_percent >
       no_of_Tokne
     )
       return toast("Your USDT Wallet Amount is low.");
@@ -133,7 +133,7 @@ function ActivationWithFST() {
             ?.pack_amount
         ) *
           Number(address?.token_price || 0) *
-           (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) // 10%
+          fst_percent // 10%
       ) > no_of_TokneFST
     )
       return toast("Your FST Wallet is low.");
@@ -162,7 +162,7 @@ function ActivationWithFST() {
         Number(
           res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
             ?.pack_amount
-        ) * (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0)
+        ) * dollar_percent
       )?.toFixed(usdtDecimals);
 
       const fstAmount = Number(
@@ -170,7 +170,7 @@ function ActivationWithFST() {
           res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
             ?.pack_amount
         ) *
-           (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) *
+          fst_percent *
           Number(address?.token_price || 0)
       )?.toFixed(fstDecimals);
 
@@ -445,25 +445,21 @@ function ActivationWithFST() {
               </MenuItem>
             ))}
           </TextField>
-          {Number(fk.values.pack_id) !== 11 && (
-            <>
-              <p className=" font-bold text-gold-color">USD Count:</p>
-              <TextField
-                className="!bg-white !rounded-lg !text-gold-color "
-                id="req_amount"
-                name="req_amount"
-                value={
-                  Number(
-                    Number(
-                      res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-                        ?.pack_amount
-                    ) * (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0)
-                  )?.toFixed(4) // means 10%
-                }
-                // onChange={fk.handleChange}
-              />
-            </>
-          )}
+          <p className=" font-bold text-gold-color">USD Count:</p>
+          <TextField
+            className="!bg-white !rounded-lg !text-gold-color "
+            id="req_amount"
+            name="req_amount"
+            value={
+              Number(
+                Number(
+                  res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
+                    ?.pack_amount
+                ) * dollar_percent
+              )?.toFixed(4) // means 10%
+            }
+            // onChange={fk.handleChange}
+          />
           <p className=" font-bold text-gold-color">FST Count:</p>
           <TextField
             className="!bg-white !rounded-lg !text-gold-color "
@@ -475,10 +471,11 @@ function ActivationWithFST() {
                   res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
                     ?.pack_amount
                 ) *
-                  (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) *
+                  fst_percent *
                   Number(address?.token_price || 0)
               )?.toFixed(4) // means 10%
             }
+            // onChange={fk.handleChange}
           />
           <button
             className="!bg-gold-color rounded-full hover:bg-white hover:text-black  p-2 !text-background"

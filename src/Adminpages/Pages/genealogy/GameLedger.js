@@ -1,13 +1,12 @@
 import { FilterAlt } from "@mui/icons-material";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { Button, TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import CustomToPagination from "../../../Shared/CustomToPagination";
-import { API_URLS } from "../../config/APIUrls";
+import { endpoint } from "../../../utils/APIRoutes";
 import axiosInstance from "../../config/axios";
 import CustomTable from "../../Shared/CustomTable";
-import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
-import { endpoint } from "../../../utils/APIRoutes";
 
 const GameLedgerAdmin = () => {
   const [loding, setloding] = useState(false);
@@ -21,7 +20,7 @@ const GameLedgerAdmin = () => {
     setloding(true);
     try {
       const res = await axiosInstance.post(endpoint?.game_ledger, {
-        income_type: "Wingo",
+        type: "Wingo",
         created_at: from_date,
         updated_at: to_date,
         page: page,
@@ -39,19 +38,16 @@ const GameLedgerAdmin = () => {
     GameLedgerFn();
   }, [page]);
 
-  console.log(data);
-
   const tablehead = [
     <span>S.No.</span>,
     <span>User Id</span>,
     <span>Name</span>,
     <span>Mobile</span>,
     <span>Email</span>,
+    <span> Amnt</span>,
+    <span>Open Amnt</span>,
+    <span>Close Amnt</span>,
     <span>Game Type</span>,
-    <span>Betting Amnt</span>,
-    <span>Open Bal</span>,
-    <span>Close Bal</span>,
-    <span>Bal Type</span>,
     <span>Date/Time</span>,
   ];
 
@@ -62,15 +58,11 @@ const GameLedgerAdmin = () => {
       <span>{i?.lgn_real_name}</span>,
       <span>{i?.lgn_real_mob}</span>,
       <span>{i?.lgn_real_email}</span>,
-      <span>{i?.gt_game_type}</span>,
       <span>{i?.gt_trad_amnt}</span>,
       <span>{i?.gt_open_balance}</span>,
       <span>{i?.gt_close_balance}</span>,
-      <span>{i?.gt_balance_type}</span>,
-      <span>
-        {moment(i?.gt_created_at)
-          .format("DD-MM-YYYY HH:mm:ss")}
-      </span>,
+      <span>{i?.gt_game_type}</span>,
+      <span>{moment(i?.gt_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
     ];
   });
 

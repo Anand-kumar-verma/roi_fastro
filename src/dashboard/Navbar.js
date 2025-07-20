@@ -1,4 +1,4 @@
-import { Lock, LogoutTwoTone, Person, Person3 } from "@mui/icons-material";
+import { Lock, Person, Person3 } from "@mui/icons-material";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import { useEffect, useState } from "react";
@@ -111,12 +111,30 @@ export default function Navbar() {
             <p
               className="flex items-center gap-1 cursor-pointer px-2 py-1 "
               onClick={() => {
-                navigate("/burning");
+                navigate("/burning", {
+                  state: {
+                    fst_tupe: "Burning",
+                  },
+                });
                 // window.location.reload();
               }}
             >
               <CurrencyExchangeIcon className="text-blue-400 !text-sm" />{" "}
               Burning Event
+            </p>
+            <p
+              className="flex items-center gap-1 cursor-pointer px-2 py-1 "
+              onClick={() => {
+                navigate("/burning", {
+                  state: {
+                    fst_tupe: "Pending",
+                  },
+                });
+                // window.location.reload();
+              }}
+            >
+              <CurrencyExchangeIcon className="text-blue-400 !text-sm" />{" "}
+              Pending Slot FST
             </p>
             <div
               className="relative dropdown"
@@ -262,6 +280,12 @@ export default function Navbar() {
                     onClick={() => navigate("/betting-income")}
                   >
                     Betting Income
+                  </div>
+                  <div
+                    className="cursor-pointer py-1 hover:text-blue-400 text-gray-800"
+                    onClick={() => navigate("/booster_income")}
+                  >
+                    Activity Income
                   </div>
                 </div>
               )}

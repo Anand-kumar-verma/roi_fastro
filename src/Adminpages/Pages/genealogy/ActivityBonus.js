@@ -1,4 +1,5 @@
 import { FilterAlt } from "@mui/icons-material";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { Button, TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -6,9 +7,8 @@ import CustomToPagination from "../../../Shared/CustomToPagination";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
 import CustomTable from "../../Shared/CustomTable";
-import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 
-const BettingBonusAdmin = () => {
+const ActivityBonus = () => {
   const [loding, setloding] = useState(false);
   const [data, setData] = useState([]);
   const [from_date, setFrom_date] = useState("");
@@ -16,11 +16,11 @@ const BettingBonusAdmin = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const BettingBonusFn = async () => {
+  const LevelBonusFn = async () => {
     setloding(true);
     try {
       const res = await axiosInstance.post(API_URLS?.level_bonus_data, {
-        income_type: "Betting",
+        income_type: "BOOSTER",
         created_at: from_date,
         updated_at: to_date,
         page: page,
@@ -35,7 +35,7 @@ const BettingBonusAdmin = () => {
   };
 
   useEffect(() => {
-    BettingBonusFn();
+    LevelBonusFn();
   }, [page]);
 
   const tablehead = [
@@ -76,10 +76,10 @@ const BettingBonusAdmin = () => {
 
   return (
     <div>
-      <div className="bg-white shadow rounded-xl p-4 flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
-        {/* From Date */}
+      <div className="bg-white shadow-md rounded-xl p-4 md:p-6 flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
+        {/* Date Range */}
         <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full md:w-auto">
-          <span className="font-semibold text-sm">From:</span>
+          <label className="text-sm font-semibold">From:</label>
           <TextField
             type="date"
             size="small"
@@ -89,9 +89,8 @@ const BettingBonusAdmin = () => {
           />
         </div>
 
-        {/* To Date */}
         <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full md:w-auto">
-          <span className="font-semibold text-sm">To:</span>
+          <label className="text-sm font-semibold">To:</label>
           <TextField
             type="date"
             size="small"
@@ -101,44 +100,45 @@ const BettingBonusAdmin = () => {
           />
         </div>
 
-        {/* Search Input */}
-        <div className="w-full md:w-64">
+        {/* Search Field */}
+        <div className="w-full md:w-60">
           <TextField
             type="search"
             size="small"
-            placeholder="Search by user ID"
+            placeholder="Search by User ID"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             fullWidth
           />
         </div>
 
-        {/* Buttons */}
+        {/* Action Buttons */}
         <div className="flex gap-2 w-full md:w-auto">
           <Button
             onClick={() => {
               setPage(1);
-              BettingBonusFn();
+              LevelBonusFn();
             }}
             variant="contained"
-            color="primary"
             startIcon={<FilterAlt />}
             className="w-full md:w-auto"
+            color="primary"
           >
-            Filter
+            Apply Filter
           </Button>
+
           <Button
             onClick={() => {
               setSearch("");
               setTo_date("");
               setFrom_date("");
               setPage(1);
-              BettingBonusFn();
+              LevelBonusFn();
             }}
             variant="outlined"
-            color="secondary"
             startIcon={<FilterAltOffIcon />}
             className="w-full md:w-auto"
+            color="secondary"
           >
             Clear
           </Button>
@@ -156,4 +156,4 @@ const BettingBonusAdmin = () => {
   );
 };
 
-export default BettingBonusAdmin;
+export default ActivityBonus;

@@ -114,16 +114,16 @@ export const all_Data = [
         ),
       },
 
-      // {
-      //   id: 8.5,
-      //   navLink: "/salarybonus",
-      //   navItem: "Award Reward",
-      //   navIcon: (
-      //     <span>
-      //       <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
-      //     </span>
-      //   ),
-      // },
+      {
+        id: 8.5,
+        navLink: "/activity-bonus",
+        navItem: "Activity Income",
+        navIcon: (
+          <span>
+            <WheelchairPickupOutlined color="#15317E" fontSize="medium" />
+          </span>
+        ),
+      },
 
       // {
       //   id: 8.5,

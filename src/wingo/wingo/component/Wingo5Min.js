@@ -125,7 +125,7 @@ function Wingo5Min() {
       socket.off("onemin", handleOneMin);
     };
   }, []);
-  const { isLoading, data: game_history } = useQuery(
+  const {data: game_history } = useQuery(
     ["gamehistory_4min"],
     () => GameHistoryFn("4"),
     {
@@ -159,7 +159,7 @@ function Wingo5Min() {
     );
     dispatch(gameHistory_trx_one_minFn(game_history?.data?.data));
   }, [game_history?.data?.data]);
-  const { isLoading: myhistory_loding_all, data: my_history_all } = useQuery(
+  const { data: my_history_all } = useQuery(
     ["myAllhistory_4"],
     () => MyHistoryFn(4),
     {

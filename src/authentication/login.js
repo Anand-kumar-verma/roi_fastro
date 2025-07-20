@@ -21,10 +21,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const { logindataen, uid } = useSelector((state) => state.aviator);
 
-  // const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
-  const datatele = {
-    id: "1840589027",
-  };
+  const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
+  // const datatele = {
+  //   id: "9857092571",
+  // };
   const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
 
   const loginFn = async (reqBody) => {
@@ -38,12 +38,12 @@ const Login = () => {
       password: String(reqBody.id),
     };
     // const reqBodyy = {
-    //   mobile: String("1840589027"),
-    //   email: String("1840589027"),
+    //   mobile: String("9857092571"),
+    //   email: String("9857092571"),
     //   full_name: String(datatele?.username),
     //   referral_id: String("1234567890"),
-    //   username: String("1840589027"),
-    //   password: String("1840589027"),
+    //   username: String("9857092571"),
+    //   password: String("9857092571"),
     // };
 
     try {
@@ -78,30 +78,30 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    const bo = "1840589027";
-    const token =
-      "Pj79NJoVCvoCcAuAAFFJQKgrkEgmakuQCOb8nbHxfC44TU6muAUFpum7DFqSoI8UG5WqpNSL6p4mhp5Nsu8WYofwHby3Zz91jfXo";
+    // const bo = "9857092571";
+    // // const token =
+    // //   "Pj79NJoVCvoCcAuAAFFJQKgrkEgmakuQCOb8nbHxfC44TU6muAUFpum7DFqSoI8UG5WqpNSL6p4mhp5Nsu8WYofwHby3Zz91jfXo";
     // const token =
     //   "XtyRTPEtH6qCmWfpnCowMMrBQSOjrpqK3e62K64GmDdG5uaOBYJHsTneCZtiMZP9hejinINRSzGpfcAqu1ucJ0Cscs2XAwqqmOTJ";
-    dispatch(saveUid(bo));
-    dispatch(saveToken(token));
-    localStorage.setItem("logindataen", token);
-    localStorage.setItem("uid", bo);
-    navigate("/home");
+    // dispatch(saveUid(bo));
+    // dispatch(saveToken(token));
+    // localStorage.setItem("logindataen", token);
+    // localStorage.setItem("uid", bo);
+    // navigate("/home");
 
-    // if (datatele?.id) {
-    //   if (datatele?.id && (!logindataen || !uid)) {
-    //     loginFn({
-    //       id: String(datatele?.id),
-    //     });
-    //   } else if (uid == datatele?.id) {
-    //     navigate("/home");
-    //   } else {
-    //     loginFn({
-    //       id: String(datatele?.id),
-    //     });
-    //   }
-    // }
+    if (datatele?.id) {
+      if (datatele?.id && (!logindataen || !uid)) {
+        loginFn({
+          id: String(datatele?.id),
+        });
+      } else if (uid == datatele?.id) {
+        navigate("/home");
+      } else {
+        loginFn({
+          id: String(datatele?.id),
+        });
+      }
+    }
   }, [datatele]);
   // datatele
   return (

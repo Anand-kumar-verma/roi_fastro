@@ -48,7 +48,7 @@ const LevelBonus = () => {
     <span>Lapps Amnt</span>,
     <span>Net Amnt</span>,
     <span>Curr Wallet</span>,
-    <span>Roi</span>,
+    <span>Cr. Amount</span>,
     <span>Date/Time</span>,
     <span>Description</span>,
   ];

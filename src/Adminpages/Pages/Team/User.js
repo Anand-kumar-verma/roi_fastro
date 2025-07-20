@@ -1,7 +1,15 @@
 import { Edit, FilterAlt } from "@mui/icons-material";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
-import { Button, Dialog, IconButton, TextField } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -19,6 +27,7 @@ const UserDetail = () => {
   const [openPopup, setOpenPopup] = useState(false);
   const [amount, setAmount] = useState("");
   const [descriptin, setDescriptin] = useState("");
+  const [tr_type, setTr_type] = useState("dr");
 
   const UserBonusFn = async () => {
     setloding(true);
@@ -61,6 +70,7 @@ const UserDetail = () => {
           amount: amount || 0,
           lgn_cust_id: openPopup,
           descriptin: descriptin || "",
+          tr_type:tr_type
         }
       );
       if (response?.data?.success) {
@@ -232,11 +242,29 @@ const UserDetail = () => {
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
         <div className="bg-white rounded-3xl shadow-2xl lg:p-6 p-1 w-full lg:!max-w-4xl mx-auto mt-10">
           <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-            Deduct Wallet
+            {tr_type === "cr" ? "Credit" : "Debit"} Wallet
           </h2>
 
           <div className="flex flex-wrap gap-6 px-12">
             <div className="w-full ">
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="dr"
+                name="radio-buttons-group"
+                value={tr_type}
+                onChange={(e) => setTr_type(e.target.value)}
+              >
+                <FormControlLabel
+                  value="cr"
+                  control={<Radio />}
+                  label="Credited"
+                />
+                <FormControlLabel
+                  value="dr"
+                  control={<Radio />}
+                  label="Debited"
+                />
+              </RadioGroup>
               <label className="block text-gray-700 font-medium mb-1">
                 Amount
               </label>

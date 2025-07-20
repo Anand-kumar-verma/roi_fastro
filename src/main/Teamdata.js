@@ -90,12 +90,30 @@ function Teamdata() {
             </div>
           </div>
           <div className="!text-white !flex !flex-wrap !justify-between">
-            <p>Total Count: <span className="!text-gold-color font-extrabold">{data?.length}</span></p> 
-            <p>Total business:
-            <span className="!text-gold-color font-extrabold">{data
-              ?.reduce((a, b) => a + Number(b?.jnr_topup_wallet), 0)
-              ?.toFixed(2)}
-            $</span></p>
+            <p>
+              Total Count:{" "}
+              <span className="!text-gold-color font-extrabold">
+                {data?.length}
+              </span>
+            </p>
+            <p>
+              Last Week Buss:
+              <span className="!text-gold-color font-extrabold">
+                {data
+                  ?.reduce((a, b) => a + Number(b?.last_week_buss), 0)
+                  ?.toFixed(2)}
+                $
+              </span>
+            </p>
+            <p>
+              Total Buss:
+              <span className="!text-gold-color font-extrabold">
+                {data
+                  ?.reduce((a, b) => a + Number(b?.jnr_topup_wallet), 0)
+                  ?.toFixed(2)}
+                $
+              </span>
+            </p>
           </div>
           <div className="mt-3  overflow-x-auto">
             <table className="min-w-full ">
@@ -115,6 +133,9 @@ function Teamdata() {
                   </th>
                   <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                     Wallet
+                  </th>
+                  <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
+                    Last Week Buss
                   </th>
                   <th className="px-2 md:px-6 py-3  border border-yellow-500 text-center text-xs text-yellow-700 font-semibold  uppercase tracking-wider">
                     Level
@@ -143,6 +164,10 @@ function Teamdata() {
                     <td className="px-2 md:px-6  text-center border border-yellow-500 text-white py-4 text-colorspace-nowrap">
                       {" "}
                       $ {Number(item?.jnr_topup_wallet)?.toFixed(0, 2)}
+                    </td>
+                    <td className="px-2 md:px-6  text-center border border-yellow-500 text-white py-4 text-colorspace-nowrap">
+                      {" "}
+                      $ {Number(item?.last_week_buss)?.toFixed(0, 2)}
                     </td>
                     <td className="px-2 md:px-6  text-center border border-yellow-500 text-white py-4 text-colorspace-nowrap">
                       Level {item?.level}{" "}

@@ -5,7 +5,6 @@ import { FaCircleUser, FaUserGroup } from "react-icons/fa6";
 import { PiMicrosoftTeamsLogoLight } from "react-icons/pi";
 import { VscFileSubmodule } from "react-icons/vsc";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../dashboard/Navbar";
 import crown from "../images/crown.png";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
@@ -13,7 +12,6 @@ import Loader from "../Shared/Loader";
 import { apiConnectorGet } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 const Network = () => {
-  const navigate = useNavigate();
   const { isLoading: proLoding, data: profile_data } = useQuery(
     ["profile_api"],
     () => apiConnectorGet(endpoint?.profile_api),
@@ -38,7 +36,6 @@ const Network = () => {
     }
   );
   const level_business = LevelBusiness?.data?.result || [];
-  console.log(profile);
   return (
     <>
       <Navbar />

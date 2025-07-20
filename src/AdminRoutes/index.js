@@ -69,6 +69,7 @@ import ColorPrediction2Min from "../Adminpages/Pages/colorprediction/ColorPredic
 import BettingIncome from "../Income/BettingIncome";
 import BettingBonusAdmin from "../Adminpages/Pages/genealogy/BettingBonus";
 import GameLedgerAdmin from "../Adminpages/Pages/genealogy/GameLedger";
+import ActivityBonus from "../Adminpages/Pages/genealogy/ActivityBonus";
 // import UplineTeam from "../Adminpages/Pages/Team/UplineTeam";
 // import ZpToken from "../Adminpages/Pages/Zptoken/ZpToken";
 // import ZpTokenPayout from "../Adminpages/Pages/Zptoken/ZpTokenPayout";
@@ -245,10 +246,16 @@ export const adminroutes = [
     navItem: "Team Trading Bonus",
   },
   {
-    id: 19,
+    id: 202,
     path: "/matching",
     component: <MatchingBonus />,
     navItem: "Award Reward",
+  },
+  {
+    id: 203,
+    path: "/activity-bonus",
+    component: <ActivityBonus />,
+    navItem: "Activity Bonus",
   },
   // {
   //   id: 20,
