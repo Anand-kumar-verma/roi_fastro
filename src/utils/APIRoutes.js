@@ -62,4 +62,9 @@ export const endpoint = {
   game_paying: `${domain}/api/v2/game-paying-request`,
   jackpot_paying: `${domain}/api/v2/jackpot-paying-request`,
   fst_count: `${domain}/api/v2/get-fst-count-for-jackpot-pay`,
+
+  //mines
+   mines_record: `${domain}/api/v1/mines-grid-records`,
+  mines_bet: `${domain}/api/v1/mines-betting-cashsout`,
+  mines_history: `${domain}/api/v1/mines-betting-history`,
 };
