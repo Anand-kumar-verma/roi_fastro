@@ -1,10 +1,9 @@
 import { useState } from "react";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
+import Mines from "../mines/Mines";
 import Wingo from "../wingo/wingo/Wingo";
 import JackpotCountdown from "./JackpotCountdown";
 import Navbar from "./Navbar";
-import MinesCountdown from "./ColorPrediction";
-import Mines from "../mines/Mines";
 
 const GameProject = () => {
   const [activeTab, setActiveTab] = useState("wingo");

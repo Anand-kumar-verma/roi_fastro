@@ -10,15 +10,19 @@ import mouseSound from "../images/button_click.mp3";
 import bombSound from "../images/bomb_detect.mp3";
 import minesSound from "../images/mouse_over_mine.mp3";
 import cashoutSound from "../images/mouse_over_mine.mp3";
-import { apiConnectorPost } from "../utils/APIConnector";
+import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { endpoint } from "../utils/APIRoutes";
 import { enCryptData } from "../utils/Secret";
+import { useNavigate } from "react-router-dom";
+import { History } from "@mui/icons-material";
+import { rupees } from "../wingo/services/urls";
 
 function getRandom(start, end) {
   return Math.floor(Math.random() * (end - start + 1)) + start;
 }
 
 function Mines() {
+  const [dummyAmount, setDummyAmount] = useState(100);
   const [minesCount, setMinesCount] = useState(1);
   const [betAmount, setBetAmount] = useState(1);
   const [betvalue, setBetvalue] = useState(betAmount);
@@ -30,6 +34,7 @@ function Mines() {
   const [isEnableClick, setIsEnableClick] = useState(false);
   const [cashoutAvailable, setCashoutAvailable] = useState(false);
   const [increment, setincrement] = useState(0.1);
+  const navigate = useNavigate();
 
   const initializeGame = (count = 1) => {
     // Generate a Set of unique mine indices
@@ -196,9 +201,16 @@ function Mines() {
     const audio = new Audio(mouseSound);
     audio.play();
     try {
-      const res = await apiConnectorPost(endpoint?.mines_bet, {
-        payload: enCryptData(reqbody),
-      });
+      if (betAmount <= 0) return toast("Amount is low");
+      const res = {
+        data: {
+          msg: "Bid placed Successfully",
+        },
+      };
+      // await apiConnectorPost(endpoint?.mines_bet, {
+      //   payload: enCryptData(reqbody),
+      // });
+      setDummyAmount(dummyAmount - reqbody.amount);
       if (res?.data?.msg !== "Bid placed Successfully") {
         toast(res?.data?.msg, { id: 1 });
       }
@@ -224,9 +236,16 @@ function Mines() {
     const audio = new Audio(cashoutSound);
     audio.play();
     try {
-      const res = await apiConnectorPost(endpoint?.mines_bet, {
-        payload: enCryptData(reqbody),
-      });
+      setDummyAmount(dummyAmount + betAmount * reqbody.bet_multiplier);
+
+      const res = {
+        data: {
+          msg: "Cashout Successfully",
+        },
+      };
+      //  await apiConnectorPost(endpoint?.mines_bet, {
+      //   payload: enCryptData(reqbody),
+      // });
       if (res?.data?.msg !== "Cashout Successfully") {
         toast(res?.data?.msg, { id: 1 });
       }
@@ -247,18 +266,48 @@ function Mines() {
       console.error(e);
     }
   };
-
+  const { data: wallet_amount } = useQuery(
+    ["wallet_amount_amount"],
+    () => apiConnectorGet(endpoint.get_balance),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const wallet_amount_data = wallet_amount?.data?.data || 0;
   return (
     <Container>
-      <div className="h-min-screen bg-blue-800 text-white flex flex-col gap-8 lg:gap-0 font-sans">
-        <Header />
+      <div className="h-min-screen bg-custom-gradient text-white flex flex-col gap-8 lg:gap-0 font-sans">
+        <header className="bg-blue-900 p-4 flex justify-between items-center text-white shadow-md">
+          <div className="flex items-center space-x-4">
+            <button className="px-3 py-1 rounded-full bg-gold-color hover:bg-blue-600 text-sm">
+              MINES
+            </button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm font-semibold">
+              {" "}
+              {rupees}
+              {Number(dummyAmount)?.toFixed(2)}{" "}
+            </span>
+            <button
+              className="p-1 rounded-full hover:bg-blue-700"
+              onClick={() => navigate("/mines_history")}
+            >
+              <History />
+            </button>
+          </div>
+        </header>
         <main className="flex-grow flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-blue-900 rounded-lg p-2 shadow-lg">
             <div className="flex justify-between items-center ">
-              <div className="flex items-center space-x-2 bg-blue-600 rounded-full border border-blue-500 px-3 py-1 focus-within:ring-2 focus-within:ring-blue-400">
+              <div className="flex items-center space-x-2 bg-blue-600 rounded-full border bg-custom-gradient px-3 py-1 focus-within:ring-2 focus-within:ring-blue-400">
                 {/* <span className="text-gray-200 text-sm">Mines:</span> */}
                 <select
-                  className="text-sm bg-blue-500 text-white rounded-full px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 appearance-none cursor-pointer max-h-20 overflow-y-auto"
+                  className="text-sm bg-blue-900 text-white rounded-full px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 appearance-none cursor-pointer max-h-20 overflow-y-auto"
                   value={minesCount}
                   onChange={(e) => {
                     setincrement(0.1 * e.target.value);
@@ -276,7 +325,7 @@ function Mines() {
                 </select>
               </div>
 
-              <div className="text-sm bg-yellow-500 p-1 px-2 rounded-full">
+              <div className="text-sm bg-gold-color p-1 px-2 rounded-full">
                 <span className="text-black">Next:</span>{" "}
                 <span className=" text-black">
                   {Number(multiplier + increment * (count + 1 || 1))?.toFixed(
@@ -293,7 +342,7 @@ function Mines() {
               ></div>
             </div>
 
-            <div className="relative grid grid-cols-5 gap-2 md:gap-3 p-2 bg-[#025ad7] rounded-lg">
+            <div className="relative grid grid-cols-5 gap-2 md:gap-3 p-2 bg-custom-gradient rounded-lg">
               {grid.map((square) => (
                 <Square
                   key={square.id}

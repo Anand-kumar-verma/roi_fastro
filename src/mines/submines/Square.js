@@ -1,4 +1,3 @@
-import React from "react";
 import { FaRegStar } from "react-icons/fa";
 
 function Square({ revealed, hasMine, onClick, gameOver }) {
