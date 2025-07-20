@@ -3,20 +3,19 @@ import Footer from "./layoutmines/Footer";
 import Header from "./layoutmines/Header";
 import { Container } from "@mui/material";
 import { useQuery, useQueryClient } from "react-query";
+import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { FaPlay, FaRedoAlt, FaCoins } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { endpoint } from "../utils/APIRoutes";
+import { enCryptData } from "../utils/Secret";
 import Square from "./submines/Square";
 import mouseSound from "../images/button_click.mp3";
 import bombSound from "../images/bomb_detect.mp3";
 import minesSound from "../images/mouse_over_mine.mp3";
 import cashoutSound from "../images/mouse_over_mine.mp3";
-import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
-import { endpoint } from "../utils/APIRoutes";
-import { enCryptData } from "../utils/Secret";
 import { useNavigate } from "react-router-dom";
 import { History } from "@mui/icons-material";
 import { rupees } from "../wingo/services/urls";
-
 function getRandom(start, end) {
   return Math.floor(Math.random() * (end - start + 1)) + start;
 }
@@ -243,11 +242,12 @@ function Mines() {
           msg: "Cashout Successfully",
         },
       };
+      toast("Cashout Successfully");
       //  await apiConnectorPost(endpoint?.mines_bet, {
       //   payload: enCryptData(reqbody),
       // });
       if (res?.data?.msg !== "Cashout Successfully") {
-        toast(res?.data?.msg, { id: 1 });
+        toast("Cashout Successfully");
       }
       if (res?.data?.msg === "Cashout Successfully") {
         client.refetchQueries("wallet_amount_amount");
@@ -266,18 +266,7 @@ function Mines() {
       console.error(e);
     }
   };
-  const { data: wallet_amount } = useQuery(
-    ["wallet_amount_amount"],
-    () => apiConnectorGet(endpoint.get_balance),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  const wallet_amount_data = wallet_amount?.data?.data || 0;
+
   return (
     <Container>
       <div className="h-min-screen bg-custom-gradient text-white flex flex-col gap-8 lg:gap-0 font-sans">

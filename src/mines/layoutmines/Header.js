@@ -24,7 +24,7 @@ function Header() {
   return (
     <header className="bg-blue-900 p-4 flex justify-between items-center text-white shadow-md">
       <div className="flex items-center space-x-4">
-        <button className="px-3 py-1 rounded-full bg-gold-color hover:bg-blue-600 text-sm">MINES</button>
+        <button className="px-3 py-1 rounded-full bg-blue-700 hover:bg-blue-600 text-sm">MINES</button>
       </div>
       <div className="flex items-center space-x-2">
         <span className="text-sm font-semibold"> {rupees}
