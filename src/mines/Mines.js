@@ -7,7 +7,10 @@ import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import bombSound from "../images/bomb_detect.mp3";
 import mouseSound from "../images/button_click.mp3";
-import { default as cashoutSound, default as minesSound } from "../images/mouse_over_mine.mp3";
+import {
+  default as cashoutSound,
+  default as minesSound,
+} from "../images/mouse_over_mine.mp3";
 import { rupees } from "../wingo/services/urls";
 import Square from "./submines/Square";
 function getRandom(start, end) {

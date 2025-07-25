@@ -14,8 +14,7 @@ export const endpoint = {
   very_fy_OTP: `${domain}/api/v2/verify-otp`,
   very_fy_OTP_wingo: `${domain}/api/v2/verify-otp-wingo`,
   game_ledger: `${domain}/api/v2/get-game-ledger-by-admin`,
-  
-  
+
   wallet_api: `${domain}/api/v2/check-wallet-address-availability`,
   package_list_api: `${domain}/api/v2/get-package-details`,
   get_user_wallet_by_cust_id: `${domain}/api/v2/get-user-wallet-by-cu-id`,
@@ -64,7 +63,7 @@ export const endpoint = {
   fst_count: `${domain}/api/v2/get-fst-count-for-jackpot-pay`,
 
   //mines
-   mines_record: `${domain}/api/v1/mines-grid-records`,
+  mines_record: `${domain}/api/v1/mines-grid-records`,
   mines_bet: `${domain}/api/v1/mines-betting-cashsout`,
   mines_history: `${domain}/api/v1/mines-betting-history`,
 };
