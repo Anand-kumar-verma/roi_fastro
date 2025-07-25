@@ -61,7 +61,7 @@ function Teamdata() {
                   onChange={(e) => handleLevelChange(Number(e.target.value))}
                   className="px-4 py-2 rounded text-black w-full md:w-1/2 bg-white bg-opacity-50"
                 >
-                  {[...Array(6)].map((_, index) => (
+                  {[...Array(15)].map((_, index) => (
                     <option key={index} value={index + 1}>
                       Level {index + 1}
                     </option>

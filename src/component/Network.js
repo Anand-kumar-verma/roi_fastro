@@ -204,13 +204,11 @@ const Network = () => {
               <div className="flex flex-col gap-0 md:gap-2">
                 <p class="text-sm md:text-2xl text-gold-color">Total Team</p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {Number(
-                    Number(level_business?.[0]?.tb_mem_lev_1 || 0) +
-                      Number(level_business?.[0]?.tb_mem_lev_2 || 0) +
-                      Number(level_business?.[0]?.tb_mem_lev_3 || 0) +
-                      Number(level_business?.[0]?.tb_mem_lev_4 || 0) +
-                      Number(level_business?.[0]?.tb_mem_lev_5 || 0) +
-                      Number(level_business?.[0]?.tb_mem_lev_6 || 0)
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].reduce(
+                    (sum, level) =>
+                      sum +
+                      Number(level_business?.[0]?.[`tb_mem_lev_${level}`] || 0),
+                    0
                   )}
                 </p>
               </div>
@@ -226,22 +224,24 @@ const Network = () => {
                   Total Team Buss
                 </p>
                 <p class="text-lg text-center text-nowrap md:text-xl font-semibold text-white">
-                  {Number(
-                    Number(level_business?.[0]?.tb_t_buss_lev_1 || 0) +
-                      Number(level_business?.[0]?.tb_t_buss_lev_2 || 0) +
-                      Number(level_business?.[0]?.tb_t_buss_lev_3 || 0) +
-                      Number(level_business?.[0]?.tb_t_buss_lev_4 || 0) +
-                      Number(level_business?.[0]?.tb_t_buss_lev_5 || 0) +
-                      Number(level_business?.[0]?.tb_t_buss_lev_6 || 0)
-                  )?.toFixed(2) -
-                    Number(
-                      Number(level_business?.[0]?.tb_lapps_lev_1 || 0) +
-                        Number(level_business?.[0]?.tb_lapps_lev_2 || 0) +
-                        Number(level_business?.[0]?.tb_lapps_lev_3 || 0) +
-                        Number(level_business?.[0]?.tb_lapps_lev_4 || 0) +
-                        Number(level_business?.[0]?.tb_lapps_lev_5 || 0) +
-                        Number(level_business?.[0]?.tb_lapps_lev_6 || 0)
-                    )?.toFixed(2) || 0}{" "}
+                  {(
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].reduce(
+                      (sum, level) =>
+                        sum +
+                        Number(
+                          level_business?.[0]?.[`tb_t_buss_lev_${level}`] || 0
+                        ),
+                      0
+                    ) -
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].reduce(
+                      (sum, level) =>
+                        sum +
+                        Number(
+                          level_business?.[0]?.[`tb_lapps_lev_${level}`] || 0
+                        ),
+                      0
+                    )
+                  ).toFixed(2) || 0}{" "}
                   USD
                 </p>
               </div>

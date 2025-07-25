@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Footer from "./layoutmines/Footer";
-import Header from "./layoutmines/Header";
-import { Container } from "@mui/material";
-import { useQuery, useQueryClient } from "react-query";
-import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
-import { FaPlay, FaRedoAlt, FaCoins } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { endpoint } from "../utils/APIRoutes";
-import { enCryptData } from "../utils/Secret";
-import Square from "./submines/Square";
-import mouseSound from "../images/button_click.mp3";
-import bombSound from "../images/bomb_detect.mp3";
-import minesSound from "../images/mouse_over_mine.mp3";
-import cashoutSound from "../images/mouse_over_mine.mp3";
-import { useNavigate } from "react-router-dom";
 import { History } from "@mui/icons-material";
+import { Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { FaCoins, FaPlay, FaRedoAlt } from "react-icons/fa";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import bombSound from "../images/bomb_detect.mp3";
+import mouseSound from "../images/button_click.mp3";
+import { default as cashoutSound, default as minesSound } from "../images/mouse_over_mine.mp3";
 import { rupees } from "../wingo/services/urls";
+import Square from "./submines/Square";
 function getRandom(start, end) {
   return Math.floor(Math.random() * (end - start + 1)) + start;
 }

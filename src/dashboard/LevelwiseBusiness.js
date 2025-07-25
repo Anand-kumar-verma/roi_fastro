@@ -46,7 +46,7 @@ const LevelwiseBusiness = () => {
                 </tr>
               </thead>
               <tbody>
-                {Array(6)
+                {Array(15)
                   .fill(1)
                   ?.map((_, index) => (
                     <tr key={index}>
@@ -97,7 +97,7 @@ const LevelwiseBusiness = () => {
                   </td>
 
                   <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-gold-color">
-                    {Array.from({ length: 6 }, (_, index) =>
+                    {Array.from({ length: 15 }, (_, index) =>
                       Math.floor(
                         level_business?.[0]?.[`tb_mem_lev_${index + 1}`] || 0
                       )
@@ -105,7 +105,7 @@ const LevelwiseBusiness = () => {
                   </td>
                   <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
                     {Array.from(
-                      { length: 6 },
+                      { length: 15 },
                       (_, index) =>
                         Number(
                           level_business?.[0]?.[`tb_t_buss_lev_${index + 1}`] ||
