@@ -24,7 +24,6 @@ function getRandom(start, end) {
 }
 
 function Mines() {
-  const [dummyAmount, setDummyAmount] = useState(100);
   const [minesCount, setMinesCount] = useState(1);
   const [betAmount, setBetAmount] = useState(1);
   const [betvalue, setBetvalue] = useState(betAmount);
@@ -256,14 +255,11 @@ function Mines() {
       const res = await apiConnectorPost(endpoint?.mines_bet, {
         payload: enCryptData(reqbody),
       });
-      setDummyAmount(dummyAmount - reqbody.amount);
-      if (res?.data?.msg !== "Bid placed Successfully") {
-        toast(res?.data?.msg, { id: 1 });
-      }
+      toast(res?.data?.msg, { id: 1 });
       if (res?.data?.msg === "Bid placed Successfully") {
         setIsEnableClick(true);
         setCashoutAvailable(true);
-        client.refetchQueries("wallet_amount_amount");
+        client.refetchQueries("wallet_amount");
       }
     } catch (e) {
       console.error(e);
@@ -285,22 +281,12 @@ function Mines() {
     const audio = new Audio(cashoutSound);
     audio.play();
     try {
-      setDummyAmount(dummyAmount + betAmount * reqbody.bet_multiplier);
-
-      const res = {
-        data: {
-          msg: "Cashout Successfully",
-        },
-      };
-      toast("Cashout Successfully");
-       await apiConnectorPost(endpoint?.mines_bet, {
+      const res = await apiConnectorPost(endpoint?.mines_bet, {
         payload: enCryptData(reqbody),
       });
-      if (res?.data?.msg !== "Cashout Successfully") {
-        toast("Cashout Successfully");
-      }
+      toast(res?.data?.msg)
       if (res?.data?.msg === "Cashout Successfully") {
-        client.refetchQueries("wallet_amount_amount");
+        client.refetchQueries("wallet_amount");
         setCashoutAvailable(false);
         setMultiplier(1.0);
         setTimeout(() => {
@@ -417,7 +403,7 @@ function Mines() {
           <div className="flex items-center space-x-2">
             <span className="text-sm font-semibold">
               {" "}
-              {rupees} {wallet_amount_data}
+              {rupees} { Number(profile?.jnr_wingo_game_wallet || 0)}
             </span>
             <button
               className="p-1 rounded-full hover:bg-blue-700"
@@ -487,7 +473,7 @@ function Mines() {
             </div>
           </div>
         </main>
-        <footer className="bg-blue-900 py-5 px-1 flex flex-col  justify-center items-center gap-1 text-white shadow-md ">
+        <footer className="bg-blue-900 mb-10 py-5 px-1 flex flex-col  justify-center items-center gap-1 text-white shadow-md ">
           <div className="flex items-center justify-center w-full gap-1">
             {/* Bet Controls Box */}
             <div className="flex items-center bg-blue-700 rounded-full px-4 py-1 border border-blue-900 gap-1">
