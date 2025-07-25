@@ -56,7 +56,6 @@ function Wingo5Min() {
   const audioRefMusiclast = React.useRef(null);
   const next_step = useSelector((state) => state.aviator.next_step);
   const { byTimeEnablingSound } = useSelector((state) => state.aviator);
-
   const [isImageChange, setIsImageChange] = useState("1_2_3_4_5");
   const img1 = Number(isImageChange?.split("_")[0]);
   const img2 = Number(isImageChange?.split("_")[1]);

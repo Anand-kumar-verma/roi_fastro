@@ -151,7 +151,7 @@ const Dashboard = () => {
       )}
       <div className=" text-white lg:px-32 h-screen overflow-y-scroll pb-10 bg-custom-gradient">
         <Loader isLoading={isLoading || proLoding || loading} />
-        <div className="px-8 pt-10  mt-10">
+        <div className="px-2 pt-10  mt-10">
           <div className="text-lg bg-glassy border border-rose-500 rounded opacity-75 lg:p-4 p-2 lg:px-5 lg:mt-10 mt-5 flex lg:flex-row flex-col items-center justify-between">
             <span className="!font-bold pr-3 text-green-500">News:</span>
             <div className="w-full overflow-hidden whitespace-nowrap relative">
@@ -202,7 +202,11 @@ const Dashboard = () => {
                   </Button>
                 </div>
                 <div className="text-xl font-bold text-amber-400 flex gap-2 pt-2">
-                  {Number(Number(profile?.jnr_topup_wallet || 0) - Number(profile?.jnr_collapse_pkg || 0))?.toFixed(2)} USD
+                  {Number(
+                    Number(profile?.jnr_topup_wallet || 0) -
+                      Number(profile?.jnr_collapse_pkg || 0)
+                  )?.toFixed(2)}{" "}
+                  USD
                   <img src={tether} alt="" className="w-6 h-6" />
                 </div>
                 {/* <div className="!text-xs text-green-500">First Topup: <span className="!text-gold-color">{Number(profile?.jnr_first_topup || 0)?.toFixed(2)} USD</span></div>
