@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Footer from "./layoutmines/Footer";
 import Header from "./layoutmines/Header";
-import { Container } from "@mui/material";
+import { Box, Button, Container, Dialog, Stack } from "@mui/material";
 import { useQuery, useQueryClient } from "react-query";
 import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { FaPlay, FaRedoAlt, FaCoins } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { endpoint } from "../utils/APIRoutes";
+import { endpoint, frontend } from "../utils/APIRoutes";
 import { enCryptData } from "../utils/Secret";
 import Square from "./submines/Square";
 import mouseSound from "../images/button_click.mp3";
@@ -14,8 +14,11 @@ import bombSound from "../images/bomb_detect.mp3";
 import minesSound from "../images/mouse_over_mine.mp3";
 import cashoutSound from "../images/mouse_over_mine.mp3";
 import { useNavigate } from "react-router-dom";
-import { History } from "@mui/icons-material";
+import { Cancel, CopyAll, Diversity1, History, Refresh } from "@mui/icons-material";
 import { rupees } from "../wingo/services/urls";
+import CustomCircularProgress from "../wingo/shared/loder/CustomCircularProgress";
+import PromotionData from "../wingo/wingo/PromotionData";
+import { useSelector } from "react-redux";
 function getRandom(start, end) {
   return Math.floor(Math.random() * (end - start + 1)) + start;
 }
@@ -33,6 +36,7 @@ function Mines() {
   const [isEnableClick, setIsEnableClick] = useState(false);
   const [cashoutAvailable, setCashoutAvailable] = useState(false);
   const [increment, setincrement] = useState(0.1);
+  const [opendialogbox, setOpenDialogBox] = useState(false);
   const navigate = useNavigate();
 
   const initializeGame = (count = 1) => {
@@ -171,6 +175,54 @@ function Mines() {
     }
   };
 
+  const handleCopy = (url) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          toast.success("Link copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.error("Failed to copy link.");
+        });
+    } else {
+      // Fallback method for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          toast.success("Link copied to clipboard!");
+        } else {
+          toast.error("Copy failed. Please try manually.");
+        }
+      } catch (err) {
+        console.error("Fallback copy failed: ", err);
+        toast.error("Clipboard not supported in this browser.");
+      }
+
+      document.body.removeChild(textArea);
+    }
+  };
+  const { isLoading, data: wallet_amount } = useQuery(
+    ["wallet_amount"],
+    () => apiConnectorGet(endpoint?.game_profile),
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      retryOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const profile = wallet_amount?.data?.result?.[0] || {};
+
   const incrementBet = () => {
     const newBet = parseFloat((betAmount + 0.1).toFixed(2));
     setBetAmount(newBet);
@@ -201,14 +253,9 @@ function Mines() {
     audio.play();
     try {
       if (betAmount <= 0) return toast("Amount is low");
-      const res = {
-        data: {
-          msg: "Bid placed Successfully",
-        },
-      };
-      // await apiConnectorPost(endpoint?.mines_bet, {
-      //   payload: enCryptData(reqbody),
-      // });
+      const res = await apiConnectorPost(endpoint?.mines_bet, {
+        payload: enCryptData(reqbody),
+      });
       setDummyAmount(dummyAmount - reqbody.amount);
       if (res?.data?.msg !== "Bid placed Successfully") {
         toast(res?.data?.msg, { id: 1 });
@@ -222,6 +269,9 @@ function Mines() {
       console.error(e);
     }
   };
+  const wallet_amount_data = useSelector(
+    (state) => state.aviator.wallet_real_balance
+  );
 
   const Cashoutfunction = async () => {
     const reqbody = {
@@ -243,9 +293,9 @@ function Mines() {
         },
       };
       toast("Cashout Successfully");
-      //  await apiConnectorPost(endpoint?.mines_bet, {
-      //   payload: enCryptData(reqbody),
-      // });
+       await apiConnectorPost(endpoint?.mines_bet, {
+        payload: enCryptData(reqbody),
+      });
       if (res?.data?.msg !== "Cashout Successfully") {
         toast("Cashout Successfully");
       }
@@ -270,6 +320,94 @@ function Mines() {
   return (
     <Container>
       <div className="h-min-screen bg-custom-gradient text-white flex flex-col gap-8 lg:gap-0 font-sans">
+      <Box
+          sx={{
+            padding: 1,
+            background: "black",
+            px: 2,
+          }}
+        >
+          <CustomCircularProgress isLoading={isLoading} />
+          <Stack
+            direction="row"
+            sx={{ alignItems: "center", justifyContent: "space-between" }}
+          >
+            <Button
+              variant="contained"
+              className="!rounded-full"
+              onClick={() => {
+                handleCopy(
+                  frontend + "/wingo-payin?token=" + localStorage.getItem("uid")
+                );
+                // toast.success("Copy to clipboard", { id: 1 });
+              }}
+            >
+              Deposit
+            </Button>
+            <Refresh
+              onClick={() =>
+                navigate("/topup_detail", {
+                  state: {
+                    type: "wingo",
+                  },
+                })
+              }
+            />
+            <Button
+              variant="contained"
+              className="!rounded-full !bg-gold-color !text-text-color !font-bold"
+              onClick={() =>
+                Number(profile?.jnr_wingo_game_wallet || 0) > 0
+                  ? navigate("/withdrawal-link", {
+                      state: {
+                        type: "wingo",
+                      },
+                    })
+                  : toast("Your Amount is low.", { id: 1 })
+              }
+            >
+              Withdrawal
+            </Button>
+            <Refresh
+              onClick={() =>
+                navigate("/withdrawalhistory", {
+                  state: {
+                    type: "wingo",
+                  },
+                })
+              }
+            />
+            <Diversity1 onClick={() => setOpenDialogBox("promotion")} />
+          </Stack>
+          <Stack direction="row" className="!items-center !gap">
+            <div className="!flex !justify-between !w-full !items-center">
+              <span className="!text-xs">https://fastro.info/wingo-payin</span>
+              <span>
+                {" "}
+                {localStorage.getItem("uid") && (
+                  <CopyAll
+                    onClick={() => {
+                      handleCopy(
+                        frontend +
+                          "/wingo-payin?token=" +
+                          localStorage.getItem("uid")
+                      );
+                      // toast.success("Copy to clipboard", { id: 1 });
+                    }}
+                    className="text-gold-color !text-xs"
+                  />
+                )}
+              </span>
+            </div>
+            {/* <NavLink onClick={() => setmusicicon(!musicicon)}>
+                {musicicon === true ? (
+                  <Box component="img" src={music} width={25}></Box>
+                ) : (
+                  <Box component="img" src={musicoff} width={25}></Box>
+                )}
+              </NavLink> */}
+          </Stack>
+        </Box>
         <header className="bg-blue-900 p-4 flex justify-between items-center text-white shadow-md">
           <div className="flex items-center space-x-4">
             <button className="px-3 py-1 rounded-full bg-gold-color hover:bg-blue-600 text-sm">
@@ -279,8 +417,7 @@ function Mines() {
           <div className="flex items-center space-x-2">
             <span className="text-sm font-semibold">
               {" "}
-              {rupees}
-              {Number(dummyAmount)?.toFixed(2)}{" "}
+              {rupees} {wallet_amount_data}
             </span>
             <button
               className="p-1 rounded-full hover:bg-blue-700"
@@ -301,7 +438,7 @@ function Mines() {
                   onChange={(e) => {
                     setincrement(0.1 * e.target.value);
                     setMinesCount(parseInt(e.target.value));
-                    initializeGame(e.target.value);
+                    initializeGame(e.target.value<=5?5:e.target.value);
                   }}
                   size={1}
                   disabled={count}
@@ -428,6 +565,24 @@ function Mines() {
           </div>
         </footer>
       </div>
+      {opendialogbox && (
+          <Dialog
+            open={opendialogbox}
+            PaperProps={{
+              style: {
+                backgroundColor: "transparent",
+                boxShadow: "none",
+              },
+            }}
+          >
+            {opendialogbox === "promotion" && (
+              <PromotionData />
+            )}
+            <p className="!text-center !text-white">
+              <Cancel onClick={() => setOpenDialogBox(false)} />
+            </p>
+          </Dialog>
+        )}
     </Container>
   );
 }
