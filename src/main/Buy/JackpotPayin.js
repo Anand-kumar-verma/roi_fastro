@@ -140,10 +140,12 @@ function JackpotPayin() {
       const usdtDecimals = 18;
       const fstDecimals = 8;
 
-      const usdAmount = Number(fk.values.req_amount)?.toFixed(usdtDecimals);
-      const fstAmount = Number(
-        Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
-      )?.toFixed(fstDecimals);
+      const usdAmount = String(Number(fk.values.req_amount)?.toFixed(2));
+      const fstAmount = String(
+        Number(
+          Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
+        )?.toFixed(2)
+      );
 
       const dummyData = await PayinZpDummy();
       if (dummyData?.success == false) {
@@ -294,7 +296,7 @@ function JackpotPayin() {
       currentBNB: 0,
       currentZP: no_of_Tokne,
       gas_price: "",
-      deposit_type:"Jackpot"
+      deposit_type: "Jackpot",
     };
 
     try {
@@ -340,6 +342,10 @@ function JackpotPayin() {
                   walletAddress?.length
                 )}
               </span>
+            </div>
+           <div className="flex flex-wrap justify-start items-center">
+              <span className="!font-bold text-gold-color">User ID : </span>{" "}
+              <span className="!text-sm text-gold-color">{" "}{base64String}</span>
             </div>
             <p className="!font-bold mt-2 text-gold-color">Wallet Balance</p>
             <div className="flex flex-wrap justify-start items-center">

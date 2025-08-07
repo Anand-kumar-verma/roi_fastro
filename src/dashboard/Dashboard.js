@@ -1,13 +1,14 @@
 import { Close, CopyAll, Diamond } from "@mui/icons-material";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
-import { Button } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsTrophyFill } from "react-icons/bs";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import CustomPopup from "../component/CustomPopup";
 import card1 from "../images/card1.jpg";
 import card2 from "../images/card2.jpg";
 import card3 from "../images/card3.jpg";
@@ -15,13 +16,23 @@ import card6 from "../images/card_6.png";
 import tether from "../images/tether.png";
 import ButtomNavigation from "../Layout/ButtomNaviagatoin";
 import Loader from "../Shared/Loader";
-import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
+import {
+  apiConnectorGet,
+  apiConnectorPost,
+  getTimeLeft,
+} from "../utils/APIConnector";
 import { contractAddress, endpoint, telegram_url } from "../utils/APIRoutes";
 import { enCryptData } from "../utils/Secret";
-import LevelwiseBusiness from "./LevelwiseBusiness";
 import Navbar from "./Navbar";
-import CustomPopup from "../component/CustomPopup";
+import metamask from "../images/metamask.png";
+import trustwallet from "../images/trustwallet.jpeg";
+import tokenpocket from "../images/tokenpocket.png";
+import safepal from "../images/safepal.png";
+
+import CancelIcon from "@mui/icons-material/Cancel";
 const Dashboard = () => {
+  const [openWallet, setOpenWallet] = useState(false);
+  const [timeLeft, setTimeLeft] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
@@ -138,6 +149,46 @@ const Dashboard = () => {
       return toast(e.message || "Something went wrong");
     }
   }
+
+  const handleWalletClick = (wallet) => {
+    const uid = localStorage.getItem("uid");
+    if (!uid) return;
+
+    const encodedUid = encodeURIComponent(uid);
+    let url = "";
+
+    if (wallet === "metamask") {
+      url = `https://metamask.app.link/dapp/fastro.info/activation-link?token=${encodedUid}`;
+    } else if (wallet === "trustwallet") {
+      url = `https://link.trustwallet.com/open_url?coin_id=20000714&url=https%3A%2F%2Ffastro.info%2Factivation-link%3Ftoken%3D${encodedUid}`;
+    } else if (wallet === "tokenpocket") {
+      const dappUrl = encodeURIComponent(
+        `https://fastro.info/activation-link?token=${encodedUid}`
+      );
+      url = `tpdapp://open?url=${dappUrl}`;
+    } else if (wallet === "safepal") {
+      url = `https://fastro.info/activation-link?token=${encodedUid}`;
+    }
+
+    if (url) {
+      window.open(url);
+    }
+  };
+
+  useEffect(() => {
+    if (!profile?.jnr_remaining_time) return;
+
+    const targetTime = moment(profile.jnr_remaining_time).format(
+      "YYYY-MM-DD HH:mm:ss"
+    );
+
+    const timer = setInterval(() => {
+      setTimeLeft(getTimeLeft(targetTime));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [profile?.jnr_remaining_time]);
+
   return (
     <>
       <Navbar />
@@ -164,7 +215,7 @@ const Dashboard = () => {
                 <span className="inline-block text-text-color text-sm">
                   Congratulatoins! You have completed{" "}
                   {Number(profile?.slot_count || 1) - 1}
-                  nd Slot of FST Coin.
+                  Slot of FST Coin.
                 </span>
               </div>
             </div>
@@ -187,7 +238,7 @@ const Dashboard = () => {
 
               <div className="flex flex-col">
                 <div className="flex justify-between items-center pt-8">
-                  <div className="flex gap-2">
+                  <div className="flex gap-3 items-center">
                     <p className="text-text-color lg:text-lg text-base">
                       Active Topup <br />
                       Amount
@@ -196,18 +247,27 @@ const Dashboard = () => {
                   <Button
                     variant="contained"
                     className="!rounded-full"
-                    onClick={() => navigate("/activation")}
+                    // onClick={() => navigate("/activation")}
+                    onClick={() => {
+                      setOpenWallet(true);
+                    }}
                   >
                     Deposit
                   </Button>
                 </div>
-                <div className="text-xl font-bold text-amber-400 flex gap-2 pt-2">
-                  {Number(
-                    Number(profile?.jnr_topup_wallet || 0) -
-                      Number(profile?.jnr_collapse_pkg || 0)
-                  )?.toFixed(2)}{" "}
-                  USD
-                  <img src={tether} alt="" className="w-6 h-6" />
+                <div className="text-xl font-bold text-amber-400 flex gap-2 justify-between items-center pt-2">
+                  <div className="flex gap-2">
+                    {Number(
+                      Number(profile?.jnr_topup_wallet || 0) -
+                        Number(profile?.jnr_collapse_pkg || 0)
+                    )?.toFixed(2)}
+                    {""}
+                    USD
+                    <img src={tether} alt="" className="w-6 h-6" />
+                  </div>
+                  <div className="flex items-center justify-center bg-gold-color rounded-md text-black px-1 font-extrabold text-3xl">
+                    {timeLeft}
+                  </div>
                 </div>
                 {/* <div className="!text-xs text-green-500">First Topup: <span className="!text-gold-color">{Number(profile?.jnr_first_topup || 0)?.toFixed(2)} USD</span></div>
                 <div className="!text-xs text-green-500">Re Topup: <span className="!text-gold-color">{Number(profile?.jnr_other_topup || 0)?.toFixed(2)} USD</span></div> */}
@@ -291,7 +351,7 @@ const Dashboard = () => {
                     FST Slot Count {Number(profile?.slot_count || 0)}:{" "}
                   </span>
                   <span className="font-semibold text-green-400">
-                    100000 /{" "}
+                    50000 /{" "}
                     {(
                       Math.ceil(Number(data?.[0]?.total_fst_with || 0)) -
                       Math.ceil(Number(profile?.token_curr_value || 0))
@@ -449,7 +509,7 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-            <LevelwiseBusiness />
+            {/* <LevelwiseBusiness /> */}
           </div>
           <div className=" w-full mt-8 grid lg:grid-cols-3 grid-cols-1 gap-4 ">
             <div className="p-6   flex justify-between items-center space-y-2 rounded-xl !text-gold-color bg-custom-gradient shadow-xl border border-yellow-500/30">
@@ -569,6 +629,46 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
+      <Dialog open={openWallet}>
+        <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-8 max-w-md mx-auto text-center text-white">
+          {/* Close Button */}
+          <button
+            onClick={() => setOpenWallet(false)}
+            className="absolute top-4 right-4 text-gold-color hover:text-yellow-400 transition-colors"
+          >
+            <CancelIcon />
+          </button>
+
+          <p className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-6">
+            Select Wallet
+          </p>
+          {/* { name: "SafePal", key: "safepal", img: safepal },
+              { name: "TokenPocket", key: "tokenpocket", img: tokenpocket }, */}
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { name: "Trust Wallet", key: "trustwallet", img: trustwallet },
+              { name: "MetaMask", key: "metamask", img: metamask },
+            ].map((wallet) => (
+              <div
+                id="_boxes"
+                key={wallet.key}
+                onClick={() => handleWalletClick(wallet.key)}
+                className="border-2 border-green-500 cursor-pointer p-2 rounded-xl bg-white/10 hover:bg-white/20 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <img
+                  src={wallet.img}
+                  alt={wallet.name}
+                  className="h-16 w-16 mx-auto rounded-lg"
+                />
+                <p className="mt-3 text-sm font-semibold text-blue-800">
+                  {wallet.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Dialog>
+
       <ButtomNavigation />
     </>
   );

@@ -3,30 +3,29 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Tilt from "react-parallax-tilt";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import logo from "../images/fastro.png";
-import Loader from "../Shared/Loader";
-import { endpoint } from "../utils/APIRoutes";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import logo from "../../../images/fastro.png";
+import { endpoint } from "../../../utils/APIRoutes";
 import {
   saveToken,
   saveUid,
   saveUserCP,
   saveUsername,
-} from "../wingo/redux/slices/counterSlice";
+} from "../../../wingo/redux/slices/counterSlice";
+import Loader from "../../../Shared/Loader";
+import { deCryptData } from "../../../utils/Secret";
 
-const Login = () => {
-  const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
-  // const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
-
-  const datatele = {
-    id: "9857092571",
-  };
-
+const DirectAdminToUserLogin = () => {
   const navigate = useNavigate();
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const { logindataen, uid } = useSelector((state) => state.aviator);
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  const tokens = searchParams.get("token");
+  const datatele = {
+    id: deCryptData(id),
+  };
 
   const loginFn = async (reqBody) => {
     setLoading(true);
@@ -34,17 +33,17 @@ const Login = () => {
       mobile: String(datatele?.id),
       email: String(datatele?.id),
       full_name: String(datatele?.username || "N/A"),
-      referral_id: String(params),
+      // referral_id: String(params),
       username: String(reqBody.id),
       password: String(reqBody.id),
     };
     // const reqBodyy = {
-    //   mobile: String("9857092571"),
-    //   email: String("9857092571"),
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
     //   full_name: String(datatele?.username),
     //   referral_id: String("1234567890"),
-    //   username: String("9857092571"),
-    //   password: String("9857092571"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
     // };
 
     try {
@@ -70,7 +69,7 @@ const Login = () => {
         localStorage.setItem("uid", reqBodyy?.mobile);
         localStorage.setItem("username", datatele?.username);
         localStorage.setItem("isCP", response?.data?.result?.[0]?.isCP);
-        navigate("/home");
+        // navigate("/home");
         // window.location.reload();
       }
     } catch (error) {
@@ -79,19 +78,15 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    const bo = "9857092571";
-    // const token =
-    //   "xLToI3ZzIsfc6qyEgPXRgZ8fzc5xJmYzPirhqEvrERvmYDd3TnME3wpu7JVbt1o3hqAFvl7JTn1p9r43Lyd3EbHm0UbUTwrPNdEG";
-    const token =
-      "tVs0l4jkOIiZkoSYmGtrUWL37j8G7Sg3ItHLlVdwgJbYrr4gsk0tHKZoGSnqQGeTXGojTvGdpGKTWoVC2iGdZwGodey1EnaKbgiP";
+    const bo = deCryptData(id);
+    const token = tokens;
     dispatch(saveUid(bo));
     dispatch(saveToken(token));
     localStorage.setItem("logindataen", token);
     localStorage.setItem("uid", bo);
+    localStorage.setItem("username", "USER");
     navigate("/home");
-    alert("ID: " + bo);
     // if (datatele?.id) {
-    //   alert("ID: " + datatele?.id);
     //   if (datatele?.id && (!logindataen || !uid)) {
     //     loginFn({
     //       id: String(datatele?.id),
@@ -104,7 +99,7 @@ const Login = () => {
     //     });
     //   }
     // }
-  }, [datatele]);
+  }, [tokens]);
   return (
     <>
       <Loader isLoading={loading} />
@@ -155,4 +150,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DirectAdminToUserLogin;

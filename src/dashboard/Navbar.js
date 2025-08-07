@@ -156,13 +156,13 @@ export default function Navbar() {
                     <Lock className="text-blue-400" fontSize="small" />
                     <p>Withdrawal</p>
                   </div>
-                  {/* <div
+                  <div
                     className="cursor-pointer flex items-center gap-1 py-1 hover:text-blue-400 text-gray-800"
-                    onClick={() => navigate("/password")}
+                    onClick={() => navigate("/inititate-trans")}
                   >
-                    <KeyOff className="text-blue-400" fontSize="small" />
-                    <p>Password</p>
-                  </div> */}
+                    <Lock className="text-blue-400" fontSize="small" />
+                    <p>Initiate Trans</p>
+                  </div>
                   <div
                     className="cursor-pointer flex items-center gap-1 py-1 hover:text-blue-400 text-gray-800"
                     onClick={() => navigate("/view")}

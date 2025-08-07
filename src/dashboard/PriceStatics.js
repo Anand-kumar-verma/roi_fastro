@@ -23,34 +23,34 @@ const PriceStatics = () => {
                     Duration
                   </th>
                   <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
-                    Burn Event
+                   FST Price
                   </th>
-                  <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
+                  {/* <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
                     Dollar
-                  </th>
-                  <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
+                  </th> */}
+                  {/* <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
                     Token(Qnt)
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
                 {price_statics?.map((i, index) => (
                   <tr key={index}>
                     <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap">
-                      {index + 1}
+                      {index + 11}
                     </td>
                     <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-gold-color">
                       {i?.start1} - {i?.end1}
                     </td>
                     <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-rose-500">
-                      {i.burning_event} Lacks
+                      {i.burning_event} $
                     </td>
-                    <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
+                    {/* <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
                       $ {i.dollar}
-                    </td>
-                    <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
+                    </td> */}
+                    {/* <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
                       {i.token_cnt}
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

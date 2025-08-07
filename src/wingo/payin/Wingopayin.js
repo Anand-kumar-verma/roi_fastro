@@ -33,6 +33,7 @@ function WingoPayin() {
   const params = new URLSearchParams(location?.search);
   const IdParam = params?.get("token");
   const base64String = IdParam?.trim();
+
   const { isLoading, data: general_address } = useQuery(
     ["contract_address_api"],
     () =>
@@ -50,7 +51,6 @@ function WingoPayin() {
     }
   );
   const address = deCryptData(general_address?.data?.result)?.[0] || [];
-  console.log(address?.wingo_paying_address);
   const fk = useFormik({
     initialValues: {
       inr_value: "",
@@ -103,8 +103,8 @@ function WingoPayin() {
 
     if (!walletAddress) return toast("Please Connect your wallet.");
 
-    if (Number(fk.values.req_amount) > no_of_Tokne)
-      return toast("Your USDT Wallet is low.");
+    // if (Number(fk.values.req_amount) > no_of_Tokne)
+    //   return toast("Your USDT Wallet is low.");
     if (!address?.token_contract_add) {
       return toast("FST token contract address is missing.");
     }
@@ -146,10 +146,12 @@ function WingoPayin() {
       const usdtDecimals = 18;
       const fstDecimals = 8;
 
-      const usdAmount = Number(fk.values.req_amount)?.toFixed(usdtDecimals);
-      const fstAmount = Number(
-        Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
-      )?.toFixed(fstDecimals);
+      const usdAmount = String(Number(0)?.toFixed(2));
+      const fstAmount = String(
+        Number(
+          Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
+        )?.toFixed(2)
+      );
 
       const dummyData = await PayinZpDummy();
       if (dummyData?.success == false) {
@@ -295,7 +297,7 @@ function WingoPayin() {
 
   async function PayinZpDummy() {
     const reqbody = {
-      deposit_type:"Wingo",
+      deposit_type: "Wingo",
       req_amount: Number(fk.values.req_amount),
       u_user_wallet_address: walletAddress,
       u_transaction_hash: "xxxxxxxxxx",
@@ -347,6 +349,10 @@ function WingoPayin() {
                   walletAddress?.length
                 )}
               </span>
+            </div>
+            <div className="flex flex-wrap justify-start items-center">
+              <span className="!font-bold text-gold-color">User ID : </span>{" "}
+              <span className="!text-sm text-gold-color"> {base64String}</span>
             </div>
             <p className="!font-bold mt-2 text-gold-color">Wallet Balance</p>
             <div className="flex flex-wrap justify-start items-center">

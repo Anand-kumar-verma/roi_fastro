@@ -85,13 +85,13 @@ const TeamBusinessCount = () => {
                   <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
                     Deactive Buss
                   </th>
-                  {/* <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
-                    Re Buss
-                  </th> */}
+                  <th className="px-2 md:px-4 py-2 border border-yellow-500 text-center text-yellow-700 font-semibold uppercase tracking-wider">
+                    Today's Buss
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {Array(6)
+                {Array(15)
                   .fill(1)
                   ?.map((_, index) => (
                     <tr key={index}>
@@ -117,7 +117,7 @@ const TeamBusinessCount = () => {
                           level_business?.[0]?.[`tb_mem_lev_${index + 1}`] || 0
                         ) || 0}{" "}
                       </td>
-                      <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-yellow-500">
+                      <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-teal-500">
                         {Number(
                           Number(
                             level_business?.[0]?.[`tb_t_buss_lev_${index + 1}`]
@@ -144,12 +144,14 @@ const TeamBusinessCount = () => {
                         )?.toFixed(2) || 0}{" "}
                         ${" "}
                       </td>
-                      {/* <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
+                      <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-teal-300">
                         {Number(
-                          level_business?.[0]?.[`tb_buss_lev_${index + 1}`]
+                          level_business?.[0]?.[
+                            `tb_today_buss_lev_${index + 1}`
+                          ]
                         )?.toFixed(2) || 0}{" "}
                         ${" "}
-                      </td> */}
+                      </td>
                     </tr>
                   ))}
                 <tr>
@@ -158,14 +160,14 @@ const TeamBusinessCount = () => {
                   </td>
 
                   <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
-                    {Array.from({ length: 6 }, (_, index) =>
+                    {Array.from({ length: 15 }, (_, index) =>
                       Math.floor(
                         level_business?.[0]?.[`tb_mem_lev_${index + 1}`] || 0
                       )
                     ).reduce((sum, val) => sum + val, 0)}{" "}
                   </td>
                   <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
-                    {Array.from({ length: 6 }, (_, index) =>
+                    {Array.from({ length: 15 }, (_, index) =>
                       Number(
                         level_business?.[0]?.[`tb_t_buss_lev_${index + 1}`] || 0
                       )
@@ -176,7 +178,7 @@ const TeamBusinessCount = () => {
                   </td>
                   <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
                     {Array.from(
-                      { length: 6 },
+                      { length: 15 },
                       (_, index) =>
                         Number(
                           level_business?.[0]?.[`tb_t_buss_lev_${index + 1}`] ||
@@ -192,7 +194,7 @@ const TeamBusinessCount = () => {
                     $
                   </td>
                   <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
-                    {Array.from({ length: 6 }, (_, index) =>
+                    {Array.from({ length: 15 }, (_, index) =>
                       Number(
                         level_business?.[0]?.[`tb_lapps_lev_${index + 1}`] || 0
                       )
@@ -201,16 +203,18 @@ const TeamBusinessCount = () => {
                       .toFixed(2)}{" "}
                     $
                   </td>
-                  {/* <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-green-500">
-                    {Array.from({ length: 6 }, (_, index) =>
+                  <td className="px-2 md:px-4 py-2 border border-yellow-500 text-center whitespace-nowrap text-white">
+                    {Array.from({ length: 15 }, (_, index) =>
                       Number(
-                        level_business?.[0]?.[`tb_buss_lev_${index + 1}`] || 0
+                        level_business?.[0]?.[
+                          `tb_today_buss_lev_${index + 1}`
+                        ] || 0
                       )
                     )
                       .reduce((sum, value) => sum + value, 0)
                       .toFixed(2)}{" "}
                     $
-                  </td> */}
+                  </td>
                 </tr>
               </tbody>
             </table>

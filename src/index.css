@@ -234,7 +234,7 @@ input::-webkit-inner-spin-button {
 .bonuspr {
   text-align: center !important;
   margin-top: 8px !important;
-  color: white ;
+  color: white;
   font-size: 15px !important;
   font-weight: 600 !important;
 }
@@ -248,29 +248,57 @@ input::-webkit-inner-spin-button {
 }
 .transparentColorRedPurpleBGTOP {
   background: #c86eff !important;
-  background: linear-gradient(to bottom right,
-      #fb6161 50%,
-      #c86eff 50%) !important;
+  background: linear-gradient(
+    to bottom right,
+    #fb6161 50%,
+    #c86eff 50%
+  ) !important;
 }
- 
+
 .transparentColorGreenRedBGTOP {
   background: #18b680 !important;
-  background: linear-gradient(to bottom right,
-      #18b680 50%,
-      #c86eff 50%) !important;
+  background: linear-gradient(
+    to bottom right,
+    #18b680 50%,
+    #c86eff 50%
+  ) !important;
 }
 
 .pio {
   text-align: center;
   margin: 20px 0 60px;
   font-size: 1.25em;
- 
+
   &.success {
     color: #73af55;
   }
- 
+
   &.error {
     color: #d06079;
   }
 }
- 
+
+@keyframes borderColorChange {
+  0% {
+    border-color: #00fd5d; /* green-600 */
+  }
+  25% {
+    border-color: #facc15; /* yellow-400 */
+  }
+  50% {
+    border-color: #fe0000; /* red-500 */
+  }
+  75% {
+    border-color: #0062ff; /* blue-500 */
+  }
+  100% {
+    border-color: #02ff5e; /* green-600 again */
+  }
+}
+
+#_boxes {
+  animation: borderColorChange 1s linear infinite;
+}
+#_boxess {
+  animation: borderColorChange 6s linear infinite;
+}

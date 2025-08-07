@@ -1,6 +1,8 @@
-export const domain = "https://roi-backend-e231.onrender.com";
+// export const domain = "https://roi-backend-e231.onrender.com";
+// export const domain = "http://192.168.18.214:9010";
 export const domain_market = "https://api.coingecko.com";
-// export const domain = "http://10.60.152.149:9010";
+export const domain = "https://backend.fastro.info";
+// export const frontend = "http://localhost:3000";
 export const frontend = "https://fastro.info";
 export const telegram_url = "https://t.me/fastro2025_bot/fastro?";
 export const contractAddress = "0x8eCB084E633FC36F16e873A13CD9ae504F6c30b0";
@@ -14,6 +16,7 @@ export const endpoint = {
   very_fy_OTP: `${domain}/api/v2/verify-otp`,
   very_fy_OTP_wingo: `${domain}/api/v2/verify-otp-wingo`,
   game_ledger: `${domain}/api/v2/get-game-ledger-by-admin`,
+  auto_withdrawal_req_gtw: `${domain}/api/v2/auto-withdrawal-req-gtw`,
 
   wallet_api: `${domain}/api/v2/check-wallet-address-availability`,
   package_list_api: `${domain}/api/v2/get-package-details`,
@@ -36,6 +39,7 @@ export const endpoint = {
   user_buy_package_details_api: `${domain}/api/v2/get-buy-package-details`,
   get_topup_api: `${domain}/api/v2/get-topup-details`,
   get_topup_api_wingo: `${domain}/api/v2/get-topup-details-wingo`,
+  get_transacton_details: `${domain}/api/v2/get-all-transaction-details`,
   topup_api: `${domain}/api/v2/admin-topup-id`,
   topup_api_pending: `${domain}/api/v2/admin-pending-topup-id`,
   market_api: `${domain_market}/api/v3/simple/price`,
@@ -63,7 +67,7 @@ export const endpoint = {
   fst_count: `${domain}/api/v2/get-fst-count-for-jackpot-pay`,
 
   //mines
-   mines_record: `${domain}/api/v2/mines-grid-records`,
+  mines_record: `${domain}/api/v2/mines-grid-records`,
   mines_bet: `${domain}/api/v2/mines-betting-cashsout`,
   mines_history: `${domain}/api/v2/mines-betting-history`,
 };

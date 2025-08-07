@@ -6,34 +6,13 @@ import JackpotCountdown from "./JackpotCountdown";
 import Navbar from "./Navbar";
 
 const GameProject = () => {
-  const [activeTab, setActiveTab] = useState("wingo");
+  const [activeTab, setActiveTab] = useState("mines");
   return (
     <>
       <Navbar />
 
       {/* Tab Header */}
       <div className="bg-[#111827] text-white px-4 py-3 flex justify-center gap-4 shadow-md pt-[20%]">
-        <button
-          // onClick={() => navigate("/wingo")}
-          onClick={() => setActiveTab("wingo")}
-          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
-            activeTab === "wingo"
-              ? "bg-pink-400 text-black shadow-lg"
-              : "bg-gray-700 hover:bg-gray-600"
-          }`}
-        >
-          Wingo
-        </button>
-        <button
-          onClick={() => setActiveTab("jackpot")}
-          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
-            activeTab === "jackpot"
-              ? "bg-yellow-400 text-black shadow-lg"
-              : "bg-gray-700 hover:bg-gray-600"
-          }`}
-        >
-          Jackpot
-        </button>
         <button
           // onClick={() => navigate("/wingo")}
           onClick={() => setActiveTab("mines")}
@@ -44,6 +23,27 @@ const GameProject = () => {
           }`}
         >
           Mines
+        </button>
+        {/* <button
+          onClick={() => setActiveTab("jackpot")}
+          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
+            activeTab === "jackpot"
+              ? "bg-yellow-400 text-black shadow-lg"
+              : "bg-gray-700 hover:bg-gray-600"
+          }`}
+        >
+          Jackpot
+        </button> */}
+        <button
+          // onClick={() => navigate("/wingo")}
+          onClick={() => setActiveTab("wingo")}
+          className={`px-4 py-2 rounded-full font-semibold transition duration-200 ${
+            activeTab === "wingo"
+              ? "bg-pink-400 text-black shadow-lg"
+              : "bg-gray-700 hover:bg-gray-600"
+          }`}
+        >
+          Wingo
         </button>
       </div>
 

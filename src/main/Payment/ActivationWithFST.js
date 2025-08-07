@@ -118,14 +118,14 @@ function ActivationWithFST() {
     if (!address?.token_contract_add)
       return toast("Please add your contract Address");
     if (!walletAddress) return toast("Please Connect your wallet.");
-    if (
-      Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ) *
-        (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0) >
-      no_of_Tokne
-    )
-      return toast("Your USDT Wallet Amount is low.");
+    // if (
+    //   Number(
+    //     res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
+    //   ) *
+    //     (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0) >
+    //   no_of_Tokne
+    // )
+    //   return toast("Your USDT Wallet Amount is low.");
     if (
       Number(
         Number(
@@ -133,7 +133,7 @@ function ActivationWithFST() {
             ?.pack_amount
         ) *
           Number(address?.token_price || 0) *
-           (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) // 10%
+          (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) // 10%
       ) > no_of_TokneFST
     )
       return toast("Your FST Wallet is low.");
@@ -158,19 +158,20 @@ function ActivationWithFST() {
       const usdtDecimals = 18;
       const fstDecimals = 8;
 
-      const usdAmount = Number(
-        Number(
-          res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-            ?.pack_amount
-        ) * (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0)
-      )?.toFixed(usdtDecimals);
+      const usdAmount = Number(0)?.toFixed(usdtDecimals);
+      // Number(
+      //   Number(
+      //     res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
+      //       ?.pack_amount
+      //   ) * (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0)
+      // )?.toFixed(usdtDecimals);
 
       const fstAmount = Number(
         Number(
           res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
             ?.pack_amount
         ) *
-           (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) *
+          (Number(fk.values.pack_id) !== 11 ? fst_percent : 1) *
           Number(address?.token_price || 0)
       )?.toFixed(fstDecimals);
 
@@ -391,6 +392,10 @@ function ActivationWithFST() {
                   walletAddress?.length
                 )}
               </span>
+            </div>
+            <div className="flex flex-wrap justify-start items-center">
+              <span className="!font-bold text-gold-color">User ID : </span>{" "}
+              <span className="!text-sm text-gold-color"> {base64String}</span>
             </div>
             <p className="!font-bold mt-2 text-gold-color">Wallet Balance</p>
             <div className="flex flex-wrap justify-start items-center">

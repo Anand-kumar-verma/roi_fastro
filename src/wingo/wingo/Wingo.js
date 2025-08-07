@@ -1,4 +1,6 @@
-import { Cancel, CopyAll, Refresh, TabletMac } from "@mui/icons-material";
+import { Cancel, CopyAll, Refresh } from "@mui/icons-material";
+import Diversity1Icon from "@mui/icons-material/Diversity1";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUpOutlined";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import {
@@ -26,20 +28,19 @@ import {
 import { rupees } from "../services/urls";
 import CustomCircularProgress from "../shared/loder/CustomCircularProgress";
 import theme from "../utils/theme";
-import Wingo10Min from "./component/Wingo10Min";
 import Wingo1Min from "./component/Wingo1Min";
-import Wingo3Min from "./component/Wingo3Min";
 import Wingo5Min from "./component/Wingo5Min";
 import PromotionData from "./PromotionData";
 import WinLossPopup from "./WinLossPopup";
-import Diversity1Icon from "@mui/icons-material/Diversity1";
-import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import metamask from "../../images/metamask.png";
+import trustwallet from "../../images/trustwallet.jpeg";
+import CancelIcon from "@mui/icons-material/Cancel";
 function Wingo() {
   const navigate = useNavigate();
   const [value, setValue] = useState(3);
   const [opendialogbox, setOpenDialogBox] = useState(false);
   const isAppliedbet = localStorage.getItem("betApplied");
-
+  const [openWallet, setOpenWallet] = useState(false);
   const dummycounter = useSelector((state) => state.aviator.dummycounter);
   const wallet_amount_data = useSelector(
     (state) => state.aviator.wallet_real_balance
@@ -136,6 +137,25 @@ function Wingo() {
       document.body.removeChild(textArea);
     }
   };
+
+  const handleWalletClick = (wallet) => {
+    const uid = localStorage.getItem("uid");
+    if (!uid) return;
+
+    const encodedUid = encodeURIComponent(uid);
+    let url = "";
+
+    if (wallet === "metamask") {
+      url = `https://metamask.app.link/dapp/fastro.info/game-paying?token=${encodedUid}`;
+    } else if (wallet === "trustwallet") {
+      url = `https://link.trustwallet.com/open_url?coin_id=20000714&url=https%3A%2F%2Ffastro.info%2Fgame-paying%3Ftoken%3D${encodedUid}`;
+    }
+
+    if (url) {
+      window.open(url);
+    }
+  };
+
   return (
     <Container
       maxWidth={false}
@@ -172,11 +192,14 @@ function Wingo() {
             <Button
               variant="contained"
               className="!rounded-full"
+              // onClick={() => {
+              //   handleCopy(
+              //     frontend + "/game-paying?token=" + localStorage.getItem("uid")
+              //   );
+              //   // toast.success("Copy to clipboard", { id: 1 });
+              // }}
               onClick={() => {
-                handleCopy(
-                  frontend + "/wingo-payin?token=" + localStorage.getItem("uid")
-                );
-                // toast.success("Copy to clipboard", { id: 1 });
+                setOpenWallet(true);
               }}
             >
               Deposit
@@ -218,21 +241,23 @@ function Wingo() {
           </Stack>
           <Stack direction="row" className="!items-center !gap">
             <div className="!flex !justify-between !w-full !items-center">
-              <span className="!text-xs">https://fastro.info/wingo-payin</span>
+              <span className="!text-xs">https://fastro.info/game-paying</span>
               <span>
                 {" "}
                 {localStorage.getItem("uid") && (
-                  <CopyAll
+                  <button
+                    className=" bg-gold-color text-blue-800 text-sm rounded-lg py-2 px-3"
                     onClick={() => {
                       handleCopy(
                         frontend +
-                          "/wingo-payin?token=" +
+                          "/game-paying?token=" +
                           localStorage.getItem("uid")
                       );
                       // toast.success("Copy to clipboard", { id: 1 });
                     }}
-                    className="text-gold-color !text-xs"
-                  />
+                  >
+                    COPY
+                  </button>
                 )}
               </span>
             </div>
@@ -381,7 +406,7 @@ function Wingo() {
         </Box>
         {value === 1 && <Wingo1Min />}
         {/* {value === 2 && <Wingo3Min />} */}
-        {value === 3 && <Wingo5Min />} 
+        {value === 3 && <Wingo5Min />}
         {/* {value === 4 && <Wingo10Min />} */}
         {opendialogbox && (
           <Dialog
@@ -403,6 +428,45 @@ function Wingo() {
             </p>
           </Dialog>
         )}
+        <Dialog open={openWallet}>
+          <div className="relative bg-white rounded-2xl shadow-2xl p-6 max-w-sm mx-auto text-center">
+            {/* Close Button */}
+            <button
+              onClick={() => setOpenWallet(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <CancelIcon />
+            </button>
+
+            <p className="text-xl font-extrabold text-gray-800 mb-4">
+              Select Wallet
+            </p>
+            <div className="flex justify-around gap-4">
+              <div className="cursor-pointer hover:scale-105 transition-transform duration-200">
+                <img
+                  onClick={() => handleWalletClick("trustwallet")}
+                  className="h-24 w-24 mx-auto"
+                  src={trustwallet}
+                  alt="Trust Wallet"
+                />
+                <p className="mt-2 text-sm font-medium text-gray-600">
+                  Trust Wallet
+                </p>
+              </div>
+              <div className="cursor-pointer hover:scale-105 transition-transform duration-200">
+                <img
+                  onClick={() => handleWalletClick("metamask")}
+                  className="h-24 w-24 mx-auto"
+                  src={metamask}
+                  alt="MetaMask"
+                />
+                <p className="mt-2 text-sm font-medium text-gray-600">
+                  MetaMask
+                </p>
+              </div>
+            </div>
+          </div>
+        </Dialog>
       </Box>
     </Container>
   );

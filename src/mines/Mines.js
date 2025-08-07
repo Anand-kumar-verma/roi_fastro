@@ -1,29 +1,39 @@
-import React, { useEffect, useState } from "react";
-import Footer from "./layoutmines/Footer";
-import Header from "./layoutmines/Header";
+import {
+  Cancel,
+  CopyAll,
+  Diversity1,
+  History,
+  Refresh,
+} from "@mui/icons-material";
 import { Box, Button, Container, Dialog, Stack } from "@mui/material";
-import { useQuery, useQueryClient } from "react-query";
-import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
-import { FaPlay, FaRedoAlt, FaCoins } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaCoins, FaPlay } from "react-icons/fa";
+import { useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import bombSound from "../images/bomb_detect.mp3";
+import mouseSound from "../images/button_click.mp3";
+import {
+  default as cashoutSound,
+  default as minesSound,
+} from "../images/mouse_over_mine.mp3";
+import { apiConnectorGet, apiConnectorPost } from "../utils/APIConnector";
 import { endpoint, frontend } from "../utils/APIRoutes";
 import { enCryptData } from "../utils/Secret";
-import Square from "./submines/Square";
-import mouseSound from "../images/button_click.mp3";
-import bombSound from "../images/bomb_detect.mp3";
-import minesSound from "../images/mouse_over_mine.mp3";
-import cashoutSound from "../images/mouse_over_mine.mp3";
-import { useNavigate } from "react-router-dom";
-import { Cancel, CopyAll, Diversity1, History, Refresh } from "@mui/icons-material";
 import { rupees } from "../wingo/services/urls";
 import CustomCircularProgress from "../wingo/shared/loder/CustomCircularProgress";
 import PromotionData from "../wingo/wingo/PromotionData";
-import { useSelector } from "react-redux";
+import Square from "./submines/Square";
+import metamask from "../images/metamask.png";
+import trustwallet from "../images/trustwallet.jpeg";
+import CancelIcon from "@mui/icons-material/Cancel";
 function getRandom(start, end) {
   return Math.floor(Math.random() * (end - start + 1)) + start;
 }
 
 function Mines() {
+  const [openWallet, setOpenWallet] = useState(false);
+
   const [minesCount, setMinesCount] = useState(1);
   const [betAmount, setBetAmount] = useState(1);
   const [betvalue, setBetvalue] = useState(betAmount);
@@ -38,7 +48,7 @@ function Mines() {
   const [opendialogbox, setOpenDialogBox] = useState(false);
   const navigate = useNavigate();
 
-  const initializeGame = (count = 1) => {
+  const initializeGame = (count = 15) => {
     // Generate a Set of unique mine indices
     const mineIndices = new Set();
     while (mineIndices.size < Math.max(count, minesCount)) {
@@ -265,9 +275,6 @@ function Mines() {
       console.error(e);
     }
   };
-  const wallet_amount_data = useSelector(
-    (state) => state.aviator.wallet_real_balance
-  );
 
   const Cashoutfunction = async () => {
     const reqbody = {
@@ -284,7 +291,7 @@ function Mines() {
       const res = await apiConnectorPost(endpoint?.mines_bet, {
         payload: enCryptData(reqbody),
       });
-      toast(res?.data?.msg)
+      toast(res?.data?.msg);
       if (res?.data?.msg === "Cashout Successfully") {
         client.refetchQueries("wallet_amount");
         setCashoutAvailable(false);
@@ -302,11 +309,28 @@ function Mines() {
       console.error(e);
     }
   };
+  const handleWalletClick = (wallet) => {
+    const uid = localStorage.getItem("uid");
+    if (!uid) return;
+
+    const encodedUid = encodeURIComponent(uid);
+    let url = "";
+
+    if (wallet === "metamask") {
+      url = `https://metamask.app.link/dapp/fastro.info/game-paying?token=${encodedUid}`;
+    } else if (wallet === "trustwallet") {
+      url = `https://link.trustwallet.com/open_url?coin_id=20000714&url=https%3A%2F%2Ffastro.info%2Fgame-paying%3Ftoken%3D${encodedUid}`;
+    }
+
+    if (url) {
+      window.open(url);
+    }
+  };
 
   return (
     <Container>
-      <div className="h-min-screen bg-custom-gradient text-white flex flex-col gap-8 lg:gap-0 font-sans">
-      <Box
+      <div className="h-min-screen bg-custom-gradient text-white  font-sans">
+        <Box
           sx={{
             padding: 1,
             background: "black",
@@ -322,10 +346,7 @@ function Mines() {
               variant="contained"
               className="!rounded-full"
               onClick={() => {
-                handleCopy(
-                  frontend + "/wingo-payin?token=" + localStorage.getItem("uid")
-                );
-                // toast.success("Copy to clipboard", { id: 1 });
+                setOpenWallet(true);
               }}
             >
               Deposit
@@ -341,7 +362,7 @@ function Mines() {
             />
             <Button
               variant="contained"
-              className="!rounded-full !bg-gold-color !text-text-color !font-bold"
+              className="!rounded-full !bg-blue-800 !text-gold-color !font-bold"
               onClick={() =>
                 Number(profile?.jnr_wingo_game_wallet || 0) > 0
                   ? navigate("/withdrawal-link", {
@@ -367,24 +388,37 @@ function Mines() {
           </Stack>
           <Stack direction="row" className="!items-center !gap">
             <div className="!flex !justify-between !w-full !items-center">
-              <span className="!text-xs">https://fastro.info/wingo-payin</span>
+              <span className="!text-xs">https://fastro.info/game-paying</span>
               <span>
                 {" "}
                 {localStorage.getItem("uid") && (
-                  <CopyAll
+                  <button
+                    className=" bg-gold-color text-blue-800 text-sm rounded-lg py-2 px-3"
                     onClick={() => {
                       handleCopy(
                         frontend +
-                          "/wingo-payin?token=" +
+                          "/game-paying?token=" +
+                          localStorage.getItem("uid")
+                      );
+                      // toast.success("Copy to clipboard", { id: 1 });
+                    }}
+                  >
+                    COPY
+                  </button>
+                )}
+              </span>
+            </div>
+             {/* <CopyAll
+                    onClick={() => {
+                      handleCopy(
+                        frontend +
+                          "/game-paying?token=" +
                           localStorage.getItem("uid")
                       );
                       // toast.success("Copy to clipboard", { id: 1 });
                     }}
                     className="text-gold-color !text-xs"
-                  />
-                )}
-              </span>
-            </div>
+                  /> */}
             {/* <NavLink onClick={() => setmusicicon(!musicicon)}>
                 {musicicon === true ? (
                   <Box component="img" src={music} width={25}></Box>
@@ -394,7 +428,7 @@ function Mines() {
               </NavLink> */}
           </Stack>
         </Box>
-        <header className="bg-blue-900 p-4 flex justify-between items-center text-white shadow-md">
+        <header className="bg-blue-900 p-2 flex justify-between items-center text-white shadow-md">
           <div className="flex items-center space-x-4">
             <button className="px-3 py-1 rounded-full bg-gold-color hover:bg-blue-600 text-sm">
               MINES
@@ -403,7 +437,7 @@ function Mines() {
           <div className="flex items-center space-x-2">
             <span className="text-sm font-semibold">
               {" "}
-              {rupees} { Number(profile?.jnr_wingo_game_wallet || 0)}
+              {rupees} {Number(profile?.jnr_wingo_game_wallet || 0)}
             </span>
             <button
               className="p-1 rounded-full hover:bg-blue-700"
@@ -413,23 +447,24 @@ function Mines() {
             </button>
           </div>
         </header>
-        <main className="flex-grow flex items-center justify-center p-4">
+        <main className="flex-grow flex items-center justify-center p-2">
           <div className="w-full max-w-md bg-blue-900 rounded-lg p-2 shadow-lg">
             <div className="flex justify-between items-center ">
               <div className="flex items-center space-x-2 bg-blue-600 rounded-full border bg-custom-gradient px-3 py-1 focus-within:ring-2 focus-within:ring-blue-400">
                 {/* <span className="text-gray-200 text-sm">Mines:</span> */}
                 <select
-                  className="text-sm bg-blue-900 text-white rounded-full px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 appearance-none cursor-pointer max-h-20 overflow-y-auto"
+                  id="_boxes"
+                  className="border-2 border-green-500 text-sm bg-blue-900 text-white rounded-full px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 appearance-none cursor-pointer max-h-20 overflow-y-auto"
                   value={minesCount}
                   onChange={(e) => {
                     setincrement(0.1 * e.target.value);
                     setMinesCount(parseInt(e.target.value));
-                    initializeGame(e.target.value<=5?5:e.target.value);
+                    initializeGame(e.target.value <= 15 ? 15 : e.target.value);
                   }}
                   size={1}
                   disabled={count}
                 >
-                  {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
+                  {Array.from({ length: 10 }, (_, i) => i + 10).map((num) => (
                     <option key={num} value={num}>
                       Mines : {num}
                     </option>
@@ -447,14 +482,17 @@ function Mines() {
                 </span>
               </div>
             </div>
-            <div className="mt-5 h-[2px] w-full bg-gray-300 relative overflow-hidden">
+            <div className="mt-2 h-[2px] w-full bg-gray-300 relative overflow-hidden">
               <div
                 id="progress"
                 className=" h-[2px] bg-red-600 absolute right-0 top-0"
               ></div>
             </div>
 
-            <div className="relative grid grid-cols-5 gap-2 md:gap-3 p-2 bg-custom-gradient rounded-lg">
+            <div
+              id="_boxes"
+              className="relative grid grid-cols-5 gap-2 md:gap-3 p-2 bg-custom-gradient rounded-lg border-2 border-green-500"
+            >
               {grid.map((square) => (
                 <Square
                   key={square.id}
@@ -473,7 +511,7 @@ function Mines() {
             </div>
           </div>
         </main>
-        <footer className="bg-blue-900 mb-10 py-5 px-1 flex flex-col  justify-center items-center gap-1 text-white shadow-md ">
+        <footer className="bg-blue-900 mt-2 mb-10 py-5 flex flex-col  justify-center items-center gap-1 text-white shadow-md ">
           <div className="flex items-center justify-center w-full gap-1">
             {/* Bet Controls Box */}
             <div className="flex items-center bg-blue-700 rounded-full px-4 py-1 border border-blue-900 gap-1">
@@ -501,9 +539,9 @@ function Mines() {
 
               <button
                 className="h-5 w-5 flex justify-center items-center rounded-full bg-blue-600 hover:bg-blue-500 border border-blue-800"
-                onClick={() => {
-                  window.location.reload();
-                }}
+                // onClick={() => {
+                //   window.location.reload();
+                // }}
               >
                 <FaCoins className="w-4 h-4" />
               </button>
@@ -516,9 +554,9 @@ function Mines() {
                 <span>+</span>
               </button>
             </div>
-            <button className="p-3 rounded-full bg-blue-700 hover:bg-blue-600 border border-blue-900">
+            {/* <button className="p-3 rounded-full bg-blue-700 hover:bg-blue-600 border border-blue-900">
               <FaRedoAlt className="w-4 h-4 text-white" />
-            </button>
+            </button> */}
             {cashoutAvailable ? (
               <button
                 className={`flex items-center gap-1 px-6 py-2 rounded-full
@@ -552,23 +590,58 @@ function Mines() {
         </footer>
       </div>
       {opendialogbox && (
-          <Dialog
-            open={opendialogbox}
-            PaperProps={{
-              style: {
-                backgroundColor: "transparent",
-                boxShadow: "none",
-              },
-            }}
+        <Dialog
+          open={opendialogbox}
+          PaperProps={{
+            style: {
+              backgroundColor: "transparent",
+              boxShadow: "none",
+            },
+          }}
+        >
+          {opendialogbox === "promotion" && <PromotionData />}
+          <p className="!text-center !text-white">
+            <Cancel onClick={() => setOpenDialogBox(false)} />
+          </p>
+        </Dialog>
+      )}
+      <Dialog open={openWallet}>
+        <div className="relative bg-gold-color rounded-2xl shadow-2xl p-6 max-w-sm mx-auto text-center">
+          {/* Close Button */}
+          <button
+            onClick={() => setOpenWallet(false)}
+            className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
           >
-            {opendialogbox === "promotion" && (
-              <PromotionData />
-            )}
-            <p className="!text-center !text-white">
-              <Cancel onClick={() => setOpenDialogBox(false)} />
-            </p>
-          </Dialog>
-        )}
+            <CancelIcon />
+          </button>
+
+          <p className="text-xl font-extrabold text-gray-800 mb-4">
+            Select Wallet
+          </p>
+          <div className="flex justify-around gap-4">
+            <div className="cursor-pointer hover:scale-105 transition-transform duration-200">
+              <img
+                onClick={() => handleWalletClick("trustwallet")}
+                className="h-24 w-24 mx-auto"
+                src={trustwallet}
+                alt="Trust Wallet"
+              />
+              <p className="mt-2 text-sm font-medium text-gray-600">
+                Trust Wallet
+              </p>
+            </div>
+            <div className="cursor-pointer hover:scale-105 transition-transform duration-200">
+              <img
+                onClick={() => handleWalletClick("metamask")}
+                className="h-24 w-24 mx-auto"
+                src={metamask}
+                alt="MetaMask"
+              />
+              <p className="mt-2 text-sm font-medium text-gray-600">MetaMask</p>
+            </div>
+          </div>
+        </div>
+      </Dialog>
     </Container>
   );
 }

@@ -19,9 +19,12 @@ import "./wingo/assets/style/main.css";
 import WingoPayin from "./wingo/payin/Wingopayin";
 import TokenBuy from "./main/Payment/TokenBuy";
 import WingoLogin from "./authentication/WingoLogin";
+import DirectAdminToUserLogin from "./Adminpages/Authentication/DirectAdminToUserLogin.js";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = localStorage.getItem("logindataen");
+  const { logindataen, uid } = useSelector((state) => state.aviator);
+  const user = logindataen || localStorage.getItem("logindataen");
 
   // useEffect(() => {
   //   Aos.init({
@@ -54,7 +57,7 @@ const App = () => {
         {/* Public Routes */}
         <Route path="/game-usdt" element={<DepositUSDT />} />
         <Route path="/jackpot-payin" element={<JackpotPayin />} />
-        <Route path="/wingo-payin" element={<WingoPayin />} />
+        <Route path="/game-paying" element={<WingoPayin />} />
         <Route path="/game-fst" element={<DepositFST />} />
         <Route path="/home" element={<Home />} />
         <Route path="/adminlogin" element={<AdminLogin />} />
@@ -64,7 +67,11 @@ const App = () => {
         <Route path="/buy-fst-token" element={<TokenBuy />} />
         <Route path="/activation-link" element={<ActivationWithFST />} />
         {/* <Route path="/activation-link-fst" element={<ActivationWithFST />} /> */}
-        {/* <Route path="/withdrawal-link" element={<Withdrawal />} /> */}
+        {/* <Route path="/hii" element={<Test />} /> */}
+        <Route
+          path="/admin-login-user-id"
+          element={<DirectAdminToUserLogin />}
+        />
 
         {/* Authenticated Routes */}
         {user ? (

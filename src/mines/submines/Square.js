@@ -2,7 +2,7 @@ import { FaRegStar } from "react-icons/fa";
 
 function Square({ revealed, hasMine, onClick, gameOver }) {
   let content = (
-    <span className="text-gray-400 text-center text-6xl lg:pb-4">•</span>
+    <span className="text-gray-400 text-center text-6xl pb-4">•</span>
   );
   let bgColor = "bg-[#0b4078] hover:bg-blue-500";
   let borderColor = "border-blue-700";
@@ -12,19 +12,18 @@ function Square({ revealed, hasMine, onClick, gameOver }) {
     if (hasMine) {
       content = "💣";
       bgColor = "bg-[#0b4078]";
-    } 
-    else if(gameOver){
+    } else if (gameOver) {
       content = <FaRegStar className="text-white text-2xl" />;
-    }
-    else {
+    } else {
       content = "⭐";
       bgColor = "bg-[#0b4078]";
     }
   }
   return (
     <button
+      id="_boxess"
       className={`w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-md  text-3xl 
-         font-bold transition-colors duration-150 ease-in-out
+         font-bold transition-colors duration-150 ease-in-out border-2 border-green-500 
           ${bgColor}  
          ${borderColor} 
         ${textColor}  

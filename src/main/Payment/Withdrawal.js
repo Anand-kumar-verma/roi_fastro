@@ -35,7 +35,7 @@ function Withdrawal() {
   async function Payout() {
     const reqbody = {
       wallet_add: String(fk.values.walletAddress)?.trim(),
-      amount: Number(fk.values.amount),
+      amount: Number(fk.values.amount)?.toFixed(3),
       wallet_type:
         withdrawalType === "jackpot" ? 3 : withdrawalType === "wingo" ? 4 : 2,
     };
@@ -125,7 +125,7 @@ function Withdrawal() {
             <div className="grid grid-cols-2 gap-4 bg-glassy p-4 border border-rose-200 rounded-lg text-sm">
               <div className="flex flex-col">
                 <span className="font-medium text-yellow-400 ">
-                  {withdrawalType?.toUpperCase()} Current Balance 
+                  {withdrawalType?.toUpperCase()} Current Balance
                 </span>
                 <span className="!text-green-500 !text-lg">
                   {withdrawalType === "jackpot"

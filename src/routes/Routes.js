@@ -33,6 +33,7 @@ import WithdrawalLink from "../main/Payment/WithdrawalLink";
 import WithdrawalHistory from "../main/Payment/Withdrawalhistory";
 import AssociateSignUp from "../main/Signup";
 import Teamdata from "../main/Teamdata";
+import InitiateTrans from "../main/TopupDetails";
 import TopUP from "../main/TopupDetails";
 import ViewProfile from "../main/ViewProfile";
 import MinesHistory from "../mines/History";
@@ -99,6 +100,10 @@ export const routes = [
   {
     path: "/topup_detail",
     component: <TopUP />,
+  },
+  {
+    path: "/inititate-trans",
+    component: <InitiateTrans />,
   },
   {
     path: "/fst_detail",
@@ -201,5 +206,4 @@ export const routes = [
     path: "/mines_history",
     component: <MinesHistory />,
   },
-  
 ];

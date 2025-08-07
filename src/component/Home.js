@@ -14,11 +14,17 @@ import Popular from "./Popular";
 import { useSelector } from "react-redux";
 
 function Home() {
-  const { logindataen } = useSelector((state) => state.aviator);
+  const { logindataen } = useSelector((state) => state?.aviator);
 
   useQuery(
     ["dashboard_api"],
-    () => apiConnectorGetHome(endpoint?.user_dashboard_api, {}, logindataen),
+    () =>
+      logindataen &&
+      apiConnectorGetHome(
+        endpoint?.user_dashboard_api,
+        {},
+        logindataen
+      ),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -29,7 +35,9 @@ function Home() {
   );
   useQuery(
     ["profile_api"],
-    () => apiConnectorGetHome(endpoint?.profile_api, {}, logindataen),
+    () =>
+      logindataen &&
+      apiConnectorGetHome(endpoint?.profile_api, {}, logindataen),
     {
       refetchOnMount: false,
       refetchOnReconnect: false,
@@ -38,17 +46,17 @@ function Home() {
       refetchOnWindowFocus: false,
     }
   );
-  useQuery(
-    ["level_business"],
-    () => apiConnectorGetHome(endpoint?.level_business, {}, logindataen),
-    {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      retryOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  // useQuery(
+  //   ["level_business"],
+  //   () => apiConnectorGetHome(endpoint?.level_business, {}, logindataen),
+  //   {
+  //     refetchOnMount: false,
+  //     refetchOnReconnect: false,
+  //     retry: false,
+  //     retryOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
   const settings = {
     autoplay: true,
     dots: false,
@@ -58,9 +66,9 @@ function Home() {
     slidesToScroll: 1,
   };
   const scrollRef = useRef();
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  // useEffect(() => {
+  //   scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  // }, []);
   // const { data: bit } = useQuery(
   //   ["bit_api"],
   //   () =>

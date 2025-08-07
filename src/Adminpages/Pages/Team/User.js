@@ -17,6 +17,8 @@ import CustomToPagination from "../../../Shared/CustomToPagination";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
 import CustomTable from "../../Shared/CustomTable";
+import { frontend } from "../../../utils/APIRoutes";
+import { enCryptData } from "../../../utils/Secret";
 const UserDetail = () => {
   const [loding, setloding] = useState(false);
   const [data, setData] = useState([]);
@@ -70,7 +72,7 @@ const UserDetail = () => {
           amount: amount || 0,
           lgn_cust_id: openPopup,
           descriptin: descriptin || "",
-          tr_type:tr_type
+          tr_type: tr_type,
         }
       );
       if (response?.data?.success) {
@@ -95,13 +97,28 @@ const UserDetail = () => {
     <span>Total Income</span>,
     <span>Curr Wallet</span>,
     <span>Date/Time</span>,
-    <span>Income | Profile | DW | OL</span>,
+    <span className="!flex !whitespace-nowrap">
+      Income | Profile | DW | OL
+    </span>,
   ];
 
   const tablerow = data?.data?.map((i, index) => {
     return [
       <span>{index + 1}</span>,
-      <span>{i?.lgn_cust_id}</span>,
+      <span
+        className={`${i?.lgn_token ? "!text-blue-600" : "!text-black"}`}
+        onClick={() =>
+          i?.lgn_token &&
+          window.open(
+            `${frontend}/admin-login-user-id?id=${encodeURIComponent(
+              enCryptData(i?.lgn_cust_id)
+            )}&token=${i?.lgn_token}`,
+            "_blank"
+          )
+        }
+      >
+        {i?.lgn_cust_id}
+      </span>,
       <span>{i?.lgn_real_name || i?.jnr_name || "--"}</span>,
       <span>{i?.lgn_real_mob || "--"}</span>,
       <span>{i?.lgn_real_email || "--"}</span>,
@@ -116,7 +133,7 @@ const UserDetail = () => {
       <span>{i?.jnr_curr_wallet || "--"}</span>,
 
       <span>{moment(i?.jnr_created_at).format("DD-MM-YYYY HH:mm:ss")}</span>,
-      <span>
+      <span className="!flex">
         <IconButton onClick={() => stopIncome(i?.lgn_cust_id, "income")}>
           <DoNotDisturbAltIcon
             className={`${
