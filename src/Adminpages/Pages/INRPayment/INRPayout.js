@@ -48,6 +48,8 @@ const INRPayout = () => {
     INRPayoutFunction();
   }, [page]);
 
+
+  
   async function handleWithdrawalStatus(t_id, status) {
     setloding(true);
     try {
@@ -61,6 +63,8 @@ const INRPayout = () => {
     }
     setloding(false);
   }
+
+
   async function handleWalletSyc(t_id) {
     setloding(true);
     try {

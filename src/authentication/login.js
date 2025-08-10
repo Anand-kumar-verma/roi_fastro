@@ -16,11 +16,11 @@ import {
 
 const Login = () => {
   const params = window?.Telegram?.WebApp?.initDataUnsafe?.start_param;
-  // const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
+  const datatele = window?.Telegram?.WebApp?.initDataUnsafe?.user;
 
-  const datatele = {
-    id: "9857092571",
-  };
+  // const datatele = {
+  //   id: "1840589027",
+  // };
 
   const navigate = useNavigate();
   const [openDialogBox, setOpenDialogBox] = useState(false);
@@ -39,12 +39,12 @@ const Login = () => {
       password: String(reqBody.id),
     };
     // const reqBodyy = {
-    //   mobile: String("9857092571"),
-    //   email: String("9857092571"),
+    //   mobile: String("1840589027"),
+    //   email: String("1840589027"),
     //   full_name: String(datatele?.username),
     //   referral_id: String("1234567890"),
-    //   username: String("9857092571"),
-    //   password: String("9857092571"),
+    //   username: String("1840589027"),
+    //   password: String("1840589027"),
     // };
 
     try {
@@ -79,31 +79,31 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    const bo = "9857092571";
+    // const bo = "1840589027";
+    // // const token =
+    // //   "xLToI3ZzIsfc6qyEgPXRgZ8fzc5xJmYzPirhqEvrERvmYDd3TnME3wpu7JVbt1o3hqAFvl7JTn1p9r43Lyd3EbHm0UbUTwrPNdEG";
     // const token =
-    //   "xLToI3ZzIsfc6qyEgPXRgZ8fzc5xJmYzPirhqEvrERvmYDd3TnME3wpu7JVbt1o3hqAFvl7JTn1p9r43Lyd3EbHm0UbUTwrPNdEG";
-    const token =
-      "tVs0l4jkOIiZkoSYmGtrUWL37j8G7Sg3ItHLlVdwgJbYrr4gsk0tHKZoGSnqQGeTXGojTvGdpGKTWoVC2iGdZwGodey1EnaKbgiP";
-    dispatch(saveUid(bo));
-    dispatch(saveToken(token));
-    localStorage.setItem("logindataen", token);
-    localStorage.setItem("uid", bo);
-    navigate("/home");
-    alert("ID: " + bo);
-    // if (datatele?.id) {
-    //   alert("ID: " + datatele?.id);
-    //   if (datatele?.id && (!logindataen || !uid)) {
-    //     loginFn({
-    //       id: String(datatele?.id),
-    //     });
-    //   } else if (uid == datatele?.id) {
-    //     navigate("/home");
-    //   } else {
-    //     loginFn({
-    //       id: String(datatele?.id),
-    //     });
-    //   }
-    // }
+    //   "o2eFtGq9aDQVNlcmggktBT4sge1seKTGtpSKyxctZKArwXr2m5m4L3ySRUc9ES1WvU0L2pqAqS2B9aXb2YcTb87IDCK24pPKrn6O";
+    // dispatch(saveUid(bo));
+    // dispatch(saveToken(token));
+    // localStorage.setItem("logindataen", token);
+    // localStorage.setItem("uid", bo);
+    // navigate("/home");
+    // alert("ID: " + bo);
+    if (datatele?.id) {
+      alert("ID: " + datatele?.id);
+      if (datatele?.id && (!logindataen || !uid)) {
+        loginFn({
+          id: String(datatele?.id),
+        });
+      } else if (uid == datatele?.id) {
+        navigate("/home");
+      } else {
+        loginFn({
+          id: String(datatele?.id),
+        });
+      }
+    }
   }, [datatele]);
   return (
     <>

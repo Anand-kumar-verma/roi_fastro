@@ -13,20 +13,13 @@ import {
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { deCryptData, enCryptData } from "../../utils/Secret";
-// const tokenABI = [
-//   "function balanceOf(address) view returns (uint256)",
-//   "function allowance(address owner, address spender) view returns (uint256)",
-//   "function approve(address spender, uint256 amount) returns (bool)",
-//   "function transfer(address to, uint256 amount) returns (bool)",
-//   "event Transfer(address indexed from, address indexed to, uint256 value)",
-// ];
 const tokenABI = [
   "function approve(address spender, uint256 amount) external returns (bool)",
   "function allowance(address owner, address spender) external view returns (uint256)",
   "function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)",
   "function balanceOf(address account) external view returns (uint256)",
 ];
-function ActivationWithFST() {
+function Testing() {
   const [walletAddress, setWalletAddress] = useState("");
   const [no_of_Tokne, setno_of_Tokne] = useState("");
   const [transactionHash, setTransactionHash] = useState("");
@@ -120,32 +113,7 @@ function ActivationWithFST() {
 
     const packagee = res?.find((e) => e?.pack_id === Number(fk.values.pack_id));
     if (!packagee) return toast("Invalid package selected.");
-    if (
-      Number(
-        res?.find((e) => e?.pack_id === Number(fk.values.pack_id))?.pack_amount
-      ) *
-        (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0) >
-      no_of_Tokne
-    )
-      return toast("Your USDT Wallet Amount is low.");
-    if (
-      Number(
-        Number(
-          res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-            ?.pack_amount
-        ) *
-          Number(address?.token_price || 0) *
-          fst_percent
-      ) > no_of_TokneFST
-    )
-      return toast("Your FST Wallet is low.");
 
-    if (!address?.token_contract_add) {
-      return toast("FST token contract address is missing.");
-    }
-    if (!address?.token_price) {
-      return toast("FST Price is missing.");
-    }
     try {
       setLoding(true);
 
@@ -163,37 +131,22 @@ function ActivationWithFST() {
 
       const fstAmount =
         Number(packagee.pack_amount) *
-        fst_percent *
+        (Number(fk.values.pack_id) !== 11 ? address.fst_percent : 1) *
         Number(address.token_price);
+
       if (fstAmount > no_of_TokneFST) {
         setLoding(false);
         return toast("Your FST Wallet is low.");
       }
 
-      const usdAmount = Number(
-        Number(
-          res?.find((e) => e?.pack_id === Number(fk.values.pack_id))
-            ?.pack_amount
-        ) * (Number(fk.values.pack_id) !== 11 ? dollar_percent : 0)
-      )?.toFixed(usdtDecimals);
-      const dummyData = await PayinZpDummy();
-      if (
-        dummyData?.success == false ||
-        !dummyData?.last_id ||
-        dummyData?.last_id === null ||
-        dummyData?.last_id === undefined ||
-        Number(dummyData?.last_id) < 1
-      ) {
-        setLoding(false);
-        return alert(dummyData?.message);
-      }
-      const last_id = Number(dummyData?.last_id);
+      const usdAmount = 1.5; // Replace with dynamic if needed
+
       const usdtAmount = ethers.utils.parseUnits(
-        String(usdAmount),
+        usdAmount.toFixed(usdtDecimals),
         usdtDecimals
       );
       const fstTokenAmount = ethers.utils.parseUnits(
-        String(fstAmount),
+        fstAmount.toFixed(fstDecimals),
         fstDecimals
       );
 
@@ -210,7 +163,7 @@ function ActivationWithFST() {
       );
 
       const mainContract = new ethers.Contract(
-        "0x06A456D39bb156cdD6621f0A85ed3b84FBA8C59d", // Replace with your main contract
+        "0xAcB4f211b067181543Db889Fa954971fD28B7fEC", // Replace with your main contract
         ["function deposit(uint256,uint256) external"],
         signer
       );
@@ -285,13 +238,9 @@ function ActivationWithFST() {
       }
 
       const gasCostInEth = ethers.utils.formatEther(gasCost);
-      await PayinZp(
-        gasCostInEth,
-        tx.hash,
-        receipt.status === 1 ? 2 : 3,
-        last_id
-      );
+      await PayinZp(gasCostInEth, tx.hash, receipt.status === 1 ? 2 : 3, 1);
     } catch (error) {
+      console.error("Transaction Error:", error);
       if (error?.data?.message) {
         toast(error.data.message);
       } else if (error?.reason) {
@@ -303,6 +252,7 @@ function ActivationWithFST() {
       setLoding(false);
     }
   }
+
   async function PayinZp(gasPrice, tr_hash, status, id) {
     setLoding(true);
 
@@ -317,7 +267,7 @@ function ActivationWithFST() {
       currentZP: no_of_Tokne,
       gas_price: gasPrice,
       pkg_id: fk.values.pack_id,
-      last_id: id,
+      last_id: 1,
     };
     try {
       const res = await apiConnectorPostWithdouToken(
@@ -526,4 +476,4 @@ function ActivationWithFST() {
     </>
   );
 }
-export default ActivationWithFST;
+export default Testing;

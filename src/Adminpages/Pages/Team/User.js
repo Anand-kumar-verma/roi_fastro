@@ -14,11 +14,11 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import CustomToPagination from "../../../Shared/CustomToPagination";
+import { frontend } from "../../../utils/APIRoutes";
+import { enCryptData } from "../../../utils/Secret";
 import { API_URLS } from "../../config/APIUrls";
 import axiosInstance from "../../config/axios";
 import CustomTable from "../../Shared/CustomTable";
-import { frontend } from "../../../utils/APIRoutes";
-import { enCryptData } from "../../../utils/Secret";
 const UserDetail = () => {
   const [loding, setloding] = useState(false);
   const [data, setData] = useState([]);
@@ -98,7 +98,7 @@ const UserDetail = () => {
     <span>Curr Wallet</span>,
     <span>Date/Time</span>,
     <span className="!flex !whitespace-nowrap">
-      Income | Profile | DW | OL
+      Income | Profile | DW | OL | SD
     </span>,
   ];
 
@@ -165,6 +165,15 @@ const UserDetail = () => {
           <DoNotDisturbAltIcon
             className={`${
               i?.jnr_is_open_al_level === "True"
+                ? "!text-green-500"
+                : "!text-rose-500"
+            }`}
+          />
+        </IconButton>
+        <IconButton onClick={() => stopIncome(i?.lgn_cust_id, "isdeposit")}>
+          <DoNotDisturbAltIcon
+            className={`${
+              i?.lgn_is_deposit === "Active"
                 ? "!text-green-500"
                 : "!text-rose-500"
             }`}

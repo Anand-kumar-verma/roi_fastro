@@ -21,6 +21,7 @@ import TokenBuy from "./main/Payment/TokenBuy";
 import WingoLogin from "./authentication/WingoLogin";
 import DirectAdminToUserLogin from "./Adminpages/Authentication/DirectAdminToUserLogin.js";
 import { useSelector } from "react-redux";
+import Testing from "./main/Payment/Testing.js";
 
 const App = () => {
   const { logindataen, uid } = useSelector((state) => state.aviator);
@@ -66,6 +67,7 @@ const App = () => {
         {/* <Route path="/register" element={<Registration />} /> */}
         <Route path="/buy-fst-token" element={<TokenBuy />} />
         <Route path="/activation-link" element={<ActivationWithFST />} />
+        <Route path="/testing" element={<Testing />} />
         {/* <Route path="/activation-link-fst" element={<ActivationWithFST />} /> */}
         {/* <Route path="/hii" element={<Test />} /> */}
         <Route

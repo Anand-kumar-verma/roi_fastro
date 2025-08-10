@@ -1,5 +1,5 @@
 // export const domain = "https://roi-backend-e231.onrender.com";
-// export const domain = "http://192.168.18.214:9010";
+// export const domain = "http://192.168.112.149:9010";
 export const domain_market = "https://api.coingecko.com";
 export const domain = "https://backend.fastro.info";
 // export const frontend = "http://localhost:3000";

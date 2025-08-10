@@ -13,12 +13,18 @@ import {
 } from "../../utils/APIConnector";
 import { endpoint } from "../../utils/APIRoutes";
 import { deCryptData, enCryptData } from "../../utils/Secret";
+// const tokenABI = [
+//   "function balanceOf(address) view returns (uint256)",
+//   "function allowance(address owner, address spender) view returns (uint256)",
+//   "function approve(address spender, uint256 amount) returns (bool)",
+//   "function transfer(address to, uint256 amount) returns (bool)",
+//   "event Transfer(address indexed from, address indexed to, uint256 value)",
+// ];
 const tokenABI = [
-  "function balanceOf(address) view returns (uint256)",
-  "function allowance(address owner, address spender) view returns (uint256)",
-  "function approve(address spender, uint256 amount) returns (bool)",
-  "function transfer(address to, uint256 amount) returns (bool)",
-  "event Transfer(address indexed from, address indexed to, uint256 value)",
+  "function approve(address spender, uint256 amount) external returns (bool)",
+  "function allowance(address owner, address spender) external view returns (uint256)",
+  "function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)",
+  "function balanceOf(address account) external view returns (uint256)",
 ];
 function WingoPayin() {
   const [walletAddress, setWalletAddress] = useState("");
@@ -97,48 +103,23 @@ function WingoPayin() {
     setLoding(false);
   }
 
+  // enw
   async function sendTokenTransaction() {
-    if (!address?.jackpot_receiving_add)
-      return toast("Please add Receiving Address");
-
-    if (!walletAddress) return toast("Please Connect your wallet.");
-
-    // if (Number(fk.values.req_amount) > no_of_Tokne)
-    //   return toast("Your USDT Wallet is low.");
-    if (!address?.token_contract_add) {
-      return toast("FST token contract address is missing.");
-    }
-    if (!address?.token_price) {
-      return toast("FST Price is missing.");
-    }
-    if (
-      Number(
-        Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
-      ) > no_of_TokneFST
-    )
-      return toast("Your FST Wallet is low.");
-
-    if (!address?.token_contract_add) {
-      return toast("FST token contract address is missing.");
-    }
-    if (!address?.token_price) {
-      return toast("FST Price is missing.");
-    }
-
-    setLoding(true);
-
-    if (!window.ethereum) {
-      toast("MetaMask not detected");
-      setLoding(false);
-      return;
-    }
-
-    await window.ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x38" }], // BSC Mainnet
-    });
+    if (!window.ethereum) return toast("MetaMask not detected");
+    if (!address?.receiving_key) return toast("Please add receiving address.");
+    if (!address?.fst_percent) return toast("Invalid login percentage.");
+    if (!address?.token_price) return toast("Invalid token price.");
+    if (!address?.token_contract_add) return toast("Missing contract address.");
+    if (!walletAddress) return toast("Please connect your wallet.");
 
     try {
+      setLoding(true);
+
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x38" }], // BSC Mainnet
+      });
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const userAddress = await signer.getAddress();
@@ -146,87 +127,93 @@ function WingoPayin() {
       const usdtDecimals = 18;
       const fstDecimals = 8;
 
-      const usdAmount = String(Number(0)?.toFixed(2));
+      const usdAmount = String(
+        Number(fk.values.req_amount || 0)?.toFixed(usdtDecimals)
+      );
       const fstAmount = String(
         Number(
           Number(fk.values.req_amount || 0) * Number(address?.token_price || 0)
-        )?.toFixed(2)
+        )?.toFixed(fstDecimals)
       );
 
+      if (Number(fstAmount) > Number(no_of_TokneFST)) {
+        setLoding(false);
+        return toast("Your FST Wallet is low.");
+      }
       const dummyData = await PayinZpDummy();
-      if (dummyData?.success == false) {
+      if (!dummyData?.success) {
         setLoding(false);
         return toast(dummyData?.message);
       }
       const last_id = dummyData?.last_id;
 
       const usdtAmount = ethers.utils.parseUnits(usdAmount, usdtDecimals);
-      const tokenAmount = ethers.utils.parseUnits(fstAmount, fstDecimals);
+      const fstTokenAmount = ethers.utils.parseUnits(fstAmount, fstDecimals);
 
       const usdtContract = new ethers.Contract(
-        "0x55d398326f99059fF775485246999027B3197955", // USDT contract
+        "0x55d398326f99059fF775485246999027B3197955", // USDT (BEP20)
         tokenABI,
         signer
       );
 
       const fstContract = new ethers.Contract(
-        address?.token_contract_add,
+        address.token_contract_add, // ✅ Use dynamic FST contract address
         tokenABI,
         signer
       );
 
       const mainContract = new ethers.Contract(
-        address?.wingo_paying_address ||
-          "0xfbE7c422C6062A30E387044E5Fc964eDf92f1Ed9", // Your contract
-        ["function transferAndBurn(uint256,uint256) external"],
+        "0x06A456D39bb156cdD6621f0A85ed3b84FBA8C59d", // Replace with your main contract
+        ["function deposit(uint256,uint256) external"],
         signer
       );
 
-      const usdtBalance = await usdtContract.balanceOf(userAddress);
+      // 🔍 Balance Checks
+      const [usdtBalance, fstBalance, bnbBalance] = await Promise.all([
+        usdtContract.balanceOf(userAddress),
+        fstContract.balanceOf(userAddress),
+        provider.getBalance(userAddress),
+      ]);
+
       if (usdtBalance.lt(usdtAmount)) {
         setLoding(false);
         return toast("Insufficient USDT balance.");
       }
-
-      const fstBalance = await fstContract.balanceOf(userAddress);
-      if (fstBalance.lt(tokenAmount)) {
+      if (fstBalance.lt(fstTokenAmount)) {
         setLoding(false);
         return toast("Insufficient FST balance.");
       }
 
-      // Approvals
+      // ✅ Allowance Check & Approve USDT
       const usdtAllowance = await usdtContract.allowance(
         userAddress,
         mainContract.address
       );
       if (usdtAllowance.lt(usdtAmount)) {
-        const approveTx = await usdtContract.approve(
-          mainContract.address,
-          usdtAmount
-        );
-        await approveTx.wait();
+        const tx = await usdtContract.approve(mainContract.address, usdtAmount);
+        await tx.wait();
       }
 
+      // ✅ Allowance Check & Approve FST
       const fstAllowance = await fstContract.allowance(
         userAddress,
         mainContract.address
       );
-      if (fstAllowance.lt(tokenAmount)) {
-        const approveTx = await fstContract.approve(
+      if (fstAllowance.lt(fstTokenAmount)) {
+        const tx = await fstContract.approve(
           mainContract.address,
-          tokenAmount
+          fstTokenAmount
         );
-        await approveTx.wait();
+        await tx.wait();
       }
 
-      // ✅ Estimate gas only after approvals
-      const gasEstimate = await mainContract.estimateGas.transferAndBurn(
+      // ⛽ Estimate gas
+      const gasEstimate = await mainContract.estimateGas.deposit(
         usdtAmount,
-        tokenAmount
+        fstTokenAmount
       );
       const gasPrice = await provider.getGasPrice();
       const gasCost = gasEstimate.mul(gasPrice);
-      const bnbBalance = await provider.getBalance(userAddress);
 
       if (bnbBalance.lt(gasCost)) {
         setLoding(false);
@@ -237,31 +224,39 @@ function WingoPayin() {
         );
       }
 
-      const tx = await mainContract.transferAndBurn(usdtAmount, tokenAmount);
+      // 🚀 Send deposit transaction
+      const tx = await mainContract.deposit(usdtAmount, fstTokenAmount);
       const receipt = await tx.wait();
+
+      setTransactionHash(tx.hash);
+      setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
+
       if (receipt.status === 1) {
         toast("Transaction successful!");
       } else {
         toast("Transaction failed!");
       }
 
-      setTransactionHash(tx.hash);
-      setReceiptStatus(receipt.status === 1 ? "Success" : "Failure");
-
+      const gasCostInEth = ethers.utils.formatEther(gasCost);
       await PayinZp(
-        ethers.utils.formatEther(gasCost),
+        gasCostInEth,
         tx.hash,
         receipt.status === 1 ? 2 : 3,
         last_id
       );
     } catch (error) {
-      console.error(error);
-      toast("Transaction failed: " + (error.reason || error.message));
+      console.error("Transaction Error:", error);
+      if (error?.data?.message) {
+        toast(error.data.message);
+      } else if (error?.reason) {
+        toast(error.reason);
+      } else {
+        toast("Token transaction failed.");
+      }
+    } finally {
+      setLoding(false);
     }
-
-    setLoding(false);
   }
-
   async function PayinZp(gasPrice, tr_hash, status, id) {
     setLoding(true);
 
